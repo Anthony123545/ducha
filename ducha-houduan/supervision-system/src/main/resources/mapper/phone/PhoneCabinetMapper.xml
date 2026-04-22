@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.phone.mapper.PhoneCabinetMapper">
+    
+    <resultMap type="PhoneCabinet" id="PhoneCabinetResult">
+        <result property="id"    column="id"    />
+        <result property="number"    column="number"    />
+        <result property="address"    column="address"    />
+        <result property="gridNumber"    column="grid_number"    />
+        <result property="storageQuantity"    column="storage_quantity"    />
+        <result property="exceptionsNumber"    column="exceptions_number"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="unitName"    column="unit_name"    />
+    </resultMap>
+
+    <sql id="selectPhoneCabinetVo">
+        select id, number, address, grid_number, storage_quantity, exceptions_number, unit_id, unit_name from phone_cabinet
+    </sql>
+
+    <select id="selectPhoneCabinetList" parameterType="PhoneCabinet" resultMap="PhoneCabinetResult">
+        <include refid="selectPhoneCabinetVo"/>
+        <where>  
+            <if test="number != null "> and number = #{number}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="gridNumber != null "> and grid_number = #{gridNumber}</if>
+            <if test="storageQuantity != null "> and storage_quantity = #{storageQuantity}</if>
+            <if test="exceptionsNumber != null "> and exceptions_number = #{exceptionsNumber}</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectPhoneCabinetById" parameterType="Long" resultMap="PhoneCabinetResult">
+        <include refid="selectPhoneCabinetVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPhoneCabinet" parameterType="PhoneCabinet">
+        insert into phone_cabinet
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="number != null">number,</if>
+            <if test="address != null">address,</if>
+            <if test="gridNumber != null">grid_number,</if>
+            <if test="storageQuantity != null">storage_quantity,</if>
+            <if test="exceptionsNumber != null">exceptions_number,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="unitName != null">unit_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="number != null">#{number},</if>
+            <if test="address != null">#{address},</if>
+            <if test="gridNumber != null">#{gridNumber},</if>
+            <if test="storageQuantity != null">#{storageQuantity},</if>
+            <if test="exceptionsNumber != null">#{exceptionsNumber},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="unitName != null">#{unitName},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePhoneCabinet" parameterType="PhoneCabinet">
+        update phone_cabinet
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null">number = #{number},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="gridNumber != null">grid_number = #{gridNumber},</if>
+            <if test="storageQuantity != null">storage_quantity = #{storageQuantity},</if>
+            <if test="exceptionsNumber != null">exceptions_number = #{exceptionsNumber},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePhoneCabinetById" parameterType="Long">
+        delete from phone_cabinet where id = #{id}
+    </delete>
+
+    <delete id="deletePhoneCabinetByIds" parameterType="String">
+        delete from phone_cabinet where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

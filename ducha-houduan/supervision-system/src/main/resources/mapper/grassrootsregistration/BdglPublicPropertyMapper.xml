@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglPublicPropertyMapper">
+
+
+    <resultMap type="BdglPublicProperty" id="BdglPublicPropertyResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="version" column="version"/>
+        <result property="quantity" column="quantity"/>
+        <result property="price" column="price"/>
+        <result property="totalPrice" column="total_price"/>
+        <result property="equipTime" column="equip_time"/>
+        <result property="peopleId" column="people_id"/>
+        <result property="acquire" column="acquire"/>
+        <result property="quality" column="quality"/>
+        <result property="address" column="address"/>
+        <result property="remark" column="remark"/>
+        <result property="unitId" column="unit_id"/>
+        <result property="createtime" column="createtime"/>
+        <result property="updatetime" column="updatetime"/>
+        <result property="peopleName" column="people_name"/>
+        <result property="unitName" column="unit_name"/>
+        <result property="source" column="sources"/>
+        <result property="usage" column="usages"/>
+        <result property="borrowingSituation" column="borrowing_situation"/>
+        <result property="returnSituation" column="return_situation"/>
+    </resultMap>
+
+    <sql id="selectBdglPublicPropertyVo">
+        select id, name, version, quantity, price, total_price, equip_time, people_id, acquire, quality, address, remark, unit_id, createtime, updatetime, people_name, unit_name, sources, usages, borrowing_situation, return_situation from bdgl_public_property
+    </sql>
+
+    <select id="selectBdglPublicPropertyList" parameterType="BdglPublicProperty" resultMap="BdglPublicPropertyResult">
+        select id, name, version, quantity, price, total_price, equip_time, people_id, acquire, quality, address,
+        remark, unit_id, createtime, updatetime, people_name,unit_name
+        from bdgl_public_property p LEFT JOIN sys_dept d ON p.unit_id = d.dept_id
+        <where>
+            <if test="unitId != null ">
+                and (p.unit_id=#{unitId} or find_in_set(#{unitId}, d.ancestors))
+            </if>
+            <if test="name != null  and name != ''">and p.name like concat('%', #{name}, '%')</if>
+            <if test="version != null  and version != ''">and p.version = #{version}</if>
+            <if test="quantity != null ">and p.quantity = #{quantity}</if>
+            <if test="price != null ">and p.price = #{price}</if>
+            <if test="totalPrice != null ">and p.total_price = #{totalPrice}</if>
+            <if test="equipTime != null ">and p.equip_time = #{equipTime}</if>
+            <if test="peopleId != null ">and p.people_id = #{peopleId}</if>
+            <if test="acquire != null  and acquire != ''">and p.acquire = #{acquire}</if>
+            <if test="quality != null  and quality != ''">and p.quality = #{quality}</if>
+            <if test="address != null  and address != ''">and p.address = #{address}</if>
+<!--            <if test="unitId != null ">and p.unit_id = #{unitId}</if> -->
+            <if test="createtime != null  and createtime != ''">and p.createtime = #{createtime}</if>
+            <if test="updatetime != null  and updatetime != ''">and p.updatetime = #{updatetime}</if>
+            <if test="peopleName != null  and peopleName != ''">and p.people_name like concat('%', #{peopleName}, '%')
+            </if>
+            <if test="unitName != null  and unitName != ''">and p.unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="source != null  and source != ''">and sources = #{source}</if>
+            <if test="usage != null  and usage != ''">and usages = #{usage}</if>
+            <if test="borrowingSituation != null  and borrowingSituation != ''">and borrowing_situation =
+                #{borrowingSituation}
+            </if>
+            <if test="returnSituation != null  and returnSituation != ''">and return_situation = #{returnSituation}</if>
+        </where>
+        order by p.id desc
+    </select>
+
+    <select id="selectBdglPublicPropertyById" parameterType="Integer" resultMap="BdglPublicPropertyResult">
+        <include refid="selectBdglPublicPropertyVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectPublicPropertyunitid" parameterType="Integer" resultMap="BdglPublicPropertyResult">
+        <include refid="selectBdglPublicPropertyVo"/>
+        <where>
+            <if test="unitId != null"> and unit_id = #{unitId}</if>
+            <if test="year != null and year != ''"> and YEAR(equip_time)= #{year}</if>
+        </where>
+        order by id desc
+    </select>
+    <select id="selectPropertyCountByunitId" resultType="java.lang.Integer">
+        select count(*) from bdgl_public_property where unit_id = #{unitId} and YEAR(equip_time)=#{year}
+    </select>
+
+    <insert id="insertBdglPublicProperty" parameterType="BdglPublicProperty" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_public_property
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="version != null">version,</if>
+            <if test="quantity != null">quantity,</if>
+            <if test="price != null">price,</if>
+            <if test="totalPrice != null">total_price,</if>
+            <if test="equipTime != null">equip_time,</if>
+            <if test="peopleId != null">people_id,</if>
+            <if test="acquire != null">acquire,</if>
+            <if test="quality != null">quality,</if>
+            <if test="address != null">address,</if>
+            <if test="remark != null">remark,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="peopleName != null">people_name,</if>
+            <if test="unitName != null">unit_name,</if>
+            <if test="source != null">sources,</if>
+            <if test="usage != null">usages,</if>
+            <if test="borrowingSituation != null">borrowing_situation,</if>
+            <if test="returnSituation != null">return_situation,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="version != null">#{version},</if>
+            <if test="quantity != null">#{quantity},</if>
+            <if test="price != null">#{price},</if>
+            <if test="totalPrice != null">#{totalPrice},</if>
+            <if test="equipTime != null">#{equipTime},</if>
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="acquire != null">#{acquire},</if>
+            <if test="quality != null">#{quality},</if>
+            <if test="address != null">#{address},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="peopleName != null">#{peopleName},</if>
+            <if test="unitName != null">#{unitName},</if>
+            <if test="source != null">#{source},</if>
+            <if test="usage != null">#{usage},</if>
+            <if test="borrowingSituation != null">#{borrowingSituation},</if>
+            <if test="returnSituation != null">#{returnSituation},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglPublicProperty" parameterType="BdglPublicProperty">
+        update bdgl_public_property
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="version != null">version = #{version},</if>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="totalPrice != null">total_price = #{totalPrice},</if>
+            <if test="equipTime != null">equip_time = #{equipTime},</if>
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="acquire != null">acquire = #{acquire},</if>
+            <if test="quality != null">quality = #{quality},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="peopleName != null">people_name = #{peopleName},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="source != null">sources = #{source},</if>
+            <if test="usage != null">usages = #{usage},</if>
+            <if test="borrowingSituation != null">borrowing_situation = #{borrowingSituation},</if>
+            <if test="returnSituation != null">return_situation = #{returnSituation},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglPublicPropertyById" parameterType="Integer">
+        delete
+        from bdgl_public_property
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglPublicPropertyByIds" parameterType="String">
+        delete from bdgl_public_property where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

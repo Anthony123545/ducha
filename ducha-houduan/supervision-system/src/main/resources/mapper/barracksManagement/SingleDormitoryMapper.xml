@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.barracksManagement.mapper.SingleDormitoryMapper">
+    
+    <resultMap type="SingleDormitory" id="SingleDormitoryResult">
+        <result property="id"    column="id"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="occupant"    column="occupant"    />
+        <result property="entryTime"    column="entry_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="position"    column="position"    />
+        <result property="remark"    column="remark"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectSingleDormitoryVo">
+        select id, unit_name, occupant, entry_time, end_time, position, remark, create_by, create_time, update_by, update_time from single_dormitory
+    </sql>
+
+    <select id="selectSingleDormitoryList" parameterType="SingleDormitory" resultMap="SingleDormitoryResult">
+        <include refid="selectSingleDormitoryVo"/>
+        <where>  
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="occupant != null  and occupant != ''"> and occupant like concat('%', #{occupant}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectSingleDormitoryById" parameterType="Long" resultMap="SingleDormitoryResult">
+        <include refid="selectSingleDormitoryVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSingleDormitory" parameterType="SingleDormitory">
+        insert into single_dormitory
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="unitName != null and unitName != ''">unit_name,</if>
+            <if test="occupant != null and occupant != ''">occupant,</if>
+            <if test="entryTime != null">entry_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="position != null">position,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="unitName != null and unitName != ''">#{unitName},</if>
+            <if test="occupant != null and occupant != ''">#{occupant},</if>
+            <if test="entryTime != null">#{entryTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="position != null">#{position},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSingleDormitory" parameterType="SingleDormitory">
+        update single_dormitory
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="unitName != null and unitName != ''">unit_name = #{unitName},</if>
+            <if test="occupant != null and occupant != ''">occupant = #{occupant},</if>
+            <if test="entryTime != null">entry_time = #{entryTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="position != null">position = #{position},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSingleDormitoryById" parameterType="Long">
+        delete from single_dormitory where id = #{id}
+    </delete>
+
+    <delete id="deleteSingleDormitoryByIds" parameterType="String">
+        delete from single_dormitory where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

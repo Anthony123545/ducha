@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.monitoring.mapper.CameraManageMapper">
+    
+    <resultMap type="CameraManage" id="CameraManageResult">
+        <result property="id"    column="id"    />
+        <result property="cameraname"    column="cameraName"    />
+        <result property="unitname"    column="unitName"    />
+        <result property="cameraaddress"    column="cameraAddress"    />
+        <result property="cretetime"    column="cretetime"    />
+    </resultMap>
+
+    <sql id="selectCameraManageVo">
+        select id, cameraName, unitName, cameraAddress, cretetime from camera_manage
+    </sql>
+
+    <select id="selectCameraManageList" parameterType="CameraManage" resultMap="CameraManageResult">
+        <include refid="selectCameraManageVo"/>
+        <where>  
+            <if test="cameraname != null  and cameraname != ''"> and cameraName like concat('%', #{cameraname}, '%')</if>
+            <if test="unitname != null  and unitname != ''"> and unitName like concat('%', #{unitname}, '%')</if>
+            <if test="cameraaddress != null  and cameraaddress != ''"> and cameraAddress = #{cameraaddress}</if>
+            <if test="cretetime != null "> and cretetime = #{cretetime}</if>
+        </where>
+    </select>
+    
+    <select id="selectCameraManageById" parameterType="Long" resultMap="CameraManageResult">
+        <include refid="selectCameraManageVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCameraManage" parameterType="CameraManage">
+        insert into camera_manage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="cameraname != null">cameraName,</if>
+            <if test="unitname != null">unitName,</if>
+            <if test="cameraaddress != null">cameraAddress,</if>
+            <if test="cretetime != null">cretetime,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="cameraname != null">#{cameraname},</if>
+            <if test="unitname != null">#{unitname},</if>
+            <if test="cameraaddress != null">#{cameraaddress},</if>
+            <if test="cretetime != null">#{cretetime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCameraManage" parameterType="CameraManage">
+        update camera_manage
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="cameraname != null">cameraName = #{cameraname},</if>
+            <if test="unitname != null">unitName = #{unitname},</if>
+            <if test="cameraaddress != null">cameraAddress = #{cameraaddress},</if>
+            <if test="cretetime != null">cretetime = #{cretetime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCameraManageById" parameterType="Long">
+        delete from camera_manage where id = #{id}
+    </delete>
+
+    <delete id="deleteCameraManageByIds" parameterType="String">
+        delete from camera_manage where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

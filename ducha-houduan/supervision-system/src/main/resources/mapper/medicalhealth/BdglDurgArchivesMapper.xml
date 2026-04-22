@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.medicalhealth.mapper.BdglDurgArchivesMapper">
+
+    <resultMap type="BdglDurgArchives" id="BdglDurgArchivesResult">
+        <result property="id"    column="id"    />
+        <result property="durgName"    column="durg_name"    />
+        <result property="durgBrand"    column="durg_brand"    />
+        <result property="manufacturer"    column="manufacturer"    />
+        <result property="specifications"    column="specifications"    />
+        <result property="productIntroduction"    column="product_introduction"    />
+        <result property="storeHouse"    column="store_house"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="amount"    column="amount"    />
+        <result property="putIn"    column="put_in"    />
+        <result property="putOut"    column="put_out"    />
+        <result property="overdue"    column="overdue"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="adminId"    column="admin_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="userName"    column="user_name"    />
+        <result property="drugNo"    column="drug_no"    />
+    </resultMap>
+
+    <sql id="selectBdglDurgArchivesVo">
+        select id, durg_name, durg_brand, manufacturer, specifications, product_introduction, store_house, unit_id, amount, put_in, put_out, overdue, remarks, admin_id, create_time, update_time, unit_name, user_name, drug_no from bdgl_durg_archives
+    </sql>
+
+    <select id="selectBdglDurgArchivesList" parameterType="BdglDurgArchives" resultMap="BdglDurgArchivesResult">
+        <include refid="selectBdglDurgArchivesVo"/>
+        <where>
+            <if test="durgName != null  and durgName != ''"> and durg_name like concat('%', #{durgName}, '%')</if>
+            <if test="durgBrand != null  and durgBrand != ''"> and durg_brand = #{durgBrand}</if>
+            <if test="manufacturer != null  and manufacturer != ''"> and manufacturer = #{manufacturer}</if>
+            <if test="specifications != null  and specifications != ''"> and specifications = #{specifications}</if>
+            <if test="productIntroduction != null  and productIntroduction != ''"> and product_introduction = #{productIntroduction}</if>
+            <if test="storeHouse != null  and storeHouse != ''"> and store_house = #{storeHouse}</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="amount != null "> and amount = #{amount}</if>
+            <if test="putIn != null "> and put_in = #{putIn}</if>
+            <if test="putOut != null "> and put_out = #{putOut}</if>
+            <if test="overdue != null "> and overdue = #{overdue}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="adminId != null "> and admin_id = #{adminId}</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="drugNo != null  and drugNo != ''"> and drug_no = #{drugNo}</if>
+        </where>
+    </select>
+
+    <select id="selectBdglDurgArchivesById" parameterType="Long" resultMap="BdglDurgArchivesResult">
+        <include refid="selectBdglDurgArchivesVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectBdglDurgArchivesByDurgNo" resultMap="BdglDurgArchivesResult">
+        <include refid="selectBdglDurgArchivesVo"/>
+        where drug_no = #{drugNo}
+    </select>
+
+    <insert id="insertBdglDurgArchives" parameterType="BdglDurgArchives" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_durg_archives
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="durgName != null">durg_name,</if>
+            <if test="durgBrand != null">durg_brand,</if>
+            <if test="manufacturer != null">manufacturer,</if>
+            <if test="specifications != null">specifications,</if>
+            <if test="productIntroduction != null">product_introduction,</if>
+            <if test="storeHouse != null">store_house,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="amount != null">amount,</if>
+            <if test="putIn != null">put_in,</if>
+            <if test="putOut != null">put_out,</if>
+            <if test="overdue != null">overdue,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="adminId != null">admin_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="unitName != null">unit_name,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="drugNo != null">drug_no,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="durgName != null">#{durgName},</if>
+            <if test="durgBrand != null">#{durgBrand},</if>
+            <if test="manufacturer != null">#{manufacturer},</if>
+            <if test="specifications != null">#{specifications},</if>
+            <if test="productIntroduction != null">#{productIntroduction},</if>
+            <if test="storeHouse != null">#{storeHouse},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="putIn != null">#{putIn},</if>
+            <if test="putOut != null">#{putOut},</if>
+            <if test="overdue != null">#{overdue},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="adminId != null">#{adminId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="unitName != null">#{unitName},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="drugNo != null">#{drugNo},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglDurgArchives" parameterType="BdglDurgArchives">
+        update bdgl_durg_archives
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="durgName != null">durg_name = #{durgName},</if>
+            <if test="durgBrand != null">durg_brand = #{durgBrand},</if>
+            <if test="manufacturer != null">manufacturer = #{manufacturer},</if>
+            <if test="specifications != null">specifications = #{specifications},</if>
+            <if test="productIntroduction != null">product_introduction = #{productIntroduction},</if>
+            <if test="storeHouse != null">store_house = #{storeHouse},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="putIn != null">put_in = #{putIn},</if>
+            <if test="putOut != null">put_out = #{putOut},</if>
+            <if test="overdue != null">overdue = #{overdue},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="adminId != null">admin_id = #{adminId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="drugNo != null">drug_no = #{drugNo},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglDurgArchivesById" parameterType="Long">
+        delete from bdgl_durg_archives where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglDurgArchivesByIds" parameterType="String">
+        delete from bdgl_durg_archives where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

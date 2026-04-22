@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.barracksManagement.mapper.BdglFlatsMapper">
+    
+    <resultMap type="BdglFlats" id="BdglFlatsResult">
+        <result property="id"    column="id"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="duty"    column="duty"    />
+        <result property="whether"    column="whether"    />
+        <result property="grade"    column="grade"    />
+        <result property="houseType"    column="house_type"    />
+        <result property="birthDate"    column="birth_date"    />
+        <result property="enlistDate"    column="enlist_date"    />
+        <result property="jobTime"    column="job_time"    />
+        <result property="entranceDate"    column="entrance_date"    />
+        <result property="jobDate"    column="job_date"    />
+        <result property="jobsDate"    column="jobs_date"    />
+        <result property="whethers"    column="whethers"    />
+        <result property="rankId"    column="rank_id"    />
+        <result property="rankDate"    column="rank_date"    />
+        <result property="remark"    column="remark"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="adminId"    column="admin_id"    />
+        <result property="pName"    column="p_name"    />
+        <result property="pUnit"    column="p_unit"    />
+        <result property="pAccount"    column="p_account"    />
+        <result property="pTime"    column="p_time"    />
+        <result property="pTimeOne"    column="p_time_one"    />
+        <result property="pCeace"    column="p_ceace"    />
+        <result property="type"    column="type"    />
+        <result property="peopleName"    column="people_name"    />
+        <result property="unitName"    column="unit_name"    />
+    </resultMap>
+
+    <sql id="selectBdglFlatsVo">
+        select id, unit_id, people_id, duty, whether, grade, house_type, birth_date, enlist_date, job_time, entrance_date, job_date, jobs_date, whethers, rank_id, rank_date, remark, createtime, updatetime, admin_id, p_name, p_unit, p_account, p_time, p_time_one, p_ceace, type,people_name,unit_name from bdgl_flats
+    </sql>
+
+    <select id="selectBdglFlatsList" parameterType="BdglFlats" resultMap="BdglFlatsResult">
+        <include refid="selectBdglFlatsVo"/>
+        <where>  
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="peopleId != null "> and people_id = #{peopleId}</if>
+            <if test="duty != null  and duty != ''"> and duty = #{duty}</if>
+            <if test="whether != null  and whether != ''"> and whether = #{whether}</if>
+            <if test="grade != null  and grade != ''"> and grade = #{grade}</if>
+            <if test="houseType != null  and houseType != ''"> and house_type = #{houseType}</if>
+            <if test="birthDate != null "> and birth_date = #{birthDate}</if>
+            <if test="enlistDate != null "> and enlist_date = #{enlistDate}</if>
+            <if test="jobTime != null "> and job_time = #{jobTime}</if>
+            <if test="entranceDate != null "> and entrance_date = #{entranceDate}</if>
+            <if test="jobDate != null "> and job_date = #{jobDate}</if>
+            <if test="jobsDate != null "> and jobs_date = #{jobsDate}</if>
+            <if test="whethers != null  and whethers != ''"> and whethers = #{whethers}</if>
+            <if test="rankId != null "> and rank_id = #{rankId}</if>
+            <if test="rankDate != null "> and rank_date = #{rankDate}</if>
+            <if test="createtime != null  and createtime != ''"> and createtime = #{createtime}</if>
+            <if test="updatetime != null  and updatetime != ''"> and updatetime = #{updatetime}</if>
+            <if test="adminId != null "> and admin_id = #{adminId}</if>
+            <if test="pName != null  and pName != ''"> and p_name like concat('%', #{pName}, '%')</if>
+            <if test="pUnit != null  and pUnit != ''"> and p_unit = #{pUnit}</if>
+            <if test="pAccount != null  and pAccount != ''"> and p_account = #{pAccount}</if>
+            <if test="pTime != null "> and p_time = #{pTime}</if>
+            <if test="pTimeOne != null "> and p_time_one = #{pTimeOne}</if>
+            <if test="pCeace != null  and pCeace != ''"> and p_ceace = #{pCeace}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name = #{unitName}</if>
+            <if test="peopleName != null  and peopleName != ''"> and people_name = #{peopleName}</if>
+        </where>
+        order by id desc
+    </select>
+    
+    <select id="selectBdglFlatsById" parameterType="Integer" resultMap="BdglFlatsResult">
+        <include refid="selectBdglFlatsVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectFlatsStatCount" resultType="java.lang.Integer">
+        select count(*)
+        FROM bdgl_flats
+        where unit_id in
+        <foreach item="id" collection="list"  index="index" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <insert id="insertBdglFlats" parameterType="BdglFlats" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_flats
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="unitId != null">unit_id,</if>
+            <if test="peopleId != null">people_id,</if>
+            <if test="duty != null">duty,</if>
+            <if test="whether != null">whether,</if>
+            <if test="grade != null">grade,</if>
+            <if test="houseType != null">house_type,</if>
+            <if test="birthDate != null">birth_date,</if>
+            <if test="enlistDate != null">enlist_date,</if>
+            <if test="jobTime != null">job_time,</if>
+            <if test="entranceDate != null">entrance_date,</if>
+            <if test="jobDate != null">job_date,</if>
+            <if test="jobsDate != null">jobs_date,</if>
+            <if test="whethers != null">whethers,</if>
+            <if test="rankId != null">rank_id,</if>
+            <if test="rankDate != null">rank_date,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="adminId != null">admin_id,</if>
+            <if test="pName != null">p_name,</if>
+            <if test="pUnit != null">p_unit,</if>
+            <if test="pAccount != null">p_account,</if>
+            <if test="pTime != null">p_time,</if>
+            <if test="pTimeOne != null">p_time_one,</if>
+            <if test="pCeace != null">p_ceace,</if>
+            <if test="type != null">type,</if>
+            <if test="peopleName != null">people_name,</if>
+            <if test="unitName != null">unit_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="unitId != null">#{unitId},</if>
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="duty != null">#{duty},</if>
+            <if test="whether != null">#{whether},</if>
+            <if test="grade != null">#{grade},</if>
+            <if test="houseType != null">#{houseType},</if>
+            <if test="birthDate != null">#{birthDate},</if>
+            <if test="enlistDate != null">#{enlistDate},</if>
+            <if test="jobTime != null">#{jobTime},</if>
+            <if test="entranceDate != null">#{entranceDate},</if>
+            <if test="jobDate != null">#{jobDate},</if>
+            <if test="jobsDate != null">#{jobsDate},</if>
+            <if test="whethers != null">#{whethers},</if>
+            <if test="rankId != null">#{rankId},</if>
+            <if test="rankDate != null">#{rankDate},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="adminId != null">#{adminId},</if>
+            <if test="pName != null">#{pName},</if>
+            <if test="pUnit != null">#{pUnit},</if>
+            <if test="pAccount != null">#{pAccount},</if>
+            <if test="pTime != null">#{pTime},</if>
+            <if test="pTimeOne != null">#{pTimeOne},</if>
+            <if test="pCeace != null">#{pCeace},</if>
+            <if test="type != null">#{type},</if>
+            <if test="peopleName != null">#{peopleName},</if>
+            <if test="unitName != null">#{unitName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglFlats" parameterType="BdglFlats">
+        update bdgl_flats
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="duty != null">duty = #{duty},</if>
+            <if test="whether != null">whether = #{whether},</if>
+            <if test="grade != null">grade = #{grade},</if>
+            <if test="houseType != null">house_type = #{houseType},</if>
+            <if test="birthDate != null">birth_date = #{birthDate},</if>
+            <if test="enlistDate != null">enlist_date = #{enlistDate},</if>
+            <if test="jobTime != null">job_time = #{jobTime},</if>
+            <if test="entranceDate != null">entrance_date = #{entranceDate},</if>
+            <if test="jobDate != null">job_date = #{jobDate},</if>
+            <if test="jobsDate != null">jobs_date = #{jobsDate},</if>
+            <if test="whethers != null">whethers = #{whethers},</if>
+            <if test="rankId != null">rank_id = #{rankId},</if>
+            <if test="rankDate != null">rank_date = #{rankDate},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="adminId != null">admin_id = #{adminId},</if>
+            <if test="pName != null">p_name = #{pName},</if>
+            <if test="pUnit != null">p_unit = #{pUnit},</if>
+            <if test="pAccount != null">p_account = #{pAccount},</if>
+            <if test="pTime != null">p_time = #{pTime},</if>
+            <if test="pTimeOne != null">p_time_one = #{pTimeOne},</if>
+            <if test="pCeace != null">p_ceace = #{pCeace},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="peopleName != null">people_name = #{peopleName},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglFlatsById" parameterType="Integer">
+        delete from bdgl_flats where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglFlatsByIds" parameterType="String">
+        delete from bdgl_flats where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

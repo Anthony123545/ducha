@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglStatisticsMapper">
+
+    <resultMap type="BdglStatistics" id="BdglStatisticsResult">
+        <result property="id"    column="id"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="actualArrival"    column="actual_arrival"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="title"    column="title"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="filePath"    column="file_path"    />
+        <result property="time"    column="time"    />
+    </resultMap>
+
+    <sql id="selectBdglStatisticsVo">
+        select id, unit_id, actual_arrival, unit_name, title, file_name, file_path, time from bdgl_statistics
+    </sql>
+
+    <select id="selectBdglStatisticsList" parameterType="BdglStatistics" resultMap="BdglStatisticsResult">
+        <include refid="selectBdglStatisticsVo"/>
+        <where>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="actualArrival != null "> and actual_arrival = #{actualArrival}</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="filePath != null  and filePath != ''"> and file_path = #{filePath}</if>
+            <if test="time != null "> and time = #{time}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectBdglStatisticsById" parameterType="Integer" resultMap="BdglStatisticsResult">
+        <include refid="selectBdglStatisticsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglStatistics" parameterType="BdglStatistics" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_statistics
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="unitId != null">unit_id,</if>
+            <if test="actualArrival != null">actual_arrival,</if>
+            <if test="unitName != null">unit_name,</if>
+            <if test="title != null">title,</if>
+            <if test="fileName != null">file_name,</if>
+            <if test="filePath != null">file_path,</if>
+            <if test="time != null">time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="unitId != null">#{unitId},</if>
+            <if test="actualArrival != null">#{actualArrival},</if>
+            <if test="unitName != null">#{unitName},</if>
+            <if test="title != null">#{title},</if>
+            <if test="fileName != null">#{fileName},</if>
+            <if test="filePath != null">#{filePath},</if>
+            <if test="time != null">#{time},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglStatistics" parameterType="BdglStatistics">
+        update bdgl_statistics
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="actualArrival != null">actual_arrival = #{actualArrival},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="fileName == null">file_name = NULL,</if>
+            <if test="filePath != null">file_path = #{filePath},</if>
+            <if test="filePath == null">file_path = NULL,</if>
+            <if test="time != null">time = #{time},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglStatisticsById" parameterType="Integer">
+        delete from bdgl_statistics where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglStatisticsByIds" parameterType="String">
+        delete from bdgl_statistics where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

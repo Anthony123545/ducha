@@ -1,0 +1,12 @@
+{
+  "UserInfoSearchCond": {                            // 【可选】用户查询条件对象
+    "searchID": "${searchID}",                       // 【必填】搜索记录唯一标识
+    // 用于确认客户端是否为同一次查询任务
+    "searchResultPosition": ${searchResultPosition}, // 【可选】查询起始位置（整数）
+    // 当记录较多时，可指定从第几条开始继续查询
+    "maxResults": ${maxResults},                     // 【可选】最大返回记录数（整数）
+    // 若超过设备上限，设备会自动按上限返回
+    "EmployeeNoList": ${employeeNoList},
+    "fuzzySearch": "${fuzzySearch}"                  // 【可选】模糊搜索关键字（字符串）
+  }
+}

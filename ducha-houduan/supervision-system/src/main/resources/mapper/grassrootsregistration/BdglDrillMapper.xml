@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglDrillMapper">
+
+    <resultMap type="BdglDrill" id="BdglDrillResult">
+        <result property="id"    column="id"    />
+        <result property="project"    column="project"    />
+        <result property="drillTime"    column="drill_time"    />
+        <result property="oughtTo"    column="ought_to"    />
+        <result property="remark"    column="remark"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="filename"    column="filename"    />
+        <result property="filepath"    column="filepath"    />
+        <result property="equipment"    column="equipment"    />
+        <result property="ammunition"    column="ammunition"    />
+        <result property="mototime"    column="mototime"    />
+        <result property="drillEndtime"    column="drill_endtime"    />
+        <result property="trainingCategory"    column="training_category"    />
+        <result property="address"    column="address"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="createId"    column="create_id"    />
+        <result property="safety"    column="safety"    />
+        <result property="chiefOfficial"    column="chief_official"    />
+        <result property="targeted"    column="targeted"    />
+        <result property="system"    column="`system`"    />
+        <result property="excellent"    column="excellent"    />
+        <result property="pass"    column="pass"    />
+        <result property="fail"    column="fail"    />
+        <result property="yingxun"    column="yingxun"    />
+        <result property="shixun"    column="shixun"    />
+        <result property="participationRate"    column="participation_rate"    />
+        <result property="assessment"    column="assessment"    />
+        <result property="unitname"    column="unitname"    />
+        <result property="trainingContent"    column="training_content"    />
+    </resultMap>
+
+    <sql id="selectBdglDrillVo">
+        select id, project, drill_time, ought_to, remark, unit_id, filename, filepath, equipment, ammunition, mototime, drill_endtime, training_category, address, createtime, create_id, safety, chief_official, targeted, `system`, excellent, pass, fail, yingxun, shixun, participation_rate, assessment, unitname,training_content from bdgl_drill
+    </sql>
+
+    <select id="selectBdglDrillList" parameterType="BdglDrill" resultMap="BdglDrillResult">
+        <include refid="selectBdglDrillVo"/>
+        <where>
+            <if test="project != null  and project != ''"> and project = #{project}</if>
+            <if test="drillTime != null "> and drill_time = #{drillTime}</if>
+            <if test="oughtTo != null  and oughtTo != ''"> and ought_to = #{oughtTo}</if>
+            <if test="unitId != null  and unitId != ''"> and unit_id = #{unitId}</if>
+            <if test="filename != null  and filename != ''"> and filename like concat('%', #{filename}, '%')</if>
+            <if test="filepath != null  and filepath != ''"> and filepath = #{filepath}</if>
+            <if test="equipment != null  and equipment != ''"> and equipment = #{equipment}</if>
+            <if test="ammunition != null  and ammunition != ''"> and ammunition = #{ammunition}</if>
+            <if test="mototime != null  and mototime != ''"> and mototime = #{mototime}</if>
+            <if test="drillEndtime != null "> and drill_endtime = #{drillEndtime}</if>
+            <if test="trainingCategory != null  and trainingCategory != ''"> and training_category = #{trainingCategory}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="createtime != null "> and createtime = #{createtime}</if>
+            <if test="createId != null "> and create_id = #{createId}</if>
+            <if test="safety != null  and safety != ''"> and safety = #{safety}</if>
+            <if test="chiefOfficial != null  and chiefOfficial != ''"> and chief_official = #{chiefOfficial}</if>
+            <if test="targeted != null  and targeted != ''"> and targeted = #{targeted}</if>
+            <if test="system != null  and system != ''"> and `system` = #{system}</if>
+            <if test="excellent != null  and excellent != ''"> and excellent = #{excellent}</if>
+            <if test="pass != null "> and pass = #{pass}</if>
+            <if test="fail != null  and fail != ''"> and fail = #{fail}</if>
+            <if test="yingxun != null "> and yingxun = #{yingxun}</if>
+            <if test="shixun != null "> and shixun = #{shixun}</if>
+            <if test="participationRate != null  and participationRate != ''"> and participation_rate = #{participationRate}</if>
+            <if test="assessment != null  and assessment != ''"> and assessment = #{assessment}</if>
+            <if test="unitname != null  and unitname != ''"> and unitname like concat('%', #{unitname}, '%')</if>
+            <if test="trainingContent != null  and trainingContent != ''"> and training_content like concat('%', #{trainingContent}, '%')</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectBdglDrillById" parameterType="Integer" resultMap="BdglDrillResult">
+        <include refid="selectBdglDrillVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectlDrillCountByunitId" resultType="java.lang.Integer">
+        select count(*) from bdgl_drill where unit_id = #{unitId} and YEAR(drill_time)=#{year}
+    </select>
+    <select id="selectDrillByUnitId" parameterType="Integer" resultMap="BdglDrillResult">
+        <include refid="selectBdglDrillVo"/>
+        <where>
+            <if test="unitId != null"> and unit_id = #{unitId}</if>
+            <if test="year != null and year != ''"> and YEAR(drill_time)= #{year}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <insert id="insertBdglDrill" parameterType="BdglDrill" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_drill
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="project != null">project,</if>
+            <if test="drillTime != null">drill_time,</if>
+            <if test="oughtTo != null">ought_to,</if>
+            <if test="remark != null">remark,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="filename != null">filename,</if>
+            <if test="filepath != null">filepath,</if>
+            <if test="equipment != null">equipment,</if>
+            <if test="ammunition != null">ammunition,</if>
+            <if test="mototime != null">mototime,</if>
+            <if test="drillEndtime != null">drill_endtime,</if>
+            <if test="trainingCategory != null">training_category,</if>
+            <if test="address != null">address,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="safety != null">safety,</if>
+            <if test="chiefOfficial != null">chief_official,</if>
+            <if test="targeted != null">targeted,</if>
+            <if test="system != null">`system`,</if>
+            <if test="excellent != null">excellent,</if>
+            <if test="pass != null">pass,</if>
+            <if test="fail != null">fail,</if>
+            <if test="yingxun != null">yingxun,</if>
+            <if test="shixun != null">shixun,</if>
+            <if test="participationRate != null">participation_rate,</if>
+            <if test="assessment != null">assessment,</if>
+            <if test="unitname != null">unitname,</if>
+            <if test="trainingContent != null">training_content,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="project != null">#{project},</if>
+            <if test="drillTime != null">#{drillTime},</if>
+            <if test="oughtTo != null">#{oughtTo},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="filename != null">#{filename},</if>
+            <if test="filepath != null">#{filepath},</if>
+            <if test="equipment != null">#{equipment},</if>
+            <if test="ammunition != null">#{ammunition},</if>
+            <if test="mototime != null">#{mototime},</if>
+            <if test="drillEndtime != null">#{drillEndtime},</if>
+            <if test="trainingCategory != null">#{trainingCategory},</if>
+            <if test="address != null">#{address},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="safety != null">#{safety},</if>
+            <if test="chiefOfficial != null">#{chiefOfficial},</if>
+            <if test="targeted != null">#{targeted},</if>
+            <if test="system != null">#{system},</if>
+            <if test="excellent != null">#{excellent},</if>
+            <if test="pass != null">#{pass},</if>
+            <if test="fail != null">#{fail},</if>
+            <if test="yingxun != null">#{yingxun},</if>
+            <if test="shixun != null">#{shixun},</if>
+            <if test="participationRate != null">#{participationRate},</if>
+            <if test="assessment != null">#{assessment},</if>
+            <if test="unitname != null">#{unitname},</if>
+            <if test="trainingContent != null">#{trainingContent},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglDrill" parameterType="BdglDrill">
+        update bdgl_drill
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="project != null">project = #{project},</if>
+            <if test="drillTime != null">drill_time = #{drillTime},</if>
+            <if test="oughtTo != null">ought_to = #{oughtTo},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="filename != null">filename = #{filename},</if>
+            <if test="filepath != null">filepath = #{filepath},</if>
+            <if test="equipment != null">equipment = #{equipment},</if>
+            <if test="ammunition != null">ammunition = #{ammunition},</if>
+            <if test="mototime != null">mototime = #{mototime},</if>
+            <if test="drillEndtime != null">drill_endtime = #{drillEndtime},</if>
+            <if test="trainingCategory != null">training_category = #{trainingCategory},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="safety != null">safety = #{safety},</if>
+            <if test="chiefOfficial != null">chief_official = #{chiefOfficial},</if>
+            <if test="targeted != null">targeted = #{targeted},</if>
+            <if test="system != null">`system` = #{system},</if>
+            <if test="excellent != null">excellent = #{excellent},</if>
+            <if test="pass != null">pass = #{pass},</if>
+            <if test="fail != null">fail = #{fail},</if>
+            <if test="yingxun != null">yingxun = #{yingxun},</if>
+            <if test="shixun != null">shixun = #{shixun},</if>
+            <if test="participationRate != null">participation_rate = #{participationRate},</if>
+            <if test="assessment != null">assessment = #{assessment},</if>
+            <if test="unitname != null">unitname = #{unitname},</if>
+            <if test="trainingContent != null">training_content = #{trainingContent},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglDrillById" parameterType="Integer">
+        delete from bdgl_drill where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglDrillByIds" parameterType="String">
+        delete from bdgl_drill where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

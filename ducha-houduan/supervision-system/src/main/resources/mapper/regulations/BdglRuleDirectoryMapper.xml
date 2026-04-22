@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.regulations.mapper.BdglRuleDirectoryMapper">
+    
+    <resultMap type="BdglRuleDirectory" id="BdglRuleDirectoryResult">
+        <result property="id"    column="id"    />
+        <result property="directory"    column="directory"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="ancestors"    column="ancestors"    />
+        <result property="subclassification"    column="subclassification"    />
+        <result property="documentsNumber"    column="documents_number"    />
+        <result property="createUser"    column="create_user"    />
+        <result property="createUserid"    column="create_userid"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateUser"    column="update_user"    />
+        <result property="updateUserid"    column="update_userid"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="parentDirectory"    column="parent_directory"    />
+    </resultMap>
+
+    <sql id="selectBdglRuleDirectoryVo">
+        select id, directory, parent_id, ancestors, subclassification, documents_number, create_user, create_userid, create_time, update_user, update_userid, update_time,parent_directory from bdgl_rule_directory
+    </sql>
+
+    <select id="selectBdglRuleDirectoryList" parameterType="BdglRuleDirectory" resultMap="BdglRuleDirectoryResult">
+        <include refid="selectBdglRuleDirectoryVo"/>
+        <where>  
+            <if test="directory != null  and directory != ''"> and directory = #{directory}</if>
+            <if test="parentId != null "> and parent_id = #{parentId}</if>
+            <if test="ancestors != null  and ancestors != ''"> and ancestors = #{ancestors}</if>
+            <if test="subclassification != null "> and subclassification = #{subclassification}</if>
+            <if test="documentsNumber != null "> and documents_number = #{documentsNumber}</if>
+            <if test="createUser != null  and createUser != ''"> and create_user = #{createUser}</if>
+            <if test="createUserid != null "> and create_userid = #{createUserid}</if>
+            <if test="updateUser != null  and updateUser != ''"> and update_user = #{updateUser}</if>
+            <if test="updateUserid != null "> and update_userid = #{updateUserid}</if>
+            <if test="parentDirectory != null "> and parent_directory = #{parentDirectory}</if>
+        </where>
+    </select>
+    
+    <select id="selectBdglRuleDirectoryById" parameterType="Long" resultMap="BdglRuleDirectoryResult">
+        <include refid="selectBdglRuleDirectoryVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBdglRuleDirectoryLists" parameterType="BdglRuleDirectory" resultMap="BdglRuleDirectoryResult">
+        <include refid="selectBdglRuleDirectoryVo"/>
+        <where>
+            <if test="directory != null  and directory != ''"> and directory = #{directory}</if>
+            <if test="parentId != null "> and parent_id = #{parentId}</if>
+            <if test="ancestors != null  and ancestors != ''"> and ancestors = #{ancestors}</if>
+            <if test="subclassification != null "> and subclassification = #{subclassification}</if>
+            <if test="documentsNumber != null "> and documents_number = #{documentsNumber}</if>
+            <if test="createUser != null  and createUser != ''"> and create_user = #{createUser}</if>
+            <if test="createUserid != null "> and create_userid = #{createUserid}</if>
+            <if test="updateUser != null  and updateUser != ''"> and update_user = #{updateUser}</if>
+            <if test="updateUserid != null "> and update_userid = #{updateUserid}</if>
+            <if test="parentDirectory != null "> and parent_directory = #{parentDirectory}</if>
+        </where>
+    </select>
+
+    <insert id="insertBdglRuleDirectory" parameterType="BdglRuleDirectory">
+        insert into bdgl_rule_directory
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="directory != null">directory,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="ancestors != null">ancestors,</if>
+            <if test="subclassification != null">subclassification,</if>
+            <if test="documentsNumber != null">documents_number,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="createUserid != null">create_userid,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateUser != null">update_user,</if>
+            <if test="updateUserid != null">update_userid,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="parentDirectory != null">parent_directory,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="directory != null">#{directory},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="ancestors != null">#{ancestors},</if>
+            <if test="subclassification != null">#{subclassification},</if>
+            <if test="documentsNumber != null">#{documentsNumber},</if>
+            <if test="createUser != null">#{createUser},</if>
+            <if test="createUserid != null">#{createUserid},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateUser != null">#{updateUser},</if>
+            <if test="updateUserid != null">#{updateUserid},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="parentDirectory != null">#{parentDirectory},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglRuleDirectory" parameterType="BdglRuleDirectory">
+        update bdgl_rule_directory
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="directory != null">directory = #{directory},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="ancestors != null">ancestors = #{ancestors},</if>
+            <if test="subclassification != null">subclassification = #{subclassification},</if>
+            <if test="documentsNumber != null">documents_number = #{documentsNumber},</if>
+            <if test="createUser != null">create_user = #{createUser},</if>
+            <if test="createUserid != null">create_userid = #{createUserid},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateUser != null">update_user = #{updateUser},</if>
+            <if test="updateUserid != null">update_userid = #{updateUserid},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="parentDirectory != null">parent_directory = #{parentDirectory},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglRuleDirectoryById" parameterType="Long">
+        delete from bdgl_rule_directory where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglRuleDirectoryByIds" parameterType="String">
+        delete from bdgl_rule_directory where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

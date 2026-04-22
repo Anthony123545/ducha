@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.announcement.mapper.AnnouncementMapper">
+
+    <resultMap id="AnnouncementResult" type="com.supervision.announcement.domain.Announcement">
+        <id     column="id"           property="id"/>
+        <result column="title"        property="title"/>
+        <result column="content"      property="content"/>
+        <result column="publisher"    property="publisher"/>
+        <result column="publish_time" property="publishTime"/>
+        <result column="status"       property="status"/>
+        <result column="create_time"  property="createTime"/>
+        <result column="update_time"  property="updateTime"/>
+    </resultMap>
+
+    <!-- 列表 -->
+    <select id="selectAnnouncementList" resultMap="AnnouncementResult">
+        SELECT id, title, content, publisher, publish_time, status, create_time, update_time
+        FROM announcement
+        ORDER BY publish_time DESC, create_time DESC
+    </select>
+
+    <!-- 根据ID查询 -->
+    <select id="selectAnnouncementById" resultMap="AnnouncementResult">
+        SELECT id, title, content, publisher, publish_time, status, create_time, update_time
+        FROM announcement
+        WHERE id = #{id}
+    </select>
+
+    <!-- 新增 -->
+    <insert id="insertAnnouncement" parameterType="com.supervision.announcement.domain.Announcement">
+        INSERT INTO announcement
+        (title, content, publisher, publish_time, status, create_time, update_time)
+        VALUES
+            (#{title}, #{content}, #{publisher}, #{publishTime}, #{status},
+             NOW(), NOW())
+    </insert>
+
+    <!-- 修改 -->
+    <update id="updateAnnouncement" parameterType="com.supervision.announcement.domain.Announcement">
+        UPDATE announcement
+        SET
+            title        = #{title},
+            content      = #{content},
+            publisher    = #{publisher},
+            publish_time = #{publishTime},
+            status       = #{status},
+            update_time  = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除 -->
+    <delete id="deleteAnnouncementById">
+        DELETE FROM announcement WHERE id = #{id}
+    </delete>
+
+    <!-- 发布：简单把 status 改为 1 -->
+    <update id="publishAnnouncement">
+        UPDATE announcement
+        SET status = 1, update_time = NOW()
+        WHERE id = #{id}
+    </update>
+
+</mapper>

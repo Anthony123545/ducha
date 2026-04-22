@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.barracksManagement.mapper.TemporaryCheckinMapper">
+    
+    <resultMap type="TemporaryCheckin" id="TemporaryCheckinResult">
+        <result property="id"    column="id"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="creatTime"    column="creat_time"    />
+        <result property="creatId"    column="creat_id"    />
+        <result property="position"    column="position"    />
+        <result property="occupant"    column="occupant"    />
+        <result property="entryTime"    column="entry_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="creatName"    column="creat_name"    />
+        <result property="remark"    column="remark"    />
+        <result property="position2"    column="position2"    />
+    </resultMap>
+
+    <sql id="selectTemporaryCheckinVo">
+        select id, unit_name, unit_id, creat_time, creat_id, position, occupant, entry_time, end_time, creat_name,remark,position2 from temporary_checkin
+    </sql>
+
+    <select id="selectTemporaryCheckinList" parameterType="TemporaryCheckin" resultMap="TemporaryCheckinResult">
+        select*from(
+            <include refid="selectTemporaryCheckinVo"/>
+            <where>
+                <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+                <if test="unitId != null "> and unit_id = #{unitId}</if>
+                <if test="creatTime != null "> and creat_time = #{creatTime}</if>
+                <if test="creatId != null "> and creat_id = #{creatId}</if>
+                <if test="position != null  and position != ''"> and position = #{position}</if>
+                <if test="occupant != null  and occupant != ''"> and occupant  like concat('%', #{occupant}, '%')</if>
+                <if test="entryTime != null "> and entry_time = #{entryTime}</if>
+                <if test="endTime != null "> and end_time = #{endTime}</if>
+                <if test="creatName != null  and creatName != ''"> and creat_name like concat('%', #{creatName}, '%')</if>
+                <if test="remark != null  and remark != ''"> and remark like concat('%', #{remark}, '%')</if>
+                <if test="position2 != null  and position2 != ''"> and position2 like concat('%', #{position2}, '%')</if>
+            </where>
+            ORDER BY
+             id desc
+        )a
+        ORDER BY
+		    a.id desc
+    </select>
+    
+    <select id="selectTemporaryCheckinById" parameterType="Long" resultMap="TemporaryCheckinResult">
+        <include refid="selectTemporaryCheckinVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTemporaryCheckin" parameterType="TemporaryCheckin">
+        insert into temporary_checkin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="unitName != null">unit_name,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="creatTime != null">creat_time,</if>
+            <if test="creatId != null">creat_id,</if>
+            <if test="position != null">position,</if>
+            <if test="occupant != null">occupant,</if>
+            <if test="entryTime != null">entry_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="creatName != null">creat_name,</if>
+            <if test="remark != null">remark,</if>
+            <if test="position2 != null">position2,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="unitName != null">#{unitName},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="creatTime != null">#{creatTime},</if>
+            <if test="creatId != null">#{creatId},</if>
+            <if test="position != null">#{position},</if>
+            <if test="occupant != null">#{occupant},</if>
+            <if test="entryTime != null">#{entryTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="creatName != null">#{creatName},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="position2 != null">#{position2},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTemporaryCheckin" parameterType="TemporaryCheckin">
+        update temporary_checkin
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="creatTime != null">creat_time = #{creatTime},</if>
+            <if test="creatId != null">creat_id = #{creatId},</if>
+            <if test="position != null">position = #{position},</if>
+            <if test="occupant != null">occupant = #{occupant},</if>
+            <if test="entryTime != null">entry_time = #{entryTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="creatName != null">creat_name = #{creatName},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="position2 != null">position2 = #{position2},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTemporaryCheckinById" parameterType="Long">
+        delete from temporary_checkin where id = #{id}
+    </delete>
+
+    <delete id="deleteTemporaryCheckinByIds" parameterType="String">
+        delete from temporary_checkin where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

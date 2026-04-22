@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.system.mapper.BdglCookcategoryMapper">
+    
+    <resultMap type="BdglCookcategory" id="BdglCookcategoryResult">
+        <result property="id"    column="id"    />
+        <result property="typelist"    column="typelist"    />
+        <result property="timelist"    column="timelist"    />
+        <result property="name"    column="name"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+    </resultMap>
+
+    <sql id="selectBdglCookcategoryVo">
+        select id, typelist, timelist, name, createtime, updatetime from bdgl_cookcategory
+    </sql>
+
+    <select id="selectBdglCookcategoryList" parameterType="BdglCookcategory" resultMap="BdglCookcategoryResult">
+        <include refid="selectBdglCookcategoryVo"/>
+        <where>  
+            <if test="typelist != null "> and typelist = #{typelist}</if>
+            <if test="timelist != null "> and timelist = #{timelist}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="createtime != null "> and createtime = #{createtime}</if>
+            <if test="updatetime != null "> and updatetime = #{updatetime}</if>
+        </where>
+    </select>
+    
+    <select id="selectBdglCookcategoryById" parameterType="Integer" resultMap="BdglCookcategoryResult">
+        <include refid="selectBdglCookcategoryVo"/>
+        where id = #{id}
+    </select>
+    <select id="select" resultMap="BdglCookcategoryResult">
+        <include refid="selectBdglCookcategoryVo"/>
+        where id  in
+        <foreach item="item" collection="split"  index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <insert id="insertBdglCookcategory" parameterType="BdglCookcategory" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_cookcategory
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="typelist != null">typelist,</if>
+            <if test="timelist != null">timelist,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="typelist != null">#{typelist},</if>
+            <if test="timelist != null">#{timelist},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglCookcategory" parameterType="BdglCookcategory">
+        update bdgl_cookcategory
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="typelist != null">typelist = #{typelist},</if>
+            <if test="timelist != null">timelist = #{timelist},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglCookcategoryById" parameterType="Integer">
+        delete from bdgl_cookcategory where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglCookcategoryByIds" parameterType="String">
+        delete from bdgl_cookcategory where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

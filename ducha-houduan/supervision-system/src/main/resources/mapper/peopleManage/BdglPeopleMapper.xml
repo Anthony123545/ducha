@@ -1,0 +1,1088 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.peopleManage.mapper.BdglPeopleMapper">
+
+    <resultMap type="BdglPeople" id="BdglPeopleResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="sex"    column="sex"    />
+        <result property="age"    column="age"    />
+        <result property="birthDate"    column="birth_date"    />
+        <result property="command"    column="command"    />
+        <result property="duty"    column="duty"    />
+        <result property="postId"    column="post_id"    />
+        <result property="gradeId"    column="grade_id"    />
+        <result property="postDate"    column="post_date"    />
+        <result property="job"    column="job"    />
+        <result property="skillId"    column="skill_id"    />
+        <result property="skillDate"    column="skill_date"    />
+        <result property="levelId"    column="level_id"    />
+        <result property="levelDate"    column="level_date"    />
+        <result property="military"    column="military"    />
+        <result property="idcard"    column="idcard"    />
+        <result property="enlistDate"    column="enlist_date"    />
+        <result property="enlistaddress"    column="enlistaddress"    />
+        <result property="rankId"    column="rank_id"    />
+        <result property="rankDate"    column="rank_date"    />
+        <result property="nationId"    column="nation_id"    />
+        <result property="origin"    column="origin"    />
+        <result property="classId"    column="class_id"    />
+        <result property="educationId"    column="education_id"    />
+        <result property="degreeId"    column="degree_id"    />
+        <result property="graduationDate"    column="graduation_date"    />
+        <result property="school"    column="school"    />
+        <result property="partyId"    column="party_id"    />
+        <result property="partyDate"    column="party_date"    />
+        <result property="training"    column="training"    />
+        <result property="readmeFile"    column="readme_file"    />
+        <result property="readmeFileName"    column="readme_file_name"    />
+        <result property="prize"    column="prize"    />
+        <result property="marryList"    column="marry_list"    />
+        <result property="childrenList"    column="children_list"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="avatar"    column="avatar"    />
+        <result property="address"    column="address"    />
+        <result property="phone"    column="phone"    />
+        <result property="status"    column="status"    />
+        <result property="createtimes"    column="createtimes"    />
+        <result property="updatetimes"    column="updatetimes"    />
+        <result property="reign"    column="reign"    />
+        <result property="jobTime"    column="job_time"    />
+        <result property="healthy"    column="healthy"    />
+        <result property="bloodType"    column="blood_type"    />
+        <result property="postTime"    column="post_time"    />
+        <result property="major"    column="major"    />
+        <result property="admissionTime"    column="admission_time"    />
+        <result property="mobilePhoneModel"    column="mobile_phone_model"    />
+        <result property="guaranteeCardNo"    column="guarantee_card_no"    />
+        <result property="payrollCardNo"    column="payroll_card_no"    />
+        <result property="authorizedStrength"    column="authorized_strength"    />
+        <result property="aboral"    column="aboral"    />
+        <result property="live"    column="live"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="nowMilitaryRank"    column="now_military_rank"    />
+        <result property="treatmentLevel"    column="treatment_level"    />
+        <result property="rankUpgradeTime"    column="Rank_upgrade_time"    />
+        <result property="deptName"    column="dept_name"    />
+
+        <result property="phoneStandby"    column="phone_standby"    />
+        <result property="isBianzhi"    column="is_bianzhi"    />
+        <result property="statusrk"    column="statusrk"    />
+        <result property="employeeNumber"    column="employee_number"    />
+
+    </resultMap>
+
+    <sql id="selectBdglPeopleVo">
+        select id, name, sex, age, birth_date, command, duty, post_id, grade_id, post_date, job, skill_id, skill_date, level_id, level_date, military, idcard, enlist_date, enlistaddress, rank_id, rank_date, nation_id, origin, class_id, education_id, degree_id, graduation_date, school, party_id, party_date, training, readme_file, readme_file_name, prize, marry_list, children_list, unit_id, avatar, address, phone, status, createtimes, updatetimes, reign, job_time, healthy, blood_type, post_time, major, admission_time, mobile_phone_model, guarantee_card_no, payroll_card_no, authorized_strength, aboral, live, dept_id, user_id, now_military_rank, treatment_level, Rank_upgrade_time,dept_name,phone_standby,is_bianzhi,statusrk,employee_number from bdgl_people
+    </sql>
+
+    <select id="selectBdglPeopleList" parameterType="BdglPeople" resultMap="BdglPeopleResult">
+        <include refid="selectBdglPeopleVo"/>
+        <where>
+            and status=0
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
+            <if test="age != null "> and age = #{age}</if>
+            <if test="birthDate != null "> and birth_date = #{birthDate}</if>
+            <if test="command != null  and command != ''"> and command = #{command}</if>
+            <if test="duty != null  and duty != ''"> and duty = #{duty}</if>
+            <if test="postId != null "> and post_id = #{postId}</if>
+            <if test="gradeId != null "> and grade_id = #{gradeId}</if>
+            <if test="postDate != null "> and post_date = #{postDate}</if>
+            <if test="job != null  and job != ''"> and job = #{job}</if>
+            <if test="skillId != null "> and skill_id = #{skillId}</if>
+            <if test="skillDate != null "> and skill_date = #{skillDate}</if>
+            <if test="levelId != null "> and level_id = #{levelId}</if>
+            <if test="levelDate != null "> and level_date = #{levelDate}</if>
+            <if test="military != null  and military != ''"> and military = #{military}</if>
+            <if test="idcard != null  and idcard != ''"> and idcard = #{idcard}</if>
+            <if test="enlistDate != null "> and enlist_date = #{enlistDate}</if>
+            <if test="enlistaddress != null  and enlistaddress != ''"> and enlistaddress = #{enlistaddress}</if>
+            <if test="rankId != null "> and rank_id = #{rankId}</if>
+            <if test="rankDate != null "> and rank_date = #{rankDate}</if>
+            <if test="nationId != null "> and nation_id = #{nationId}</if>
+            <if test="origin != null  and origin != ''"> and origin = #{origin}</if>
+            <if test="classId != null "> and class_id = #{classId}</if>
+            <if test="educationId != null "> and education_id = #{educationId}</if>
+            <if test="degreeId != null "> and degree_id = #{degreeId}</if>
+            <if test="graduationDate != null "> and graduation_date = #{graduationDate}</if>
+            <if test="school != null  and school != ''"> and school = #{school}</if>
+            <if test="partyId != null "> and party_id = #{partyId}</if>
+            <if test="partyDate != null "> and party_date = #{partyDate}</if>
+            <if test="training != null  and training != ''"> and training = #{training}</if>
+            <if test="readmeFile != null  and readmeFile != ''"> and readme_file = #{readmeFile}</if>
+            <if test="readmeFileName != null  and readmeFileName != ''"> and readme_file_name like concat('%', #{readmeFileName}, '%')</if>
+            <if test="prize != null  and prize != ''"> and prize = #{prize}</if>
+            <if test="marryList != null  and marryList != ''"> and marry_list = #{marryList}</if>
+            <if test="childrenList != null  and childrenList != ''"> and children_list = #{childrenList}</if>
+            <if test="unitId != null  and unitId != ''"> and unit_id = #{unitId}</if>
+            <if test="avatar != null  and avatar != ''"> and avatar = #{avatar}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="createtimes != null "> and createtimes = #{createtimes}</if>
+            <if test="updatetimes != null "> and updatetimes = #{updatetimes}</if>
+            <if test="reign != null "> and reign = #{reign}</if>
+            <if test="jobTime != null "> and job_time = #{jobTime}</if>
+            <if test="healthy != null  and healthy != ''"> and healthy = #{healthy}</if>
+            <if test="bloodType != null  and bloodType != ''"> and blood_type = #{bloodType}</if>
+            <if test="postTime != null "> and post_time = #{postTime}</if>
+            <if test="major != null  and major != ''"> and major = #{major}</if>
+            <if test="admissionTime != null "> and admission_time = #{admissionTime}</if>
+            <if test="mobilePhoneModel != null  and mobilePhoneModel != ''"> and mobile_phone_model = #{mobilePhoneModel}</if>
+            <if test="guaranteeCardNo != null  and guaranteeCardNo != ''"> and guarantee_card_no = #{guaranteeCardNo}</if>
+            <if test="payrollCardNo != null  and payrollCardNo != ''"> and payroll_card_no = #{payrollCardNo}</if>
+            <if test="authorizedStrength != null  and authorizedStrength != ''"> and authorized_strength = #{authorizedStrength}</if>
+            <if test="aboral != null  and aboral != ''"> and aboral = #{aboral}</if>
+            <if test="live != null  and live != ''"> and live = #{live}</if>
+            <if test="deptId != null "> and dept_id = #{deptId}
+
+            </if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="nowMilitaryRank != null  and nowMilitaryRank != ''"> and now_military_rank = #{nowMilitaryRank}</if>
+            <if test="treatmentLevel != null  and treatmentLevel != ''"> and treatment_level = #{treatmentLevel}</if>
+            <if test="rankUpgradeTime != null "> and Rank_upgrade_time = #{rankUpgradeTime}</if>
+
+            <if test="deptName != null "> and dept_name = #{deptName}</if>
+            <if test="phoneStandby != null "> and phone_standby = #{phoneStandby}</if>
+            <if test="isBianzhi != null  and isBianzhi != ''"> and is_bianzhi = #{isBianzhi}</if>
+            <if test="statusrk != null  and statusrk != ''"> and statusrk = #{statusrk}</if>
+            <if test="employeeNumber != null  and employeeNumber != ''"> and employee_number = #{employeeNumber}</if>
+
+        </where>
+    </select>
+																	  
+    <select id="selectBdglPeopleById" parameterType="Long" resultMap="BdglPeopleResult">
+                select id, name, sex, age, birth_date, command, duty, post_id, grade_id, post_date, job, skill_id, skill_date, level_id, level_date, military, idcard, enlist_date, enlistaddress, rank_id, rank_date, nation_id, origin, class_id, education_id, degree_id, graduation_date, school, party_id, party_date, training, readme_file, readme_file_name, prize, marry_list, children_list, unit_id, avatar, address, phone, status, createtimes, updatetimes, reign, job_time, healthy, blood_type, post_time, major, admission_time, mobile_phone_model, guarantee_card_no, payroll_card_no, authorized_strength, aboral, live, dept_id, user_id, now_military_rank, treatment_level, Rank_upgrade_time,dept_name,phone_standby,is_bianzhi,statusrk,employee_number from bdgl_people
+        where id = #{id}
+    </select>
+    <select id="selectPowerPeoleList" parameterType="BdglPeople" resultMap="BdglPeopleResult">
+        select distinct p.id, p.name, p.dept_name,p.sex, p.age, p.birth_date, p.command, p.duty, p.post_id, p.grade_id, p.post_date, p.job, p.skill_id, p.skill_date, p.level_id, p.level_date, p.military, p.idcard, p.enlist_date, p.enlistaddress, p.rank_id, p.rank_date, p.nation_id, p.origin, p.class_id, p.education_id, p.degree_id, p.graduation_date, p.school, p.party_id, p.party_date, p.training, p.readme_file, p.readme_file_name, p.prize, p.marry_list, p.children_list, p.unit_id, p.avatar, p.address, p.phone, p.status, p.createtimes, p.updatetimes, p.reign, p.job_time, p.healthy, p.blood_type, p.post_time, p.major, p.admission_time, p.mobile_phone_model, p.guarantee_card_no, p.payroll_card_no, p.authorized_strength, p.aboral, p.live, d.dept_id  ,p.now_military_rank,
+                        p.treatment_level, p.phone_standby,p.Rank_upgrade_time,p.is_bianzhi,reign,p.statusrk,p.employee_number
+        from bdgl_people p
+        left join sys_dept d on p.dept_id = d.dept_id
+
+        <if test="deptId != null and deptId != 0">
+            where p.dept_id = #{deptId}
+        </if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+    </select>
+    <select id="selectPowerPeoleLists" parameterType="BdglPeople" resultMap="BdglPeopleResult">
+        select p.id, p.name, p.sex, p.age, p.birth_date, p.command, p.duty, p.post_id, p.grade_id, p.post_date, p.job, p.skill_id, p.skill_date, p.level_id, p.level_date, p.military, idcard, p.enlist_date, p.enlistaddress,p.rank_id, p.rank_date, p.nation_id, origin, p.class_id, p.education_id, p.degree_id,
+               p.graduation_date, p.school, p.party_id, p.party_date, p.training, p.readme_file, p.readme_file_name, p.prize,
+               p.marry_list, p.children_list, p.unit_id, p.avatar, p.address, p.phone, p.status, p.createtimes, p.updatetimes,
+               p.reign, p.job_time, p.healthy, p.blood_type, p.post_time, p.major,p.admission_time, p.mobile_phone_model,
+               p. guarantee_card_no, p.payroll_card_no, p.authorized_strength, p.aboral, p.live, p.dept_id, p.user_id,
+               p.now_military_rank, p.treatment_level, p.Rank_upgrade_time,p.dept_name,p.phone_standby,p.is_bianzhi,p.statusrk,p.employee_number
+        from bdgl_people p
+        left join sys_dept d on p.dept_id = d.dept_id
+
+        <where>
+            <if test="employeeNumber != null  and employeeNumber != ''"> and p.employee_number like concat('%', #{employeeNumber}, '%') </if>
+            <if test="name != null  and name != ''"> and p.name like concat('%', #{name}, '%')</if>
+            <if test="sex != null  and sex != ''"> and p.sex = #{sex}</if>
+            <if test="age != null "> and p.age = #{age}</if>
+            <if test="birthDate != null "> and p.birth_date = #{birthDate}</if>
+            <if test="command != null  and command != ''"> and p.command = #{command}</if>
+            <if test="duty != null  and duty != ''"> and p.duty = #{duty}</if>
+            <if test="postId != null "> and p.post_id = #{postId}</if>
+            <if test="gradeId != null "> and p.grade_id = #{gradeId}</if>
+            <if test="postDate != null "> and p.post_date = #{postDate}</if>
+            <if test="job != null  and job != ''"> and p.job = #{job}</if>
+            <if test="skillId != null "> and p.skill_id = #{skillId}</if>
+            <if test="skillDate != null "> and p.skill_date = #{skillDate}</if>
+            <if test="levelId != null "> and p.level_id = #{levelId}</if>
+            <if test="levelDate != null "> and p.level_date = #{levelDate}</if>
+            <if test="military != null  and military != ''"> and p.military = #{military}</if>
+            <if test="idcard != null  and idcard != ''"> and p.idcard = #{idcard}</if>
+            <if test="enlistDate != null "> and p.enlist_date = #{enlistDate}</if>
+            <if test="enlistaddress != null  and enlistaddress != ''"> and p.enlistaddress = #{enlistaddress}</if>
+            <if test="rankId != null "> and p.rank_id = #{rankId}</if>
+            <if test="rankDate != null "> and p.rank_date = #{rankDate}</if>
+            <if test="nationId != null "> and p.nation_id = #{nationId}</if>
+            <if test="origin != null  and origin != ''"> and p.origin = #{origin}</if>
+            <if test="classId != null "> and p.class_id = #{classId}</if>
+            <if test="educationId != null "> and p.education_id = #{educationId}</if>
+            <if test="degreeId != null "> and p.degree_id = #{degreeId}</if>
+            <if test="graduationDate != null "> and p.graduation_date = #{graduationDate}</if>
+            <if test="school != null  and school != ''"> and p.school = #{school}</if>
+            <if test="partyId != null "> and p.party_id = #{partyId}</if>
+            <if test="partyDate != null "> and p.party_date = #{partyDate}</if>
+            <if test="training != null  and training != ''"> and p.training = #{training}</if>
+            <if test="readmeFile != null  and readmeFile != ''"> and p.readme_file = #{readmeFile}</if>
+            <if test="readmeFileName != null  and readmeFileName != ''"> and p.readme_file_name like concat('%', #{readmeFileName}, '%')</if>
+            <if test="prize != null  and prize != ''"> and p.prize = #{prize}</if>
+            <if test="marryList != null  and marryList != ''"> and p.marry_list = #{marryList}</if>
+            <if test="childrenList != null  and childrenList != ''"> and p.children_list = #{childrenList}</if>
+            <if test="unitId != null  and unitId != ''"> and p.unit_id = #{unitId}</if>
+            <if test="avatar != null  and avatar != ''"> and p.avatar = #{avatar}</if>
+            <if test="address != null  and address != ''"> and p.address = #{address}</if>
+            <if test="phone != null  and phone != ''"> and p.phone = #{phone}</if>
+            <if test="status != null "> and p.status = #{status}</if>
+            <if test="createtimes != null "> and p.createtimes = #{createtimes}</if>
+            <if test="updatetimes != null "> and p.updatetimes = #{updatetimes}</if>
+            <if test="reign != null "> and p.reign = #{reign}</if>
+            <if test="jobTime != null "> and p.job_time = #{jobTime}</if>
+            <if test="healthy != null  and healthy != ''"> and p.healthy = #{healthy}</if>
+            <if test="bloodType != null  and bloodType != ''"> and p.blood_type = #{bloodType}</if>
+            <if test="postTime != null "> and p.post_time = #{postTime}</if>
+            <if test="major != null  and major != ''"> and p.major = #{major}</if>
+            <if test="admissionTime != null "> and p.admission_time = #{admissionTime}</if>
+            <if test="mobilePhoneModel != null  and mobilePhoneModel != ''"> and p.mobile_phone_model = #{mobilePhoneModel}</if>
+            <if test="guaranteeCardNo != null  and guaranteeCardNo != ''"> and p.guarantee_card_no = #{guaranteeCardNo}</if>
+            <if test="payrollCardNo != null  and payrollCardNo != ''"> and p.payroll_card_no = #{payrollCardNo}</if>
+            <if test="authorizedStrength != null  and authorizedStrength != ''"> and p.authorized_strength = #{authorizedStrength}</if>
+            <if test="aboral != null  and aboral != ''"> and p.aboral = #{aboral}</if>
+            <if test="live != null  and live != ''"> and p.live = #{live}</if>
+            <if test="userId != null "> and p.user_id = #{userId}</if>
+            <if test="nowMilitaryRank != null  and nowMilitaryRank != ''"> and p.now_military_rank = #{nowMilitaryRank}</if>
+            <if test="treatmentLevel != null  and treatmentLevel != ''"> and p.treatment_level = #{treatmentLevel}</if>
+            <if test="rankUpgradeTime != null "> and p.Rank_upgrade_time = #{rankUpgradeTime}</if>
+            <if test="statusrk != null "> and p.statusrk = #{statusrk}</if>
+
+            <if test="deptId !=null">
+                and (p.dept_id =#{deptId}  or
+                find_in_set(#{deptId}, d.ancestors) )
+            </if>
+        </where>
+        order by p.post_id desc
+
+
+    </select>
+    <select id="selectExaminationList" parameterType="BdglPeople" resultMap="BdglPeopleResult">
+    select p.id, p.name, p.sex, p.age, p.birth_date, p.command, p.duty, p.post_id, p.grade_id, p.post_date, p.job, p.skill_id, p.skill_date, p.level_id, p.level_date, p.military, idcard, p.enlist_date, p.enlistaddress,p.rank_id, p.rank_date, p.nation_id, origin, p.class_id, p.education_id, p.degree_id,
+    p.graduation_date, p.school, p.party_id, p.party_date, p.training, p.readme_file, p.readme_file_name, p.prize,
+    p.marry_list, p.children_list, p.unit_id, p.avatar, p.address, p.phone, p.status, p.createtimes, p.updatetimes,
+    p.reign, p.job_time, p.healthy, p.blood_type, p.post_time, p.major,p.admission_time, p.mobile_phone_model,
+    p. guarantee_card_no, p.payroll_card_no, p.authorized_strength, p.aboral, p.live, p.dept_id, p.user_id,
+    p.now_military_rank, p.treatment_level, p.Rank_upgrade_time,p.dept_name,p.phone_standby,p.is_bianzhi,p.statusrk,p.employee_number
+    from bdgl_people p
+    left join sys_dept d on p.dept_id = d.dept_id
+        <where>
+            and p.status=0
+            <if test="job != null  and job != ''"> and p.job &lt;&gt; #{job}</if>
+        </where>
+    </select>
+    <!--获取当前部门  在位 在编 未在编  人员情况-->
+    <select id="getDeptXiangQi" resultType="java.util.Map">
+       SELECT
+            *
+        FROM
+            (
+            SELECT
+                a.aa zbgb,
+                b.bb zbsb,
+                c.cc zbyw
+            FROM
+                (
+                SELECT
+                    count( p.id ) aa
+                FROM
+                    `bdgl_people` p
+                    LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                WHERE
+                    authorized_strength = 'Y'
+                    AND class_id IN ( 2, 3 )
+                    AND ( p.dept_id = #{deptId} OR find_in_set(#{deptId}, d.ancestors) )
+                ) a,
+                (
+                SELECT
+                    count( p.id ) bb
+                FROM
+                    `bdgl_people` p
+                    LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                WHERE
+                    authorized_strength = 'Y'
+                    AND class_id = 1
+                    AND ( p.dept_id =  #{deptId} OR find_in_set(#{deptId}, d.ancestors) )
+                ) b,
+                (
+                SELECT
+                    count( p.id ) cc
+                FROM
+                    `bdgl_people` p
+                    LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                WHERE
+                    authorized_strength = 'Y'
+                    AND class_id = 0
+                    AND ( p.dept_id = #{deptId} OR find_in_set(#{deptId}, d.ancestors) )
+                ) c
+            ) a,
+            (
+            SELECT
+                a.aa zwgb,
+                b.bb zwsb,
+                c.cc zwyw
+            FROM
+                (
+                SELECT
+                    count( id ) aa
+                FROM
+                    `bdgl_people` p
+                    LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                WHERE
+                    reign = 0
+                    AND class_id IN ( 2, 3 )
+                    AND ( p.dept_id = #{deptId} OR find_in_set(#{deptId}, d.ancestors) )
+                ) a,
+                (
+                SELECT
+                    count( id ) bb
+                FROM
+                    `bdgl_people` p
+                    LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                WHERE
+                    reign = 0
+                    AND class_id = 1
+                    AND ( p.dept_id =  #{deptId} OR find_in_set(#{deptId}, d.ancestors) )
+                ) b,
+                (
+                SELECT
+                    count( id ) cc
+                FROM
+                    `bdgl_people` p
+                    LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                WHERE
+                    reign = 0
+                    AND class_id = 0
+                    AND ( p.dept_id =  #{deptId} OR find_in_set(#{deptId}, d.ancestors) )
+                ) c
+            ) b,
+            (
+            SELECT
+                a.aa bzwgb,
+                b.bb bzwsb,
+                c.cc bzwyw
+            FROM
+                (
+                SELECT
+                    count( id ) aa
+                FROM
+                    `bdgl_people` p
+                    LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                WHERE
+                    authorized_strength = 'N'
+                    AND class_id IN ( 2, 3 )
+                    AND ( p.dept_id =  #{deptId}  OR find_in_set(#{deptId}, d.ancestors) )
+                ) a,
+                (
+                SELECT
+                    count( id ) bb
+                FROM
+                    `bdgl_people` p
+                    LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                WHERE
+                    authorized_strength = 'N'
+                    AND class_id = 1
+                    AND ( p.dept_id = #{deptId} OR find_in_set(#{deptId}, d.ancestors) )
+                ) b,
+                (
+                SELECT
+                    count( id ) cc
+                FROM
+                    `bdgl_people` p
+                    LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                WHERE
+                    authorized_strength = 'N'
+                    AND class_id = 0
+                    AND ( p.dept_id =  #{deptId} OR find_in_set(#{deptId}, d.ancestors) )
+                ) c
+            ) c
+    </select>
+    <select id="select" resultMap="BdglPeopleResult">
+        <include refid="selectBdglPeopleVo"/>
+        where id  in
+        <foreach item="item" collection="split"  index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <insert id="insertBdglPeople" parameterType="BdglPeople" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_people
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="sex != null and sex != ''">sex,</if>
+            <if test="age != null">age,</if>
+            <if test="birthDate != null">birth_date,</if>
+            <if test="command != null and command != ''">command,</if>
+            <if test="duty != null and duty != ''">duty,</if>
+            <if test="postId != null">post_id,</if>
+            <if test="gradeId != null">grade_id,</if>
+            <if test="postDate != null">post_date,</if>
+            <if test="job != null and job != ''">job,</if>
+            <if test="skillId != null">skill_id,</if>
+            <if test="skillDate != null">skill_date,</if>
+            <if test="levelId != null">level_id,</if>
+            <if test="levelDate != null">level_date,</if>
+            <if test="military != null and military != ''">military,</if>
+            <if test="idcard != null and idcard != ''">idcard,</if>
+            <if test="enlistDate != null">enlist_date,</if>
+            <if test="enlistaddress != null">enlistaddress,</if>
+            <if test="rankId != null">rank_id,</if>
+            <if test="rankDate != null">rank_date,</if>
+            <if test="nationId != null">nation_id,</if>
+            <if test="origin != null and origin != ''">origin,</if>
+            <if test="classId != null">class_id,</if>
+            <if test="educationId != null">education_id,</if>
+            <if test="degreeId != null">degree_id,</if>
+            <if test="graduationDate != null">graduation_date,</if>
+            <if test="school != null">school,</if>
+            <if test="partyId != null">party_id,</if>
+            <if test="partyDate != null">party_date,</if>
+            <if test="training != null">training,</if>
+            <if test="readmeFile != null">readme_file,</if>
+            <if test="readmeFileName != null">readme_file_name,</if>
+            <if test="prize != null">prize,</if>
+            <if test="marryList != null">marry_list,</if>
+            <if test="childrenList != null">children_list,</if>
+            <if test="unitId != null and unitId != ''">unit_id,</if>
+            <if test="avatar != null">avatar,</if>
+            <if test="address != null">address,</if>
+            <if test="phone != null">phone,</if>
+            <if test="status != null">status,</if>
+            <if test="createtimes != null">createtimes,</if>
+            <if test="updatetimes != null">updatetimes,</if>
+            <if test="reign != null">reign,</if>
+            <if test="jobTime != null">job_time,</if>
+            <if test="healthy != null">healthy,</if>
+            <if test="bloodType != null">blood_type,</if>
+            <if test="postTime != null">post_time,</if>
+            <if test="major != null">major,</if>
+            <if test="admissionTime != null">admission_time,</if>
+            <if test="mobilePhoneModel != null">mobile_phone_model,</if>
+            <if test="guaranteeCardNo != null">guarantee_card_no,</if>
+            <if test="payrollCardNo != null">payroll_card_no,</if>
+            <if test="authorizedStrength != null">authorized_strength,</if>
+            <if test="aboral != null">aboral,</if>
+            <if test="live != null">live,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="nowMilitaryRank != null">now_military_rank,</if>
+            <if test="treatmentLevel != null">treatment_level,</if>
+            <if test="rankUpgradeTime != null">Rank_upgrade_time,</if>
+            <if test="deptName != null ">  dept_name ,</if>
+            <if test="phoneStandby != null ">  phone_standby ,</if>
+            <if test="isBianzhi != null ">  is_bianzhi,</if>
+            <if test="statusrk != null ">  statusrk,</if>
+            <if test="employeeNumber != null  and employeeNumber != ''">  employee_number ,</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="sex != null and sex != ''">#{sex},</if>
+            <if test="age != null">#{age},</if>
+            <if test="birthDate != null">#{birthDate},</if>
+            <if test="command != null and command != ''">#{command},</if>
+            <if test="duty != null and duty != ''">#{duty},</if>
+            <if test="postId != null">#{postId},</if>
+            <if test="gradeId != null">#{gradeId},</if>
+            <if test="postDate != null">#{postDate},</if>
+            <if test="job != null and job != ''">#{job},</if>
+            <if test="skillId != null">#{skillId},</if>
+            <if test="skillDate != null">#{skillDate},</if>
+            <if test="levelId != null">#{levelId},</if>
+            <if test="levelDate != null">#{levelDate},</if>
+            <if test="military != null and military != ''">#{military},</if>
+            <if test="idcard != null and idcard != ''">#{idcard},</if>
+            <if test="enlistDate != null">#{enlistDate},</if>
+            <if test="enlistaddress != null">#{enlistaddress},</if>
+            <if test="rankId != null">#{rankId},</if>
+            <if test="rankDate != null">#{rankDate},</if>
+            <if test="nationId != null">#{nationId},</if>
+            <if test="origin != null and origin != ''">#{origin},</if>
+            <if test="classId != null">#{classId},</if>
+            <if test="educationId != null">#{educationId},</if>
+            <if test="degreeId != null">#{degreeId},</if>
+            <if test="graduationDate != null">#{graduationDate},</if>
+            <if test="school != null">#{school},</if>
+            <if test="partyId != null">#{partyId},</if>
+            <if test="partyDate != null">#{partyDate},</if>
+            <if test="training != null">#{training},</if>
+            <if test="readmeFile != null">#{readmeFile},</if>
+            <if test="readmeFileName != null">#{readmeFileName},</if>
+            <if test="prize != null">#{prize},</if>
+            <if test="marryList != null">#{marryList},</if>
+            <if test="childrenList != null">#{childrenList},</if>
+            <if test="unitId != null and unitId != ''">#{unitId},</if>
+            <if test="avatar != null">#{avatar},</if>
+            <if test="address != null">#{address},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createtimes != null">#{createtimes},</if>
+            <if test="updatetimes != null">#{updatetimes},</if>
+            <if test="reign != null">#{reign},</if>
+            <if test="jobTime != null">#{jobTime},</if>
+            <if test="healthy != null">#{healthy},</if>
+            <if test="bloodType != null">#{bloodType},</if>
+            <if test="postTime != null">#{postTime},</if>
+            <if test="major != null">#{major},</if>
+            <if test="admissionTime != null">#{admissionTime},</if>
+            <if test="mobilePhoneModel != null">#{mobilePhoneModel},</if>
+            <if test="guaranteeCardNo != null">#{guaranteeCardNo},</if>
+            <if test="payrollCardNo != null">#{payrollCardNo},</if>
+            <if test="authorizedStrength != null">#{authorizedStrength},</if>
+            <if test="aboral != null">#{aboral},</if>
+            <if test="live != null">#{live},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="nowMilitaryRank != null">#{nowMilitaryRank},</if>
+            <if test="treatmentLevel != null">#{treatmentLevel},</if>
+            <if test="rankUpgradeTime != null">#{rankUpgradeTime},</if>
+            <if test="deptName != null "> #{deptName},</if>
+            <if test="phoneStandby != null ">  #{phoneStandby},</if>
+            <if test="isBianzhi != null">  #{isBianzhi},</if>
+            <if test="statusrk != null">  #{statusrk},</if>
+            <if test="employeeNumber != null  and employeeNumber != ''">  #{employeeNumber},</if>
+
+        </trim>
+    </insert>
+
+    <update id="updateBdglPeople" parameterType="BdglPeople">
+        update bdgl_people
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="sex != null and sex != ''">sex = #{sex},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="birthDate != null">birth_date = #{birthDate},</if>
+            <if test="command != null and command != ''">command = #{command},</if>
+            <if test="duty != null and duty != ''">duty = #{duty},</if>
+            <if test="postId != null">post_id = #{postId},</if>
+            <if test="gradeId != null">grade_id = #{gradeId},</if>
+            <if test="postDate != null">post_date = #{postDate},</if>
+            <if test="job != null and job != ''">job = #{job},</if>
+            <if test="skillId != null">skill_id = #{skillId},</if>
+            <if test="skillDate != null">skill_date = #{skillDate},</if>
+            <if test="levelId != null">level_id = #{levelId},</if>
+            <if test="levelDate != null">level_date = #{levelDate},</if>
+            <if test="military != null and military != ''">military = #{military},</if>
+            <if test="idcard != null and idcard != ''">idcard = #{idcard},</if>
+            <if test="enlistDate != null">enlist_date = #{enlistDate},</if>
+            <if test="enlistaddress != null">enlistaddress = #{enlistaddress},</if>
+            <if test="rankId != null">rank_id = #{rankId},</if>
+            <if test="rankDate != null">rank_date = #{rankDate},</if>
+            <if test="nationId != null">nation_id = #{nationId},</if>
+            <if test="origin != null and origin != ''">origin = #{origin},</if>
+            <if test="classId != null">class_id = #{classId},</if>
+            <if test="educationId != null">education_id = #{educationId},</if>
+            <if test="degreeId != null">degree_id = #{degreeId},</if>
+            <if test="graduationDate != null">graduation_date = #{graduationDate},</if>
+            <if test="school != null">school = #{school},</if>
+            <if test="partyId != null">party_id = #{partyId},</if>
+            <if test="partyDate != null">party_date = #{partyDate},</if>
+            <if test="training != null">training = #{training},</if>
+            <if test="readmeFile != null">readme_file = #{readmeFile},</if>
+            <if test="readmeFileName != null">readme_file_name = #{readmeFileName},</if>
+            <if test="prize != null">prize = #{prize},</if>
+            <if test="marryList != null">marry_list = #{marryList},</if>
+            <if test="childrenList != null">children_list = #{childrenList},</if>
+            <if test="unitId != null and unitId != ''">unit_id = #{unitId},</if>
+            <if test="avatar != null">avatar = #{avatar},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createtimes != null">createtimes = #{createtimes},</if>
+            <if test="updatetimes != null">updatetimes = #{updatetimes},</if>
+            <if test="reign != null">reign = #{reign},</if>
+            <if test="jobTime != null">job_time = #{jobTime},</if>
+            <if test="healthy != null">healthy = #{healthy},</if>
+            <if test="bloodType != null">blood_type = #{bloodType},</if>
+            <if test="postTime != null">post_time = #{postTime},</if>
+            <if test="major != null">major = #{major},</if>
+            <if test="admissionTime != null">admission_time = #{admissionTime},</if>
+            <if test="mobilePhoneModel != null">mobile_phone_model = #{mobilePhoneModel},</if>
+            <if test="guaranteeCardNo != null">guarantee_card_no = #{guaranteeCardNo},</if>
+            <if test="payrollCardNo != null">payroll_card_no = #{payrollCardNo},</if>
+            <if test="authorizedStrength != null">authorized_strength = #{authorizedStrength},</if>
+            <if test="aboral != null">aboral = #{aboral},</if>
+            <if test="live != null">live = #{live},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="nowMilitaryRank != null">now_military_rank = #{nowMilitaryRank},</if>
+            <if test="treatmentLevel != null">treatment_level = #{treatmentLevel},</if>
+            <if test="rankUpgradeTime != null">Rank_upgrade_time = #{rankUpgradeTime},</if>
+            <if test="deptName != null ">  dept_name = #{deptName},</if>
+            <if test="phoneStandby != null ">  phone_standby = #{phoneStandby},</if>
+            <if test="isBianzhi != null  and isBianzhi != ''">  is_bianzhi = #{isBianzhi},</if>
+            <if test="statusrk != null  and statusrk != ''">  statusrk = #{statusrk},</if>
+            <if test="employeeNumber != null  and employeeNumber != ''">  employee_number = #{employeeNumber},</if>
+
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglPeopleById" parameterType="Long">
+        delete from bdgl_people where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglPeopleByIds" parameterType="String">
+        delete from bdgl_people where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- 根据人员状态和是否在编 获取人员数量 -->
+    <select id="selectPeopleByRegin" parameterType="String" resultType="java.util.HashMap">
+        SELECT
+            count(0) AS munber,
+            reign AS reign
+        FROM
+            bdgl_people
+        WHERE
+            1=1
+        AND
+            authorized_strength = #{type}
+        GROUP BY
+            reign
+    </select>
+    <!--//根据人员id获取人员姓名-->
+    <select id="selectname"  resultMap="BdglPeopleResult">
+        <include refid="selectBdglPeopleVo"/>
+        where id in
+        <foreach item="item" collection="split"  index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <!-- 根据人员状态和是否是否纳编来查询人员信息 -->
+    <select id="selectBdglPeopleInfo" parameterType="BdglPeople" resultMap="BdglPeopleResult">
+        <include refid="selectBdglPeopleVo"/>
+        <where>
+            <if test="reign != null "> and reign = #{reign}</if>
+            <if test="authorizedStrength != null  and authorizedStrength != ''"> and authorized_strength = #{authorizedStrength}</if>
+        </where>
+    </select>
+    <select id="selectGroupBYPeope" resultType="java.util.HashMap">
+        select count(p.id)as number , c.dict_label as type
+        from bdgl_people p
+        left join sys_dept d on p.dept_id = d.dept_id
+        left join sys_dict_data c on p.reign=c.dict_value
+        <where>
+        <if test="deptId !=null">
+            and (p.dept_id =#{deptId}  or
+            d.ancestors LIKE  concat('%', #{deptId},'%') )
+        </if>
+            and c.dict_type='people_state'
+        </where>
+        group by p.reign
+    </select>
+    <select id="selectTotalCountByDeptId" resultType="java.lang.Integer">
+        select count(1) from bdgl_people where dept_id = #{deptId}
+    </select>
+    <select id="selectReginCountByDeptId" resultType="java.lang.Integer">
+        select count(1) from bdgl_people where dept_id = #{deptId} and reign = 0
+    </select>
+
+    <select id="selectBdglPeopleOnUnitList" parameterType="BdglPeople" resultMap="BdglPeopleResult">
+        <include refid="selectBdglPeopleVo"/>
+        <where>
+            dept_id= #{unitId}
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectBdglPeopleByunitId" resultType="java.lang.Integer">
+        select count(*) from bdgl_people where dept_id = #{unitId}
+        -- and YEAR(createtime)= #{year}
+    </select>
+    <select id="selectReginCount2ByDeptId" resultType="java.lang.Integer">
+        select count(1) from bdgl_people where dept_id = #{deptId} and reign <![CDATA[<>]]> 0
+    </select>
+    <select id="selectReginByDeptId" resultType="com.supervision.peopleManage.domain.dto.StatOutPeopleDto">
+        select reign as reign,count(*) AS count  from bdgl_people where dept_id = #{deptId} and reign <![CDATA[<>]]> 0 	GROUP BY reign
+    </select>
+    <select id="selectPersonAgeQjList" resultType="com.supervision.peopleManage.domain.dto.StatPersonAgeDto">
+        SELECT
+        nlqj AS nlqj,
+        count(*) AS rs
+        FROM
+        (
+            SELECT
+            CASE
+                WHEN age <![CDATA[ <= ]]> 20 THEN '20岁以下'
+                WHEN age > 21 AND age <![CDATA[ <= ]]> 30 THEN '21-30'
+                WHEN age > 31 AND age <![CDATA[ <= ]]> 40 THEN '31-40'
+                WHEN age > 41 AND age <![CDATA[ <= ]]> 50 THEN '41-50'
+                WHEN age > 51 AND age <![CDATA[ <= ]]> 60 THEN '51-60'
+                WHEN age > 60 THEN '60岁以上'
+            END AS nlqj
+            FROM
+            bdgl_people
+            WHERE dept_id IN
+                  <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+        ) a
+        GROUP BY
+        nlqj
+    </select>
+    <select id="selectZzmmAndCountWithDeptId"
+            resultType="com.supervision.peopleManage.domain.dto.StatPersonZzmmDto">
+        SELECT
+            party_id as zzmm,count(*) AS rs
+        FROM
+            bdgl_people
+        WHERE dept_id IN
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        GROUP BY party_id
+    </select>
+    <select id="selectReginCount" resultType="com.supervision.peopleManage.domain.dto.StatOutPeopleDto">
+        select
+               reign as reign,
+               count(*) AS count
+        from bdgl_people
+        where reign > 0
+          and
+              dept_id IN
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        GROUP BY reign
+    </select>
+    <select id="selectPersonAgeDtoAllList"
+            resultType="com.supervision.peopleManage.domain.dto.StatPersonAgeDto">
+        SELECT
+        nlqj AS nlqj,
+        count(*) AS rs
+        FROM
+        (
+        SELECT
+        CASE
+        WHEN age <![CDATA[ <= ]]> 20 THEN '20岁以下'
+        WHEN age > 21 AND age <![CDATA[ <= ]]> 30 THEN '21-30'
+        WHEN age > 31 AND age <![CDATA[ <= ]]> 40 THEN '31-40'
+        WHEN age > 41 AND age <![CDATA[ <= ]]> 50 THEN '41-50'
+        WHEN age > 51 AND age <![CDATA[ <= ]]> 60 THEN '51-60'
+        WHEN age > 60 THEN '60岁以上'
+        END AS nlqj
+        FROM
+        bdgl_people
+        ) a
+        GROUP BY
+        nlqj
+    </select>
+    <select id="selectZzmmAndCountAll" resultType="com.supervision.peopleManage.domain.dto.StatPersonZzmmDto">
+        SELECT
+        party_id as zzmm,count(*) AS rs
+        FROM
+        bdgl_people
+        where dept_id IN
+        <foreach collection="set" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        GROUP BY party_id
+    </select>
+    <select id="countTypeNumber" resultMap="BdglPeopleResult">
+        select count(id) id,dept_name from bdgl_people  group by  dept_id, dept_name
+    </select>
+    <select id="getDeptXiangQi2" resultType="java.util.Map">
+        SELECT
+            *
+        FROM
+            (
+                SELECT
+                    a.aa sb,
+                    b.bb zhjg,
+                    c.cc zyjg,
+                    d.dd zs,
+                    e.cc  wz,
+                    f.cc cjsg,
+                    j.cc zjsg,
+                    k.cc gjsg
+
+                FROM
+                    (
+                        SELECT
+                            count( p.id ) aa
+                        FROM
+                            `bdgl_people` p
+                                LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                        WHERE
+
+                            class_id =0
+                          AND ( p.dept_id = #{deptId} OR find_in_set(#{deptId}, d.ancestors) ) and p.status=0
+                    ) a,
+                    (
+                        SELECT
+                            count( p.id ) bb
+                        FROM
+                            `bdgl_people` p
+                                LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                        WHERE
+
+                            class_id = 2
+                          AND ( p.dept_id = #{deptId} OR find_in_set(#{deptId}, d.ancestors) ) and p.status=0
+                    ) b,
+                        (
+                        SELECT
+                            count( p.id ) cc
+                        FROM
+                            `bdgl_people` p
+                                LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                        WHERE
+
+                           class_id = 3
+                           AND ( p.dept_id = #{deptId} OR find_in_set(#{deptId}, d.ancestors) ) and p.status=0
+                    ) c,
+                        (
+                        SELECT
+                            count( p.id ) dd
+                        FROM
+                            `bdgl_people` p
+                                LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                        WHERE
+
+                              ( p.dept_id = #{deptId} OR find_in_set(#{deptId}, d.ancestors) ) and p.status=0
+                    ) d,
+                    (
+                        SELECT
+                            count( p.id ) cc
+                        FROM
+                            `bdgl_people` p
+                                LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                        WHERE
+
+                            class_id = 4
+                          AND ( p.dept_id = #{deptId} OR find_in_set(#{deptId}, d.ancestors) ) and p.status=0
+                    ) e,
+                        (
+                        SELECT
+                            count( p.id ) cc
+                        FROM
+                            `bdgl_people` p
+                                LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                        WHERE
+
+                           class_id = 5
+                          AND ( p.dept_id = #{deptId} OR find_in_set(#{deptId}, d.ancestors) ) and p.status=0
+                    ) f,
+                        (
+                        SELECT
+                            count( p.id ) cc
+                        FROM
+                            `bdgl_people` p
+                                LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                        WHERE
+
+                           class_id = 6
+                          AND ( p.dept_id = #{deptId} OR find_in_set(#{deptId}, d.ancestors) ) and p.status=0
+                    ) j,
+                        (
+                        SELECT
+                            count( p.id ) cc
+                        FROM
+                            `bdgl_people` p
+                                LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                        WHERE
+
+                           class_id = 7
+                          AND ( p.dept_id = #{deptId} OR find_in_set(#{deptId}, d.ancestors) ) and p.status=0
+                    ) k
+            ) a
+    </select>
+    <select id="getDeptXiangQi3" resultType="java.util.Map">
+        SELECT
+            *
+        FROM
+            (
+                SELECT
+                    a.aa sb,
+                    b.bb zhjg,
+                    c.cc zyjg,
+                    d.dd zs,
+                    e.cc  wz,
+                    f.cc cjsg,
+                    j.cc zjsg,
+                    k.cc gjsg
+                FROM
+                    (
+                        SELECT
+                            count( p.id ) aa
+                        FROM
+                            `bdgl_people` p
+                                LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                        WHERE
+
+                            class_id = 0
+                          AND  p.dept_id = #{deptId} and p.status=0
+                    ) a,
+                    (
+                        SELECT
+                            count( p.id ) bb
+                        FROM
+                            `bdgl_people` p
+                                LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                        WHERE
+
+                            class_id = 2
+                          AND  p.dept_id =  #{deptId} and p.status=0
+                    ) b,
+                    (
+                        SELECT
+                            count( p.id ) cc
+                        FROM
+                            `bdgl_people` p
+                                LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                        WHERE
+
+                            class_id = 3
+                          AND p.dept_id = #{deptId} and  p.status=0
+                    ) c,
+                    (
+                        SELECT
+                            count( p.id ) dd
+                        FROM
+                            `bdgl_people` p
+                                LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                        WHERE
+
+                            p.dept_id = #{deptId} and  p.status=0
+                    ) d,
+                    (
+                        SELECT
+                            count( p.id ) cc
+                        FROM
+                            `bdgl_people` p
+                                LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                        WHERE
+
+                            class_id = 4
+                          AND  p.dept_id = #{deptId} and  p.status=0
+                    ) e,
+                        (
+                        SELECT
+                            count( p.id ) cc
+                        FROM
+                            `bdgl_people` p
+                                LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                        WHERE
+
+                           class_id = 5
+                          AND  p.dept_id = #{deptId} and  p.status=0
+                        ) f,
+                        (
+                        SELECT
+                            count( p.id ) cc
+                        FROM
+                            `bdgl_people` p
+                                LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                        WHERE
+
+                           class_id = 6
+                          AND  p.dept_id = #{deptId} and  p.status=0
+                        ) j,
+                        (
+                        SELECT
+                            count( p.id ) cc
+                        FROM
+                            `bdgl_people` p
+                                LEFT JOIN sys_dept d ON p.dept_id = d.dept_id
+                        WHERE
+
+                           class_id = 7
+                          AND  p.dept_id = #{deptId} and  p.status=0
+                        ) k
+
+            ) a
+    </select>
+
+    <select id="examinationCountss" resultType="java.util.Map">
+        SELECT count(job) as job FROM bdgl_people
+        <where>
+            status=0
+            <if test="job != null  and job != ''"> and job = #{job}</if>
+        </where>
+    </select>
+    <select id="selectBdglPeople" resultMap="BdglPeopleResult">
+        <include refid="selectBdglPeopleVo"/>
+        where name = #{ename}
+        limit 1
+    </select>
+    <select id="selectPowerPeoleListes" resultType="java.lang.String">
+        SELECT DISTINCT id FROM bdgl_people
+        where `name` like concat('%', #{peopleId}, '%')
+    </select>
+    <select id="selectPowerPeoleListsss" parameterType="BdglPeople" resultMap="BdglPeopleResult">
+        select p.id, p.name, p.sex, p.age, p.birth_date, p.command, p.duty, p.post_id, p.grade_id, p.post_date, p.job, p.skill_id, p.skill_date, p.level_id, p.level_date, p.military, idcard, p.enlist_date, p.enlistaddress,p.rank_id, p.rank_date, p.nation_id, origin, p.class_id, p.education_id, p.degree_id,
+        p.graduation_date, p.school, p.party_id, p.party_date, p.training, p.readme_file, p.readme_file_name, p.prize,
+        p.marry_list, p.children_list, p.unit_id, p.avatar, p.address, p.phone, p.status, p.createtimes, p.updatetimes,
+        p.reign, p.job_time, p.healthy, p.blood_type, p.post_time, p.major,p.admission_time, p.mobile_phone_model,
+        p. guarantee_card_no, p.payroll_card_no, p.authorized_strength, p.aboral, p.live, p.dept_id, p.user_id,
+        p.now_military_rank, p.treatment_level, p.Rank_upgrade_time,p.dept_name,p.phone_standby,p.is_bianzhi,p.statusrk,p.employee_number
+        from bdgl_people p
+        left join sys_dept d on p.dept_id = d.dept_id
+        <where>
+            <if test="name != null  and name != ''"> and p.name like concat('%', #{name}, '%')</if>
+            <if test="sex != null  and sex != ''"> and p.sex = #{sex}</if>
+            <if test="age != null "> and p.age = #{age}</if>
+            <if test="birthDate != null "> and p.birth_date = #{birthDate}</if>
+            <if test="command != null  and command != ''"> and p.command = #{command}</if>
+            <if test="duty != null  and duty != ''"> and p.duty = #{duty}</if>
+            <if test="postId != null "> and p.post_id = #{postId}</if>
+            <if test="gradeId != null "> and p.grade_id = #{gradeId}</if>
+            <if test="postDate != null "> and p.post_date = #{postDate}</if>
+            <if test="job != null  and job != ''"> and p.job = #{job}</if>
+            <if test="skillId != null "> and p.skill_id = #{skillId}</if>
+            <if test="skillDate != null "> and p.skill_date = #{skillDate}</if>
+            <if test="levelId != null "> and p.level_id = #{levelId}</if>
+            <if test="levelDate != null "> and p.level_date = #{levelDate}</if>
+            <if test="military != null  and military != ''"> and p.military = #{military}</if>
+            <if test="idcard != null  and idcard != ''"> and p.idcard = #{idcard}</if>
+            <if test="enlistDate != null "> and p.enlist_date = #{enlistDate}</if>
+            <if test="enlistaddress != null  and enlistaddress != ''"> and p.enlistaddress = #{enlistaddress}</if>
+            <if test="rankId != null "> and p.rank_id = #{rankId}</if>
+            <if test="rankDate != null "> and p.rank_date = #{rankDate}</if>
+            <if test="nationId != null "> and p.nation_id = #{nationId}</if>
+            <if test="origin != null  and origin != ''"> and p.origin = #{origin}</if>
+            <if test="classId != null "> and p.class_id = #{classId}</if>
+            <if test="educationId != null "> and p.education_id = #{educationId}</if>
+            <if test="degreeId != null "> and p.degree_id = #{degreeId}</if>
+            <if test="graduationDate != null "> and p.graduation_date = #{graduationDate}</if>
+            <if test="school != null  and school != ''"> and p.school = #{school}</if>
+            <if test="partyId != null "> and p.party_id = #{partyId}</if>
+            <if test="partyDate != null "> and p.party_date = #{partyDate}</if>
+            <if test="training != null  and training != ''"> and p.training = #{training}</if>
+            <if test="readmeFile != null  and readmeFile != ''"> and p.readme_file = #{readmeFile}</if>
+            <if test="readmeFileName != null  and readmeFileName != ''"> and p.readme_file_name like concat('%', #{readmeFileName}, '%')</if>
+            <if test="prize != null  and prize != ''"> and p.prize = #{prize}</if>
+            <if test="marryList != null  and marryList != ''"> and p.marry_list = #{marryList}</if>
+            <if test="childrenList != null  and childrenList != ''"> and p.children_list = #{childrenList}</if>
+            <if test="unitId != null  and unitId != ''"> and p.unit_id = #{unitId}</if>
+            <if test="avatar != null  and avatar != ''"> and p.avatar = #{avatar}</if>
+            <if test="address != null  and address != ''"> and p.address = #{address}</if>
+            <if test="phone != null  and phone != ''"> and p.phone = #{phone}</if>
+            <if test="status != null "> and p.status = #{status}</if>
+            <if test="createtimes != null "> and p.createtimes = #{createtimes}</if>
+            <if test="updatetimes != null "> and p.updatetimes = #{updatetimes}</if>
+            <if test="reign != null "> and p.reign = #{reign}</if>
+            <if test="jobTime != null "> and p.job_time = #{jobTime}</if>
+            <if test="healthy != null  and healthy != ''"> and p.healthy = #{healthy}</if>
+            <if test="bloodType != null  and bloodType != ''"> and p.blood_type = #{bloodType}</if>
+            <if test="postTime != null "> and p.post_time = #{postTime}</if>
+            <if test="major != null  and major != ''"> and p.major = #{major}</if>
+            <if test="admissionTime != null "> and p.admission_time = #{admissionTime}</if>
+            <if test="mobilePhoneModel != null  and mobilePhoneModel != ''"> and p.mobile_phone_model = #{mobilePhoneModel}</if>
+            <if test="guaranteeCardNo != null  and guaranteeCardNo != ''"> and p.guarantee_card_no = #{guaranteeCardNo}</if>
+            <if test="payrollCardNo != null  and payrollCardNo != ''"> and p.payroll_card_no = #{payrollCardNo}</if>
+            <if test="authorizedStrength != null  and authorizedStrength != ''"> and p.authorized_strength = #{authorizedStrength}</if>
+            <if test="aboral != null  and aboral != ''"> and p.aboral = #{aboral}</if>
+            <if test="live != null  and live != ''"> and p.live = #{live}</if>
+            <if test="userId != null "> and p.user_id = #{userId}</if>
+            <if test="nowMilitaryRank != null  and nowMilitaryRank != ''"> and p.now_military_rank = #{nowMilitaryRank}</if>
+            <if test="treatmentLevel != null  and treatmentLevel != ''"> and p.treatment_level = #{treatmentLevel}</if>
+            <if test="rankUpgradeTime != null "> and p.Rank_upgrade_time = #{rankUpgradeTime}</if>
+            <if test="statusrk != null "> and p.statusrk = #{statusrk}</if>
+        </where>
+        order by p.post_id desc
+
+    </select>
+
+    <select id="selectBdglPeopleByEmployeeNumber" resultType="com.supervision.peopleManage.domain.BdglPeople">
+        select * from bdgl_people where employee_number = #{employeeNumber}
+    </select>
+</mapper>

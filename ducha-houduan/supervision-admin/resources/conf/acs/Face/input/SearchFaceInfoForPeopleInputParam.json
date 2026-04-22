@@ -1,0 +1,57 @@
+{
+  "FDSearchDescription": {                        // 【必填】人脸搜索请求参数对象
+    "version": "2.0",                             // 【必填】接口版本号（固定值）
+    "searchID": "${searchID}",                    // 【必填】搜索任务ID（每次查询唯一）
+    "searchResultPosition": ${searchResultPosition}, // 【必填】查询起始位置（整数类型）
+    "maxResults": ${maxResults},                  // 【必填】最大返回数量
+    "FDID": "${FDID}",                            // 【必填】人脸库ID（指定查询目标库）
+    "startTime": "${startTime}",                  // 【可选】开始时间（YYYY-MM-DD+TZ）
+    "endTime": "${endTime}",                      // 【可选】结束时间（YYYY-MM-DD+TZ）
+    "name": "${name}",                            // 【必填】姓名
+    "sex": "${sex}",                              // 【可选】性别 [male, female, unknown]
+    "province": "${province}",                    // 【可选】省份代码
+    "city": "${city}",                            // 【可选】城市代码
+    "certificateType": "${certificateType}",      // 【可选】证件类型 [ID, passport, other]
+    "certificateNumber": "${certificateNumber}",  // 【可选】证件号码
+    "phoneNumber": "${phoneNumber}",              // 【可选】电话号码
+    "FaceModeList": [                             // 【可选】人脸模式列表
+      {
+        "ModeInfo": {                             // 【可选】模式信息对象
+          "similarity": ${similarity},             // 【可选】相似度阈值 [0.0,1.0]
+          "modeData": "${modeData}"                // 【可选】人脸特征数据（Base64 编码）
+        }
+      }
+    ],
+    "modelStatus": "${modelStatus}",              // 【可选】建模状态 [modeling, success, failed]
+    "modelingStatus": ["success", "failed", "none"], // 【可选】固定枚举示例，不替换
+    "customFaceLibID": "${customFaceLibID}",      // 【可选】自定义人脸库ID
+    "sortord": "${sortord}",                      // 【可选】排序字段 [time, name, similarity]
+    "order": "${order}",                          // 【可选】排序方式 [ASC, DESC]
+    "StrangerLibFaceAppendData": {                // 【可选】陌生人库附加数据
+      "PersonInfoExtendList": [                   // 【可选】扩展信息列表
+        {
+          "id": ${extendId},                      // 【必填】扩展字段编号
+          "enable": ${extendEnable},              // 【必填】是否启用该扩展字段
+          "name": "${extendName}",                // 【可选】扩展字段名称
+          "value": "${extendValue}"               // 【可选】扩展字段值
+        }
+      ]
+    },
+    "OccurrencesInfo": {                          // 【可选】出现次数筛选条件
+      "enabled": ${occurrencesEnabled},           // 【必填】是否启用出现次数条件
+      "occurrences": ${occurrences},              // 【可选】出现次数
+      "occurrencesSearchType": "${occurrencesSearchType}" // 【可选】筛选方式 [greaterThanOrEqual, lessThanOrEqual]
+    },
+    "faceScore": ${faceScore},                    // 【可选】最低人脸评分 [0,100]
+    "FDIDList": [
+        FDID: "${FDID}",                           // 【必填】人脸库ID（指定查询目标库）
+      ],                                          // 【可选】人脸库ID列表
+    "faceScoreMax": ${faceScoreMax},              // 【可选】最高人脸评分 [0,100]
+    "pictureStatus": "${pictureStatus}",          // 【可选】图片状态 [normal, missing, corrupted]
+
+    "importStartTime": "${importStartTime}",      // 【可选】导入开始时间（ISO8601 格式）
+    "importEndTime": "${importEndTime}",          // 【可选】导入结束时间（ISO8601 格式）
+    "faceContrastSuccessStartTime": "${faceContrastSuccessStartTime}", // 【可选】比对成功起始时间
+    "faceContrastSuccessEndTime": "${faceContrastSuccessEndTime}"      // 【可选】比对成功结束时间
+  }
+}

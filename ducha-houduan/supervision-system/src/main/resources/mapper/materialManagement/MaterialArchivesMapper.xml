@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.materialManagement.mapper.MaterialArchivesMapper">
+
+    <resultMap type="MaterialArchives" id="MaterialArchivesResult">
+        <result property="id"    column="id"    />
+        <result property="barcode"    column="barcode"    />
+        <result property="wuPinType"    column="wu_pin_type"    />
+        <result property="name"    column="name"    />
+        <result property="materialSpecification"    column="material_specification"    />
+        <result property="materialXh"    column="material_xh"    />
+        <result property="yingJuType"    column="ying_ju_type"    />
+        <result property="responsibilityUnit"    column="responsibility_unit"    />
+        <result property="personLiable"    column="person_liable"    />
+        <result property="materialTotal"    column="material_total"    />
+        <result property="materialInventory"    column="material_inventory"    />
+        <result property="inUseTotal"    column="in_use_total"    />
+        <result property="createName"    column="create_name"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="warehouse"    column="warehouse"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="personLiableId"    column="person_liable_id"    />
+        <result property="createid"    column="createid"    />
+    </resultMap>
+
+    <sql id="selectMaterialArchivesVo">
+        select id,barcode, wu_pin_type, name, material_specification, material_xh, ying_ju_type, responsibility_unit, person_liable, material_total, material_inventory, in_use_total, create_name, create_time, warehouse, unit_id, person_liable_id, createid from material_archives
+    </sql>
+
+    <select id="selectMaterialArchivesList" parameterType="MaterialArchives" resultMap="MaterialArchivesResult">
+        <include refid="selectMaterialArchivesVo"/>
+        <where>
+            <if test="barcode != null and barcode != ''">and barcode =#{barcode}</if>
+            <if test="wuPinType != null  and wuPinType != ''"> and wu_pin_type = #{wuPinType}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="materialSpecification != null  and materialSpecification != ''"> and material_specification = #{materialSpecification}</if>
+            <if test="materialXh != null  and materialXh != ''"> and material_xh = #{materialXh}</if>
+            <if test="yingJuType != null  and yingJuType != ''"> and ying_ju_type = #{yingJuType}</if>
+            <if test="responsibilityUnit != null  and responsibilityUnit != ''"> and responsibility_unit = #{responsibilityUnit}</if>
+            <if test="personLiable != null  and personLiable != ''"> and person_liable = #{personLiable}</if>
+            <if test="materialTotal != null "> and material_total = #{materialTotal}</if>
+            <if test="materialInventory != null "> and material_inventory = #{materialInventory}</if>
+            <if test="inUseTotal != null "> and in_use_total = #{inUseTotal}</if>
+            <if test="createName != null  and createName != ''"> and create_name like concat('%', #{createName}, '%')</if>
+            <if test="warehouse != null  and warehouse != ''"> and warehouse = #{warehouse}</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="personLiableId != null "> and person_liable_id = #{personLiableId}</if>
+            <if test="createid != null "> and createid = #{createid}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectMaterialArchivesById" parameterType="Long" resultMap="MaterialArchivesResult">
+        <include refid="selectMaterialArchivesVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectMaterialArchivesByBarCode" resultMap="MaterialArchivesResult">
+        <include refid="selectMaterialArchivesVo"/>
+        where barcode = #{barcode}
+    </select>
+
+    <insert id="insertMaterialArchives" parameterType="MaterialArchives">
+        insert into material_archives
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="barcode != null">barcode,</if>
+            <if test="wuPinType != null">wu_pin_type,</if>
+            <if test="name != null">name,</if>
+            <if test="materialSpecification != null">material_specification,</if>
+            <if test="materialXh != null">material_xh,</if>
+            <if test="yingJuType != null">ying_ju_type,</if>
+            <if test="responsibilityUnit != null">responsibility_unit,</if>
+            <if test="personLiable != null">person_liable,</if>
+            <if test="materialTotal != null">material_total,</if>
+            <if test="materialInventory != null">material_inventory,</if>
+            <if test="inUseTotal != null">in_use_total,</if>
+            <if test="createName != null">create_name,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="warehouse != null">warehouse,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="personLiableId != null">person_liable_id,</if>
+            <if test="createid != null">createid,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="barcode != null">#{barcode},</if>
+            <if test="wuPinType != null">#{wuPinType},</if>
+            <if test="name != null">#{name},</if>
+            <if test="materialSpecification != null">#{materialSpecification},</if>
+            <if test="materialXh != null">#{materialXh},</if>
+            <if test="yingJuType != null">#{yingJuType},</if>
+            <if test="responsibilityUnit != null">#{responsibilityUnit},</if>
+            <if test="personLiable != null">#{personLiable},</if>
+            <if test="materialTotal != null">#{materialTotal},</if>
+            <if test="materialInventory != null">#{materialInventory},</if>
+            <if test="inUseTotal != null">#{inUseTotal},</if>
+            <if test="createName != null">#{createName},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="warehouse != null">#{warehouse},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="personLiableId != null">#{personLiableId},</if>
+            <if test="createid != null">#{createid},</if>
+        </trim>
+    </insert>
+
+    <update id="updateMaterialArchives" parameterType="MaterialArchives">
+        update material_archives
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="barcode != null">barcode = #{barcode},</if>
+            <if test="wuPinType != null">wu_pin_type = #{wuPinType},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="materialSpecification != null">material_specification = #{materialSpecification},</if>
+            <if test="materialXh != null">material_xh = #{materialXh},</if>
+            <if test="yingJuType != null">ying_ju_type = #{yingJuType},</if>
+            <if test="responsibilityUnit != null">responsibility_unit = #{responsibilityUnit},</if>
+            <if test="personLiable != null">person_liable = #{personLiable},</if>
+            <if test="materialTotal != null">material_total = #{materialTotal},</if>
+            <if test="materialInventory != null">material_inventory = #{materialInventory},</if>
+            <if test="inUseTotal != null">in_use_total = #{inUseTotal},</if>
+            <if test="createName != null">create_name = #{createName},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="warehouse != null">warehouse = #{warehouse},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="personLiableId != null">person_liable_id = #{personLiableId},</if>
+            <if test="createid != null">createid = #{createid},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMaterialArchivesById" parameterType="Long">
+        delete from material_archives where id = #{id}
+    </delete>
+
+    <delete id="deleteMaterialArchivesByIds" parameterType="String">
+        delete from material_archives where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

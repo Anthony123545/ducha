@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.combatduty.mapper.BdglTeamdutyMapper">
+
+    <resultMap type="BdglTeamduty" id="BdglTeamdutyResult">
+        <result property="id"    column="id"    />
+        <result property="attendedTime"    column="attended_time"    />
+        <result property="chiefDutyName"    column="chief_duty_name"    />
+        <result property="chiefDutyId"    column="chief_duty_id"    />
+        <result property="chiefDutyPhone"    column="chief_duty_phone"    />
+        <result property="combatDutyName"    column="combat_duty_name"    />
+        <result property="combatDutyId"    column="combat_duty_id"    />
+        <result property="combatDutyPhone"    column="combat_duty_phone"    />
+        <result property="dutyOffierName"    column="duty_offier_name"    />
+        <result property="dutyOffierId"    column="duty_offier_id"    />
+        <result property="dutyOffierPhone"    column="duty_offier_phone"    />
+        <result property="confidentialName"    column="confidential_name"    />
+        <result property="confidentialId"    column="confidential_id"    />
+        <result property="confidentialPhone"    column="confidential_phone"    />
+        <result property="politicalName"    column="political_name"    />
+        <result property="politicalId"    column="political_id"    />
+        <result property="politicalPhone"    column="political_phone"    />
+        <result property="guaranteeName"    column="guarantee_name"    />
+        <result property="guaranteeId"    column="guarantee_id"    />
+        <result property="guaranteePhone"    column="guarantee_phone"    />
+        <result property="messengerName"    column="messenger_name"    />
+        <result property="messengerId"    column="messenger_id"    />
+        <result property="messengerPhone"    column="messenger_phone"    />
+        <result property="detachmentName"    column="detachment_name"    />
+        <result property="detachmentId"    column="detachment_id"    />
+        <result property="detachmentNumber"    column="detachment_number"    />
+        <result property="detachmentPeopleName"    column="detachment_people_name"    />
+        <result property="detachmentPeopleId"    column="detachment_people_id"    />
+        <result property="detachmentPeoplePhone"    column="detachment_people_phone"    />
+        <result property="zhibanqingkaung"    column="zhibanqingkaung"    />
+        <result property="bingliqingkuang"    column="bingliqingkuang"    />
+    </resultMap>
+
+    <sql id="selectBdglTeamdutyVo">
+        select id, attended_time, chief_duty_name, chief_duty_id, chief_duty_phone, combat_duty_name, combat_duty_id, combat_duty_phone, duty_offier_name, duty_offier_id, duty_offier_phone, confidential_name, confidential_id, confidential_phone, political_name, political_id, political_phone, guarantee_name, guarantee_id, guarantee_phone, messenger_name, messenger_id, messenger_phone, detachment_name, detachment_id, detachment_number, detachment_people_name, detachment_people_id, detachment_people_phone, zhibanqingkaung, bingliqingkuang from bdgl_teamduty
+    </sql>
+
+    <select id="selectBdglTeamdutyList" parameterType="BdglTeamduty" resultMap="BdglTeamdutyResult">
+        <include refid="selectBdglTeamdutyVo"/>
+        <where>
+            <if test="attendedTime != null  and attendedTime != ''"> and attended_time like concat('%', #{attendedTime}, '%')</if>
+            <if test="chiefDutyName != null  and chiefDutyName != ''"> and chief_duty_name like concat('%', #{chiefDutyName}, '%')</if>
+            <if test="chiefDutyId != null "> and chief_duty_id = #{chiefDutyId}</if>
+            <if test="chiefDutyPhone != null  and chiefDutyPhone != ''"> and chief_duty_phone = #{chiefDutyPhone}</if>
+            <if test="combatDutyName != null  and combatDutyName != ''"> and combat_duty_name like concat('%', #{combatDutyName}, '%')</if>
+            <if test="combatDutyId != null "> and combat_duty_id = #{combatDutyId}</if>
+            <if test="combatDutyPhone != null  and combatDutyPhone != ''"> and combat_duty_phone = #{combatDutyPhone}</if>
+            <if test="dutyOffierName != null  and dutyOffierName != ''"> and duty_offier_name like concat('%', #{dutyOffierName}, '%')</if>
+            <if test="dutyOffierId != null "> and duty_offier_id = #{dutyOffierId}</if>
+            <if test="dutyOffierPhone != null  and dutyOffierPhone != ''"> and duty_offier_phone = #{dutyOffierPhone}</if>
+            <if test="confidentialName != null  and confidentialName != ''"> and confidential_name like concat('%', #{confidentialName}, '%')</if>
+            <if test="confidentialId != null "> and confidential_id = #{confidentialId}</if>
+            <if test="confidentialPhone != null  and confidentialPhone != ''"> and confidential_phone = #{confidentialPhone}</if>
+            <if test="politicalName != null  and politicalName != ''"> and political_name like concat('%', #{politicalName}, '%')</if>
+            <if test="politicalId != null "> and political_id = #{politicalId}</if>
+            <if test="politicalPhone != null  and politicalPhone != ''"> and political_phone = #{politicalPhone}</if>
+            <if test="guaranteeName != null  and guaranteeName != ''"> and guarantee_name like concat('%', #{guaranteeName}, '%')</if>
+            <if test="guaranteeId != null "> and guarantee_id = #{guaranteeId}</if>
+            <if test="guaranteePhone != null  and guaranteePhone != ''"> and guarantee_phone = #{guaranteePhone}</if>
+            <if test="messengerName != null  and messengerName != ''"> and messenger_name like concat('%', #{messengerName}, '%')</if>
+            <if test="messengerId != null "> and messenger_id = #{messengerId}</if>
+            <if test="messengerPhone != null  and messengerPhone != ''"> and messenger_phone = #{messengerPhone}</if>
+            <if test="detachmentName != null  and detachmentName != ''"> and detachment_name like concat('%', #{detachmentName}, '%')</if>
+            <if test="detachmentId != null "> and detachment_id = #{detachmentId}</if>
+            <if test="detachmentNumber != null "> and detachment_number = #{detachmentNumber}</if>
+            <if test="detachmentPeopleName != null  and detachmentPeopleName != ''"> and detachment_people_name like concat('%', #{detachmentPeopleName}, '%')</if>
+            <if test="detachmentPeopleId != null "> and detachment_people_id = #{detachmentPeopleId}</if>
+            <if test="detachmentPeoplePhone != null  and detachmentPeoplePhone != ''"> and detachment_people_phone = #{detachmentPeoplePhone}</if>
+            <if test="zhibanqingkaung != null  and zhibanqingkaung != ''"> and zhibanqingkaung = #{zhibanqingkaung}</if>
+            <if test="bingliqingkuang != null  and bingliqingkuang != ''"> and bingliqingkuang = #{bingliqingkuang}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectBdglTeamdutyById" parameterType="Long" resultMap="BdglTeamdutyResult">
+        <include refid="selectBdglTeamdutyVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglTeamduty" parameterType="BdglTeamduty"  useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_teamduty
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="attendedTime != null">attended_time,</if>
+            <if test="chiefDutyName != null">chief_duty_name,</if>
+            <if test="chiefDutyId != null">chief_duty_id,</if>
+            <if test="chiefDutyPhone != null">chief_duty_phone,</if>
+            <if test="combatDutyName != null">combat_duty_name,</if>
+            <if test="combatDutyId != null">combat_duty_id,</if>
+            <if test="combatDutyPhone != null">combat_duty_phone,</if>
+            <if test="dutyOffierName != null">duty_offier_name,</if>
+            <if test="dutyOffierId != null">duty_offier_id,</if>
+            <if test="dutyOffierPhone != null and dutyOffierPhone != ''">duty_offier_phone,</if>
+            <if test="confidentialName != null">confidential_name,</if>
+            <if test="confidentialId != null">confidential_id,</if>
+            <if test="confidentialPhone != null">confidential_phone,</if>
+            <if test="politicalName != null">political_name,</if>
+            <if test="politicalId != null">political_id,</if>
+            <if test="politicalPhone != null">political_phone,</if>
+            <if test="guaranteeName != null">guarantee_name,</if>
+            <if test="guaranteeId != null">guarantee_id,</if>
+            <if test="guaranteePhone != null">guarantee_phone,</if>
+            <if test="messengerName != null">messenger_name,</if>
+            <if test="messengerId != null">messenger_id,</if>
+            <if test="messengerPhone != null">messenger_phone,</if>
+            <if test="detachmentName != null">detachment_name,</if>
+            <if test="detachmentId != null">detachment_id,</if>
+            <if test="detachmentNumber != null">detachment_number,</if>
+            <if test="detachmentPeopleName != null">detachment_people_name,</if>
+            <if test="detachmentPeopleId != null">detachment_people_id,</if>
+            <if test="detachmentPeoplePhone != null">detachment_people_phone,</if>
+            <if test="zhibanqingkaung != null">zhibanqingkaung,</if>
+            <if test="bingliqingkuang != null">bingliqingkuang,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="attendedTime != null">#{attendedTime},</if>
+            <if test="chiefDutyName != null">#{chiefDutyName},</if>
+            <if test="chiefDutyId != null">#{chiefDutyId},</if>
+            <if test="chiefDutyPhone != null">#{chiefDutyPhone},</if>
+            <if test="combatDutyName != null">#{combatDutyName},</if>
+            <if test="combatDutyId != null">#{combatDutyId},</if>
+            <if test="combatDutyPhone != null">#{combatDutyPhone},</if>
+            <if test="dutyOffierName != null">#{dutyOffierName},</if>
+            <if test="dutyOffierId != null">#{dutyOffierId},</if>
+            <if test="dutyOffierPhone != null and dutyOffierPhone != ''">#{dutyOffierPhone},</if>
+            <if test="confidentialName != null">#{confidentialName},</if>
+            <if test="confidentialId != null">#{confidentialId},</if>
+            <if test="confidentialPhone != null">#{confidentialPhone},</if>
+            <if test="politicalName != null">#{politicalName},</if>
+            <if test="politicalId != null">#{politicalId},</if>
+            <if test="politicalPhone != null">#{politicalPhone},</if>
+            <if test="guaranteeName != null">#{guaranteeName},</if>
+            <if test="guaranteeId != null">#{guaranteeId},</if>
+            <if test="guaranteePhone != null">#{guaranteePhone},</if>
+            <if test="messengerName != null">#{messengerName},</if>
+            <if test="messengerId != null">#{messengerId},</if>
+            <if test="messengerPhone != null">#{messengerPhone},</if>
+            <if test="detachmentName != null">#{detachmentName},</if>
+            <if test="detachmentId != null">#{detachmentId},</if>
+            <if test="detachmentNumber != null">#{detachmentNumber},</if>
+            <if test="detachmentPeopleName != null">#{detachmentPeopleName},</if>
+            <if test="detachmentPeopleId != null">#{detachmentPeopleId},</if>
+            <if test="detachmentPeoplePhone != null">#{detachmentPeoplePhone},</if>
+            <if test="zhibanqingkaung != null">#{zhibanqingkaung},</if>
+            <if test="bingliqingkuang != null">#{bingliqingkuang},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglTeamduty" parameterType="BdglTeamduty">
+        update bdgl_teamduty
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="attendedTime != null">attended_time = #{attendedTime},</if>
+            <if test="chiefDutyName != null">chief_duty_name = #{chiefDutyName},</if>
+            <if test="chiefDutyId != null">chief_duty_id = #{chiefDutyId},</if>
+            <if test="chiefDutyPhone != null">chief_duty_phone = #{chiefDutyPhone},</if>
+            <if test="combatDutyName != null">combat_duty_name = #{combatDutyName},</if>
+            <if test="combatDutyId != null">combat_duty_id = #{combatDutyId},</if>
+            <if test="combatDutyPhone != null">combat_duty_phone = #{combatDutyPhone},</if>
+            <if test="dutyOffierName != null">duty_offier_name = #{dutyOffierName},</if>
+            <if test="dutyOffierId != null">duty_offier_id = #{dutyOffierId},</if>
+            <if test="dutyOffierPhone != null and dutyOffierPhone != ''">duty_offier_phone = #{dutyOffierPhone},</if>
+            <if test="confidentialName != null">confidential_name = #{confidentialName},</if>
+            <if test="confidentialId != null">confidential_id = #{confidentialId},</if>
+            <if test="confidentialPhone != null">confidential_phone = #{confidentialPhone},</if>
+            <if test="politicalName != null">political_name = #{politicalName},</if>
+            <if test="politicalId != null">political_id = #{politicalId},</if>
+            <if test="politicalPhone != null">political_phone = #{politicalPhone},</if>
+            <if test="guaranteeName != null">guarantee_name = #{guaranteeName},</if>
+            <if test="guaranteeId != null">guarantee_id = #{guaranteeId},</if>
+            <if test="guaranteePhone != null">guarantee_phone = #{guaranteePhone},</if>
+            <if test="messengerName != null">messenger_name = #{messengerName},</if>
+            <if test="messengerId != null">messenger_id = #{messengerId},</if>
+            <if test="messengerPhone != null">messenger_phone = #{messengerPhone},</if>
+            <if test="detachmentName != null">detachment_name = #{detachmentName},</if>
+            <if test="detachmentId != null">detachment_id = #{detachmentId},</if>
+            <if test="detachmentNumber != null">detachment_number = #{detachmentNumber},</if>
+            <if test="detachmentPeopleName != null">detachment_people_name = #{detachmentPeopleName},</if>
+            <if test="detachmentPeopleId != null">detachment_people_id = #{detachmentPeopleId},</if>
+            <if test="detachmentPeoplePhone != null">detachment_people_phone = #{detachmentPeoplePhone},</if>
+            <if test="zhibanqingkaung != null">zhibanqingkaung = #{zhibanqingkaung},</if>
+            <if test="bingliqingkuang != null">bingliqingkuang = #{bingliqingkuang},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglTeamdutyById" parameterType="Long">
+        delete from bdgl_teamduty where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglTeamdutyByIds" parameterType="String">
+        delete from bdgl_teamduty where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectBdglTeamdutyListByTime"  resultMap="BdglTeamdutyResult">
+        SELECT political_name,detachment_people_phone FROM bdgl_teamduty WHERE attended_time &gt;= #{starttime} AND attended_time &lt;= #{endtime} AND detachment_id = #{unitid}
+    </select>
+    <select id="selectTeamdutyList" resultMap="BdglTeamdutyResult">
+        select attended_time,
+               chief_duty_name,
+               chief_duty_phone,
+               combat_duty_name,
+               combat_duty_phone,
+               duty_offier_name,
+               duty_offier_phone,
+               confidential_name,
+               confidential_phone,
+               political_name,
+               political_phone,
+               guarantee_name,
+               guarantee_phone,
+               messenger_name,
+               messenger_phone
+        from bdgl_teamduty
+        where attended_time like concat('%', #{date},'%')
+    </select>
+    <select id="selectBdglTeamdutyLists" resultMap="BdglTeamdutyResult">
+        select attended_time,
+               chief_duty_name,
+               chief_duty_phone,
+               combat_duty_name,
+               combat_duty_phone,
+               duty_offier_name,
+               duty_offier_phone,
+               confidential_name,
+               confidential_phone,
+               political_name,
+               political_phone,
+               guarantee_name,
+               guarantee_phone,
+               messenger_name,
+               messenger_phone
+        from bdgl_teamduty
+        where attended_time like concat('%', #{attendedTime},'%')
+    </select>
+</mapper>

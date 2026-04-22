@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.supervision.web.noticeManage.mapper.NoticeMapper">
+
+<resultMap id="NoticeResultMap" type="com.supervision.web.noticeManage.entity.Notice">
+    <id property="id" column="id"/>
+    <result property="title" column="title"/>
+    <result property="description" column="description"/>
+    <result property="attachment" column="attachment"/>
+    <result property="createTime" column="create_time"/>
+    <result property="updateTime" column="update_time"/>
+    <result property="fileType" column="file_type"/>
+</resultMap>
+
+<insert id="insertNotice" parameterType="com.supervision.web.noticeManage.entity.Notice" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO new_notice (title, description, attachment, create_time, update_time, file_type)
+    VALUES (#{title}, #{description}, #{attachment}, #{createTime}, #{updateTime}, #{fileType})
+</insert>
+
+<select id="selectAll" resultMap="NoticeResultMap">
+    SELECT id, title, description, attachment, create_time, update_time,file_type
+    FROM new_notice
+    ORDER BY create_time DESC
+</select>
+
+<select id="selectByTitleAndTimeRange" resultMap="NoticeResultMap">
+    SELECT id, title, description, attachment, create_time, update_time,file_type
+    FROM new_notice
+    WHERE 1=1
+    <if test="title != null and title.trim() != ''">
+        AND title LIKE CONCAT('%', #{title}, '%')
+    </if>
+    <if test="start != null">
+        AND create_time &gt;= #{start}
+    </if>
+    <if test="end != null">
+        AND create_time &lt;= #{end}
+    </if>
+    ORDER BY create_time DESC
+</select>
+
+<delete id="deleteById" parameterType="int">
+    DELETE FROM new_notice WHERE id = #{id}
+</delete>
+
+</mapper>

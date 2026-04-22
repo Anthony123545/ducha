@@ -1,0 +1,42 @@
+{
+  "UserInfo": {
+    "employeeNo": "${employeeNo}",           // 必填，工号（人员ID）
+    "deleteUser": ${deleteUser},             // 可选，是否删除该人员
+    "name": "${name}",                       // 可选，人员姓名
+    "userType": "${userType}",               // 必填，人员类型 [normal, visitor, blackList]
+    "closeDelayEnabled": ${closeDelayEnabled}, // 可选，是否启用关门延迟
+    "Valid": {                               // 可选，有效期信息
+      "enable": ${Valid_enable},             // 是否启用有效期
+      "beginTime": "${Valid_beginTime}",     // 有效期开始时间
+      "endTime": "${Valid_endTime}",         // 有效期结束时间
+      "timeType": "${Valid_timeType}"        // 时间类型 [local, UTC]
+    },
+    "belongGroup": "${belongGroup}",         // 可选，所属群组编号
+    "password": "${password}",               // 可选，开门密码
+    "doorRight": "${doorRight}",             // 可选，门权限
+    "RightPlan": [                           // 可选，门权限计划
+      {
+      "doorNo": ${RightPlan_doorNo},      // 门编号
+      "planTemplateNo": "${RightPlan_planTemplateNo}" // 权限计划模板编号
+      }
+    ],
+    "maxOpenDoorTime": ${maxOpenDoorTime},   // 可选，最大认证次数
+    "openDoorTime": ${openDoorTime},         // 可选，已认证次数
+    "roomNumber": ${roomNumber},             // 可选，房间号
+    "floorNumber": ${floorNumber},           // 可选，楼层号
+    "doubleLockRight": ${doubleLockRight},   // 可选，反锁开门权限
+    "localUIRight": ${localUIRight},         // 可选，设备本地UI访问权限
+    "userVerifyMode": "${userVerifyMode}",   // 可选，人员验证方式
+    "checkUser": ${checkUser},               // 可选，是否进行重复添加校验
+    "gender": "${gender}",                    // 可选，性别
+    "PersonInfoExtends": [                    // 可选，人员扩展信息
+      {
+      "value": "${PersonInfoExtends_value}" // 扩展信息内容
+      }
+    ],
+    "dynamicCode": "${dynamicCode}",         // 可选，动态权限码
+    "callNumbers": ${callNumbers},           // 可选，呼叫号码列表
+    "floorNumbers": ${floorNumbers},         // 可选，层号列表
+    "groupName": "${groupName}"              // 可选，组织架构名称
+  }
+}

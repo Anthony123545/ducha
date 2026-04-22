@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglFoodKindMapper">
+
+    <resultMap type="BdglFoodKind" id="BdglFoodKindResult">
+        <result property="id"    column="id"    />
+        <result property="distinctions"    column="distinctions"    />
+        <result property="name"    column="name"    />
+        <result property="weight"    column="weight"    />
+        <result property="unitPrice"    column="unit_price"    />
+        <result property="money"    column="money"    />
+        <result property="types"    column="types"    />
+        <result property="remark"    column="remark"    />
+        <result property="foodId"    column="food_id"    />
+        <result property="time"    column="time"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+    </resultMap>
+
+    <sql id="selectBdglFoodKindVo">
+        select id, distinctions, name, weight, unit_price, money, types, remark, food_id, time, createtime, updatetime from bdgl_food_kind
+    </sql>
+
+    <select id="selectBdglFoodKindList" parameterType="BdglFoodKind" resultMap="BdglFoodKindResult">
+        <include refid="selectBdglFoodKindVo"/>
+        <where>
+            <if test="distinctions != null  and distinctions != ''"> and distinctions = #{distinctions}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="weight != null "> and weight = #{weight}</if>
+            <if test="unitPrice != null "> and unit_price = #{unitPrice}</if>
+            <if test="money != null "> and money = #{money}</if>
+            <if test="types != null  and types != ''"> and types = #{types}</if>
+            <if test="foodId != null "> and food_id = #{foodId}</if>
+            <if test="time != null "> and time = #{time}</if>
+            <if test="createtime != null "> and createtime = #{createtime}</if>
+            <if test="updatetime != null "> and updatetime = #{updatetime}</if>
+        </where>
+    </select>
+
+    <select id="selectBdglFoodKindById" parameterType="Integer" resultMap="BdglFoodKindResult">
+        <include refid="selectBdglFoodKindVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBdglFoodKindLists" parameterType="BdglFoodKind" resultMap="BdglFoodKindResult">
+        SELECT id,IFNULL( distinctions, "" ) AS distinctions,NAME,IFNULL( weight, "" ) AS weight,IFNULL( unit_price, "" ) AS unit_price,
+        IFNULL( money, "" ) AS money,IFNULL( types, "" ) AS types,IFNULL( remark, "" ) AS remark,IFNULL( food_id, "" ) AS food_id,time,
+        createtime,updatetime FROM bdgl_food_kind
+        <where>
+            <if test="distinctions != null  and distinctions != ''"> and distinctions = #{distinctions}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="weight != null "> and weight = #{weight}</if>
+            <if test="unitPrice != null "> and unit_price = #{unitPrice}</if>
+            <if test="money != null "> and money = #{money}</if>
+            <if test="types != null  and types != ''"> and types = #{types}</if>
+            <if test="foodId != null "> and food_id = #{foodId}</if>
+            <if test="time != null "> and time = #{time}</if>
+            <if test="createtime != null "> and createtime = #{createtime}</if>
+            <if test="updatetime != null "> and updatetime = #{updatetime}</if>
+        </where>
+    </select>
+
+    <insert id="insertBdglFoodKind" parameterType="BdglFoodKind" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_food_kind
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="distinctions != null">distinctions,</if>
+            <if test="name != null">name,</if>
+            <if test="weight != null">weight,</if>
+            <if test="unitPrice != null">unit_price,</if>
+            <if test="money != null">money,</if>
+            <if test="types != null">types,</if>
+            <if test="remark != null">remark,</if>
+            <if test="foodId != null">food_id,</if>
+            <if test="time != null">time,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="distinctions != null">#{distinctions},</if>
+            <if test="name != null">#{name},</if>
+            <if test="weight != null">#{weight},</if>
+            <if test="unitPrice != null">#{unitPrice},</if>
+            <if test="money != null">#{money},</if>
+            <if test="types != null">#{types},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="foodId != null">#{foodId},</if>
+            <if test="time != null">#{time},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglFoodKind" parameterType="BdglFoodKind">
+        update bdgl_food_kind
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="distinctions != null">distinctions = #{distinctions},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="unitPrice != null">unit_price = #{unitPrice},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="types != null">types = #{types},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="foodId != null">food_id = #{foodId},</if>
+            <if test="time != null">time = #{time},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglFoodKindById" parameterType="Integer">
+        delete from bdgl_food_kind where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglFoodKindByIds" parameterType="String">
+        delete from bdgl_food_kind where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteBdglFoodKind">
+        delete from bdgl_food_kind where food_id = #{id}
+    </delete>
+</mapper>

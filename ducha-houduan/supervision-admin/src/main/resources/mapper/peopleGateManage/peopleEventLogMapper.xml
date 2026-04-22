@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.supervision.web.Hikvision.peopleDoor.web.mapper.EventLogMapper">
+    <resultMap id="EventLogResultMap" type="com.supervision.web.Hikvision.peopleDoor.web.entity.EventLog">
+        <id property="id" column="id"/>
+        <result property="personId" column="person_id"/>
+        <result property="jobNumber" column="job_number"/>
+        <result property="name" column="name"/>
+        <result property="cardNumber" column="card_number"/>
+        <result property="door" column="door"/>
+        <result property="remoteHost" column="remote_host"/>
+        <result property="reader" column="reader"/>
+        <result property="detectorId" column="detector_id"/>
+        <result property="operation" column="operation"/>
+        <result property="eventType" column="event_type"/>
+        <result property="eventTime" column="event_time"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+
+    <!-- 分页查询 -->
+    <select id="selectByCondition" resultMap="EventLogResultMap">
+        SELECT *
+        FROM event_log
+        <where>
+            <if test="eventType != null and eventType != ''">
+                AND event_type = #{eventType}
+            </if>
+            <if test="personId != null and personId != ''">
+                AND person_id = #{personId}
+            </if>
+            <if test="jobNumber != null and jobNumber != ''">
+                AND job_number = #{jobNumber}
+            </if>
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="remoteHost != null and remoteHost != ''">
+                AND remote_host LIKE CONCAT('%', #{remoteHost}, '%')
+            </if>
+            <if test="reader != null and reader != ''">
+                AND reader LIKE CONCAT('%', #{reader}, '%')
+            </if>
+            <if test="detectorId != null and detectorId != ''">
+                AND detector_id = #{detectorId}
+            </if>
+            <if test="operation != null and operation != ''">
+                AND operation LIKE CONCAT('%', #{operation}, '%')
+            </if>
+<!--            <if test="startTime != null and startTime != ''">-->
+<!--                AND event_time &gt;= #{startTime}-->
+<!--            </if>-->
+<!--            <if test="endTime != null and endTime != ''">-->
+<!--                AND event_time &lt;= #{endTime}-->
+<!--            </if>-->
+            <if test="startTime != null and startTime != ''">
+                AND event_time <![CDATA[ >= ]]> #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND event_time <![CDATA[ <= ]]> #{endTime}
+            </if>
+        </where>
+        ORDER BY event_time DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <!-- 总数查询 -->
+    <select id="countByCondition" resultType="int">
+        SELECT COUNT(*)
+        FROM event_log
+        <where>
+            <if test="eventType != null and eventType != ''">
+                AND event_type = #{eventType}
+            </if>
+            <if test="personId != null and personId != ''">
+                AND person_id = #{personId}
+            </if>
+            <if test="jobNumber != null and jobNumber != ''">
+                AND job_number = #{jobNumber}
+            </if>
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="remoteHost != null and remoteHost != ''">
+                AND remote_host LIKE CONCAT('%', #{remoteHost}, '%')
+            </if>
+            <if test="reader != null and reader != ''">
+                AND reader LIKE CONCAT('%', #{reader}, '%')
+            </if>
+            <if test="detectorId != null and detectorId != ''">
+                AND detector_id = #{detectorId}
+            </if>
+            <if test="operation != null and operation != ''">
+                AND operation LIKE CONCAT('%', #{operation}, '%')
+            </if>
+            <if test="startTime != null and startTime != ''">
+                AND event_time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND event_time &lt;= #{endTime}
+            </if>
+        </where>
+    </select>
+</mapper>

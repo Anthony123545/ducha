@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglFoodProcurementMapper">
+
+    <resultMap type="BdglFoodProcurement" id="BdglFoodProcurementResult">
+        <result property="id"    column="id"    />
+        <result property="distinction"    column="distinction"    />
+        <result property="time"    column="time"    />
+        <result property="name"    column="name"    />
+        <result property="amount"    column="amount"    />
+        <result property="price"    column="price"    />
+        <result property="consumption"    column="consumption"    />
+        <result property="foodId"    column="food_id"    />
+        <result property="creattime"    column="creattime"    />
+        <result property="updatetime"    column="updatetime"    />
+    </resultMap>
+
+    <sql id="selectBdglFoodProcurementVo">
+        select id, distinction, time, name, amount, price, consumption, food_id, creattime, updatetime from bdgl_food_procurement
+    </sql>
+
+    <select id="selectBdglFoodProcurementList" parameterType="BdglFoodProcurement" resultMap="BdglFoodProcurementResult">
+        <include refid="selectBdglFoodProcurementVo"/>
+        <where>
+            <if test="distinction != null  and distinction != ''"> and distinction = #{distinction}</if>
+            <if test="time != null "> and time = #{time}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="amount != null "> and amount = #{amount}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="consumption != null "> and consumption = #{consumption}</if>
+            <if test="foodId != null "> and food_id = #{foodId}</if>
+            <if test="creattime != null "> and creattime = #{creattime}</if>
+            <if test="updatetime != null "> and updatetime = #{updatetime}</if>
+        </where>
+    </select>
+
+    <select id="selectBdglFoodProcurementById" parameterType="Integer" resultMap="BdglFoodProcurementResult">
+        <include refid="selectBdglFoodProcurementVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglFoodProcurement" parameterType="BdglFoodProcurement" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_food_procurement
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="distinction != null">distinction,</if>
+            <if test="time != null">time,</if>
+            <if test="name != null">name,</if>
+            <if test="amount != null">amount,</if>
+            <if test="price != null">price,</if>
+            <if test="consumption != null">consumption,</if>
+            <if test="foodId != null">food_id,</if>
+            <if test="creattime != null">creattime,</if>
+            <if test="updatetime != null">updatetime,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="distinction != null">#{distinction},</if>
+            <if test="time != null">#{time},</if>
+            <if test="name != null">#{name},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="price != null">#{price},</if>
+            <if test="consumption != null">#{consumption},</if>
+            <if test="foodId != null">#{foodId},</if>
+            <if test="creattime != null">#{creattime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglFoodProcurement" parameterType="BdglFoodProcurement">
+        update bdgl_food_procurement
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="distinction != null">distinction = #{distinction},</if>
+            <if test="time != null">time = #{time},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="consumption != null">consumption = #{consumption},</if>
+            <if test="foodId != null">food_id = #{foodId},</if>
+            <if test="creattime != null">creattime = #{creattime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglFoodProcurementById" parameterType="Integer">
+        delete from bdgl_food_procurement where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglFoodProcurementByIds" parameterType="String">
+        delete from bdgl_food_procurement where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteBdglFoodProcurement">
+        delete from bdgl_food_procurement where food_id = #{id}
+    </delete>
+</mapper>

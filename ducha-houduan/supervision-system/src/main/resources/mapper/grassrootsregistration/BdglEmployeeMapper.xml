@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglEmployeeMapper">
+    
+    <resultMap type="BdglEmployee" id="BdglEmployeeResult">
+        <result property="pin"    column="pin"    />
+        <result property="name"    column="name"    />
+        <result property="deptnumber"    column="deptnumber"    />
+        <result property="deptname"    column="deptname"    />
+        <result property="position"    column="position"    />
+        <result property="gender"    column="gender"    />
+        <result property="telephone"    column="telephone"    />
+        <result property="email"    column="email"    />
+        <result property="card"    column="card"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectBdglEmployeeVo">
+        select pin, name, deptnumber, deptname, position, gender, telephone, email, card, mobile, status from bdgl_employee
+    </sql>
+
+    <select id="selectBdglEmployeeList" parameterType="BdglEmployee" resultMap="BdglEmployeeResult">
+        <include refid="selectBdglEmployeeVo"/>
+        <where>  
+            <if test="pin != null "> and pin = #{pin}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="deptnumber != null "> and deptnumber = #{deptnumber}</if>
+            <if test="deptname != null  and deptname != ''"> and deptname like concat('%', #{deptname}, '%')</if>
+            <if test="position != null  and position != ''"> and position = #{position}</if>
+            <if test="gender != null  and gender != ''"> and gender = #{gender}</if>
+            <if test="telephone != null  and telephone != ''"> and telephone = #{telephone}</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="card != null  and card != ''"> and card = #{card}</if>
+            <if test="mobile != null  and mobile != ''"> and mobile = #{mobile}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectBdglEmployeeByPin" parameterType="Long" resultMap="BdglEmployeeResult">
+        <include refid="selectBdglEmployeeVo"/>
+        where pin = #{pin}
+    </select>
+        
+    <insert id="insertBdglEmployee" parameterType="BdglEmployee">
+        insert into bdgl_employee
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pin != null">pin,</if>
+            <if test="name != null">name,</if>
+            <if test="deptnumber != null">deptnumber,</if>
+            <if test="deptname != null">deptname,</if>
+            <if test="position != null">position,</if>
+            <if test="gender != null">gender,</if>
+            <if test="telephone != null">telephone,</if>
+            <if test="email != null">email,</if>
+            <if test="card != null">card,</if>
+            <if test="mobile != null">mobile,</if>
+            <if test="status != null">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pin != null">#{pin},</if>
+            <if test="name != null">#{name},</if>
+            <if test="deptnumber != null">#{deptnumber},</if>
+            <if test="deptname != null">#{deptname},</if>
+            <if test="position != null">#{position},</if>
+            <if test="gender != null">#{gender},</if>
+            <if test="telephone != null">#{telephone},</if>
+            <if test="email != null">#{email},</if>
+            <if test="card != null">#{card},</if>
+            <if test="mobile != null">#{mobile},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglEmployee" parameterType="BdglEmployee">
+        update bdgl_employee
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="deptnumber != null">deptnumber = #{deptnumber},</if>
+            <if test="deptname != null">deptname = #{deptname},</if>
+            <if test="position != null">position = #{position},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="telephone != null">telephone = #{telephone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="card != null">card = #{card},</if>
+            <if test="mobile != null">mobile = #{mobile},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where pin = #{pin}
+    </update>
+
+    <delete id="deleteBdglEmployeeByPin" parameterType="Long">
+        delete from bdgl_employee where pin = #{pin}
+    </delete>
+
+    <delete id="deleteBdglEmployeeByPins" parameterType="String">
+        delete from bdgl_employee where pin in 
+        <foreach item="pin" collection="array" open="(" separator="," close=")">
+            #{pin}
+        </foreach>
+    </delete>
+</mapper>

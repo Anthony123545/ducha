@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.combatduty.mapper.BdglRegisDutyMapper">
+
+    <resultMap type="BdglRegisDuty" id="BdglRegisDutyResult">
+        <result property="id"    column="id"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="equipmentName"    column="equipment_name"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="equipmentNumber"    column="equipment_number"    />
+        <result property="type"    column="type"    />
+        <result property="equipmentStates"    column="equipment_states"    />
+        <result property="standbyPosition"    column="standby_position"    />
+        <result property="attendedTime"    column="attended_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="isonduty"    column="isonduty"    />
+        <result property="typenumber"    column="typenumber"    />
+
+    </resultMap>
+
+    <sql id="selectBdglRegisDutyVo">
+        select id, unit_name, unit_id, equipment_name, equipment_id, equipment_number, type, equipment_states, standby_position, attended_time, remarks,isonduty from bdgl_regis_duty
+    </sql>
+
+    <select id="selectBdglRegisDutyList" parameterType="BdglRegisDuty" resultMap="BdglRegisDutyResult">
+        <include refid="selectBdglRegisDutyVo"/>
+        <where>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="equipmentName != null  and equipmentName != ''"> and equipment_name like concat('%', #{equipmentName}, '%')</if>
+            <if test="equipmentId != null  and equipmentId != ''"> and equipment_id = #{equipmentId}</if>
+            <if test="equipmentNumber != null "> and equipment_number = #{equipmentNumber}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="equipmentStates != null  and equipmentStates != ''"> and equipment_states = #{equipmentStates}</if>
+            <if test="standbyPosition != null  and standbyPosition != ''"> and standby_position = #{standbyPosition}</if>
+            <if test="attendedTime != null  and attendedTime != ''"> and attended_time = #{attendedTime}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="isonduty != null  and isonduty != ''"> and isonduty = #{isonduty}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectBdglRegisDutyById" parameterType="Long" resultMap="BdglRegisDutyResult">
+        <include refid="selectBdglRegisDutyVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglRegisDuty" parameterType="BdglRegisDuty" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_regis_duty
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="unitName != null">unit_name,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="equipmentName != null">equipment_name,</if>
+            <if test="equipmentId != null">equipment_id,</if>
+            <if test="equipmentNumber != null">equipment_number,</if>
+            <if test="type != null">type,</if>
+            <if test="equipmentStates != null">equipment_states,</if>
+            <if test="standbyPosition != null">standby_position,</if>
+            <if test="attendedTime != null">attended_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="isonduty != null">isonduty,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="unitName != null">#{unitName},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="equipmentName != null">#{equipmentName},</if>
+            <if test="equipmentId != null">#{equipmentId},</if>
+            <if test="equipmentNumber != null">#{equipmentNumber},</if>
+            <if test="type != null">#{type},</if>
+            <if test="equipmentStates != null">#{equipmentStates},</if>
+            <if test="standbyPosition != null">#{standbyPosition},</if>
+            <if test="attendedTime != null">#{attendedTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="isonduty != null">#{isonduty},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglRegisDuty" parameterType="BdglRegisDuty">
+        update bdgl_regis_duty
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="equipmentName != null">equipment_name = #{equipmentName},</if>
+            <if test="equipmentId != null">equipment_id = #{equipmentId},</if>
+            <if test="equipmentNumber != null">equipment_number = #{equipmentNumber},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="equipmentStates != null">equipment_states = #{equipmentStates},</if>
+            <if test="standbyPosition != null">standby_position = #{standbyPosition},</if>
+            attended_time = #{attendedTime},
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="isonduty != null">isonduty = #{isonduty},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <select id="selectBdglRegisDutyNumber" parameterType="BdglRegisDuty" resultMap="BdglRegisDutyResult">
+        SELECT a.type, count(a.type) as typenumber from bdgl_regis_duty a
+           WHERE 1=1 GROUP BY a.type
+    </select>
+
+    <delete id="deleteBdglRegisDutyById" parameterType="Long">
+        delete from bdgl_regis_duty where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglRegisDutyByIds" parameterType="String">
+        delete from bdgl_regis_duty where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.jobTask.mapper.JobTaskRecordExecutorMapper">
+
+    <resultMap type="JobTaskRecordExecutor" id="JobTaskRecordExecutorResult">
+        <result property="workId"    column="work_id"    />
+        <result property="executorPeople"    column="executor_people"    />
+        <result property="workRate"    column="work_rate"    />
+        <result property="workFinishTime"    column="work_finish_time"    />
+        <result property="workFeedbackFileName"    column="work_feedback_file_name"    />
+        <result property="workFeedbackFileUrl"    column="work_feedback_file_url"    />
+        <result property="workFeedbackRemark"    column="work_feedback_remark"    />
+    </resultMap>
+
+    <sql id="selectJobTaskRecordExecutorVo">
+        select work_id, executor_people, work_rate, work_finish_time,work_feedback_file_name,work_feedback_file_url,work_feedback_remark from job_task_record_executor
+    </sql>
+
+    <select id="selectJobTaskRecordExecutorList" parameterType="JobTaskRecordExecutor" resultMap="JobTaskRecordExecutorResult">
+        <include refid="selectJobTaskRecordExecutorVo"/>
+        <where>
+            <if test="workId != null "> and work_id = #{workId}</if>
+            <if test="executorPeople != null  and executorPeople != ''"> and executor_people = #{executorPeople}</if>
+        </where>
+    </select>
+
+    <select id="selectJobTaskRecordExecutorByWorkId" parameterType="Integer" resultMap="JobTaskRecordExecutorResult">
+        <include refid="selectJobTaskRecordExecutorVo"/>
+        where work_id = #{workId}
+    </select>
+    <select id="selectJobTaskPeopleByWorkId" resultType="java.lang.String">
+        select executor_people from job_task_record_executor where work_id = #{workId}
+    </select>
+
+    <insert id="insertJobTaskRecordExecutor" parameterType="JobTaskRecordExecutor">
+        insert into job_task_record_executor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="workId != null">work_id,</if>
+            <if test="executorPeople != null and executorPeople != ''">executor_people,</if>
+            <if test="workRate != null">work_rate,</if>
+            <if test="workFinishTime != null">work_finish_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="workId != null">#{workId},</if>
+            <if test="executorPeople != null and executorPeople != ''">#{executorPeople},</if>
+            <if test="workRate != null">#{workRate},</if>
+            <if test="workFinishTime != null">#{workFinishTime},</if>
+        </trim>
+    </insert>
+    <insert id="insertBatchJobTaskRecordExecutor">
+        insert into job_task_record_executor
+        (work_id, executor_people,work_rate)
+        VALUES
+        <foreach collection ="list" item="executor" separator =",">
+            (#{executor.workId}, #{executor.executorPeople},#{executor.workRate})
+        </foreach>
+    </insert>
+
+    <update id="updateJobTaskRecordExecutor" parameterType="JobTaskRecordExecutor">
+        update job_task_record_executor
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="executorPeople != null and executorPeople != ''">executor_people = #{executorPeople},</if>
+            <if test="workRate != null">work_rate = #{workRate},</if>
+            <if test="workFinishTime != null">work_finish_time = #{workFinishTime},</if>
+            <if test="workFeedbackFileName != null">work_feedback_file_name = #{workFeedbackFileName},</if>
+            <if test="workFeedbackFileUrl != null">work_feedback_file_url = #{workFeedbackFileUrl},</if>
+            <if test="workFeedbackRemark != null">work_feedback_remark = #{workFeedbackRemark},</if>
+        </trim>
+        where work_id = #{workId} and executor_people = #{executorPeople}
+    </update>
+
+    <delete id="deleteJobTaskRecordExecutorByWorkId" parameterType="Integer">
+        delete from job_task_record_executor where work_id = #{workId}
+    </delete>
+
+    <delete id="deleteJobTaskRecordExecutorByWorkIds" parameterType="String">
+        delete from job_task_record_executor where work_id in
+        <foreach item="workId" collection="array" open="(" separator="," close=")">
+            #{workId}
+        </foreach>
+    </delete>
+</mapper>

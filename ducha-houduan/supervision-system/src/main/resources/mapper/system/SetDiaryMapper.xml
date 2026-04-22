@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.system.mapper.SetDiaryMapper">
+    
+    <resultMap type="SetDiary" id="SetDiaryResult">
+        <result property="id"    column="id"    />
+        <result property="setnum"    column="setnum"    />
+        <result property="upname"    column="upname"    />
+        <result property="updates"    column="updates"    />
+        <result property="types"    column="types"    />
+    </resultMap>
+
+    <sql id="selectSetDiaryVo">
+        select id, setnum, upname, updates, types from set_diary
+    </sql>
+
+    <select id="selectSetDiaryList" parameterType="SetDiary" resultMap="SetDiaryResult">
+        <include refid="selectSetDiaryVo"/>
+        <where>  
+            <if test="setnum != null "> and setnum = #{setnum}</if>
+            <if test="upname != null  and upname != ''"> and upname like concat('%', #{upname}, '%')</if>
+            <if test="updates != null "> and updates = #{updates}</if>
+            <if test="types != null "> and types = #{types}</if>
+        </where>
+    </select>
+    
+    <select id="selectSetDiaryById" parameterType="Long" resultMap="SetDiaryResult">
+        <include refid="selectSetDiaryVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSetDiary" parameterType="SetDiary" useGeneratedKeys="true" keyProperty="id">
+        insert into set_diary
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="setnum != null">setnum,</if>
+            <if test="upname != null">upname,</if>
+            <if test="updates != null">updates,</if>
+            <if test="types != null">types,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="setnum != null">#{setnum},</if>
+            <if test="upname != null">#{upname},</if>
+            <if test="updates != null">#{updates},</if>
+            <if test="types != null">#{types},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSetDiary" parameterType="SetDiary">
+        update set_diary
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="setnum != null">setnum = #{setnum},</if>
+            <if test="upname != null">upname = #{upname},</if>
+            <if test="updates != null">updates = #{updates},</if>
+            <if test="types != null">types = #{types},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSetDiaryById" parameterType="Long">
+        delete from set_diary where id = #{id}
+    </delete>
+
+    <delete id="deleteSetDiaryByIds" parameterType="String">
+        delete from set_diary where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglDiaryLeaveMapper">
+    
+    <resultMap type="BdglDiaryLeave" id="BdglDiaryLeaveResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="job"    column="job"    />
+        <result property="reason"    column="reason"    />
+        <result property="leaveDuration"    column="leave_duration"    />
+        <result property="leaveApprover"    column="leave_approver"    />
+        <result property="leaveTime"    column="leave_time"    />
+        <result property="backTime"    column="back_time"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="overTime"    column="over_time"    />
+        <result property="bdgldiaryId"    column="bdgldiary_id"    />
+    </resultMap>
+
+    <sql id="selectBdglDiaryLeaveVo">
+        select id, name, job, reason, leave_duration, leave_approver, leave_time, back_time, create_time, over_time, bdgldiary_id from bdgl_diary_leave
+    </sql>
+
+    <select id="selectBdglDiaryLeaveList" parameterType="BdglDiaryLeave" resultMap="BdglDiaryLeaveResult">
+        <include refid="selectBdglDiaryLeaveVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="job != null  and job != ''"> and job = #{job}</if>
+            <if test="reason != null  and reason != ''"> and reason = #{reason}</if>
+            <if test="leaveDuration != null "> and leave_duration = #{leaveDuration}</if>
+            <if test="leaveApprover != null  and leaveApprover != ''"> and leave_approver = #{leaveApprover}</if>
+            <if test="leaveTime != null "> and leave_time = #{leaveTime}</if>
+            <if test="backTime != null "> and back_time = #{backTime}</if>
+            <if test="overTime != null "> and over_time = #{overTime}</if>
+            <if test="bdgldiaryId != null "> and bdgldiary_id = #{bdgldiaryId}</if>
+        </where>
+    </select>
+    
+    <select id="selectBdglDiaryLeaveById" parameterType="Long" resultMap="BdglDiaryLeaveResult">
+        <include refid="selectBdglDiaryLeaveVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBdglDiaryLeave" parameterType="BdglDiaryLeave" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_diary_leave
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="job != null">job,</if>
+            <if test="reason != null">reason,</if>
+            <if test="leaveDuration != null">leave_duration,</if>
+            <if test="leaveApprover != null">leave_approver,</if>
+            <if test="leaveTime != null">leave_time,</if>
+            <if test="backTime != null">back_time,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="overTime != null">over_time,</if>
+            <if test="bdgldiaryId != null">bdgldiary_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="job != null">#{job},</if>
+            <if test="reason != null">#{reason},</if>
+            <if test="leaveDuration != null">#{leaveDuration},</if>
+            <if test="leaveApprover != null">#{leaveApprover},</if>
+            <if test="leaveTime != null">#{leaveTime},</if>
+            <if test="backTime != null">#{backTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="overTime != null">#{overTime},</if>
+            <if test="bdgldiaryId != null">#{bdgldiaryId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglDiaryLeave" parameterType="BdglDiaryLeave">
+        update bdgl_diary_leave
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="job != null">job = #{job},</if>
+            <if test="reason != null">reason = #{reason},</if>
+            <if test="leaveDuration != null">leave_duration = #{leaveDuration},</if>
+            <if test="leaveApprover != null">leave_approver = #{leaveApprover},</if>
+            <if test="leaveTime != null">leave_time = #{leaveTime},</if>
+            <if test="backTime != null">back_time = #{backTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="overTime != null">over_time = #{overTime},</if>
+            <if test="bdgldiaryId != null">bdgldiary_id = #{bdgldiaryId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglDiaryLeaveById" parameterType="Long">
+        delete from bdgl_diary_leave where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglDiaryLeaveByIds" parameterType="String">
+        delete from bdgl_diary_leave where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

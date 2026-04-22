@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.thought.mapper.ThoughtGetreadyMapper">
+    
+    <resultMap type="ThoughtGetready" id="ThoughtGetreadyResult">
+        <result property="id"    column="id"    />
+        <result property="talkPeople"    column="talk_people"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="createName"    column="create_name"    />
+        <result property="createId"    column="create_id"    />
+        <result property="filePath"    column="file_path"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="talkContent"    column="talk_content"    />
+        <result property="talkTheme"    column="talk_theme"    />
+        <result property="talkIntroduction"    column="talk_introduction"    />
+        <result property="recorder"    column="recorder"    />
+        <result property="recorderId"    column="recorder_id"    />
+    </resultMap>
+
+    <sql id="selectThoughtGetreadyVo">
+        select id, talk_people, start_time, end_time, create_time, update_time, create_name, create_id, file_path, file_name, talk_content, talk_theme, talk_introduction, recorder, recorder_id from thought_getready
+    </sql>
+
+    <select id="selectThoughtGetreadyList" parameterType="ThoughtGetready" resultMap="ThoughtGetreadyResult">
+        <include refid="selectThoughtGetreadyVo"/>
+        <where>  
+            <if test="talkPeople != null  and talkPeople != ''"> and talk_people = #{talkPeople}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="createName != null  and createName != ''"> and create_name like concat('%', #{createName}, '%')</if>
+            <if test="createId != null "> and create_id = #{createId}</if>
+            <if test="filePath != null  and filePath != ''"> and file_path = #{filePath}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="talkContent != null  and talkContent != ''"> and talk_content = #{talkContent}</if>
+            <if test="talkTheme != null  and talkTheme != ''"> and talk_theme = #{talkTheme}</if>
+            <if test="talkIntroduction != null  and talkIntroduction != ''"> and talk_introduction = #{talkIntroduction}</if>
+            <if test="recorder != null  and recorder != ''"> and recorder = #{recorder}</if>
+            <if test="recorderId != null  and recorderId != ''"> and recorder_id = #{recorderId}</if>
+        </where>
+        order by id desc
+    </select>
+    
+    <select id="selectThoughtGetreadyById" parameterType="Long" resultMap="ThoughtGetreadyResult">
+        <include refid="selectThoughtGetreadyVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertThoughtGetready" parameterType="ThoughtGetready" useGeneratedKeys="true" keyProperty="id">
+        insert into thought_getready
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="talkPeople != null">talk_people,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createName != null">create_name,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="filePath != null">file_path,</if>
+            <if test="fileName != null">file_name,</if>
+            <if test="talkContent != null">talk_content,</if>
+            <if test="talkTheme != null">talk_theme,</if>
+            <if test="talkIntroduction != null">talk_introduction,</if>
+            <if test="recorder != null">recorder,</if>
+            <if test="recorderId != null">recorder_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="talkPeople != null">#{talkPeople},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createName != null">#{createName},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="filePath != null">#{filePath},</if>
+            <if test="fileName != null">#{fileName},</if>
+            <if test="talkContent != null">#{talkContent},</if>
+            <if test="talkTheme != null">#{talkTheme},</if>
+            <if test="talkIntroduction != null">#{talkIntroduction},</if>
+            <if test="recorder != null">#{recorder},</if>
+            <if test="recorderId != null">#{recorderId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateThoughtGetready" parameterType="ThoughtGetready">
+        update thought_getready
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="talkPeople != null">talk_people = #{talkPeople},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createName != null">create_name = #{createName},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="filePath != null">file_path = #{filePath},</if>
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="talkContent != null">talk_content = #{talkContent},</if>
+            <if test="talkTheme != null">talk_theme = #{talkTheme},</if>
+            <if test="talkIntroduction != null">talk_introduction = #{talkIntroduction},</if>
+            <if test="recorder != null">recorder = #{recorder},</if>
+            <if test="recorderId != null">recorder_id = #{recorderId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteThoughtGetreadyById" parameterType="Long">
+        delete from thought_getready where id = #{id}
+    </delete>
+
+    <delete id="deleteThoughtGetreadyByIds" parameterType="String">
+        delete from thought_getready where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

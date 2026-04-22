@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.peopleManage.mapper.BdglPeopleTransferMapper">
+    
+    <resultMap type="BdglPeopleTransfer" id="BdglPeopleTransferResult">
+        <result property="id"    column="id"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="transferId"    column="transfer_id"    />
+        <result property="transferDate"    column="transfer_date"    />
+        <result property="transferTake"    column="transfer_take"    />
+        <result property="militaryRank1"    column="military_rank1"    />
+        <result property="militaryRank2"    column="military_rank2"    />
+        <result property="post1"    column="post1"    />
+        <result property="post2"    column="post2"    />
+        <result property="unit1"    column="unit1"    />
+        <result property="unit2"    column="unit2"    />
+        <result property="aduty"    column="aduty"    />
+        <result property="commandNumber"    column="command_number"    />
+        <result property="reason"    column="reason"    />
+        <result property="remark"    column="remark"    />
+        <result property="field1"    column="field1"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="cName"    column="c_name"    />
+    </resultMap>
+
+    <sql id="selectBdglPeopleTransferVo">
+        select id, people_id, transfer_id, transfer_date, transfer_take, military_rank1, military_rank2, post1, post2, unit1, unit2, aduty, command_number, reason, remark, field1, createtime, updatetime, c_name from bdgl_people_transfer
+    </sql>
+
+    <select id="selectBdglPeopleTransferList" parameterType="BdglPeopleTransfer" resultMap="BdglPeopleTransferResult">
+        <include refid="selectBdglPeopleTransferVo"/>
+        <where>  
+            <if test="peopleId != null "> and people_id = #{peopleId}</if>
+            <if test="transferId != null "> and transfer_id = #{transferId}</if>
+            <if test="transferDate != null "> and transfer_date = #{transferDate}</if>
+            <if test="transferTake != null "> and transfer_take = #{transferTake}</if>
+            <if test="militaryRank1 != null  and militaryRank1 != ''"> and military_rank1 = #{militaryRank1}</if>
+            <if test="militaryRank2 != null  and militaryRank2 != ''"> and military_rank2 = #{militaryRank2}</if>
+            <if test="post1 != null  and post1 != ''"> and post1 = #{post1}</if>
+            <if test="post2 != null  and post2 != ''"> and post2 = #{post2}</if>
+            <if test="unit1 != null  and unit1 != ''"> and unit1 = #{unit1}</if>
+            <if test="unit2 != null  and unit2 != ''"> and unit2 = #{unit2}</if>
+            <if test="aduty != null  and aduty != ''"> and aduty = #{aduty}</if>
+            <if test="commandNumber != null  and commandNumber != ''"> and command_number = #{commandNumber}</if>
+            <if test="reason != null  and reason != ''"> and reason = #{reason}</if>
+            <if test="field1 != null  and field1 != ''"> and field1 = #{field1}</if>
+            <if test="createtime != null "> and createtime = #{createtime}</if>
+            <if test="updatetime != null "> and updatetime = #{updatetime}</if>
+            <if test="cName != null  and cName != ''"> and c_name like concat('%', #{cName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectBdglPeopleTransferById" parameterType="Integer" resultMap="BdglPeopleTransferResult">
+        <include refid="selectBdglPeopleTransferVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBdglPeopleTransfer" parameterType="BdglPeopleTransfer" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_people_transfer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="peopleId != null">people_id,</if>
+            <if test="transferId != null">transfer_id,</if>
+            <if test="transferDate != null">transfer_date,</if>
+            <if test="transferTake != null">transfer_take,</if>
+            <if test="militaryRank1 != null">military_rank1,</if>
+            <if test="militaryRank2 != null">military_rank2,</if>
+            <if test="post1 != null">post1,</if>
+            <if test="post2 != null">post2,</if>
+            <if test="unit1 != null">unit1,</if>
+            <if test="unit2 != null">unit2,</if>
+            <if test="aduty != null">aduty,</if>
+            <if test="commandNumber != null">command_number,</if>
+            <if test="reason != null">reason,</if>
+            <if test="remark != null">remark,</if>
+            <if test="field1 != null">field1,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="cName != null">c_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="transferId != null">#{transferId},</if>
+            <if test="transferDate != null">#{transferDate},</if>
+            <if test="transferTake != null">#{transferTake},</if>
+            <if test="militaryRank1 != null">#{militaryRank1},</if>
+            <if test="militaryRank2 != null">#{militaryRank2},</if>
+            <if test="post1 != null">#{post1},</if>
+            <if test="post2 != null">#{post2},</if>
+            <if test="unit1 != null">#{unit1},</if>
+            <if test="unit2 != null">#{unit2},</if>
+            <if test="aduty != null">#{aduty},</if>
+            <if test="commandNumber != null">#{commandNumber},</if>
+            <if test="reason != null">#{reason},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="field1 != null">#{field1},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="cName != null">#{cName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglPeopleTransfer" parameterType="BdglPeopleTransfer">
+        update bdgl_people_transfer
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="transferId != null">transfer_id = #{transferId},</if>
+            <if test="transferDate != null">transfer_date = #{transferDate},</if>
+            <if test="transferTake != null">transfer_take = #{transferTake},</if>
+            <if test="militaryRank1 != null">military_rank1 = #{militaryRank1},</if>
+            <if test="militaryRank2 != null">military_rank2 = #{militaryRank2},</if>
+            <if test="post1 != null">post1 = #{post1},</if>
+            <if test="post2 != null">post2 = #{post2},</if>
+            <if test="unit1 != null">unit1 = #{unit1},</if>
+            <if test="unit2 != null">unit2 = #{unit2},</if>
+            <if test="aduty != null">aduty = #{aduty},</if>
+            <if test="commandNumber != null">command_number = #{commandNumber},</if>
+            <if test="reason != null">reason = #{reason},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="field1 != null">field1 = #{field1},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="cName != null">c_name = #{cName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglPeopleTransferById" parameterType="Integer">
+        delete from bdgl_people_transfer where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglPeopleTransferByIds" parameterType="String">
+        delete from bdgl_people_transfer where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

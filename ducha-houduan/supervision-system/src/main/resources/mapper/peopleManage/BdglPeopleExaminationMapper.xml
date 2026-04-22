@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.peopleManage.mapper.BdglPeopleExaminationMapper">
+    
+    <resultMap type="BdglPeopleExamination" id="BdglPeopleExaminationResult">
+        <result property="id"    column="id"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="sex"    column="sex"    />
+        <result property="birthDate"    column="birth_date"    />
+        <result property="partyId"    column="party_id"    />
+        <result property="nationId"    column="nation_id"    />
+        <result property="origin"    column="origin"    />
+        <result property="enlistDate"    column="enlist_date"    />
+        <result property="prize"    column="prize"    />
+        <result property="enlistdesc"    column="enlistdesc"    />
+        <result property="politicsAttitude"    column="politics_attitude"    />
+        <result property="organization"    column="organization"    />
+        <result property="family"    column="family"    />
+        <result property="socialRelations"    column="social_relations"    />
+        <result property="family2"    column="family2"    />
+        <result property="selfIdentification"    column="self_identification"    />
+        <result property="unitExamination"    column="unit_examination"    />
+        <result property="adminId"    column="admin_id"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="cName"    column="c_name"    />
+    </resultMap>
+
+    <sql id="selectBdglPeopleExaminationVo">
+        select id, people_id, sex, birth_date, party_id, nation_id, origin, enlist_date, prize, enlistdesc, politics_attitude, organization, family, social_relations, family2, self_identification, unit_examination, admin_id, createtime, updatetime, c_name from bdgl_people_examination
+    </sql>
+
+    <select id="selectBdglPeopleExaminationList" parameterType="BdglPeopleExamination" resultMap="BdglPeopleExaminationResult">
+        <include refid="selectBdglPeopleExaminationVo"/>
+        <where>  
+            <if test="peopleId != null "> and people_id = #{peopleId}</if>
+            <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
+            <if test="birthDate != null "> and birth_date = #{birthDate}</if>
+            <if test="partyId != null "> and party_id = #{partyId}</if>
+            <if test="nationId != null "> and nation_id = #{nationId}</if>
+            <if test="origin != null  and origin != ''"> and origin = #{origin}</if>
+            <if test="enlistDate != null "> and enlist_date = #{enlistDate}</if>
+            <if test="prize != null  and prize != ''"> and prize = #{prize}</if>
+            <if test="enlistdesc != null  and enlistdesc != ''"> and enlistdesc = #{enlistdesc}</if>
+            <if test="politicsAttitude != null  and politicsAttitude != ''"> and politics_attitude = #{politicsAttitude}</if>
+            <if test="organization != null  and organization != ''"> and organization = #{organization}</if>
+            <if test="family != null  and family != ''"> and family = #{family}</if>
+            <if test="socialRelations != null  and socialRelations != ''"> and social_relations = #{socialRelations}</if>
+            <if test="family2 != null  and family2 != ''"> and family2 = #{family2}</if>
+            <if test="selfIdentification != null  and selfIdentification != ''"> and self_identification = #{selfIdentification}</if>
+            <if test="unitExamination != null  and unitExamination != ''"> and unit_examination = #{unitExamination}</if>
+            <if test="adminId != null "> and admin_id = #{adminId}</if>
+            <if test="createtime != null "> and createtime = #{createtime}</if>
+            <if test="updatetime != null "> and updatetime = #{updatetime}</if>
+            <if test="cName != null  and cName != ''"> and c_name like concat('%', #{cName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectBdglPeopleExaminationById" parameterType="Integer" resultMap="BdglPeopleExaminationResult">
+        <include refid="selectBdglPeopleExaminationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBdglPeopleExamination" parameterType="BdglPeopleExamination" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_people_examination
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="peopleId != null">people_id,</if>
+            <if test="sex != null and sex != ''">sex,</if>
+            <if test="birthDate != null">birth_date,</if>
+            <if test="partyId != null">party_id,</if>
+            <if test="nationId != null">nation_id,</if>
+            <if test="origin != null and origin != ''">origin,</if>
+            <if test="enlistDate != null">enlist_date,</if>
+            <if test="prize != null">prize,</if>
+            <if test="enlistdesc != null">enlistdesc,</if>
+            <if test="politicsAttitude != null">politics_attitude,</if>
+            <if test="organization != null">organization,</if>
+            <if test="family != null">family,</if>
+            <if test="socialRelations != null">social_relations,</if>
+            <if test="family2 != null">family2,</if>
+            <if test="selfIdentification != null">self_identification,</if>
+            <if test="unitExamination != null">unit_examination,</if>
+            <if test="adminId != null">admin_id,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="cName != null">c_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="sex != null and sex != ''">#{sex},</if>
+            <if test="birthDate != null">#{birthDate},</if>
+            <if test="partyId != null">#{partyId},</if>
+            <if test="nationId != null">#{nationId},</if>
+            <if test="origin != null and origin != ''">#{origin},</if>
+            <if test="enlistDate != null">#{enlistDate},</if>
+            <if test="prize != null">#{prize},</if>
+            <if test="enlistdesc != null">#{enlistdesc},</if>
+            <if test="politicsAttitude != null">#{politicsAttitude},</if>
+            <if test="organization != null">#{organization},</if>
+            <if test="family != null">#{family},</if>
+            <if test="socialRelations != null">#{socialRelations},</if>
+            <if test="family2 != null">#{family2},</if>
+            <if test="selfIdentification != null">#{selfIdentification},</if>
+            <if test="unitExamination != null">#{unitExamination},</if>
+            <if test="adminId != null">#{adminId},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="cName != null">#{cName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglPeopleExamination" parameterType="BdglPeopleExamination">
+        update bdgl_people_examination
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="sex != null and sex != ''">sex = #{sex},</if>
+            <if test="birthDate != null">birth_date = #{birthDate},</if>
+            <if test="partyId != null">party_id = #{partyId},</if>
+            <if test="nationId != null">nation_id = #{nationId},</if>
+            <if test="origin != null and origin != ''">origin = #{origin},</if>
+            <if test="enlistDate != null">enlist_date = #{enlistDate},</if>
+            <if test="prize != null">prize = #{prize},</if>
+            <if test="enlistdesc != null">enlistdesc = #{enlistdesc},</if>
+            <if test="politicsAttitude != null">politics_attitude = #{politicsAttitude},</if>
+            <if test="organization != null">organization = #{organization},</if>
+            <if test="family != null">family = #{family},</if>
+            <if test="socialRelations != null">social_relations = #{socialRelations},</if>
+            <if test="family2 != null">family2 = #{family2},</if>
+            <if test="selfIdentification != null">self_identification = #{selfIdentification},</if>
+            <if test="unitExamination != null">unit_examination = #{unitExamination},</if>
+            <if test="adminId != null">admin_id = #{adminId},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="cName != null">c_name = #{cName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglPeopleExaminationById" parameterType="Integer">
+        delete from bdgl_people_examination where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglPeopleExaminationByIds" parameterType="String">
+        delete from bdgl_people_examination where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

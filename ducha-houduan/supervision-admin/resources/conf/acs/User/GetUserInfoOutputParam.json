@@ -1,0 +1,51 @@
+{
+  "UserInfoSearch": {                            // 【只读，可选】查询结果对象
+    "searchID": "${searchID}",                   // 【只读，必填】搜索记录唯一标识ID
+    "responseStatusStrg": "${responseStatusStrg}", // 【只读，必填】查询状态 [OK 查询结束, MORE 还有数据待查询, NO MATCH 没有匹配数据]
+    "numOfMatches": ${numOfMatches},            // 【只读，必填】当前返回记录条数
+    "totalMatches": ${totalMatches},            // 【只读，必填】符合条件的记录总条数
+    "UserInfo": [                                // 【只读，可选】人员信息数组
+      {
+        "employeeNo": "${employeeNo}",          // 【只读，必填】工号（人员ID）
+        "name": "${name}",                      // 【只读，可选】姓名
+        "userType": "${userType}",              // 【只读，必填】人员类型 [normal, visitor, blackList]
+        "closeDelayEnabled": ${closeDelayEnabled}, // 【只读，可选】是否启用关门延迟
+        "Valid": {                              // 【只读，可选】有效期参数
+        "enable": ${Valid_enable},            // 【必填】是否启用有效期
+        "beginTime": "${Valid_beginTime}",    // 【必填】有效期起始时间
+        "endTime": "${Valid_endTime}",        // 【必填】有效期结束时间
+        "timeType": "${Valid_timeType}"       // 【可选】时间类型 [local, UTC]
+        },
+        "belongGroup": "${belongGroup}",        // 【可选】所属群组
+        "password": "${password}",              // 【可选】登录/开门密码
+        "doorRight": "${doorRight}",            // 【可选】门权限
+        "RightPlan": [                          // 【可选】门权限计划
+          {
+          "doorNo": ${RightPlan_doorNo},           // 【可选】门编号
+          "planTemplateNo": "${RightPlan_planTemplateNo}" // 【可选】权限计划模板编号
+          }
+        ],
+        "maxOpenDoorTime": ${maxOpenDoorTime}, // 【可选】最大认证开门次数
+        "openDoorTime": ${openDoorTime},       // 【可选】已认证次数
+        "roomNumber": ${roomNumber},           // 【可选】房间号
+        "floorNumber": ${floorNumber},         // 【可选】层号
+        "doubleLockRight": ${doubleLockRight}, // 【可选】是否具备反锁开门权限
+        "localUIRight": ${localUIRight},       // 【可选】是否可使用设备本地UI
+        "userVerifyMode": "${userVerifyMode}", // 【可选】验证方式
+        "dynamicCode": "${dynamicCode}",       // 【可选】动态权限码
+        "callNumbers": ${callNumbers},         // 【可选】呼叫号码列表（数组）
+        "floorNumbers": ${floorNumbers},       // 【可选】层号列表（数组）
+        "numOfFace": ${numOfFace},             // 【可选】关联人脸数量
+        "numOfFP": ${numOfFP},                 // 【可选】关联指纹数量
+        "numOfCard": ${numOfCard},             // 【可选】关联卡数量
+        "gender": "${gender}",                  // 【可选】性别
+        "PersonInfoExtends": [                  // 【可选】扩展人员信息
+          {
+          "value": "${PersonInfoExtends_value}" // 【可选】扩展内容
+          }
+        ],
+        "groupName": "${groupName}"            // 【可选】组织架构名称
+      }
+    ]
+  }
+}

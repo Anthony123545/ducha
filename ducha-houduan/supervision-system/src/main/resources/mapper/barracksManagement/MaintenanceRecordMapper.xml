@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.barracksManagement.mapper.MaintenanceRecordMapper">
+
+    <resultMap type="MaintenanceRecord" id="MaintenanceRecordResult">
+        <result property="id"    column="id"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="problem"    column="problem"    />
+        <result property="time"    column="time"    />
+        <result property="personCharge"    column="person_charge"    />
+        <result property="rectificationTime"    column="rectification_time"    />
+        <result property="materialScience"    column="material_science"    />
+        <result property="remark"    column="remark"    />
+        <result property="funding"    column="Funding"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectMaintenanceRecordVo">
+        select id, unit_name, unit_id, problem, time, person_charge, rectification_time, material_science, remark, Funding, create_time from maintenance_record
+    </sql>
+
+    <select id="selectMaintenanceRecordList" parameterType="MaintenanceRecord" resultMap="MaintenanceRecordResult">
+        <include refid="selectMaintenanceRecordVo"/>
+        <where>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="problem != null  and problem != ''"> and problem = #{problem}</if>
+            <if test="time != null "> and time = #{time}</if>
+            <if test="personCharge != null  and personCharge != ''"> and person_charge = #{personCharge}</if>
+            <if test="rectificationTime != null "> and rectification_time = #{rectificationTime}</if>
+            <if test="materialScience != null  and materialScience != ''"> and material_science = #{materialScience}</if>
+            <if test="funding != null  and funding != ''"> and Funding = #{funding}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectMaintenanceRecordById" parameterType="Long" resultMap="MaintenanceRecordResult">
+        <include refid="selectMaintenanceRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertMaintenanceRecord" parameterType="MaintenanceRecord">
+        insert into maintenance_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="unitName != null">unit_name,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="problem != null">problem,</if>
+            <if test="time != null">time,</if>
+            <if test="personCharge != null">person_charge,</if>
+            <if test="rectificationTime != null">rectification_time,</if>
+            <if test="materialScience != null">material_science,</if>
+            <if test="remark != null">remark,</if>
+            <if test="funding != null">Funding,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="unitName != null">#{unitName},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="problem != null">#{problem},</if>
+            <if test="time != null">#{time},</if>
+            <if test="personCharge != null">#{personCharge},</if>
+            <if test="rectificationTime != null">#{rectificationTime},</if>
+            <if test="materialScience != null">#{materialScience},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="funding != null">#{funding},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateMaintenanceRecord" parameterType="MaintenanceRecord">
+        update maintenance_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="problem != null">problem = #{problem},</if>
+            <if test="time != null">time = #{time},</if>
+            <if test="personCharge != null">person_charge = #{personCharge},</if>
+            <if test="rectificationTime != null">rectification_time = #{rectificationTime},</if>
+            <if test="materialScience != null">material_science = #{materialScience},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="funding != null">Funding = #{funding},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMaintenanceRecordById" parameterType="Long">
+        delete from maintenance_record where id = #{id}
+    </delete>
+
+    <delete id="deleteMaintenanceRecordByIds" parameterType="String">
+        delete from maintenance_record where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

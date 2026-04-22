@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.thought.mapper.ThoughtPlanFujianMapper">
+    
+    <resultMap type="ThoughtPlanFujian" id="ThoughtPlanFujianResult">
+        <result property="id"    column="id"    />
+        <result property="planId"    column="plan_id"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="filePath"    column="file_path"    />
+    </resultMap>
+
+    <sql id="selectThoughtPlanFujianVo">
+        select id, plan_id, file_name, file_path from thought_plan_fujian
+    </sql>
+
+    <select id="selectThoughtPlanFujianList" parameterType="ThoughtPlanFujian" resultMap="ThoughtPlanFujianResult">
+        <include refid="selectThoughtPlanFujianVo"/>
+        <where>  
+            <if test="planId != null "> and plan_id = #{planId}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="filePath != null  and filePath != ''"> and file_path = #{filePath}</if>
+        </where>
+    </select>
+    
+    <select id="selectThoughtPlanFujianById" parameterType="Long" resultMap="ThoughtPlanFujianResult">
+        <include refid="selectThoughtPlanFujianVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertThoughtPlanFujian" parameterType="ThoughtPlanFujian" useGeneratedKeys="true" keyProperty="id">
+        insert into thought_plan_fujian
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="planId != null">plan_id,</if>
+            <if test="fileName != null">file_name,</if>
+            <if test="filePath != null">file_path,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="planId != null">#{planId},</if>
+            <if test="fileName != null">#{fileName},</if>
+            <if test="filePath != null">#{filePath},</if>
+         </trim>
+    </insert>
+
+    <update id="updateThoughtPlanFujian" parameterType="ThoughtPlanFujian">
+        update thought_plan_fujian
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="planId != null">plan_id = #{planId},</if>
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="filePath != null">file_path = #{filePath},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteThoughtPlanFujianById" parameterType="Long">
+        delete from thought_plan_fujian where id = #{id}
+    </delete>
+
+    <delete id="deleteThoughtPlanFujianByIds" parameterType="String">
+        delete from thought_plan_fujian where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteThoughtPlanFujian">
+        delete from thought_plan_fujian where plan_id = #{planId}
+    </delete>
+</mapper>

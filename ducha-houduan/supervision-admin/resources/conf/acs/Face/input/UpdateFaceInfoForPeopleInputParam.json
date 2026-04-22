@@ -1,0 +1,31 @@
+{
+  "faceURL": "${faceURL}",              // 【可选】人脸图片URL方式上传时输入的图片存储URL（字符串类型，范围 [0,256]）
+  "name": "${name}",                    // 【必填】人脸图片对应的人员姓名（字符串类型，范围 [0,96]）
+  "gender": "${gender}",                // 【可选】人员性别 [male#男, female#女, unknown#未知]（枚举类型）
+  "bornTime": "${bornTime}",            // 【必填】出生日期（日期类型，格式如 "1970-01-01+08:00"）
+  "city": "${city}",                    // 【可选】人员出生城市编号（参考全国行政区划代码）
+  "certificateType": "${certificateType}",  // 【可选】证件类型 [ID#身份证]（枚举类型）
+  "certificateNumber": "${certificateNumber}",  // 【可选】证件号（字符串类型）
+  "caseInfo": "${caseInfo}",            // 【可选】备注信息（字符串类型，范围 [0,192]，名单库 blackFD 适用）
+  "tag": "${tag}",                      // 【可选】自定义标签（多个标签用英文逗号分隔，最多4个标签，每个标签最长48字节，总长度 ≤195字节）
+  "address": "${address}",              // 【可选】人员住址（字符串类型，静态库 staticFD 适用）
+  "customInfo": "${customInfo}",        // 【可选】自定义信息（字符串类型，静态库 staticFD 适用）
+  "modelData": "${modelData}",          // 【可选】目标模型数据（base64 编码后的字符串，用于传输二进制非建模数据）
+  "rowKey": "${rowKey}",                // 【可选】人脸记录数据库主键（字符串类型，最大长度64字节，用于加速查询）
+  "transfer": ${transfer},              // 【可选】是否转存（布控网关 PBG 对接时使用，true 表示转存；布尔类型）
+  "PicFeaturePoints": [                 // 【可选】图片特征点信息列表
+    {
+      "featurePointType": "${featurePointType}",  // 【必填】特征点类型 [face#人脸, leftEye#左眼, rightEye#右眼, leftMouthCorner#左嘴角, rightMouthCorner#右嘴角, nose#鼻子]
+      "coordinatePoint": {              // 【可选】特征点区域坐标（原点位于左上角）
+        "x": ${x},                      // 【必填】x 坐标（整数类型，范围 [0,1000]，已归一化）
+        "y": ${y},                      // 【必填】y 坐标（整数类型，范围 [0,1000]，已归一化）
+        "width": ${width},              // 【可选】宽度（整数类型，范围 [0,1000]，当类型为 face 时必填）
+        "height": ${height}             // 【可选】高度（整数类型，范围 [0,1000]，当类型为 face 时必填）
+      }
+    }
+  ],
+  "faceType": "${faceType}",            // 【可选】人脸类型 [normalFace#普通人脸, patrolFace#巡更人脸, hijackFace#胁迫人脸, superFace#超级人脸]
+  "saveFacePic": ${saveFacePic},        // 【可选】是否保存人脸底图（布尔类型，true 表示保存）
+  "leaderPermission": [${leaderPermission}]  // 【可选】首次认证权限（整型数组，范围 [1,4]；为空数组表示清空权限）
+  // 表示人员具有门编号 1、2、3、4 的首次认证权限
+}

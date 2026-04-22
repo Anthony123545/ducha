@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.materialManagement.mapper.MaterialRegistrationMapper">
+    
+    <resultMap type="MaterialRegistration" id="MaterialRegistrationResult">
+        <result property="id"    column="id"    />
+        <result property="barcode"    column="barcode"    />
+        <result property="wuPinType"    column="wu_pin_type"    />
+        <result property="name"    column="name"    />
+        <result property="materialSpecification"    column="material_specification"    />
+        <result property="materialXh"    column="material_xh"    />
+        <result property="yingJuType"    column="ying_ju_type"    />
+        <result property="responsibilityUnit"    column="responsibility_unit"    />
+        <result property="personLiable"    column="person_liable"    />
+        <result property="putInt"    column="put_int"    />
+        <result property="createName"    column="create_name"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="storageTime"    column="storage_time"    />
+        <result property="inboundNo"    column="inbound_no"    />
+        <result property="storageLocation"    column="storage_location"    />
+        <result property="buyingTime"    column="buying_time"    />
+        <result property="price"    column="price"    />
+        <result property="remark"    column="remark"    />
+        <result property="warehouse"    column="warehouse"    />
+        <result property="archivesId"    column="archives_id"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="total"    column="total"    />
+    </resultMap>
+
+    <sql id="selectMaterialRegistrationVo">
+        select id,barcode, wu_pin_type, name, material_specification, material_xh, ying_ju_type, responsibility_unit, person_liable, put_int, create_name, create_time, storage_time, inbound_no, storage_location, buying_time, price, remark, warehouse, archives_id,unit_id,total from material_registration
+    </sql>
+
+    <select id="selectMaterialRegistrationList" parameterType="MaterialRegistration" resultMap="MaterialRegistrationResult">
+        <include refid="selectMaterialRegistrationVo"/>
+        <where>  
+            <if test="wuPinType != null  and wuPinType != ''"> and wu_pin_type = #{wuPinType}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="materialSpecification != null  and materialSpecification != ''"> and material_specification = #{materialSpecification}</if>
+            <if test="materialXh != null  and materialXh != ''"> and material_xh = #{materialXh}</if>
+            <if test="yingJuType != null  and yingJuType != ''"> and ying_ju_type = #{yingJuType}</if>
+            <if test="responsibilityUnit != null  and responsibilityUnit != ''"> and responsibility_unit = #{responsibilityUnit}</if>
+            <if test="personLiable != null  and personLiable != ''"> and person_liable = #{personLiable}</if>
+            <if test="putInt != null "> and put_int = #{putInt}</if>
+            <if test="createName != null  and createName != ''"> and create_name like concat('%', #{createName}, '%')</if>
+            <if test="storageTime != null "> and storage_time = #{storageTime}</if>
+            <if test="inboundNo != null  and inboundNo != ''"> and inbound_no = #{inboundNo}</if>
+            <if test="storageLocation != null  and storageLocation != ''"> and storage_location = #{storageLocation}</if>
+            <if test="buyingTime != null "> and buying_time = #{buyingTime}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="warehouse != null  and warehouse != ''"> and warehouse = #{warehouse}</if>
+            <if test="archivesId != null "> and archives_id = #{archivesId}</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="total != null "> and total = #{total}</if>
+        </where>
+        order by id desc
+    </select>
+    
+    <select id="selectMaterialRegistrationById" parameterType="Long" resultMap="MaterialRegistrationResult">
+        <include refid="selectMaterialRegistrationVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectMaterialRegistrationByBarCode" resultMap="MaterialRegistrationResult">
+        select id,price from material_registration where barcode = #{barcode}
+    </select>
+
+    <insert id="insertMaterialRegistration" parameterType="MaterialRegistration">
+        insert into material_registration
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="barcode != null">barcode,</if>
+            <if test="wuPinType != null">wu_pin_type,</if>
+            <if test="name != null">name,</if>
+            <if test="materialSpecification != null">material_specification,</if>
+            <if test="materialXh != null">material_xh,</if>
+            <if test="yingJuType != null">ying_ju_type,</if>
+            <if test="responsibilityUnit != null">responsibility_unit,</if>
+            <if test="personLiable != null">person_liable,</if>
+            <if test="putInt != null">put_int,</if>
+            <if test="createName != null">create_name,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="storageTime != null">storage_time,</if>
+            <if test="inboundNo != null">inbound_no,</if>
+            <if test="storageLocation != null">storage_location,</if>
+            <if test="buyingTime != null">buying_time,</if>
+            <if test="price != null">price,</if>
+            <if test="remark != null">remark,</if>
+            <if test="warehouse != null">warehouse,</if>
+            <if test="archivesId != null">archives_id,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="total != null">total,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="barcode != null">#{barcode},</if>
+            <if test="wuPinType != null">#{wuPinType},</if>
+            <if test="name != null">#{name},</if>
+            <if test="materialSpecification != null">#{materialSpecification},</if>
+            <if test="materialXh != null">#{materialXh},</if>
+            <if test="yingJuType != null">#{yingJuType},</if>
+            <if test="responsibilityUnit != null">#{responsibilityUnit},</if>
+            <if test="personLiable != null">#{personLiable},</if>
+            <if test="putInt != null">#{putInt},</if>
+            <if test="createName != null">#{createName},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="storageTime != null">#{storageTime},</if>
+            <if test="inboundNo != null">#{inboundNo},</if>
+            <if test="storageLocation != null">#{storageLocation},</if>
+            <if test="buyingTime != null">#{buyingTime},</if>
+            <if test="price != null">#{price},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="warehouse != null">#{warehouse},</if>
+            <if test="archivesId != null">#{archivesId},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="total != null">#{total},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMaterialRegistration" parameterType="MaterialRegistration">
+        update material_registration
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="wuPinType != null">wu_pin_type = #{wuPinType},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="materialSpecification != null">material_specification = #{materialSpecification},</if>
+            <if test="materialXh != null">material_xh = #{materialXh},</if>
+            <if test="yingJuType != null">ying_ju_type = #{yingJuType},</if>
+            <if test="responsibilityUnit != null">responsibility_unit = #{responsibilityUnit},</if>
+            <if test="personLiable != null">person_liable = #{personLiable},</if>
+            <if test="putInt != null">put_int = #{putInt},</if>
+            <if test="createName != null">create_name = #{createName},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="storageTime != null">storage_time = #{storageTime},</if>
+            <if test="inboundNo != null">inbound_no = #{inboundNo},</if>
+            <if test="storageLocation != null">storage_location = #{storageLocation},</if>
+            <if test="buyingTime != null">buying_time = #{buyingTime},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="warehouse != null">warehouse = #{warehouse},</if>
+            <if test="archivesId != null">archives_id = #{archivesId},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="total != null">total = #{total},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMaterialRegistrationById" parameterType="Long">
+        delete from material_registration where id = #{id}
+    </delete>
+
+    <delete id="deleteMaterialRegistrationByIds" parameterType="String">
+        delete from material_registration where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectMaterialStorageByWarehouse" resultType="java.util.Map">
+        select * from material_registration join material_archives on material_registration.barcode = material_archives.barcode where material_registration.warehouse = #{warehouse}
+    </select>
+</mapper>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.medicalhealth.mapper.BdglRecuperateMapper">
+
+    <resultMap type="BdglRecuperate" id="BdglRecuperateResult">
+        <result property="id"    column="id"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="type"    column="type"    />
+        <result property="number"    column="number"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="unitId1"    column="unit_id1"    />
+        <result property="unitId2"    column="unit_id2"    />
+        <result property="unitId3"    column="unit_id3"    />
+        <result property="peopleId1"    column="people_id1"    />
+        <result property="peopleId2"    column="people_id2"    />
+        <result property="peopleId3"    column="people_id3"    />
+        <result property="status1"    column="status1"    />
+        <result property="status2"    column="status2"    />
+        <result property="status3"    column="status3"    />
+        <result property="peopleState1"    column="people_state1"    />
+        <result property="peopleState2"    column="people_state2"    />
+        <result property="peopleState3"    column="people_state3"    />
+        <result property="people1Remark"    column="people1_remark"    />
+        <result property="people2Remark"    column="people2_remark"    />
+        <result property="people3Remark"    column="people3_remark"    />
+        <result property="people1Authtime"    column="people1_authtime"    />
+        <result property="people2Authtime"    column="people2_authtime"    />
+        <result property="people3Authtime"    column="people3_authtime"    />
+        <result property="status"    column="status"    />
+        <result property="job"    column="job"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="unitName1"    column="unit_name1"    />
+        <result property="unitName2"    column="unit_name2"    />
+        <result property="unitName3"    column="unit_name3"    />
+        <result property="peopleName"    column="people_name"    />
+        <result property="peopleName1"    column="people_name1"    />
+        <result property="peopleName2"    column="people_name2"    />
+        <result property="peopleName3"    column="people_name3"    />
+        <result property="address"    column="address"    />
+        <result property="reasons"    column="reasons"    />
+    </resultMap>
+
+    <sql id="selectBdglRecuperateVo">
+        select id, unit_id, people_id, type, number, start_time, end_time, remark, createtime, updatetime, unit_id1, unit_id2, unit_id3, people_id1, people_id2, people_id3, status1, status2, status3, people_state1, people_state2, people_state3, people1_remark, people2_remark, people3_remark, people1_authtime, people2_authtime, people3_authtime, status, job, unit_name, unit_name1, unit_name2, unit_name3, people_name, people_name1, people_name2, people_name3,address,reasons from bdgl_recuperate
+    </sql>
+
+    <select id="selectBdglRecuperateList" parameterType="BdglRecuperate" resultMap="BdglRecuperateResult">
+        <include refid="selectBdglRecuperateVo"/>
+        <where>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="peopleId != null "> and people_id = #{peopleId}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="number != null  and number != ''"> and number = #{number}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="createtime != null  and createtime != ''"> and createtime = #{createtime}</if>
+            <if test="updatetime != null  and updatetime != ''"> and updatetime = #{updatetime}</if>
+            <if test="unitId1 != null "> and unit_id1 = #{unitId1}</if>
+            <if test="unitId2 != null "> and unit_id2 = #{unitId2}</if>
+            <if test="unitId3 != null "> and unit_id3 = #{unitId3}</if>
+            <if test="peopleId1 != null "> and people_id1 = #{peopleId1}</if>
+            <if test="peopleId2 != null "> and people_id2 = #{peopleId2}</if>
+            <if test="peopleId3 != null "> and people_id3 = #{peopleId3}</if>
+            <if test="status1 != null  and status1 != ''"> and status1 = #{status1}</if>
+            <if test="status2 != null  and status2 != ''"> and status2 = #{status2}</if>
+            <if test="status3 != null  and status3 != ''"> and status3 = #{status3}</if>
+            <if test="peopleState1 != null "> and people_state1 = #{peopleState1}</if>
+            <if test="peopleState2 != null "> and people_state2 = #{peopleState2}</if>
+            <if test="peopleState3 != null "> and people_state3 = #{peopleState3}</if>
+            <if test="people1Remark != null  and people1Remark != ''"> and people1_remark = #{people1Remark}</if>
+            <if test="people2Remark != null  and people2Remark != ''"> and people2_remark = #{people2Remark}</if>
+            <if test="people3Remark != null  and people3Remark != ''"> and people3_remark = #{people3Remark}</if>
+            <if test="people1Authtime != null  and people1Authtime != ''"> and people1_authtime = #{people1Authtime}</if>
+            <if test="people2Authtime != null  and people2Authtime != ''"> and people2_authtime = #{people2Authtime}</if>
+            <if test="people3Authtime != null  and people3Authtime != ''"> and people3_authtime = #{people3Authtime}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="job != null  and job != ''"> and job = #{job}</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="unitName1 != null  and unitName1 != ''"> and unit_name1 = #{unitName1}</if>
+            <if test="unitName2 != null  and unitName2 != ''"> and unit_name2 = #{unitName2}</if>
+            <if test="unitName3 != null  and unitName3 != ''"> and unit_name3 = #{unitName3}</if>
+            <if test="peopleName != null  and peopleName != ''"> and people_name like concat('%', #{peopleName}, '%')</if>
+            <if test="peopleName1 != null  and peopleName1 != ''"> and people_name1 = #{peopleName1}</if>
+            <if test="peopleName2 != null  and peopleName2 != ''"> and people_name2 = #{peopleName2}</if>
+            <if test="peopleName3 != null  and peopleName3 != ''"> and people_name3 = #{peopleName3}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="reasons != null  and reasons != ''"> and reasons = #{reasons}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectBdglRecuperateById" parameterType="Integer" resultMap="BdglRecuperateResult">
+        <include refid="selectBdglRecuperateVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglRecuperate" parameterType="BdglRecuperate" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_recuperate
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="unitId != null">unit_id,</if>
+            <if test="peopleId != null">people_id,</if>
+            <if test="type != null">type,</if>
+            <if test="number != null">number,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="unitId1 != null">unit_id1,</if>
+            <if test="unitId2 != null">unit_id2,</if>
+            <if test="unitId3 != null">unit_id3,</if>
+            <if test="peopleId1 != null">people_id1,</if>
+            <if test="peopleId2 != null">people_id2,</if>
+            <if test="peopleId3 != null">people_id3,</if>
+            <if test="status1 != null">status1,</if>
+            <if test="status2 != null">status2,</if>
+            <if test="status3 != null">status3,</if>
+            <if test="peopleState1 != null">people_state1,</if>
+            <if test="peopleState2 != null">people_state2,</if>
+            <if test="peopleState3 != null">people_state3,</if>
+            <if test="people1Remark != null">people1_remark,</if>
+            <if test="people2Remark != null">people2_remark,</if>
+            <if test="people3Remark != null">people3_remark,</if>
+            <if test="people1Authtime != null">people1_authtime,</if>
+            <if test="people2Authtime != null">people2_authtime,</if>
+            <if test="people3Authtime != null">people3_authtime,</if>
+            <if test="status != null">status,</if>
+            <if test="job != null">job,</if>
+            <if test="unitName != null">unit_name,</if>
+            <if test="unitName1 != null">unit_name1,</if>
+            <if test="unitName2 != null">unit_name2,</if>
+            <if test="unitName3 != null">unit_name3,</if>
+            <if test="peopleName != null">people_name,</if>
+            <if test="peopleName1 != null">people_name1,</if>
+            <if test="peopleName2 != null">people_name2,</if>
+            <if test="peopleName3 != null">people_name3,</if>
+            <if test="address != null">address,</if>
+            <if test="reasons != null">reasons,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="unitId != null">#{unitId},</if>
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="type != null">#{type},</if>
+            <if test="number != null">#{number},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="unitId1 != null">#{unitId1},</if>
+            <if test="unitId2 != null">#{unitId2},</if>
+            <if test="unitId3 != null">#{unitId3},</if>
+            <if test="peopleId1 != null">#{peopleId1},</if>
+            <if test="peopleId2 != null">#{peopleId2},</if>
+            <if test="peopleId3 != null">#{peopleId3},</if>
+            <if test="status1 != null">#{status1},</if>
+            <if test="status2 != null">#{status2},</if>
+            <if test="status3 != null">#{status3},</if>
+            <if test="peopleState1 != null">#{peopleState1},</if>
+            <if test="peopleState2 != null">#{peopleState2},</if>
+            <if test="peopleState3 != null">#{peopleState3},</if>
+            <if test="people1Remark != null">#{people1Remark},</if>
+            <if test="people2Remark != null">#{people2Remark},</if>
+            <if test="people3Remark != null">#{people3Remark},</if>
+            <if test="people1Authtime != null">#{people1Authtime},</if>
+            <if test="people2Authtime != null">#{people2Authtime},</if>
+            <if test="people3Authtime != null">#{people3Authtime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="job != null">#{job},</if>
+            <if test="unitName != null">#{unitName},</if>
+            <if test="unitName1 != null">#{unitName1},</if>
+            <if test="unitName2 != null">#{unitName2},</if>
+            <if test="unitName3 != null">#{unitName3},</if>
+            <if test="peopleName != null">#{peopleName},</if>
+            <if test="peopleName1 != null">#{peopleName1},</if>
+            <if test="peopleName2 != null">#{peopleName2},</if>
+            <if test="peopleName3 != null">#{peopleName3},</if>
+            <if test="address != null">#{address},</if>
+            <if test="reasons != null">#{reasons},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglRecuperate" parameterType="BdglRecuperate">
+        update bdgl_recuperate
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="number != null">number = #{number},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="unitId1 != null">unit_id1 = #{unitId1},</if>
+            <if test="unitId2 != null">unit_id2 = #{unitId2},</if>
+            <if test="unitId3 != null">unit_id3 = #{unitId3},</if>
+            <if test="peopleId1 != null">people_id1 = #{peopleId1},</if>
+            <if test="peopleId2 != null">people_id2 = #{peopleId2},</if>
+            <if test="peopleId3 != null">people_id3 = #{peopleId3},</if>
+            <if test="status1 != null">status1 = #{status1},</if>
+            <if test="status2 != null">status2 = #{status2},</if>
+            <if test="status3 != null">status3 = #{status3},</if>
+            <if test="peopleState1 != null">people_state1 = #{peopleState1},</if>
+            <if test="peopleState2 != null">people_state2 = #{peopleState2},</if>
+            <if test="peopleState3 != null">people_state3 = #{peopleState3},</if>
+            <if test="people1Remark != null">people1_remark = #{people1Remark},</if>
+            <if test="people2Remark != null">people2_remark = #{people2Remark},</if>
+            <if test="people3Remark != null">people3_remark = #{people3Remark},</if>
+            <if test="people1Authtime != null">people1_authtime = #{people1Authtime},</if>
+            <if test="people2Authtime != null">people2_authtime = #{people2Authtime},</if>
+            <if test="people3Authtime != null">people3_authtime = #{people3Authtime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="job != null">job = #{job},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="unitName1 != null">unit_name1 = #{unitName1},</if>
+            <if test="unitName2 != null">unit_name2 = #{unitName2},</if>
+            <if test="unitName3 != null">unit_name3 = #{unitName3},</if>
+            <if test="peopleName != null">people_name = #{peopleName},</if>
+            <if test="peopleName1 != null">people_name1 = #{peopleName1},</if>
+            <if test="peopleName2 != null">people_name2 = #{peopleName2},</if>
+            <if test="peopleName3 != null">people_name3 = #{peopleName3},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="reasons != null">reasons = #{reasons},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglRecuperateById" parameterType="Integer">
+        delete from bdgl_recuperate where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglRecuperateByIds" parameterType="String">
+        delete from bdgl_recuperate where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.medicalhealth.mapper.BdglAnnouncementMapper">
+    
+    <resultMap type="BdglAnnouncement" id="BdglAnnouncementResult">
+        <result property="id"    column="id"    />
+        <result property="file"    column="file"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+    </resultMap>
+
+    <sql id="selectBdglAnnouncementVo">
+        select id, file, file_name, createtime, updatetime from bdgl_announcement
+    </sql>
+
+    <select id="selectBdglAnnouncementList" parameterType="BdglAnnouncement" resultMap="BdglAnnouncementResult">
+        <include refid="selectBdglAnnouncementVo"/>
+        <where>  
+            <if test="file != null  and file != ''"> and file = #{file}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="createtime != null  and createtime != ''"> and createtime = #{createtime}</if>
+            <if test="updatetime != null  and updatetime != ''"> and updatetime = #{updatetime}</if>
+        </where>
+    </select>
+    
+    <select id="selectBdglAnnouncementById" parameterType="Integer" resultMap="BdglAnnouncementResult">
+        <include refid="selectBdglAnnouncementVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBdglAnnouncement" parameterType="BdglAnnouncement" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_announcement
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="file != null">file,</if>
+            <if test="fileName != null">file_name,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="file != null">#{file},</if>
+            <if test="fileName != null">#{fileName},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglAnnouncement" parameterType="BdglAnnouncement">
+        update bdgl_announcement
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="file != null">file = #{file},</if>
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglAnnouncementById" parameterType="Integer">
+        delete from bdgl_announcement where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglAnnouncementByIds" parameterType="String">
+        delete from bdgl_announcement where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

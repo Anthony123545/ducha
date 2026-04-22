@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.barracksManagement.mapper.BdglRepairMapper">
+    
+    <resultMap type="BdglRepair" id="BdglRepairResult">
+        <result property="id"    column="id"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="contactInformation"    column="contact_information"    />
+        <result property="addressUnit"    column="address_unit"    />
+        <result property="repairType"    column="repair_type"    />
+        <result property="description"    column="description"    />
+        <result property="state"    column="state"    />
+    </resultMap>
+
+    <sql id="selectBdglRepairVo">
+        select id, contacts, contact_information, address_unit, repair_type, description, state from bdgl_repair
+    </sql>
+
+    <select id="selectBdglRepairList" parameterType="BdglRepair" resultMap="BdglRepairResult">
+        <include refid="selectBdglRepairVo"/>
+        <where>  
+            <if test="contacts != null  and contacts != ''"> and contacts = #{contacts}</if>
+            <if test="contactInformation != null  and contactInformation != ''"> and contact_information = #{contactInformation}</if>
+            <if test="addressUnit != null  and addressUnit != ''"> and address_unit = #{addressUnit}</if>
+            <if test="repairType != null "> and repair_type = #{repairType}</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="state != null "> and state = #{state}</if>
+        </where>
+    </select>
+    
+    <select id="selectBdglRepairById" parameterType="Long" resultMap="BdglRepairResult">
+        <include refid="selectBdglRepairVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBdglRepair" parameterType="BdglRepair" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_repair
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="contacts != null">contacts,</if>
+            <if test="contactInformation != null">contact_information,</if>
+            <if test="addressUnit != null">address_unit,</if>
+            <if test="repairType != null">repair_type,</if>
+            <if test="description != null">description,</if>
+            <if test="state != null">state,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="contacts != null">#{contacts},</if>
+            <if test="contactInformation != null">#{contactInformation},</if>
+            <if test="addressUnit != null">#{addressUnit},</if>
+            <if test="repairType != null">#{repairType},</if>
+            <if test="description != null">#{description},</if>
+            <if test="state != null">#{state},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglRepair" parameterType="BdglRepair">
+        update bdgl_repair
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="contacts != null">contacts = #{contacts},</if>
+            <if test="contactInformation != null">contact_information = #{contactInformation},</if>
+            <if test="addressUnit != null">address_unit = #{addressUnit},</if>
+            <if test="repairType != null">repair_type = #{repairType},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="state != null">state = #{state},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglRepairById" parameterType="Long">
+        delete from bdgl_repair where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglRepairByIds" parameterType="String">
+        delete from bdgl_repair where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

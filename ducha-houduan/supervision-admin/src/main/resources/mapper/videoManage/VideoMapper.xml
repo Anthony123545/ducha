@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.web.Hikvision.videoManage.mapper.VideoMapper">
+
+    <!-- 映射数据库字段与实体属性 -->
+    <resultMap id="VideoResultMap" type="com.supervision.web.Hikvision.videoManage.domain.Video">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="deviceType" column="device_type"/>
+        <result property="ip" column="ip"/>
+        <result property="port" column="port"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="channel" column="channel"/>
+        <result property="channelName" column="channel_name"/>
+        <result property="streamType" column="stream_type"/>
+        <result property="streamCode" column="stream_code"/>
+        <result property="rtspPort" column="rtsp_port"/>
+        <result property="rtspUrl" column="rtsp_url"/>
+        <result property="parentDeviceId" column="parent_device_id"/>
+        <result property="enable" column="enable"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <!-- 按条件模糊查询（仅启用的视频） -->
+    <select id="searchByCondition" resultMap="VideoResultMap">
+        SELECT *
+        FROM new_video_info
+        <where>
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="deviceType != null and deviceType != ''">
+                AND device_type = #{deviceType}
+            </if>
+            <if test="enable != null">
+                AND enable = #{enable}
+            </if>
+        </where>
+        ORDER BY id ASC
+    </select>
+
+    <!-- 根据视频名称模糊查询（仅启用的视频） -->
+    <select id="searchByName" parameterType="String" resultMap="VideoResultMap">
+        SELECT *
+        FROM new_video_info
+        WHERE enable = 1
+          AND name LIKE CONCAT('%', #{name}, '%')
+        ORDER BY id DESC
+    </select>
+
+    <!-- 根据 parentDeviceId 查询子视频（仅启用） -->
+    <select id="searchByParentDeviceId" parameterType="long" resultMap="VideoResultMap">
+        SELECT *
+        FROM new_video_info
+        WHERE parent_device_id = #{parentDeviceId}
+          AND enable = 1
+        ORDER BY id DESC
+    </select>
+
+    <!-- 根据ID查询视频设备 -->
+    <select id="searchById" parameterType="long" resultMap="VideoResultMap">
+        SELECT *
+        FROM new_video_info
+        WHERE id = #{id}
+    </select>
+
+    <!-- 根据IP查询视频设备 -->
+    <select id="searchByIp" parameterType="String" resultMap="VideoResultMap">
+        SELECT *
+        FROM new_video_info
+        WHERE ip = #{ip}
+    </select>
+
+    <!-- 根据IP查询视频设备是否存在 -->
+    <select id="existsByIp" parameterType="String" resultType="boolean">
+        SELECT EXISTS(
+            SELECT *
+            FROM new_video_info
+            WHERE ip = #{ip}
+        )
+    </select>
+
+    <!-- 新增视频设备 -->
+    <insert id="insert"
+            parameterType="com.supervision.web.Hikvision.videoManage.domain.Video"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO new_video_info
+        (
+            name,
+            device_type,
+            ip,
+            port,
+            username,
+            password,
+            channel,
+            channel_name,
+            stream_type,
+            stream_code,
+            rtsp_port,
+            rtsp_url,
+            parent_device_id,
+            enable,
+            create_time,
+            update_time
+        )
+        VALUES
+            (
+                #{name,jdbcType=VARCHAR},
+                #{deviceType,jdbcType=INTEGER},
+                #{ip,jdbcType=VARCHAR},
+                #{port,jdbcType=INTEGER},
+                #{username,jdbcType=VARCHAR},
+                #{password,jdbcType=VARCHAR},
+                #{channel,jdbcType=INTEGER},
+                #{channelName,jdbcType=VARCHAR},
+                #{streamType,jdbcType=INTEGER},
+                #{streamCode,jdbcType=VARCHAR},
+                #{rtspPort,jdbcType=INTEGER},
+                #{rtspUrl,jdbcType=VARCHAR},
+                #{parentDeviceId,jdbcType=BIGINT},
+                #{enable,jdbcType=TINYINT},
+                NOW(),
+                NOW()
+            )
+    </insert>
+
+    <insert id="batchInsert">
+        INSERT INTO new_video_info
+        (
+        name,
+        device_type,
+        ip,
+        port,
+        username,
+        password,
+        channel,
+        channel_name,
+        stream_type,
+        stream_code,
+        rtsp_port,
+        rtsp_url,
+        parent_device_id,
+        enable,
+        create_time,
+        update_time
+        )
+        VALUES
+        <foreach collection="list" item="v" separator=",">
+            (
+            #{v.name},
+            #{v.deviceType},
+            #{v.ip},
+            #{v.port},
+            #{v.username},
+            #{v.password},
+            #{v.channel},
+            #{v.channelName},
+            #{v.streamType},
+            #{v.streamCode},
+            #{v.rtspPort},
+            #{v.rtspUrl},
+            #{v.parentDeviceId},
+            #{v.enable},
+            NOW(),
+            NOW()
+            )
+        </foreach>
+    </insert>
+
+    <!-- 更新视频设备信息 -->
+    <update id="update" parameterType="com.supervision.web.Hikvision.videoManage.domain.Video">
+        UPDATE new_video_info
+        SET
+            name = #{name},
+            device_type = #{deviceType},
+            ip = #{ip},
+            port = #{port},
+            username = #{username},
+            password = #{password},
+            channel = #{channel},
+            channel_name = #{channelName},
+            stream_type = #{streamType},
+            stream_code = #{streamCode},
+            rtsp_port = #{rtspPort},
+            rtsp_url = #{rtspUrl},
+            parent_device_id = #{parentDeviceId},
+            enable = #{enable},
+            update_time = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <update id="setParentDeviceId">
+        UPDATE new_video_info
+        SET parent_device_id = #{parentDeviceId}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 将绑定到指定设备的所有视频的 parentDeviceId 置为 null -->
+    <update id="unsetParentDeviceIdByDeviceId">
+        UPDATE new_video_info
+        SET parent_device_id = NULL
+        WHERE parent_device_id = #{parentDeviceId}
+    </update>
+
+    <update id="unsetParentDeviceIds">
+        UPDATE new_video_info
+        SET parent_device_id = NULL
+        WHERE parent_device_id IN
+        <foreach collection="parentDeviceIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <!-- 根据ID删除视频设备 -->
+    <delete id="deleteById" parameterType="long">
+        DELETE FROM new_video_info
+        WHERE id = #{id}
+    </delete>
+
+    <!-- 批量删除视频设备 -->
+    <delete id="batchDelete" parameterType="java.util.List">
+        DELETE FROM new_video_info
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

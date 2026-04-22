@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.militaryvehicleManagement.mapper.BdglThebusThemplateMapper">
+
+    <resultMap type="BdglThebusThemplate" id="BdglThebusThemplateResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="people1Id"    column="people1_id"    />
+        <result property="people2Id"    column="people2_id"    />
+        <result property="people3Id"    column="people3_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="peopleName1"    column="people_name1"    />
+        <result property="peopleName2"    column="people_name2"    />
+        <result property="peopleName3"    column="people_name3"    />
+    </resultMap>
+
+    <sql id="selectBdglThebusThemplateVo">
+        select id, name, people1_id, people2_id, people3_id, create_time, update_time, people_name1, people_name2, people_name3 from bdgl_thebus_themplate
+    </sql>
+
+    <select id="selectBdglThebusThemplateList" parameterType="BdglThebusThemplate" resultMap="BdglThebusThemplateResult">
+        <include refid="selectBdglThebusThemplateVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="people1Id != null "> and people1_id = #{people1Id}</if>
+            <if test="people2Id != null "> and people2_id = #{people2Id}</if>
+            <if test="people3Id != null "> and people3_id = #{people3Id}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="peopleName1 != null  and peopleName1 != ''"> and people_name1 = #{peopleName1}</if>
+            <if test="peopleName2 != null  and peopleName2 != ''"> and people_name2 = #{peopleName2}</if>
+            <if test="peopleName3 != null  and peopleName3 != ''"> and people_name3 = #{peopleName3}</if>
+        </where>
+    </select>
+
+    <select id="selectBdglThebusThemplateById" parameterType="Integer" resultMap="BdglThebusThemplateResult">
+        <include refid="selectBdglThebusThemplateVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglThebusThemplate" parameterType="BdglThebusThemplate" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_thebus_themplate
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="people1Id != null">people1_id,</if>
+            <if test="people2Id != null">people2_id,</if>
+            <if test="people3Id != null">people3_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="peopleName1 != null">people_name1,</if>
+            <if test="peopleName2 != null">people_name2,</if>
+            <if test="peopleName3 != null">people_name3,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="people1Id != null">#{people1Id},</if>
+            <if test="people2Id != null">#{people2Id},</if>
+            <if test="people3Id != null">#{people3Id},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="peopleName1 != null">#{peopleName1},</if>
+            <if test="peopleName2 != null">#{peopleName2},</if>
+            <if test="peopleName3 != null">#{peopleName3},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglThebusThemplate" parameterType="BdglThebusThemplate">
+        update bdgl_thebus_themplate
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="people1Id != null">people1_id = #{people1Id},</if>
+            <if test="people2Id != null">people2_id = #{people2Id},</if>
+            <if test="people3Id != null">people3_id = #{people3Id},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="peopleName1 != null">people_name1 = #{peopleName1},</if>
+            <if test="peopleName2 != null">people_name2 = #{peopleName2},</if>
+            <if test="peopleName3 != null">people_name3 = #{peopleName3},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglThebusThemplateById" parameterType="Integer">
+        delete from bdgl_thebus_themplate where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglThebusThemplateByIds" parameterType="String">
+        delete from bdgl_thebus_themplate where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.combatduty.mapper.PeopleStatisticsMapper">
+
+    <resultMap type="PeopleStatistics" id="PeopleStatisticsResult">
+        <result property="id"    column="id"    />
+        <result property="totalNumber"    column="total_number"    />
+        <result property="nabianPlace"    column="nabian_place"    />
+        <result property="notInPlace"    column="not_in_place"    />
+        <result property="nabianOut"    column="nabian_out"    />
+        <result property="notNabianOut"    column="not_nabian_out"    />
+        <result property="toggle"    column="toggle"    />
+    </resultMap>
+
+    <sql id="selectPeopleStatisticsVo">
+        select id, total_number, nabian_place, not_in_place, nabian_out, not_nabian_out, toggle from people_statistics
+    </sql>
+
+    <select id="selectPeopleStatisticsList" parameterType="PeopleStatistics" resultMap="PeopleStatisticsResult">
+        <include refid="selectPeopleStatisticsVo"/>
+        <where>
+            <if test="totalNumber != null  and totalNumber != ''"> and total_number = #{totalNumber}</if>
+            <if test="nabianPlace != null  and nabianPlace != ''"> and nabian_place = #{nabianPlace}</if>
+            <if test="notInPlace != null  and notInPlace != ''"> and not_in_place = #{notInPlace}</if>
+            <if test="nabianOut != null  and nabianOut != ''"> and nabian_out = #{nabianOut}</if>
+            <if test="notNabianOut != null  and notNabianOut != ''"> and not_nabian_out = #{notNabianOut}</if>
+            <if test="toggle != null  and toggle != ''"> and toggle = #{toggle}</if>
+        </where>
+    </select>
+
+    <select id="selectPeopleStatisticsById" parameterType="Integer" resultMap="PeopleStatisticsResult">
+        <include refid="selectPeopleStatisticsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPeopleStatistics" parameterType="PeopleStatistics">
+        insert into people_statistics
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="totalNumber != null">total_number,</if>
+            <if test="nabianPlace != null">nabian_place,</if>
+            <if test="notInPlace != null">not_in_place,</if>
+            <if test="nabianOut != null">nabian_out,</if>
+            <if test="notNabianOut != null">not_nabian_out,</if>
+            <if test="toggle != null">toggle,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="totalNumber != null">#{totalNumber},</if>
+            <if test="nabianPlace != null">#{nabianPlace},</if>
+            <if test="notInPlace != null">#{notInPlace},</if>
+            <if test="nabianOut != null">#{nabianOut},</if>
+            <if test="notNabianOut != null">#{notNabianOut},</if>
+            <if test="toggle != null">#{toggle},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePeopleStatistics" parameterType="PeopleStatistics">
+        update people_statistics
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="totalNumber != null">total_number = #{totalNumber},</if>
+            <if test="nabianPlace != null">nabian_place = #{nabianPlace},</if>
+            <if test="notInPlace != null">not_in_place = #{notInPlace},</if>
+            <if test="nabianOut != null">nabian_out = #{nabianOut},</if>
+            <if test="notNabianOut != null">not_nabian_out = #{notNabianOut},</if>
+            <if test="toggle != null">toggle = #{toggle},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePeopleStatisticsById" parameterType="Integer">
+        delete from people_statistics where id = #{id}
+    </delete>
+
+    <delete id="deletePeopleStatisticsByIds" parameterType="String">
+        delete from people_statistics where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

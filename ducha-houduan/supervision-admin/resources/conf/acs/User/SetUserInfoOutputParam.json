@@ -1,0 +1,7 @@
+{
+  "statusCode": 1,              // 【只读，可选】状态码，int类型，1表示成功且无特殊状态
+  "statusString": "ok",         // 【只读，可选】状态描述，string类型，ok表示成功且无特殊状态
+  "subStatusCode": "ok",        // 【只读，可选】子状态码，string类型，ok表示成功且无特殊状态
+  "errorCode": 1,               // 【只读，可选】错误码，int类型，当statusCode不为1时，与subStatusCode对应
+  "errorMsg": "ok"              // 【只读，可选】错误信息，string类型，当statusCode不为1时必须返回，用于解释错误
+}

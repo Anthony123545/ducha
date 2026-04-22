@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.medicalhealth.mapper.BdglDurgPutoutMapper">
+
+    <resultMap type="BdglDurgPutout" id="BdglDurgPutoutResult">
+        <result property="id"    column="id"    />
+        <result property="durgArchivesId"    column="durg_archives_id"    />
+        <result property="putOut"    column="put_out"    />
+        <result property="place"    column="place"    />
+        <result property="purpose"    column="purpose"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="putTime"    column="put_time"    />
+        <result property="receiveId"    column="receive_id"    />
+        <result property="adminId"    column="admin_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="durgBrand"    column="durg_brand"    />
+        <result property="manufacturer"    column="manufacturer"    />
+        <result property="specifications"    column="specifications"    />
+        <result property="productIntroduction"    column="product_introduction"    />
+        <result property="number"    column="number"    />
+        <result property="storeHouse"    column="store_house"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="unitId1"    column="unit_id1"    />
+        <result property="unitName1"    column="unit_name1"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="durgName"    column="durg_name"    />
+        <result property="peopleName"    column="people_name"    />
+        <result property="inId"    column="in_id"    />
+    </resultMap>
+
+    <sql id="selectBdglDurgPutoutVo">
+        select id, durg_archives_id, put_out, place, purpose, remarks, put_time, receive_id, admin_id, create_time, update_time, durg_brand, manufacturer, specifications, product_introduction, number, store_house, unit_id, unit_id1, unit_name1, unit_name, durg_name, people_name,in_id from bdgl_durg_putout
+    </sql>
+
+    <select id="selectBdglDurgPutoutList" parameterType="BdglDurgPutout" resultMap="BdglDurgPutoutResult">
+        <include refid="selectBdglDurgPutoutVo"/>
+        <where>
+            <if test="durgArchivesId != null "> and durg_archives_id = #{durgArchivesId}</if>
+            <if test="putOut != null "> and put_out = #{putOut}</if>
+            <if test="place != null  and place != ''"> and place = #{place}</if>
+            <if test="purpose != null  and purpose != ''"> and purpose = #{purpose}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="putTime != null "> and put_time = #{putTime}</if>
+            <if test="receiveId != null "> and receive_id = #{receiveId}</if>
+            <if test="adminId != null "> and admin_id = #{adminId}</if>
+            <if test="durgBrand != null  and durgBrand != ''"> and durg_brand = #{durgBrand}</if>
+            <if test="manufacturer != null  and manufacturer != ''"> and manufacturer = #{manufacturer}</if>
+            <if test="specifications != null  and specifications != ''"> and specifications = #{specifications}</if>
+            <if test="productIntroduction != null  and productIntroduction != ''"> and product_introduction = #{productIntroduction}</if>
+            <if test="number != null  and number != ''"> and number = #{number}</if>
+            <if test="storeHouse != null "> and store_house = #{storeHouse}</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="unitId1 != null "> and unit_id1 = #{unitId1}</if>
+            <if test="unitName1 != null  and unitName1 != ''"> and unit_name1 = #{unitName1}</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="durgName != null  and durgName != ''"> and durg_name like concat('%', #{durgName}, '%')</if>
+            <if test="peopleName != null  and peopleName != ''"> and people_name like concat('%', #{peopleName}, '%')</if>
+            <if test="inId != null "> and in_id = #{inId}</if>
+        </where>
+    </select>
+
+    <select id="selectBdglDurgPutoutById" parameterType="Long" resultMap="BdglDurgPutoutResult">
+        <include refid="selectBdglDurgPutoutVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglDurgPutout" parameterType="BdglDurgPutout" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_durg_putout
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="durgArchivesId != null">durg_archives_id,</if>
+            <if test="putOut != null">put_out,</if>
+            <if test="place != null">place,</if>
+            <if test="purpose != null">purpose,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="putTime != null">put_time,</if>
+            <if test="receiveId != null">receive_id,</if>
+            <if test="adminId != null">admin_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="durgBrand != null">durg_brand,</if>
+            <if test="manufacturer != null">manufacturer,</if>
+            <if test="specifications != null">specifications,</if>
+            <if test="productIntroduction != null">product_introduction,</if>
+            <if test="number != null">number,</if>
+            <if test="storeHouse != null">store_house,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="unitId1 != null">unit_id1,</if>
+            <if test="unitName1 != null">unit_name1,</if>
+            <if test="unitName != null">unit_name,</if>
+            <if test="durgName != null">durg_name,</if>
+            <if test="peopleName != null">people_name,</if>
+            <if test="inId != null">in_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="durgArchivesId != null">#{durgArchivesId},</if>
+            <if test="putOut != null">#{putOut},</if>
+            <if test="place != null">#{place},</if>
+            <if test="purpose != null">#{purpose},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="putTime != null">#{putTime},</if>
+            <if test="receiveId != null">#{receiveId},</if>
+            <if test="adminId != null">#{adminId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="durgBrand != null">#{durgBrand},</if>
+            <if test="manufacturer != null">#{manufacturer},</if>
+            <if test="specifications != null">#{specifications},</if>
+            <if test="productIntroduction != null">#{productIntroduction},</if>
+            <if test="number != null">#{number},</if>
+            <if test="storeHouse != null">#{storeHouse},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="unitId1 != null">#{unitId1},</if>
+            <if test="unitName1 != null">#{unitName1},</if>
+            <if test="unitName != null">#{unitName},</if>
+            <if test="durgName != null">#{durgName},</if>
+            <if test="peopleName != null">#{peopleName},</if>
+            <if test="inId != null">#{inId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglDurgPutout" parameterType="BdglDurgPutout">
+        update bdgl_durg_putout
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="durgArchivesId != null">durg_archives_id = #{durgArchivesId},</if>
+            <if test="putOut != null">put_out = #{putOut},</if>
+            <if test="place != null">place = #{place},</if>
+            <if test="purpose != null">purpose = #{purpose},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="putTime != null">put_time = #{putTime},</if>
+            <if test="receiveId != null">receive_id = #{receiveId},</if>
+            <if test="adminId != null">admin_id = #{adminId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="durgBrand != null">durg_brand = #{durgBrand},</if>
+            <if test="manufacturer != null">manufacturer = #{manufacturer},</if>
+            <if test="specifications != null">specifications = #{specifications},</if>
+            <if test="productIntroduction != null">product_introduction = #{productIntroduction},</if>
+            <if test="number != null">number = #{number},</if>
+            <if test="storeHouse != null">store_house = #{storeHouse},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="unitId1 != null">unit_id1 = #{unitId1},</if>
+            <if test="unitName1 != null">unit_name1 = #{unitName1},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="durgName != null">durg_name = #{durgName},</if>
+            <if test="peopleName != null">people_name = #{peopleName},</if>
+            <if test="inId != null">in_id = #{inId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglDurgPutoutById" parameterType="Long">
+        delete from bdgl_durg_putout where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglDurgPutoutByIds" parameterType="String">
+        delete from bdgl_durg_putout where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

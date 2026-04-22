@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglArmamentMapper">
+
+    <resultMap type="BdglArmament" id="BdglArmamentResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="recordDate"    column="record_date"    />
+        <result property="metering"    column="metering"    />
+        <result property="gist"    column="gist"    />
+        <result property="prepareNumber"    column="prepare_number"    />
+        <result property="sum"    column="sum"    />
+        <result property="intactNumber"    column="intact_number"    />
+        <result property="repairNumber"    column="repair_number"    />
+        <result property="sendNumber"    column="send_number"    />
+        <result property="standard"    column="standard"    />
+        <result property="existing"    column="existing"    />
+        <result property="flaw"    column="flaw"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="peopleId1"    column="people_id1"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="peopleName"    column="people_name"    />
+        <result property="people1Name"    column="people1_name"    />
+        <result property="unitName"    column="unit_name"    />
+    </resultMap>
+
+    <sql id="selectBdglArmamentVo">
+        select id, name, record_date, metering, gist, prepare_number, sum, intact_number, repair_number, send_number, standard, existing, flaw, people_id, people_id1, unit_id, createtime, updatetime, people_name, people1_name, unit_name from bdgl_armament
+    </sql>
+
+    <select id="selectBdglArmamentList" parameterType="BdglArmament" resultMap="BdglArmamentResult">
+        select id, name, record_date, metering, gist, prepare_number, sum, intact_number, repair_number, send_number, standard, existing, flaw, people_id, people_id1, unit_id, createtime, updatetime, people_name, people1_name, unit_name
+        from bdgl_armament a left join sys_dept t
+        on a.unit_id=t.dept_id
+        <where>
+            <if test="unitId != null ">
+                and (a.unit_id=#{unitId} or  find_in_set(#{unitId}, t.ancestors))
+            </if>
+            <if test="name != null  and name != ''"> and a.name like concat('%', #{name}, '%')</if>
+            <if test="recordDate != null "> and a.record_date = #{recordDate}</if>
+            <if test="metering != null  and metering != ''"> and a.metering = #{metering}</if>
+            <if test="gist != null  and gist != ''"> and a.gist = #{gist}</if>
+            <if test="prepareNumber != null "> and a.prepare_number = #{prepareNumber}</if>
+            <if test="sum != null "> and a.sum = #{sum}</if>
+            <if test="intactNumber != null "> and a.intact_number = #{intactNumber}</if>
+            <if test="repairNumber != null "> and a.repair_number = #{repairNumber}</if>
+            <if test="sendNumber != null "> and a.send_number = #{sendNumber}</if>
+            <if test="standard != null  and standard != ''"> and a.standard = #{standard}</if>
+            <if test="existing != null  and existing != ''"> and a.existing = #{existing}</if>
+            <if test="flaw != null  and flaw != ''"> and a.flaw = #{flaw}</if>
+            <if test="peopleId != null "> and a.people_id = #{peopleId}</if>
+            <if test="peopleId1 != null "> and a.people_id1 = #{peopleId1}</if>
+            <if test="createtime != null  and createtime != ''"> and a.createtime = #{createtime}</if>
+            <if test="updatetime != null  and updatetime != ''"> and a.updatetime = #{updatetime}</if>
+            <if test="peopleName != null  and peopleName != ''"> and a.people_name like concat('%', #{peopleName}, '%')</if>
+            <if test="people1Name != null  and people1Name != ''"> and a.people1_name like concat('%', #{people1Name}, '%')</if>
+            <if test="unitName != null  and unitName != ''"> and a.unit_name like concat('%', #{unitName}, '%')</if>
+        </where>
+        order by a.record_date desc
+    </select>
+
+    <select id="selectBdglArmamentById" parameterType="Integer" resultMap="BdglArmamentResult">
+        <include refid="selectBdglArmamentVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectArmamentunitid" parameterType="Integer" resultMap="BdglArmamentResult">
+        <include refid="selectBdglArmamentVo"/>
+        <where>
+            <if test="unitId != null"> and unit_id = #{unitId}</if>
+            <if test="year != null and year != ''"> and YEAR(record_date)= #{year}</if>
+        </where>
+        order by id desc
+    </select>
+    <select id="selectlArmamentCountByunitId" resultType="java.lang.Integer">
+        select count(*) from bdgl_armament where unit_id = #{unitId} and YEAR(record_date)=#{year}
+    </select>
+
+    <insert id="insertBdglArmament" parameterType="BdglArmament" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_armament
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="recordDate != null">record_date,</if>
+            <if test="metering != null">metering,</if>
+            <if test="gist != null">gist,</if>
+            <if test="prepareNumber != null">prepare_number,</if>
+            <if test="sum != null">sum,</if>
+            <if test="intactNumber != null">intact_number,</if>
+            <if test="repairNumber != null">repair_number,</if>
+            <if test="sendNumber != null">send_number,</if>
+            <if test="standard != null">standard,</if>
+            <if test="existing != null">existing,</if>
+            <if test="flaw != null">flaw,</if>
+            <if test="peopleId != null">people_id,</if>
+            <if test="peopleId1 != null">people_id1,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="peopleName != null">people_name,</if>
+            <if test="people1Name != null">people1_name,</if>
+            <if test="unitName != null">unit_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="recordDate != null">#{recordDate},</if>
+            <if test="metering != null">#{metering},</if>
+            <if test="gist != null">#{gist},</if>
+            <if test="prepareNumber != null">#{prepareNumber},</if>
+            <if test="sum != null">#{sum},</if>
+            <if test="intactNumber != null">#{intactNumber},</if>
+            <if test="repairNumber != null">#{repairNumber},</if>
+            <if test="sendNumber != null">#{sendNumber},</if>
+            <if test="standard != null">#{standard},</if>
+            <if test="existing != null">#{existing},</if>
+            <if test="flaw != null">#{flaw},</if>
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="peopleId1 != null">#{peopleId1},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="peopleName != null">#{peopleName},</if>
+            <if test="people1Name != null">#{people1Name},</if>
+            <if test="unitName != null">#{unitName},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglArmament" parameterType="BdglArmament">
+        update bdgl_armament
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="recordDate != null">record_date = #{recordDate},</if>
+            <if test="metering != null">metering = #{metering},</if>
+            <if test="gist != null">gist = #{gist},</if>
+            <if test="prepareNumber != null">prepare_number = #{prepareNumber},</if>
+            <if test="sum != null">sum = #{sum},</if>
+            <if test="intactNumber != null">intact_number = #{intactNumber},</if>
+            <if test="repairNumber != null">repair_number = #{repairNumber},</if>
+            <if test="sendNumber != null">send_number = #{sendNumber},</if>
+            <if test="standard != null">standard = #{standard},</if>
+            <if test="existing != null">existing = #{existing},</if>
+            <if test="flaw != null">flaw = #{flaw},</if>
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="peopleId1 != null">people_id1 = #{peopleId1},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="peopleName != null">people_name = #{peopleName},</if>
+            <if test="people1Name != null">people1_name = #{people1Name},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglArmamentById" parameterType="Integer">
+        delete from bdgl_armament where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglArmamentByIds" parameterType="String">
+        delete from bdgl_armament where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

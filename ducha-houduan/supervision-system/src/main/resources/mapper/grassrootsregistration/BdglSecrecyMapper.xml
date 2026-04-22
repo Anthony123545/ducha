@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglSecrecyMapper">
+
+    <resultMap type="BdglSecrecy" id="BdglSecrecyResult">
+        <result property="id"    column="id"    />
+        <result property="secrecyType"    column="secrecy_type"    />
+        <result property="number"    column="number"    />
+        <result property="name"    column="name"    />
+        <result property="kind"    column="kind"    />
+        <result property="version"    column="version"    />
+        <result property="confidential"    column="confidential"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="peopleId1"    column="people_id1"    />
+        <result property="peopleId2"    column="people_id2"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="hindOverTime"    column="hind_over_time"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="peopleName"    column="people_name"    />
+        <result property="people1Name"    column="people1_name"    />
+        <result property="people2Name"    column="people2_name"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="createtime"    column="createtime"    />
+    </resultMap>
+
+    <sql id="selectBdglSecrecyVo">
+        select id, secrecy_type, number, name, kind, version, confidential, people_id, people_id1, people_id2, start_time, end_time, hind_over_time, unit_id, people_name, people1_name, people2_name,dept_name from bdgl_secrecy
+    </sql>
+
+    <select id="selectBdglSecrecyList" parameterType="BdglSecrecy" resultMap="BdglSecrecyResult">
+        select id, secrecy_type, number, name, kind, version, confidential, people_id, people_id1, people_id2, start_time, end_time, hind_over_time, unit_id, people_name, people1_name, people2_name,s.dept_name,createtime
+        from bdgl_secrecy s left join sys_dept t
+        on s.unit_id=t.dept_id
+        <where>
+            <if test="unitId != null ">
+                and (s.unit_id=#{unitId} or find_in_set(#{unitId}, t.ancestors))
+            </if>
+            <if test="secrecyType != null "> and s.secrecy_type = #{secrecyType}</if>
+            <if test="number != null  and number != ''"> and s.number = #{number}</if>
+            <if test="name != null  and name != ''"> and s.name like concat('%', #{name}, '%')</if>
+            <if test="kind != null  and kind != ''"> and s.kind = #{kind}</if>
+            <if test="version != null  and version != ''"> and s.version = #{version}</if>
+            <if test="confidential != null  and confidential != ''"> and s.confidential = #{confidential}</if>
+            <if test="peopleId != null "> and s.people_id = #{peopleId}</if>
+            <if test="peopleId1 != null "> and s.people_id1 = #{peopleId1}</if>
+            <if test="peopleId2 != null "> and s.people_id2 = #{peopleId2}</if>
+            <if test="startTime != null "> and s.start_time = #{startTime}</if>
+            <if test="endTime != null "> and s.end_time = #{endTime}</if>
+            <if test="hindOverTime != null "> and s.hind_over_time = #{hindOverTime}</if>
+            <if test="peopleName != null  and peopleName != ''"> and s.people_name like concat('%', #{peopleName}, '%')</if>
+            <if test="people1Name != null  and people1Name != ''"> and s.people1_name like concat('%', #{people1Name}, '%')</if>
+            <if test="people2Name != null  and people2Name != ''"> and s.people2_name like concat('%', #{people2Name}, '%')</if>
+            <if test="deptName != null  and deptName != ''"> and s.dept_name like concat('%', #{deptName}, '%')</if>
+        </where>
+        order by s.id desc
+    </select>
+
+    <select id="selectBdglSecrecyById" parameterType="Integer" resultMap="BdglSecrecyResult">
+        <include refid="selectBdglSecrecyVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBdglSecrecyBunitId" parameterType="Integer" resultMap="BdglSecrecyResult">
+        <include refid="selectBdglSecrecyVo"/>
+        <where>
+            <if test="unitId != null"> and unit_id = #{unitId}</if>
+            <if test="year != null and year != ''"> and YEAR(start_time)= #{year}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectlSecrecyCountByunitId" resultType="java.lang.Integer">
+        select count(*) from bdgl_secrecy where unit_id = #{unitId} and YEAR(start_time)= #{year}
+    </select>
+    <select id="selectlSecrecyStartTimeByunitId"
+            resultMap="BdglSecrecyResult">
+        select start_time from bdgl_secrecy where unit_id = #{unitId} and YEAR(start_time)= #{year} order by id desc
+    </select>
+
+    <insert id="insertBdglSecrecy" parameterType="BdglSecrecy" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_secrecy
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="secrecyType != null">secrecy_type,</if>
+            <if test="number != null">number,</if>
+            <if test="name != null">name,</if>
+            <if test="kind != null">kind,</if>
+            <if test="version != null">version,</if>
+            <if test="confidential != null">confidential,</if>
+            <if test="peopleId != null">people_id,</if>
+            <if test="peopleId1 != null">people_id1,</if>
+            <if test="peopleId2 != null">people_id2,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="hindOverTime != null">hind_over_time,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="peopleName != null">people_name,</if>
+            <if test="people1Name != null">people1_name,</if>
+            <if test="people2Name != null">people2_name,</if>
+            <if test="deptName != null">dept_name,</if>
+            <if test="createtime != null">createtime</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="secrecyType != null">#{secrecyType},</if>
+            <if test="number != null">#{number},</if>
+            <if test="name != null">#{name},</if>
+            <if test="kind != null">#{kind},</if>
+            <if test="version != null">#{version},</if>
+            <if test="confidential != null">#{confidential},</if>
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="peopleId1 != null">#{peopleId1},</if>
+            <if test="peopleId2 != null">#{peopleId2},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="hindOverTime != null">#{hindOverTime},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="peopleName != null">#{peopleName},</if>
+            <if test="people1Name != null">#{people1Name},</if>
+            <if test="people2Name != null">#{people2Name},</if>
+            <if test="deptName != null">#{deptName},</if>
+            <if test="createtime != null">#{createtime}</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglSecrecy" parameterType="BdglSecrecy">
+        update bdgl_secrecy
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="secrecyType != null">secrecy_type = #{secrecyType},</if>
+            <if test="number != null">number = #{number},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="kind != null">kind = #{kind},</if>
+            <if test="version != null">version = #{version},</if>
+            <if test="confidential != null">confidential = #{confidential},</if>
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="peopleId1 != null">people_id1 = #{peopleId1},</if>
+            <if test="peopleId2 != null">people_id2 = #{peopleId2},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="hindOverTime != null">hind_over_time = #{hindOverTime},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="peopleName != null">people_name = #{peopleName},</if>
+            <if test="people1Name != null">people1_name = #{people1Name},</if>
+            <if test="people2Name != null">people2_name = #{people2Name},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglSecrecyById" parameterType="Integer">
+        delete from bdgl_secrecy where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglSecrecyByIds" parameterType="String">
+        delete from bdgl_secrecy where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.medicalhealth.mapper.BdglExamineDetailsMapper">
+
+    <resultMap type="BdglExamineDetails" id="BdglExamineDetailsResult">
+        <result property="id"    column="id"    />
+        <result property="year"    column="year"    />
+        <result property="contents"    column="contents"    />
+        <result property="examineId"    column="examine_id"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="filePath"    column="file_path"    />
+        <result property="month"    column="month"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectBdglExamineDetailsVo">
+        select id, year, contents, examine_id, file_name, file_path, month, create_time from bdgl_examine_details
+    </sql>
+
+    <select id="selectBdglExamineDetailsList" parameterType="BdglExamineDetails" resultMap="BdglExamineDetailsResult">
+        <include refid="selectBdglExamineDetailsVo"/>
+        <where>
+            <if test="year != null  and year != ''"> and year = #{year}</if>
+            <if test="contents != null  and contents != ''"> and contents = #{contents}</if>
+            <if test="examineId != null "> and examine_id = #{examineId}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="filePath != null  and filePath != ''"> and file_path = #{filePath}</if>
+            <if test="month != null  and month != ''"> and month = #{month}</if>
+        </where>
+    </select>
+
+    <select id="selectBdglExamineDetailsById" parameterType="Integer" resultMap="BdglExamineDetailsResult">
+        <include refid="selectBdglExamineDetailsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglExamineDetails" parameterType="BdglExamineDetails" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_examine_details
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="year != null">year,</if>
+            <if test="contents != null">contents,</if>
+            <if test="examineId != null">examine_id,</if>
+            <if test="fileName != null">file_name,</if>
+            <if test="filePath != null">file_path,</if>
+            <if test="month != null">month,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="year != null">#{year},</if>
+            <if test="contents != null">#{contents},</if>
+            <if test="examineId != null">#{examineId},</if>
+            <if test="fileName != null">#{fileName},</if>
+            <if test="filePath != null">#{filePath},</if>
+            <if test="month != null">#{month},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglExamineDetails" parameterType="BdglExamineDetails">
+        update bdgl_examine_details
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="year != null">year = #{year},</if>
+            <if test="contents != null">contents = #{contents},</if>
+            <if test="examineId != null">examine_id = #{examineId},</if>
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="filePath != null">file_path = #{filePath},</if>
+            <if test="month != null">month = #{month},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglExamineDetailsById" parameterType="Integer">
+        delete from bdgl_examine_details where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglExamineDetailsByIds" parameterType="String">
+        delete from bdgl_examine_details where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

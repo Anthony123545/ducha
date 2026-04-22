@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglFileBorrowRecordMapper">
+
+    <insert id="batchInsert">
+        INSERT INTO bdgl_file_borrow_record
+        (file_number, borrow_id, loan_time, return_time)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.fileNumber},
+            #{item.borrowId},
+            #{item.loanTime},
+            #{item.returnTime}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteByFileNumber">
+        DELETE FROM bdgl_file_borrow_record
+        WHERE file_number = #{fileNumber}
+    </delete>
+
+    <select id="selectByFileNumber" resultType="BdglFileBorrowRecord">
+        SELECT id, file_number, borrow_id, loan_time, return_time
+        FROM bdgl_file_borrow_record
+        WHERE file_number = #{fileNumber}
+        ORDER BY loan_time ASC
+    </select>
+
+</mapper>

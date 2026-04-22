@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglFileManagementMapper">
+
+    <resultMap type="BdglFileManagement" id="BdglFileManagementResult">
+        <result property="id"    column="id"    />
+        <result property="number"    column="number"    />
+        <result property="name"    column="name"    />
+        <result property="incomingDispatchesTime"    column="incoming_dispatches_time"    />
+        <result property="confidential"    column="confidential"    />
+        <result property="copies"    column="copies"    />
+        <result property="peopleId"    column="people_id"    />
+
+        <result property="logoutId"    column="logout_id"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="peopleName"    column="people_name"    />
+
+        <result property="logoutName"    column="logout_name"    />
+        <result property="beizhu"    column="beizhu"    />
+    </resultMap>
+
+    <sql id="selectBdglFileManagementVo">
+        select id, number, name, incoming_dispatches_time, confidential, copies, people_id, borrow_id, loan_time, return_time, logout_id, unit_id, createtime, updatetime, dept_name, people_name, borrow_name, logout_name, beizhu from bdgl_file_management
+    </sql>
+
+    <select id="selectBdglFileManagementList" parameterType="BdglFileManagement" resultMap="BdglFileManagementResult">
+        select id, number, name, incoming_dispatches_time, confidential, copies, people_id,  logout_id, unit_id, createtime, updatetime, f.dept_name, people_name, logout_name, beizhu
+        from bdgl_file_management f left join sys_dept t
+        on f.unit_id=t.dept_id
+        <where>
+            <if test="unitId != null ">
+                and (f.unit_id=#{unitId} or find_in_set(#{unitId}, t.ancestors))
+            </if>
+            <if test="number != null  and number != ''"> and f.number = #{number}</if>
+            <if test="name != null  and name != ''"> and f.name like concat('%', #{name}, '%')</if>
+            <if test="incomingDispatchesTime != null "> and f.incoming_dispatches_time = #{incomingDispatchesTime}</if>
+            <if test="confidential != null  and confidential != ''"> and f.confidential = #{confidential}</if>
+            <if test="copies != null "> and f.copies = #{copies}</if>
+            <if test="peopleId != null "> and f.people_id = #{peopleId}</if>
+            <if test="borrowId != null "> and f.borrow_id = #{borrowId}</if>
+            <if test="loanTime != null "> and f.loan_time = #{loanTime}</if>
+            <if test="returnTime != null "> and f.return_time = #{returnTime}</if>
+            <if test="logoutId != null "> and f.logout_id = #{logoutId}</if>
+            <if test="createtime != null  and createtime != ''"> and f.createtime = #{createtime}</if>
+            <if test="updatetime != null  and updatetime != ''"> and f.updatetime = #{updatetime}</if>
+            <if test="deptName != null  and deptName != ''"> and f.dept_name like concat('%', #{deptName}, '%')</if>
+            <if test="peopleName != null  and peopleName != ''"> and f.people_name like concat('%', #{peopleName}, '%')</if>
+            <if test="borrowName != null  and borrowName != ''"> and f.borrow_name like concat('%', #{borrowName}, '%')</if>
+            <if test="logoutName != null  and logoutName != ''"> and f.logout_name like concat('%', #{logoutName}, '%')</if>
+            <if test="beizhu != null  and beizhu != ''"> and f.beizhu like concat('%', #{beizhu}, '%')</if>
+        </where>
+        order by f.id desc
+    </select>
+
+    <select id="selectBdglFileManagementById" parameterType="Integer" resultMap="BdglFileManagementResult">
+        <include refid="selectBdglFileManagementVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectBdglSecrecyBunitunitid" parameterType="Integer" resultMap="BdglFileManagementResult">
+        <include refid="selectBdglFileManagementVo"/>
+        <where>
+            <if test="unitId != null"> and unit_id = #{unitId}</if>
+            <if test="year != null and year != ''"> and YEAR(createtime)= #{year}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectlFileDocCountByunitId" resultType="java.lang.Integer">
+        select count(*) from bdgl_file_management where unit_id = #{unitId} and YEAR(createtime)=#{year}
+    </select>
+
+    <insert id="insertBdglFileManagement" parameterType="BdglFileManagement" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_file_management
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null">number,</if>
+            <if test="name != null">name,</if>
+            <if test="incomingDispatchesTime != null">incoming_dispatches_time,</if>
+            <if test="confidential != null">confidential,</if>
+            <if test="copies != null">copies,</if>
+            <if test="peopleId != null">people_id,</if>
+            <if test="borrowId != null">borrow_id,</if>
+            <if test="loanTime != null">loan_time,</if>
+            <if test="returnTime != null">return_time,</if>
+            <if test="logoutId != null">logout_id,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="deptName != null">dept_name,</if>
+            <if test="peopleName != null">people_name,</if>
+            <if test="borrowName != null">borrow_name,</if>
+            <if test="logoutName != null">logout_name,</if>
+            <if test="beizhu != null">beizhu,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null">#{number},</if>
+            <if test="name != null">#{name},</if>
+            <if test="incomingDispatchesTime != null">#{incomingDispatchesTime},</if>
+            <if test="confidential != null">#{confidential},</if>
+            <if test="copies != null">#{copies},</if>
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="borrowId != null">#{borrowId},</if>
+            <if test="loanTime != null">#{loanTime},</if>
+            <if test="returnTime != null">#{returnTime},</if>
+            <if test="logoutId != null">#{logoutId},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="deptName != null">#{deptName},</if>
+            <if test="peopleName != null">#{peopleName},</if>
+            <if test="borrowName != null">#{borrowName},</if>
+            <if test="logoutName != null">#{logoutName},</if>
+            <if test="beizhu != null">#{beizhu},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglFileManagement" parameterType="BdglFileManagement">
+        update bdgl_file_management
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null">number = #{number},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="incomingDispatchesTime != null">incoming_dispatches_time = #{incomingDispatchesTime},</if>
+            <if test="confidential != null">confidential = #{confidential},</if>
+            <if test="copies != null">copies = #{copies},</if>
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="borrowId != null">borrow_id = #{borrowId},</if>
+            <if test="loanTime != null">loan_time = #{loanTime},</if>
+            <if test="returnTime != null">return_time = #{returnTime},</if>
+            <if test="logoutId != null">logout_id = #{logoutId},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="peopleName != null">people_name = #{peopleName},</if>
+            <if test="borrowName != null">borrow_name = #{borrowName},</if>
+            <if test="logoutName != null">logout_name = #{logoutName},</if>
+            <if test="beizhu != null">beizhu = #{beizhu},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglFileManagementById" parameterType="Integer">
+        delete from bdgl_file_management where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglFileManagementByIds" parameterType="String">
+        delete from bdgl_file_management where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

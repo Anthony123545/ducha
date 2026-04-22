@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.supervision.web.Hikvision.carDoor.web.mapper.CarInfoMapper">
+
+    <!-- CarInfo 实体映射 -->
+    <resultMap id="CarInfoResultMap" type="com.supervision.web.Hikvision.carDoor.web.entity.CarInfo">
+        <id column="id" property="id"/>
+        <result column="plate_number" property="plateNumber"/>
+        <result column="plate_color" property="plateColor"/>
+        <result column="plate_type" property="plateType"/>
+        <result column="vehicle_type" property="vehicleType"/>
+        <result column="vehicle_color" property="vehicleColor"/>
+        <result column="vehicle_brand" property="vehicleBrand"/>
+        <result column="engine_no" property="engineNo"/>
+        <result column="emission_no" property="emissionNo"/>
+        <result column="vin" property="vin"/>
+        <result column="displacement" property="displacement"/>
+        <result column="identify_code" property="identifyCode"/>
+        <result column="fleet_name" property="fleetName"/>
+        <result column="issuer_name" property="issuerName"/>
+        <result column="issuer_device_type" property="issuerDeviceType"/>
+        <result column="parking_type" property="parkingType"/>
+        <result column="package_info" property="packageInfo"/>
+        <result column="owner_name" property="ownerName"/>
+        <result column="phone_number" property="phoneNumber"/>
+        <result column="certificate_no" property="certificateNo"/>
+        <result column="address" property="address"/>
+        <result column="position" property="position"/>
+        <result column="company" property="company"/>
+        <result column="department_name" property="departmentName"/>
+        <result column="group_name" property="groupName"/>
+        <result column="vehicle_group" property="vehicleGroup"/>
+        <result column="parking_name" property="parkingName"/>
+        <result column="remarks" property="remarks"/>
+        <result column="data_version" property="dataVersion"/>
+        <result column="valid_until" property="validUntil"/>
+        <result column="create_time" property="createTime"/>
+        <result column="is_temporary" property="isTemporary"/>
+        <result column="enable" property="enable"/>
+    </resultMap>
+
+    <!-- 查询全部 -->
+    <select id="searchByCondition" resultMap="CarInfoResultMap">
+        SELECT *
+        FROM new_car_info
+        WHERE 1=1
+        <if test="plateNumber != null and plateNumber != ''">
+            AND plate_number LIKE CONCAT('%', #{plateNumber}, '%')
+        </if>
+        <if test="plateType != null and plateType != ''">
+            AND plate_type = #{plateType}
+        </if>
+        <if test="vehicleType != null and vehicleType != ''">
+            AND vehicle_type = #{vehicleType}
+        </if>
+        <if test="vehicleBrand != null and vehicleBrand != ''">
+            AND vehicle_brand = #{vehicleBrand}
+        </if>
+        ORDER BY id ASC
+    </select>
+
+    <!-- 添加 -->
+    <insert id="insert" parameterType="com.supervision.web.Hikvision.carDoor.web.entity.CarInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO new_car_info (
+            plate_number, plate_color, plate_type,
+            vehicle_type, vehicle_color, vehicle_brand, engine_no, emission_no, vin, displacement, identify_code, fleet_name,
+            issuer_name, issuer_device_type, parking_type, package_info,
+            owner_name, phone_number, certificate_no, address, position, company, department_name,
+            group_name, vehicle_group, parking_name,
+            remarks, data_version, valid_until, create_time, is_temporary
+        )
+        VALUES (
+                   #{plateNumber}, #{plateColor}, #{plateType},
+                   #{vehicleType}, #{vehicleColor}, #{vehicleBrand}, #{engineNo}, #{emissionNo}, #{vin}, #{displacement}, #{identifyCode}, #{fleetName},
+                   #{issuerName}, #{issuerDeviceType}, #{parkingType}, #{packageInfo},
+                   #{ownerName}, #{phoneNumber}, #{certificateNo}, #{address}, #{position}, #{company}, #{departmentName},
+                   #{groupName}, #{vehicleGroup}, #{parkingName},
+                   #{remarks}, #{dataVersion}, #{validUntil}, #{createTime}, #{isTemporary}
+               )
+    </insert>
+
+    <!-- 修改 -->
+    <update id="update" parameterType="com.supervision.web.Hikvision.carDoor.web.entity.CarInfo">
+        UPDATE new_car_info
+        SET plate_number = #{plateNumber},
+            plate_color = #{plateColor},
+            plate_type = #{plateType},
+            vehicle_type = #{vehicleType},
+            vehicle_color = #{vehicleColor},
+            vehicle_brand = #{vehicleBrand},
+            engine_no = #{engineNo},
+            emission_no = #{emissionNo},
+            vin = #{vin},
+            displacement = #{displacement},
+            identify_code = #{identifyCode},
+            fleet_name = #{fleetName},
+            issuer_name = #{issuerName},
+            issuer_device_type = #{issuerDeviceType},
+            parking_type = #{parkingType},
+            package_info = #{packageInfo},
+            owner_name = #{ownerName},
+            phone_number = #{phoneNumber},
+            certificate_no = #{certificateNo},
+            address = #{address},
+            position = #{position},
+            company = #{company},
+            department_name = #{departmentName},
+            group_name = #{groupName},
+            vehicle_group = #{vehicleGroup},
+            parking_name = #{parkingName},
+            remarks = #{remarks},
+            data_version = #{dataVersion},
+            valid_until = #{validUntil},
+            create_time = #{createTime},
+            is_temporary = #{isTemporary}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除 -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM new_car_info WHERE id = #{id}
+    </delete>
+
+    <!-- 批量删除设备 -->
+    <delete id="deleteBatch" parameterType="java.util.List">
+        DELETE FROM new_car_info
+        WHERE id IN
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

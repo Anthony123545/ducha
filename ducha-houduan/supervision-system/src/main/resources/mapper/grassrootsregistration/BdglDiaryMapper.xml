@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglDiaryMapper">
+
+    <resultMap type="BdglDiary" id="BdglDiaryResult">
+        <result property="id"    column="id"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="blogDate"    column="blog_date"    />
+        <result property="weather"    column="weather"    />
+        <result property="orgcadre"    column="orgcadre"    />
+        <result property="orgsoldier"    column="orgsoldier"    />
+        <result property="orgcivilian"    column="orgcivilian"    />
+        <result property="nowcadre"    column="nowcadre"    />
+        <result property="nowsoldier"    column="nowsoldier"    />
+        <result property="nowcivilian"    column="nowcivilian"    />
+        <result property="tolerance"    column="tolerance"    />
+        <result property="transfer"    column="transfer"    />
+        <result property="equip"    column="equip"    />
+        <result property="internal"    column="internal"    />
+        <result property="dutylead"    column="dutylead"    />
+        <result property="dutya"    column="dutyA"    />
+        <result property="dutyb"    column="dutyB"    />
+        <result property="dutyc"    column="dutyC"    />
+        <result property="dutyd"    column="dutyD"    />
+        <result property="dutye"    column="dutyE"    />
+        <result property="dutyf"    column="dutyF"    />
+        <result property="dutyinfoa"    column="dutyinfoA"    />
+        <result property="dutyinfoc"    column="dutyinfoC"    />
+        <result property="dutyinfoe"    column="dutyinfoE"    />
+        <result property="dutyDate"    column="duty_date"    />
+        <result property="invalid"    column="invalid"    />
+        <result property="notice"    column="notice"    />
+        <result property="lead"    column="lead"    />
+        <result property="weekwork"    column="weekwork"    />
+        <result property="examine"    column="examine"    />
+        <result property="peopleId1"    column="people_id1"    />
+        <result property="contents"    column="contents"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createName"    column="create_name"    />
+        <result property="peopleName"    column="people_name"    />
+        <result property="leadName"    column="lead_name"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="organizer"    column="organizer"    />
+        <result property="diaryTime"    column="diary_time"    />
+    </resultMap>
+
+    <sql id="selectBdglDiaryVo">
+        select id, unit_id, people_id, blog_date, weather, orgcadre, orgsoldier, orgcivilian, nowcadre, nowsoldier, nowcivilian, tolerance, transfer, equip, internal, dutylead, dutyA, dutyB, dutyC, dutyD, dutyE, dutyF, dutyinfoA, dutyinfoC, dutyinfoE, duty_date, invalid, notice, `lead`, weekwork, examine, people_id1, contents, create_id, create_name,people_name,lead_name,unit_name,organizer,diary_time from bdgl_diary
+    </sql>
+    <select id="selectBdglDiaryListss" parameterType="BdglDiary" resultMap="BdglDiaryResult">
+        <include refid="selectBdglDiaryVo"/>
+        <where>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="peopleId != null "> and people_id = #{peopleId}</if>
+            <if test="blogDate != null "> and blog_date = #{blogDate}</if>
+            <if test="weather != null  and weather != ''"> and weather = #{weather}</if>
+            <if test="orgcadre != null "> and orgcadre = #{orgcadre}</if>
+            <if test="orgsoldier != null "> and orgsoldier = #{orgsoldier}</if>
+            <if test="orgcivilian != null "> and orgcivilian = #{orgcivilian}</if>
+            <if test="nowcadre != null "> and nowcadre = #{nowcadre}</if>
+            <if test="nowsoldier != null "> and nowsoldier = #{nowsoldier}</if>
+            <if test="nowcivilian != null "> and nowcivilian = #{nowcivilian}</if>
+            <if test="tolerance != null  and tolerance != ''"> and tolerance = #{tolerance}</if>
+            <if test="transfer != null  and transfer != ''"> and transfer = #{transfer}</if>
+            <if test="equip != null  and equip != ''"> and equip = #{equip}</if>
+            <if test="internal != null  and internal != ''"> and internal = #{internal}</if>
+            <if test="dutylead != null  and dutylead != ''"> and dutylead = #{dutylead}</if>
+            <if test="dutya != null  and dutya != ''"> and dutyA = #{dutya}</if>
+            <if test="dutyb != null  and dutyb != ''"> and dutyB = #{dutyb}</if>
+            <if test="dutyc != null  and dutyc != ''"> and dutyC = #{dutyc}</if>
+            <if test="dutyd != null  and dutyd != ''"> and dutyD = #{dutyd}</if>
+            <if test="dutye != null  and dutye != ''"> and dutyE = #{dutye}</if>
+            <if test="dutyf != null  and dutyf != ''"> and dutyF = #{dutyf}</if>
+            <if test="dutyinfoa != null  and dutyinfoa != ''"> and dutyinfoA = #{dutyinfoa}</if>
+            <if test="dutyinfoc != null  and dutyinfoc != ''"> and dutyinfoC = #{dutyinfoc}</if>
+            <if test="dutyinfoe != null  and dutyinfoe != ''"> and dutyinfoE = #{dutyinfoe}</if>
+            <if test="dutyDate != null "> and duty_date = #{dutyDate}</if>
+            <if test="invalid != null  and invalid != ''"> and invalid = #{invalid}</if>
+            <if test="notice != null  and notice != ''"> and notice = #{notice}</if>
+            <if test="lead != null "> and `lead` = #{lead}</if>
+            <if test="weekwork != null  and weekwork != ''"> and weekwork = #{weekwork}</if>
+            <if test="examine != null "> and examine = #{examine}</if>
+            <if test="peopleId1 != null "> and people_id1 = #{peopleId1}</if>
+            <if test="contents != null  and contents != ''"> and contents = #{contents}</if>
+            <if test="createId != null "> and create_id = #{createId}</if>
+            <if test="createName != null  and createName != ''"> and create_name like concat('%', #{createName}, '%')</if>
+            <if test="peopleName != null  and peopleName != ''"> and people_name like concat('%', #{peopleName}, '%')</if>
+            <if test="leadName != null  and leadName != ''"> and lead_name like concat('%', #{leadName}, '%')</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="organizer != null  and organizer != ''"> and organizer = #{organizer}</if>
+            <if test="diaryTime != null  and diaryTime != ''"> and diary_time = #{diaryTime}</if>
+        </where>
+        order by id desc
+    </select>
+    <select id="selectBdglDiaryList" parameterType="BdglDiary" resultMap="BdglDiaryResult">
+        select d.id, d.unit_id,t.dept_id, people_id,d.blog_date, d.weather, d.orgcadre, d.orgsoldier, d.orgcivilian, d.nowcadre, d.nowsoldier, d.nowcivilian
+        , tolerance, transfer, equip, internal, dutylead, dutyA, dutyB, dutyC, dutyD, dutyE, dutyF, dutyinfoA, dutyinfoC, dutyinfoE, duty_date, invalid
+        , d.notice, d.`lead`,d.weekwork,d.examine, d.people_id1,d.contents,d.create_id, create_name,people_name,lead_name,unit_name,organizer,diary_time
+        from bdgl_diary d left join sys_dept t
+        on d.unit_id=t.dept_id
+        <where>
+            <if test="peopleId != null "> and d.people_id = #{peopleId}</if>
+            <if test="blogDate != null "> and d.blog_date = like concat('%', #{blogDate}, '%')</if>
+            <if test="weather != null  and weather != ''"> and d.weather = #{weather}</if>
+            <if test="orgcadre != null "> and d.orgcadre = #{orgcadre}</if>
+            <if test="orgsoldier != null "> and d.orgsoldier = #{orgsoldier}</if>
+            <if test="orgcivilian != null "> and d.orgcivilian = #{orgcivilian}</if>
+            <if test="nowcadre != null "> and d.nowcadre = #{nowcadre}</if>
+            <if test="nowsoldier != null "> and d.nowsoldier = #{nowsoldier}</if>
+            <if test="nowcivilian != null "> and d.nowcivilian = #{nowcivilian}</if>
+            <if test="tolerance != null  and tolerance != ''"> and d.tolerance = #{tolerance}</if>
+            <if test="transfer != null  and transfer != ''"> and d.transfer = #{transfer}</if>
+            <if test="equip != null  and equip != ''"> and d.equip = #{equip}</if>
+            <if test="internal != null  and internal != ''"> and d.internal = #{internal}</if>
+            <if test="dutylead != null  and dutylead != ''"> and d.dutylead = #{dutylead}</if>
+            <if test="dutya != null  and dutya != ''"> and d.dutyA = #{dutya}</if>
+            <if test="dutyb != null  and dutyb != ''"> and d.dutyB = #{dutyb}</if>
+            <if test="dutyc != null  and dutyc != ''"> and d.dutyC = #{dutyc}</if>
+            <if test="dutyd != null  and dutyd != ''"> and d.dutyD = #{dutyd}</if>
+            <if test="dutye != null  and dutye != ''"> and d.dutyE = #{dutye}</if>
+            <if test="dutyf != null  and dutyf != ''"> and d.dutyF = #{dutyf}</if>
+            <if test="dutyinfoa != null  and dutyinfoa != ''"> and d.dutyinfoA = #{dutyinfoa}</if>
+            <if test="dutyinfoc != null  and dutyinfoc != ''"> and d.dutyinfoC = #{dutyinfoc}</if>
+            <if test="dutyinfoe != null  and dutyinfoe != ''"> and d.dutyinfoE = #{dutyinfoe}</if>
+            <if test="dutyDate != null "> and d.duty_date = #{dutyDate}</if>
+            <if test="invalid != null  and invalid != ''"> and d.invalid = #{invalid}</if>
+            <if test="notice != null  and notice != ''"> and d.notice = #{notice}</if>
+            <if test="lead != null "> and d.`lead` = #{lead}</if>
+            <if test="weekwork != null  and weekwork != ''"> and d.weekwork = #{weekwork}</if>
+            <if test="examine != null "> and d.examine = #{examine}</if>
+            <if test="peopleId1 != null "> and d.people_id1 = #{peopleId1}</if>
+            <if test="contents != null  and contents != ''"> and d.contents = #{contents}</if>
+            <if test="createId != null "> and d.create_id = #{createId}</if>
+            <if test="createName != null  and createName != ''"> and d.create_name like concat('%', #{createName}, '%')</if>
+            <if test="peopleName != null  and peopleName != ''"> and d.people_name like concat('%', #{peopleName}, '%')</if>
+            <if test="leadName != null  and leadName != ''"> and d.lead_name like concat('%', #{leadName}, '%')</if>
+            <if test="unitName != null  and unitName != ''"> and d.unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="organizer != null  and organizer != ''"> and d.organizer like concat('%', #{organizer}, '%')</if>
+            <if test="diaryTime != null  and diaryTime != ''"> and d.diary_time like concat('%', #{diaryTime}, '%')</if>
+            <if test="unitId !=null">
+                and (d.unit_id=#{unitId} or find_in_set(#{unitId}, t.ancestors))
+            </if>
+        </where>
+        order by d.blog_date desc
+    </select>
+
+    <select id="selectBdglDiaryById" parameterType="Integer" resultMap="BdglDiaryResult">
+        <include refid="selectBdglDiaryVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectBdglDiaryLists" parameterType="BdglDiary" resultMap="BdglDiaryResult">
+        <include refid="selectBdglDiaryVo"/>
+        <where>
+            <if test="unitId != null">and unit_id=#{unitId}</if>
+            AND examine =1
+        </where>
+     </select>
+    <select id="selectBdglDiarys" resultMap="BdglDiaryResult">
+            select distinct (unit_id),id,  people_id, blog_date, weather, orgcadre, orgsoldier, orgcivilian, nowcadre, nowsoldier, nowcivilian, tolerance, transfer, equip, internal, dutylead, dutyA, dutyB, dutyC, dutyD, dutyE, dutyF, dutyinfoA, dutyinfoC, dutyinfoE, duty_date, invalid, notice, `lead`, weekwork, examine, people_id1, contents, create_id, create_name,people_name,lead_name,unit_name,organizer,diary_time from bdgl_diary
+            where diary_time=#{diary_time}
+            and examine=1
+    </select>
+    <insert id="insertBdglDiary" parameterType="BdglDiary" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_diary
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="unitId != null">unit_id,</if>
+            <if test="peopleId != null">people_id,</if>
+            <if test="blogDate != null">blog_date,</if>
+            <if test="weather != null">weather,</if>
+            <if test="orgcadre != null">orgcadre,</if>
+            <if test="orgsoldier != null">orgsoldier,</if>
+            <if test="orgcivilian != null">orgcivilian,</if>
+            <if test="nowcadre != null">nowcadre,</if>
+            <if test="nowsoldier != null">nowsoldier,</if>
+            <if test="nowcivilian != null">nowcivilian,</if>
+            <if test="tolerance != null">tolerance,</if>
+            <if test="transfer != null">transfer,</if>
+            <if test="equip != null">equip,</if>
+            <if test="internal != null">internal,</if>
+            <if test="dutylead != null">dutylead,</if>
+            <if test="dutya != null">dutyA,</if>
+            <if test="dutyb != null">dutyB,</if>
+            <if test="dutyc != null">dutyC,</if>
+            <if test="dutyd != null">dutyD,</if>
+            <if test="dutye != null">dutyE,</if>
+            <if test="dutyf != null">dutyF,</if>
+            <if test="dutyinfoa != null">dutyinfoA,</if>
+            <if test="dutyinfoc != null">dutyinfoC,</if>
+            <if test="dutyinfoe != null">dutyinfoE,</if>
+            <if test="dutyDate != null">duty_date,</if>
+            <if test="invalid != null">invalid,</if>
+            <if test="notice != null">notice,</if>
+            <if test="lead != null">`lead`,</if>
+            <if test="weekwork != null">weekwork,</if>
+            <if test="examine != null">examine,</if>
+            <if test="peopleId1 != null">people_id1,</if>
+            <if test="contents != null">contents,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createName != null">create_name,</if>
+            <if test="peopleName != null">people_name,</if>
+            <if test="leadName != null">lead_name,</if>
+            <if test="unitName != null">unit_name,</if>
+            <if test="organizer != null">organizer,</if>
+            <if test="diaryTime != null">diary_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="unitId != null">#{unitId},</if>
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="blogDate != null">#{blogDate},</if>
+            <if test="weather != null">#{weather},</if>
+            <if test="orgcadre != null">#{orgcadre},</if>
+            <if test="orgsoldier != null">#{orgsoldier},</if>
+            <if test="orgcivilian != null">#{orgcivilian},</if>
+            <if test="nowcadre != null">#{nowcadre},</if>
+            <if test="nowsoldier != null">#{nowsoldier},</if>
+            <if test="nowcivilian != null">#{nowcivilian},</if>
+            <if test="tolerance != null">#{tolerance},</if>
+            <if test="transfer != null">#{transfer},</if>
+            <if test="equip != null">#{equip},</if>
+            <if test="internal != null">#{internal},</if>
+            <if test="dutylead != null">#{dutylead},</if>
+            <if test="dutya != null">#{dutya},</if>
+            <if test="dutyb != null">#{dutyb},</if>
+            <if test="dutyc != null">#{dutyc},</if>
+            <if test="dutyd != null">#{dutyd},</if>
+            <if test="dutye != null">#{dutye},</if>
+            <if test="dutyf != null">#{dutyf},</if>
+            <if test="dutyinfoa != null">#{dutyinfoa},</if>
+            <if test="dutyinfoc != null">#{dutyinfoc},</if>
+            <if test="dutyinfoe != null">#{dutyinfoe},</if>
+            <if test="dutyDate != null">#{dutyDate},</if>
+            <if test="invalid != null">#{invalid},</if>
+            <if test="notice != null">#{notice},</if>
+            <if test="lead != null">#{lead},</if>
+            <if test="weekwork != null">#{weekwork},</if>
+            <if test="examine != null">#{examine},</if>
+            <if test="peopleId1 != null">#{peopleId1},</if>
+            <if test="contents != null">#{contents},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createName != null">#{createName},</if>
+            <if test="peopleName != null">#{peopleName},</if>
+            <if test="leadName != null">#{leadName},</if>
+            <if test="unitName != null">#{unitName},</if>
+            <if test="organizer != null">#{organizer},</if>
+            <if test="diaryTime != null">#{diaryTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglDiary" parameterType="BdglDiary">
+        update bdgl_diary
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="blogDate != null">blog_date = #{blogDate},</if>
+            <if test="weather != null">weather = #{weather},</if>
+            <if test="orgcadre != null">orgcadre = #{orgcadre},</if>
+            <if test="orgsoldier != null">orgsoldier = #{orgsoldier},</if>
+            <if test="orgcivilian != null">orgcivilian = #{orgcivilian},</if>
+            <if test="nowcadre != null">nowcadre = #{nowcadre},</if>
+            <if test="nowsoldier != null">nowsoldier = #{nowsoldier},</if>
+            <if test="nowcivilian != null">nowcivilian = #{nowcivilian},</if>
+            <if test="tolerance != null">tolerance = #{tolerance},</if>
+            <if test="transfer != null">transfer = #{transfer},</if>
+            <if test="equip != null">equip = #{equip},</if>
+            <if test="internal != null">internal = #{internal},</if>
+            <if test="dutylead != null">dutylead = #{dutylead},</if>
+            <if test="dutya != null">dutyA = #{dutya},</if>
+            <if test="dutyb != null">dutyB = #{dutyb},</if>
+            <if test="dutyc != null">dutyC = #{dutyc},</if>
+            <if test="dutyd != null">dutyD = #{dutyd},</if>
+            <if test="dutye != null">dutyE = #{dutye},</if>
+            <if test="dutyf != null">dutyF = #{dutyf},</if>
+            <if test="dutyinfoa != null">dutyinfoA = #{dutyinfoa},</if>
+            <if test="dutyinfoc != null">dutyinfoC = #{dutyinfoc},</if>
+            <if test="dutyinfoe != null">dutyinfoE = #{dutyinfoe},</if>
+            <if test="dutyDate != null">duty_date = #{dutyDate},</if>
+            <if test="invalid != null">invalid = #{invalid},</if>
+            <if test="notice != null">notice = #{notice},</if>
+            <if test="lead != null">`lead` = #{lead},</if>
+            <if test="weekwork != null">weekwork = #{weekwork},</if>
+            <if test="examine != null">examine = #{examine},</if>
+            <if test="peopleId1 != null">people_id1 = #{peopleId1},</if>
+            <if test="contents != null">contents = #{contents},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createName != null">create_name = #{createName},</if>
+            <if test="peopleName != null">people_name = #{peopleName},</if>
+            <if test="leadName != null">lead_name = #{leadName},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="organizer != null">organizer = #{organizer},</if>
+            <if test="diaryTime != null">diary_time = #{diaryTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglDiaryById" parameterType="Integer">
+        delete from bdgl_diary where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglDiaryByIds" parameterType="String">
+        delete from bdgl_diary where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectBdglDiaryListByTime"  resultMap="BdglDiaryResult">
+        SELECT orgcadre FROM bdgl_diary WHERE blog_date &gt;= #{starttime} AND blog_date &lt;= #{endtime} AND unit_id = #{unitid}
+    </select>
+
+    <select id="selectBdglDailyInspectCountByTime"  resultType="int">
+        SELECT
+            COUNT(1)
+        FROM
+            bdgl_diary
+                LEFT JOIN bdgl_daily_inspect ON bdgl_diary.id = bdgl_daily_inspect.diary_id
+        WHERE blog_date &gt;= #{startTime} AND blog_date &lt;= #{endTime} AND bdgl_diary.unit_id = #{unitId}
+    </select>
+    <select id="selectDirayStatList" resultType="com.supervision.grassrootsregistration.domain.vo.BdglDiaryVo">
+        SELECT
+        a.id as id,
+        a.unit_id as unitId,
+        a.blog_date as blogDate,
+        a.unit_name as unitName,
+        b.people_name as peopleName,
+        b.sentry_name as sentryName,
+        b.foreman_name as foremanName,
+        b.dialogue as dialogue,
+        b.examine_date as examineDate
+        FROM
+        bdgl_diary a RIGHT JOIN bdgl_daily_inspect b ON a.id = b.diary_id
+        <where>
+            <if test="unitId != null ">AND a.unit_id = #{unitId}</if>
+            <if test="unitName != null and unitName != ''">AND a.unit_name = #{unitName}</if>
+            <if test="startTime != null and endTime != null ">AND a.blog_date BETWEEN #{startTime} AND #{endTime}</if>
+            AND b.people_name is NOT NULL
+        </where>
+        ORDER BY a.blog_date
+    </select>
+</mapper>

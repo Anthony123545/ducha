@@ -1,0 +1,23 @@
+{
+  "faceURL":           "$faceURL",                // 【可选】图片url（字符串类型）
+  "faceLibType":       "$faceLibType",            // 【必填】人脸库类型（枚举：blackFD-名单库，staticFD-静态库）
+  "FDID":              "$FDID",                   // 【必填】人脸库ID（字符串类型，最大63字节）
+  "FPID":              "$FPID",                    // 【可选】人脸记录ID（字符串类型，最长63字节）
+  "deleteFP":          "$deleteFP",               // 【可选】是否删除该人脸（布尔类型）
+  "modelData":         "$modelData",              // 【可选】目标模型数据（字符串类型，base64编码）
+
+  "PicFeaturePoint": [                            // 【可选】特征图片坐标（数组类型）
+    {
+      "featurePointType": "$featurePointType",  // 【必填】特征点类型（枚举：face-人脸等）
+      "coordinatePoint": {
+        "x":      "$x",                         // 【必填】x坐标（整数，0-1000范围，归一化处理）
+        "y":      "$y",                         // 【必填】y坐标（整数，0-1000范围，归一化处理）
+        "width":  "$width",                     // 【可选】宽度（整数，featurePointType为face时必填）
+        "height": "$height"                     // 【可选】高度（整数，featurePointType为face时必填）
+      }
+    }
+  ],
+  "faceType":          "$faceType",               // 【可选】人脸类型（枚举：normalFace-普通人脸等）
+  "saveFacePic":       "$saveFacePic",            // 【可选】是否保存人脸底图（布尔类型）
+  "leaderPermission":  ["$doorNo1", "$doorNo2"]   // 【可选】首次认证权限（数组类型，为空表示清空权限）
+}

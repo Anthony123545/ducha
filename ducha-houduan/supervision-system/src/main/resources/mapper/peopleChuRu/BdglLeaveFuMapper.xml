@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.peopleChuRu.mapper.BdglLeaveFuMapper">
+
+    <resultMap type="BdglLeaveFu" id="BdglLeaveFuResult">
+        <result property="id"    column="id"    />
+        <result property="leaveId"    column="leave_id"    />
+        <result property="people"    column="people"    />
+        <result property="spState"    column="sp_state"    />
+        <result property="specialApproval"    column="special_approval"    />
+        <result property="createtime"    column="createtime"    />
+    </resultMap>
+
+    <sql id="selectBdglLeaveFuVo">
+        select id, leave_id, people, sp_state, special_approval, createtime from bdgl_leave_fu
+    </sql>
+
+    <select id="selectBdglLeaveFuList" parameterType="BdglLeaveFu" resultMap="BdglLeaveFuResult">
+        <include refid="selectBdglLeaveFuVo"/>
+        <where>
+            <if test="leaveId != null "> and leave_id = #{leaveId}</if>
+            <if test="people != null  and people != ''"> and people = #{people}</if>
+            <if test="spState != null "> and sp_state = #{spState}</if>
+            <if test="specialApproval != null  and specialApproval != ''"> and special_approval = #{specialApproval}</if>
+            <if test="createtime != null "> and createtime = #{createtime}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectBdglLeaveFuById" parameterType="Long" resultMap="BdglLeaveFuResult">
+        <include refid="selectBdglLeaveFuVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglLeaveFu" parameterType="BdglLeaveFu">
+        insert into bdgl_leave_fu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="leaveId != null">leave_id,</if>
+            <if test="people != null">people,</if>
+            <if test="spState != null">sp_state,</if>
+            <if test="specialApproval != null">special_approval,</if>
+            <if test="createtime != null">createtime,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="leaveId != null">#{leaveId},</if>
+            <if test="people != null">#{people},</if>
+            <if test="spState != null">#{spState},</if>
+            <if test="specialApproval != null">#{specialApproval},</if>
+            <if test="createtime != null">#{createtime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglLeaveFu" parameterType="BdglLeaveFu">
+        update bdgl_leave_fu
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="leaveId != null">leave_id = #{leaveId},</if>
+            <if test="people != null">people = #{people},</if>
+            <if test="spState != null">sp_state = #{spState},</if>
+            <if test="specialApproval != null">special_approval = #{specialApproval},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglLeaveFuById" parameterType="Long">
+        delete from bdgl_leave_fu where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglLeaveFuByIds" parameterType="String">
+        delete from bdgl_leave_fu where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

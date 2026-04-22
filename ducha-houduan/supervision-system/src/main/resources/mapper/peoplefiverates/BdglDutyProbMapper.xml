@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.peoplefiverates.mapper.BdglDutyProbMapper">
+    
+    <resultMap type="BdglDutyProb" id="BdglDutyProbResult">
+        <result property="id"    column="id"    />
+        <result property="bzrs"    column="bzrs"    />
+        <result property="sjrs"    column="sjrs"    />
+        <result property="zwrs"    column="zwrs"    />
+        <result property="dkrs"    column="dkrs"    />
+        <result property="cdrs"    column="cdrs"    />
+    </resultMap>
+
+    <sql id="selectBdglDutyProbVo">
+        select id, bzrs, sjrs, zwrs, dkrs, cdrs from bdgl_duty_prob
+    </sql>
+
+    <select id="selectBdglDutyProbList" parameterType="BdglDutyProb" resultMap="BdglDutyProbResult">
+        <include refid="selectBdglDutyProbVo"/>
+        <where>  
+            <if test="bzrs != null "> and bzrs = #{bzrs}</if>
+            <if test="sjrs != null "> and sjrs = #{sjrs}</if>
+            <if test="zwrs != null "> and zwrs = #{zwrs}</if>
+            <if test="dkrs != null "> and dkrs = #{dkrs}</if>
+            <if test="cdrs != null "> and cdrs = #{cdrs}</if>
+        </where>
+    </select>
+    
+    <select id="selectBdglDutyProbById" parameterType="Integer" resultMap="BdglDutyProbResult">
+        <include refid="selectBdglDutyProbVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBdglDutyProb" parameterType="BdglDutyProb" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_duty_prob
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bzrs != null">bzrs,</if>
+            <if test="sjrs != null">sjrs,</if>
+            <if test="zwrs != null">zwrs,</if>
+            <if test="dkrs != null">dkrs,</if>
+            <if test="cdrs != null">cdrs,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bzrs != null">#{bzrs},</if>
+            <if test="sjrs != null">#{sjrs},</if>
+            <if test="zwrs != null">#{zwrs},</if>
+            <if test="dkrs != null">#{dkrs},</if>
+            <if test="cdrs != null">#{cdrs},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglDutyProb" parameterType="BdglDutyProb">
+        update bdgl_duty_prob
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="bzrs != null">bzrs = #{bzrs},</if>
+            <if test="sjrs != null">sjrs = #{sjrs},</if>
+            <if test="zwrs != null">zwrs = #{zwrs},</if>
+            <if test="dkrs != null">dkrs = #{dkrs},</if>
+            <if test="cdrs != null">cdrs = #{cdrs},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglDutyProbById" parameterType="Integer">
+        delete from bdgl_duty_prob where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglDutyProbByIds" parameterType="String">
+        delete from bdgl_duty_prob where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

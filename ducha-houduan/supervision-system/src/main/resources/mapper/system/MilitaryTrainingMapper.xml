@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.system.mapper.MilitaryTrainingMapper">
+
+    <resultMap type="MilitaryTraining" id="MilitaryTrainingResult">
+        <result property="id"    column="id"    />
+        <result property="synthesis"    column="synthesis"    />
+        <result property="professional"    column="professional"    />
+        <result property="common"    column="common"    />
+        <result property="peopleNumber"    column="people_number"    />
+        <result property="youliang"    column="youliang"    />
+        <result property="jige"    column="jige"    />
+        <result property="weijige"    column="weijige"    />
+        <result property="createtime"    column="createtime"    />
+    </resultMap>
+
+    <sql id="selectMilitaryTrainingVo">
+        select id, synthesis, professional, common, people_number, youliang, jige, weijige,createtime from military_training
+    </sql>
+
+    <select id="selectMilitaryTrainingList" parameterType="MilitaryTraining" resultMap="MilitaryTrainingResult">
+        select  synthesis, professional, common, people_number, youliang, jige, weijige,createtime, shiyou, canxun, weicanxun, canxunlv from military_training where  id=(select max(id) from military_training )
+    </select>
+
+    <select id="selectMilitaryTrainingById" parameterType="Long" resultMap="MilitaryTrainingResult">
+        <include refid="selectMilitaryTrainingVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertMilitaryTraining" parameterType="MilitaryTraining">
+        insert into military_training
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="synthesis != null and synthesis != ''">synthesis,</if>
+            <if test="professional != null">professional,</if>
+            <if test="common != null">common,</if>
+            <if test="peopleNumber != null">people_number,</if>
+            <if test="youliang != null">youliang,</if>
+            <if test="jige != null">jige,</if>
+            <if test="weijige != null">weijige,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="shiyou != null">shiyou,</if>
+            <if test="canxun != null">canxun,</if>
+            <if test="weicanxun != null">weicanxun,</if>
+            <if test="canxunlv != null">canxunlv,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="synthesis != null and synthesis != ''">#{synthesis},</if>
+            <if test="professional != null">#{professional},</if>
+            <if test="common != null">#{common},</if>
+            <if test="peopleNumber != null">#{peopleNumber},</if>
+            <if test="youliang != null">#{youliang},</if>
+            <if test="jige != null">#{jige},</if>
+            <if test="weijige != null">#{weijige},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="shiyou != null">#{shiyou},</if>
+            <if test="canxun != null">#{canxun},</if>
+            <if test="weicanxun != null">#{weicanxun},</if>
+            <if test="canxunlv != null">#{canxunlv},</if>
+        </trim>
+    </insert>
+
+
+    <update id="updateMilitaryTraining" parameterType="MilitaryTraining">
+        update military_training
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="synthesis != null and synthesis != ''">synthesis = #{synthesis},</if>
+            <if test="professional != null">professional = #{professional},</if>
+            <if test="common != null">common = #{common},</if>
+            <if test="peopleNumber != null">people_number = #{peopleNumber},</if>
+            <if test="youliang != null">youliang = #{youliang},</if>
+            <if test="jige != null">jige = #{jige},</if>
+            <if test="weijige != null">weijige = #{weijige},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMilitaryTrainingById" parameterType="Long">
+        delete from military_training where id = #{id}
+    </delete>
+
+    <delete id="deleteMilitaryTrainingByIds" parameterType="String">
+        delete from military_training where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

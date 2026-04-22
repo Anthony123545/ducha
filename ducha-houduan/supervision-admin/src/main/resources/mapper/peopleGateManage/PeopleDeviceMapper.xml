@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.supervision.web.Hikvision.peopleDoor.web.mapper.PeopleDeviceMapper">
+
+    <resultMap id="PeopleDeviceResultMap" type="com.supervision.web.Hikvision.peopleDoor.web.entity.PeopleDevice">
+        <id property="id" column="id"/>
+        <result property="personId" column="person_id"/>
+        <result property="deviceId" column="device_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    
+
+
+    <!-- 插入绑定关系 -->
+    <insert id="insertRelation" parameterType="com.supervision.web.Hikvision.peopleDoor.web.entity.PeopleDevice" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO new_people_device (person_id, device_id, create_time, update_time)
+        VALUES (#{personId}, #{deviceId}, #{createTime}, #{updateTime})
+            ON DUPLICATE KEY UPDATE update_time = VALUES(update_time)
+    </insert>
+
+    <!-- 删除绑定关系 -->
+    <delete id="delete">
+        DELETE FROM new_people_device WHERE person_id = #{personId} AND device_id = #{deviceId}
+    </delete>
+
+    <!-- 查询某人绑定的设备 -->
+    <select id="selectDevicesByPerson" resultType="long">
+        SELECT device_id FROM new_people_device WHERE person_id = #{personId}
+    </select>
+
+</mapper>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.combatduty.mapper.BdglBasedutyMapper">
+
+    <resultMap type="BdglBaseduty" id="BdglBasedutyResult">
+        <result property="id"    column="id"    />
+        <result property="attendedTime"    column="attended_time"    />
+        <result property="chiefDutyName"    column="chief_duty_name"    />
+        <result property="chiefDutyId"    column="chief_duty_id"    />
+        <result property="chiefDutyPhone"    column="chief_duty_phone"    />
+        <result property="combatDutyName"    column="combat_duty_name"    />
+        <result property="combatDutyId"    column="combat_duty_id"    />
+        <result property="combatDutyPhone"    column="combat_duty_phone"    />
+        <result property="dutyOffierName"    column="duty_offier_name"    />
+        <result property="dutyOffierId"    column="duty_offier_id"    />
+        <result property="dutyOffierPhone"    column="duty_offier_phone"    />
+        <result property="detachmentoneName"    column="detachmentone_name"    />
+        <result property="detachmentoneId"    column="detachmentone_id"    />
+        <result property="detachmentoneNumber"    column="detachmentone_number"    />
+        <result property="detachmentonePeopleName"    column="detachmentone_people_name"    />
+        <result property="detachmentonePeopleId"    column="detachmentone_people_id"    />
+        <result property="detachmentonePeoplePhone"    column="detachmentone_people_phone"    />
+        <result property="detachmentwoName"    column="detachmentwo_name"    />
+        <result property="detachmentwoId"    column="detachmentwo_id"    />
+        <result property="detachmentwoNumber"    column="detachmentwo_number"    />
+        <result property="detachmentwoPeopleName"    column="detachmentwo_people_name"    />
+        <result property="detachmentwoPeopleId"    column="detachmentwo_people_id"    />
+        <result property="detachmentwoPeoplePhone"    column="detachmentwo_people_phone"    />
+        <result property="remarks"    column="remarks"    />
+    </resultMap>
+
+    <sql id="selectBdglBasedutyVo">
+        select id, attended_time, chief_duty_name, chief_duty_id, chief_duty_phone, combat_duty_name, combat_duty_id, combat_duty_phone, duty_offier_name, duty_offier_id, duty_offier_phone, detachmentone_name, detachmentone_id, detachmentone_number, detachmentone_people_name, detachmentone_people_id, detachmentone_people_phone, detachmentwo_name, detachmentwo_id, detachmentwo_number, detachmentwo_people_name, detachmentwo_people_id, detachmentwo_people_phone, remarks from bdgl_baseduty
+    </sql>
+
+    <select id="selectBdglBasedutyList" parameterType="BdglBaseduty" resultMap="BdglBasedutyResult">
+        <include refid="selectBdglBasedutyVo"/>
+        <where>
+            <if test="attendedTime != null  and attendedTime != ''"> and attended_time = #{attendedTime}</if>
+            <if test="chiefDutyName != null  and chiefDutyName != ''"> and chief_duty_name like concat('%', #{chiefDutyName}, '%')</if>
+            <if test="chiefDutyId != null "> and chief_duty_id = #{chiefDutyId}</if>
+            <if test="chiefDutyPhone != null  and chiefDutyPhone != ''"> and chief_duty_phone = #{chiefDutyPhone}</if>
+            <if test="combatDutyName != null  and combatDutyName != ''"> and combat_duty_name like concat('%', #{combatDutyName}, '%')</if>
+            <if test="combatDutyId != null "> and combat_duty_id = #{combatDutyId}</if>
+            <if test="combatDutyPhone != null  and combatDutyPhone != ''"> and combat_duty_phone = #{combatDutyPhone}</if>
+            <if test="dutyOffierName != null  and dutyOffierName != ''"> and duty_offier_name like concat('%', #{dutyOffierName}, '%')</if>
+            <if test="dutyOffierId != null "> and duty_offier_id = #{dutyOffierId}</if>
+            <if test="dutyOffierPhone != null  and dutyOffierPhone != ''"> and duty_offier_phone = #{dutyOffierPhone}</if>
+            <if test="detachmentoneName != null  and detachmentoneName != ''"> and detachmentone_name like concat('%', #{detachmentoneName}, '%')</if>
+            <if test="detachmentoneId != null "> and detachmentone_id = #{detachmentoneId}</if>
+            <if test="detachmentoneNumber != null "> and detachmentone_number = #{detachmentoneNumber}</if>
+            <if test="detachmentonePeopleName != null  and detachmentonePeopleName != ''"> and detachmentone_people_name like concat('%', #{detachmentonePeopleName}, '%')</if>
+            <if test="detachmentonePeopleId != null "> and detachmentone_people_id = #{detachmentonePeopleId}</if>
+            <if test="detachmentonePeoplePhone != null  and detachmentonePeoplePhone != ''"> and detachmentone_people_phone = #{detachmentonePeoplePhone}</if>
+            <if test="detachmentwoName != null  and detachmentwoName != ''"> and detachmentwo_name like concat('%', #{detachmentwoName}, '%')</if>
+            <if test="detachmentwoId != null "> and detachmentwo_id = #{detachmentwoId}</if>
+            <if test="detachmentwoNumber != null "> and detachmentwo_number = #{detachmentwoNumber}</if>
+            <if test="detachmentwoPeopleName != null  and detachmentwoPeopleName != ''"> and detachmentwo_people_name like concat('%', #{detachmentwoPeopleName}, '%')</if>
+            <if test="detachmentwoPeopleId != null "> and detachmentwo_people_id = #{detachmentwoPeopleId}</if>
+            <if test="detachmentwoPeoplePhone != null  and detachmentwoPeoplePhone != ''"> and detachmentwo_people_phone = #{detachmentwoPeoplePhone}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="attendedTimeGe != null"> and attended_time &gt;= #{attendedTimeGe}</if>
+            <if test="attendedTimeLe != null"> and attended_time &lt;= #{attendedTimeLe}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectBdglBasedutyById" parameterType="Long" resultMap="BdglBasedutyResult">
+        <include refid="selectBdglBasedutyVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglBaseduty" parameterType="BdglBaseduty">
+        insert into bdgl_baseduty
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="attendedTime != null">attended_time,</if>
+            <if test="chiefDutyName != null">chief_duty_name,</if>
+            <if test="chiefDutyId != null">chief_duty_id,</if>
+            <if test="chiefDutyPhone != null">chief_duty_phone,</if>
+            <if test="combatDutyName != null">combat_duty_name,</if>
+            <if test="combatDutyId != null">combat_duty_id,</if>
+            <if test="combatDutyPhone != null">combat_duty_phone,</if>
+            <if test="dutyOffierName != null">duty_offier_name,</if>
+            <if test="dutyOffierId != null">duty_offier_id,</if>
+            <if test="dutyOffierPhone != null">duty_offier_phone,</if>
+            <if test="detachmentoneName != null">detachmentone_name,</if>
+            <if test="detachmentoneId != null">detachmentone_id,</if>
+            <if test="detachmentoneNumber != null">detachmentone_number,</if>
+            <if test="detachmentonePeopleName != null">detachmentone_people_name,</if>
+            <if test="detachmentonePeopleId != null">detachmentone_people_id,</if>
+            <if test="detachmentonePeoplePhone != null">detachmentone_people_phone,</if>
+            <if test="detachmentwoName != null">detachmentwo_name,</if>
+            <if test="detachmentwoId != null">detachmentwo_id,</if>
+            <if test="detachmentwoNumber != null">detachmentwo_number,</if>
+            <if test="detachmentwoPeopleName != null">detachmentwo_people_name,</if>
+            <if test="detachmentwoPeopleId != null">detachmentwo_people_id,</if>
+            <if test="detachmentwoPeoplePhone != null">detachmentwo_people_phone,</if>
+            <if test="remarks != null">remarks,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="attendedTime != null">#{attendedTime},</if>
+            <if test="chiefDutyName != null">#{chiefDutyName},</if>
+            <if test="chiefDutyId != null">#{chiefDutyId},</if>
+            <if test="chiefDutyPhone != null">#{chiefDutyPhone},</if>
+            <if test="combatDutyName != null">#{combatDutyName},</if>
+            <if test="combatDutyId != null">#{combatDutyId},</if>
+            <if test="combatDutyPhone != null">#{combatDutyPhone},</if>
+            <if test="dutyOffierName != null">#{dutyOffierName},</if>
+            <if test="dutyOffierId != null">#{dutyOffierId},</if>
+            <if test="dutyOffierPhone != null">#{dutyOffierPhone},</if>
+            <if test="detachmentoneName != null">#{detachmentoneName},</if>
+            <if test="detachmentoneId != null">#{detachmentoneId},</if>
+            <if test="detachmentoneNumber != null">#{detachmentoneNumber},</if>
+            <if test="detachmentonePeopleName != null">#{detachmentonePeopleName},</if>
+            <if test="detachmentonePeopleId != null">#{detachmentonePeopleId},</if>
+            <if test="detachmentonePeoplePhone != null">#{detachmentonePeoplePhone},</if>
+            <if test="detachmentwoName != null">#{detachmentwoName},</if>
+            <if test="detachmentwoId != null">#{detachmentwoId},</if>
+            <if test="detachmentwoNumber != null">#{detachmentwoNumber},</if>
+            <if test="detachmentwoPeopleName != null">#{detachmentwoPeopleName},</if>
+            <if test="detachmentwoPeopleId != null">#{detachmentwoPeopleId},</if>
+            <if test="detachmentwoPeoplePhone != null">#{detachmentwoPeoplePhone},</if>
+            <if test="remarks != null">#{remarks},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglBaseduty" parameterType="BdglBaseduty">
+        update bdgl_baseduty
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="attendedTime != null">attended_time = #{attendedTime},</if>
+            <if test="chiefDutyName != null">chief_duty_name = #{chiefDutyName},</if>
+            <if test="chiefDutyId != null">chief_duty_id = #{chiefDutyId},</if>
+            <if test="chiefDutyPhone != null">chief_duty_phone = #{chiefDutyPhone},</if>
+            <if test="combatDutyName != null">combat_duty_name = #{combatDutyName},</if>
+            <if test="combatDutyId != null">combat_duty_id = #{combatDutyId},</if>
+            <if test="combatDutyPhone != null">combat_duty_phone = #{combatDutyPhone},</if>
+            <if test="dutyOffierName != null">duty_offier_name = #{dutyOffierName},</if>
+            <if test="dutyOffierId != null">duty_offier_id = #{dutyOffierId},</if>
+            <if test="dutyOffierPhone != null">duty_offier_phone = #{dutyOffierPhone},</if>
+            <if test="detachmentoneName != null">detachmentone_name = #{detachmentoneName},</if>
+            <if test="detachmentoneId != null">detachmentone_id = #{detachmentoneId},</if>
+            <if test="detachmentoneNumber != null">detachmentone_number = #{detachmentoneNumber},</if>
+            <if test="detachmentonePeopleName != null">detachmentone_people_name = #{detachmentonePeopleName},</if>
+            <if test="detachmentonePeopleId != null">detachmentone_people_id = #{detachmentonePeopleId},</if>
+            <if test="detachmentonePeoplePhone != null">detachmentone_people_phone = #{detachmentonePeoplePhone},</if>
+            <if test="detachmentwoName != null">detachmentwo_name = #{detachmentwoName},</if>
+            <if test="detachmentwoId != null">detachmentwo_id = #{detachmentwoId},</if>
+            <if test="detachmentwoNumber != null">detachmentwo_number = #{detachmentwoNumber},</if>
+            <if test="detachmentwoPeopleName != null">detachmentwo_people_name = #{detachmentwoPeopleName},</if>
+            <if test="detachmentwoPeopleId != null">detachmentwo_people_id = #{detachmentwoPeopleId},</if>
+            <if test="detachmentwoPeoplePhone != null">detachmentwo_people_phone = #{detachmentwoPeoplePhone},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglBasedutyById" parameterType="Long">
+        delete from bdgl_baseduty where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglBasedutyByIds" parameterType="String">
+        delete from bdgl_baseduty where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

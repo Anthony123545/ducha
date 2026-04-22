@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.workingArrangements.mapper.BdglWorkTaskPlanMapper">
+
+    <resultMap type="BdglWorkTaskPlan" id="BdglWorkTaskPlanResult">
+        <result property="id"    column="id"    />
+        <result property="taskName"    column="task_name"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="remarkInfo"    column="remark_info"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <resultMap id="BdglWorkTaskPlanBdglWorkTaskPlanAnnerResult" type="BdglWorkTaskPlan" extends="BdglWorkTaskPlanResult">
+        <collection property="annexList" notNullColumn="sub_id" javaType="java.util.List" resultMap="BdglWorkTaskPlanAnnerResult" />
+    </resultMap>
+
+    <resultMap type="BdglWorkTaskPlanAnner" id="BdglWorkTaskPlanAnnerResult">
+        <result property="id"    column="sub_id"    />
+        <result property="name"    column="sub_name"    />
+        <result property="url"    column="sub_url"    />
+        <result property="taskPlanId"    column="sub_task_plan_id"    />
+        <result property="taskPlanDetailId"    column="sub_task_plan_detail_id"    />
+    </resultMap>
+
+    <sql id="selectBdglWorkTaskPlanVo">
+        select id, task_name, start_time, end_time, remark_info, create_by, create_time, update_by, update_time from bdgl_work_task_plan
+    </sql>
+
+    <select id="selectBdglWorkTaskPlanList" parameterType="BdglWorkTaskPlan" resultMap="BdglWorkTaskPlanResult">
+        <include refid="selectBdglWorkTaskPlanVo"/>
+        <where>
+            <if test="taskName != null  and taskName != ''"> and task_name like concat('%', #{taskName}, '%')</if>
+            <if test="createBy != null "> and create_by = #{createBy}</if>
+        </where>
+    </select>
+
+    <select id="selectBdglWorkTaskPlanById" parameterType="Long" resultMap="BdglWorkTaskPlanBdglWorkTaskPlanAnnerResult">
+        select a.id, a.task_name, a.start_time, a.end_time, a.remark_info, a.create_by, a.create_time, a.update_by, a.update_time,
+               b.id as sub_id, b.name as sub_name, b.url as sub_url, b.task_plan_id as sub_task_plan_id,b.task_plan_detail_id as sub_task_plan_detail_id
+        from bdgl_work_task_plan a
+                 left join bdgl_work_task_plan_anner b on b.task_plan_id = a.id
+        where a.id = #{id}
+    </select>
+
+    <!--根据任务ID查询任务附件-->
+    <select id="selectBdglWorkTaskPlanAnnerByTaskPlanId" parameterType="Long" resultType="com.supervision.workingArrangements.domain.BdglWorkTaskPlanAnner">
+        select id,name,url,task_plan_id as taskPlanId from bdgl_work_task_plan_anner where task_plan_id = #{taskPlanId}
+    </select>
+
+    <!--根据任务详情ID查询任务反馈附件-->
+    <select id="selectWorkTaskPlanAnnerByTaskPlanDetailId" parameterType="Long" resultType="com.supervision.workingArrangements.domain.BdglWorkTaskPlanAnner">
+        select id,name,url,task_plan_detail_id as taskPlanDetailId from bdgl_work_task_plan_anner where task_plan_detail_id = #{taskPlanDetailId}
+    </select>
+
+    <insert id="insertBdglWorkTaskPlan" parameterType="BdglWorkTaskPlan" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_work_task_plan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="taskName != null and taskName != ''">task_name,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="remarkInfo != null">remark_info,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="taskName != null and taskName != ''">#{taskName},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="remarkInfo != null">#{remarkInfo},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglWorkTaskPlan" parameterType="BdglWorkTaskPlan">
+        update bdgl_work_task_plan
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="taskName != null and taskName != ''">task_name = #{taskName},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="remarkInfo != null">remark_info = #{remarkInfo},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglWorkTaskPlanById" parameterType="Long">
+        delete from bdgl_work_task_plan where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglWorkTaskPlanByIds" parameterType="String">
+        delete from bdgl_work_task_plan where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBdglWorkTaskPlanAnnerByTaskPlanIds" parameterType="String">
+        delete from bdgl_work_task_plan_anner where task_plan_id in
+        <foreach item="taskPlanId" collection="array" open="(" separator="," close=")">
+            #{taskPlanId}
+        </foreach>
+    </delete>
+
+
+
+    <delete id="deleteBdglWorkTaskPlanAnnerByTaskPlanId" parameterType="Long">
+        delete from bdgl_work_task_plan_anner where task_plan_id = #{taskPlanId}
+    </delete>
+
+    <insert id="batchBdglWorkTaskPlanAnner">
+        insert into bdgl_work_task_plan_anner( id, name, url, task_plan_id) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.id}, #{item.name}, #{item.url}, #{item.taskPlanId})
+        </foreach>
+    </insert>
+
+    <!-- 批量新增任务详情附件-->
+    <insert id="batchBdglWorkTaskPlanAnnerWithDetail">
+        insert into bdgl_work_task_plan_anner( id, name, url, task_plan_detail_id) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.id}, #{item.name}, #{item.url}, #{item.taskPlanDetailId})
+        </foreach>
+    </insert>
+</mapper>

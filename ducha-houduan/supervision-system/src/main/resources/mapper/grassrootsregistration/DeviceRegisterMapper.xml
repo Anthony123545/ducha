@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.supervision.grassrootsregistration.mapper.DeviceRegisterMapper">
+
+    <resultMap id="DeviceRegisterMap" type="DeviceRegister">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="dept" property="dept"/>
+
+        <result column="phone1" property="phone1"/>
+        <result column="phone1_time" property="phone1Time"/>
+
+        <result column="phone2" property="phone2"/>
+        <result column="phone2_time" property="phone2Time"/>
+
+        <result column="smart_phone1" property="smartPhone1"/>
+        <result column="smart_phone2" property="smartPhone2"/>
+        <result column="smart_phone3" property="smartPhone3"/>
+        <result column="non_smart_phone" property="nonSmartPhone"/>
+
+        <result column="other_device" property="otherDevice"/>
+
+        <result column="wechat" property="wechat"/>
+        <result column="qq" property="qq"/>
+        <result column="weibo" property="weibo"/>
+        <result column="douyin" property="douyin"/>
+        <result column="other_social" property="otherSocial"/>
+
+        <result column="user_name" property="userName"/>
+        <result column="use_date" property="useDate"/>
+    </resultMap>
+
+    <!-- 列表 -->
+    <select id="selectList" resultMap="DeviceRegisterMap">
+        select * from new_device_register
+        order by id desc
+    </select>
+
+    <!-- 详情 -->
+    <select id="selectById" resultMap="DeviceRegisterMap">
+        select * from new_device_register
+        where id = #{id}
+    </select>
+
+    <!-- 新增 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into new_device_register (
+            name, dept,
+            phone1, phone1_time,
+            phone2, phone2_time,
+            smart_phone1, smart_phone2, smart_phone3, non_smart_phone,
+            other_device,
+            wechat, qq, weibo, douyin, other_social,
+            user_name, use_date
+        ) values (
+                     #{name}, #{dept},
+                     #{phone1}, #{phone1Time},
+                     #{phone2}, #{phone2Time},
+                     #{smartPhone1}, #{smartPhone2}, #{smartPhone3}, #{nonSmartPhone},
+                     #{otherDevice},
+                     #{wechat}, #{qq}, #{weibo}, #{douyin}, #{otherSocial},
+                     #{userName}, #{useDate}
+                 )
+    </insert>
+
+</mapper>
+

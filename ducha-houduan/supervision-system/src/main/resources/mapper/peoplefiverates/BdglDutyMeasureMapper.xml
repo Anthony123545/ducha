@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.peoplefiverates.mapper.BdglDutyMeasureMapper">
+    
+    <resultMap type="BdglDutyMeasure" id="BdglDutyMeasureResult">
+        <result property="id"    column="id"    />
+        <result property="ylZscb"    column="yl_zscb"    />
+        <result property="ylCxyz"    column="yl_cxyz"    />
+        <result property="ylZcnl"    column="yl_zcnl"    />
+        <result property="jxZscb"    column="jx_zscb"    />
+        <result property="jxCxyz"    column="jx_cxyz"    />
+        <result property="jxZcnl"    column="jx_zcnl"    />
+        <result property="zbjZscb"    column="zbj_zscb"    />
+        <result property="wswzZscb"    column="wswz_zscb"    />
+        <result property="wswzCxyz"    column="wswz_cxyz"    />
+        <result property="dyCcl"    column="dy_ccl"    />
+        <result property="wxCcl"    column="wx_ccl"    />
+    </resultMap>
+
+    <sql id="selectBdglDutyMeasureVo">
+        select id, yl_zscb, yl_cxyz, yl_zcnl, jx_zscb, jx_cxyz, jx_zcnl, zbj_zscb, wswz_zscb, wswz_cxyz, dy_ccl, wx_ccl from bdgl_duty_measure
+    </sql>
+
+    <select id="selectBdglDutyMeasureList" parameterType="BdglDutyMeasure" resultMap="BdglDutyMeasureResult">
+        <include refid="selectBdglDutyMeasureVo"/>
+        <where>  
+            <if test="ylZscb != null "> and yl_zscb = #{ylZscb}</if>
+            <if test="ylCxyz != null "> and yl_cxyz = #{ylCxyz}</if>
+            <if test="ylZcnl != null "> and yl_zcnl = #{ylZcnl}</if>
+            <if test="jxZscb != null "> and jx_zscb = #{jxZscb}</if>
+            <if test="jxCxyz != null "> and jx_cxyz = #{jxCxyz}</if>
+            <if test="jxZcnl != null "> and jx_zcnl = #{jxZcnl}</if>
+            <if test="zbjZscb != null "> and zbj_zscb = #{zbjZscb}</if>
+            <if test="wswzZscb != null "> and wswz_zscb = #{wswzZscb}</if>
+            <if test="wswzCxyz != null "> and wswz_cxyz = #{wswzCxyz}</if>
+            <if test="dyCcl != null "> and dy_ccl = #{dyCcl}</if>
+            <if test="wxCcl != null "> and wx_ccl = #{wxCcl}</if>
+        </where>
+    </select>
+    
+    <select id="selectBdglDutyMeasureById" parameterType="Integer" resultMap="BdglDutyMeasureResult">
+        <include refid="selectBdglDutyMeasureVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBdglDutyMeasure" parameterType="BdglDutyMeasure" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_duty_measure
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ylZscb != null">yl_zscb,</if>
+            <if test="ylCxyz != null">yl_cxyz,</if>
+            <if test="ylZcnl != null">yl_zcnl,</if>
+            <if test="jxZscb != null">jx_zscb,</if>
+            <if test="jxCxyz != null">jx_cxyz,</if>
+            <if test="jxZcnl != null">jx_zcnl,</if>
+            <if test="zbjZscb != null">zbj_zscb,</if>
+            <if test="wswzZscb != null">wswz_zscb,</if>
+            <if test="wswzCxyz != null">wswz_cxyz,</if>
+            <if test="dyCcl != null">dy_ccl,</if>
+            <if test="wxCcl != null">wx_ccl,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ylZscb != null">#{ylZscb},</if>
+            <if test="ylCxyz != null">#{ylCxyz},</if>
+            <if test="ylZcnl != null">#{ylZcnl},</if>
+            <if test="jxZscb != null">#{jxZscb},</if>
+            <if test="jxCxyz != null">#{jxCxyz},</if>
+            <if test="jxZcnl != null">#{jxZcnl},</if>
+            <if test="zbjZscb != null">#{zbjZscb},</if>
+            <if test="wswzZscb != null">#{wswzZscb},</if>
+            <if test="wswzCxyz != null">#{wswzCxyz},</if>
+            <if test="dyCcl != null">#{dyCcl},</if>
+            <if test="wxCcl != null">#{wxCcl},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglDutyMeasure" parameterType="BdglDutyMeasure">
+        update bdgl_duty_measure
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ylZscb != null">yl_zscb = #{ylZscb},</if>
+            <if test="ylCxyz != null">yl_cxyz = #{ylCxyz},</if>
+            <if test="ylZcnl != null">yl_zcnl = #{ylZcnl},</if>
+            <if test="jxZscb != null">jx_zscb = #{jxZscb},</if>
+            <if test="jxCxyz != null">jx_cxyz = #{jxCxyz},</if>
+            <if test="jxZcnl != null">jx_zcnl = #{jxZcnl},</if>
+            <if test="zbjZscb != null">zbj_zscb = #{zbjZscb},</if>
+            <if test="wswzZscb != null">wswz_zscb = #{wswzZscb},</if>
+            <if test="wswzCxyz != null">wswz_cxyz = #{wswzCxyz},</if>
+            <if test="dyCcl != null">dy_ccl = #{dyCcl},</if>
+            <if test="wxCcl != null">wx_ccl = #{wxCcl},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglDutyMeasureById" parameterType="Integer">
+        delete from bdgl_duty_measure where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglDutyMeasureByIds" parameterType="String">
+        delete from bdgl_duty_measure where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.peopleManage.mapper.BdglPeopleRecallMapper">
+
+    <resultMap type="BdglPeopleRecall" id="BdglPeopleRecallResult">
+        <result property="id"    column="id"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="filed1"    column="filed1"    />
+        <result property="filed2"    column="filed2"    />
+        <result property="cName"    column="c_name"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="adminId"    column="admin_id"    />
+        <association property="bdglPeopleRecallAuditlog"    column="peopleId" javaType="BdglPeopleRecallAuditlog" resultMap="BdglPeopleRecallAuditlogResult" />
+    </resultMap>
+    <resultMap type="BdglPeopleRecallAuditlog" id="BdglPeopleRecallAuditlogResult">
+        <result property="id"    column="id"    />
+        <result property="pid"    column="pid"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="adminId"    column="admin_id"    />
+        <result property="type"    column="type"    />
+        <result property="contents"    column="contents"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+    </resultMap>
+
+    <sql id="selectBdglPeopleRecallVo">
+        select id, filed1,filed2,people_id, c_name, createtime, admin_id from bdgl_people_recall
+    </sql>
+
+    <select id="selectBdglPeopleRecallList" parameterType="BdglPeopleRecall" resultMap="BdglPeopleRecallResult">
+        <include refid="selectBdglPeopleRecallVo"/>
+        <where>
+            <if test="peopleId != null "> and people_id = #{peopleId}</if>
+            <if test="filed1 != null  and filed1 != ''"> and filed1 = #{filed1}</if>
+            <if test="filed2 != null  and filed2 != ''"> and filed2 = #{filed2}</if>
+            <if test="cName != null  and cName != ''"> and c_name like concat('%', #{cName}, '%')</if>
+            <if test="createtime != null "> and createtime = #{createtime}</if>
+            <if test="adminId != null "> and admin_id = #{adminId}</if>
+        </where>
+    </select>
+
+    <select id="selectBdglPeopleRecallById" parameterType="Integer" resultMap="BdglPeopleRecallResult">
+        <include refid="selectBdglPeopleRecallVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBdglPeopleID" parameterType="BdglPeopleRecall" resultMap="BdglPeopleRecallResult">
+
+        select z.id,z.people_id,z.c_name,f.id, f.pid, f.people_id, f.admin_id, f.type, f.contents, f.createtime, f.updatetime from bdgl_people_recall z,bdgl_people_recall_auditlog f
+
+        <where>
+            and z.people_id = f.people_id
+            <if test="peopleId != null "> and z.people_id = #{peopleId}</if>
+        </where>
+    </select>
+
+    <insert id="insertBdglPeopleRecall" parameterType="BdglPeopleRecall" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_people_recall
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="peopleId != null">people_id,</if>
+            <if test="filed1 != null">filed1,</if>
+            <if test="filed2 != null">filed2,</if>
+            <if test="cName != null">c_name,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="adminId != null">admin_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="filed1 != null">#{filed1},</if>
+            <if test="filed2 != null">#{filed2},</if>
+            <if test="cName != null">#{cName},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="adminId != null">#{adminId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglPeopleRecall" parameterType="BdglPeopleRecall">
+        update bdgl_people_recall
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="filed1 != null">filed1 = #{filed1},</if>
+            <if test="filed2 != null">filed2 = #{filed2},</if>
+            <if test="cName != null">c_name = #{cName},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="adminId != null">admin_id = #{adminId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglPeopleRecallById" parameterType="Integer">
+        delete from bdgl_people_recall where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglPeopleRecallByIds" parameterType="String">
+        delete from bdgl_people_recall where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

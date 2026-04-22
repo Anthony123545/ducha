@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.combatduty.mapper.BdglTeamdutyFuMapper">
+
+    <resultMap type="BdglTeamdutyFu" id="BdglTeamdutyFuResult">
+        <result property="id"    column="id"    />
+        <result property="detachmentName"    column="detachment_name"    />
+        <result property="detachmentId"    column="detachment_id"    />
+        <result property="detachmentNumber"    column="detachment_number"    />
+        <result property="detachmentPeopleName"    column="detachment_people_name"    />
+        <result property="detachmentPeopleId"    column="detachment_people_id"    />
+        <result property="detachmentPeoplePhone"    column="detachment_people_phone"    />
+        <result property="bdglTeamdutyId"    column="bdgl_teamduty_id"    />
+    </resultMap>
+
+    <sql id="selectBdglTeamdutyFuVo">
+        select id, detachment_name, detachment_id, detachment_number, detachment_people_name, detachment_people_id, detachment_people_phone, bdgl_teamduty_id from bdgl_teamduty_fu
+    </sql>
+
+    <select id="selectBdglTeamdutyFuList" parameterType="BdglTeamdutyFu" resultMap="BdglTeamdutyFuResult">
+        <include refid="selectBdglTeamdutyFuVo"/>
+        <where>
+            <if test="detachmentName != null  and detachmentName != ''"> and detachment_name like concat('%', #{detachmentName}, '%')</if>
+            <if test="detachmentId != null "> and detachment_id = #{detachmentId}</if>
+            <if test="detachmentNumber != null "> and detachment_number = #{detachmentNumber}</if>
+            <if test="detachmentPeopleName != null  and detachmentPeopleName != ''"> and detachment_people_name like concat('%', #{detachmentPeopleName}, '%')</if>
+            <if test="detachmentPeopleId != null "> and detachment_people_id = #{detachmentPeopleId}</if>
+            <if test="detachmentPeoplePhone != null  and detachmentPeoplePhone != ''"> and detachment_people_phone = #{detachmentPeoplePhone}</if>
+            <if test="bdglTeamdutyId != null "> and bdgl_teamduty_id = #{bdglTeamdutyId}</if>
+        </where>
+    </select>
+
+    <select id="selectBdglTeamdutyFuById" parameterType="Long" resultMap="BdglTeamdutyFuResult">
+        <include refid="selectBdglTeamdutyFuVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglTeamdutyFu" parameterType="BdglTeamdutyFu" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_teamduty_fu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="detachmentName != null">detachment_name,</if>
+            <if test="detachmentId != null">detachment_id,</if>
+            <if test="detachmentNumber != null">detachment_number,</if>
+            <if test="detachmentPeopleName != null">detachment_people_name,</if>
+            <if test="detachmentPeopleId != null">detachment_people_id,</if>
+            <if test="detachmentPeoplePhone != null">detachment_people_phone,</if>
+            <if test="bdglTeamdutyId != null">bdgl_teamduty_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="detachmentName != null">#{detachmentName},</if>
+            <if test="detachmentId != null">#{detachmentId},</if>
+            <if test="detachmentNumber != null">#{detachmentNumber},</if>
+            <if test="detachmentPeopleName != null">#{detachmentPeopleName},</if>
+            <if test="detachmentPeopleId != null">#{detachmentPeopleId},</if>
+            <if test="detachmentPeoplePhone != null">#{detachmentPeoplePhone},</if>
+            <if test="bdglTeamdutyId != null">#{bdglTeamdutyId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglTeamdutyFu" parameterType="BdglTeamdutyFu">
+        update bdgl_teamduty_fu
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="detachmentName != null">detachment_name = #{detachmentName},</if>
+            <if test="detachmentId != null">detachment_id = #{detachmentId},</if>
+            <if test="detachmentNumber != null">detachment_number = #{detachmentNumber},</if>
+            <if test="detachmentPeopleName != null">detachment_people_name = #{detachmentPeopleName},</if>
+            <if test="detachmentPeopleId != null">detachment_people_id = #{detachmentPeopleId},</if>
+            <if test="detachmentPeoplePhone != null">detachment_people_phone = #{detachmentPeoplePhone},</if>
+            <if test="bdglTeamdutyId != null">bdgl_teamduty_id = #{bdglTeamdutyId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglTeamdutyFuById" parameterType="Long">
+        delete from bdgl_teamduty_fu where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglTeamdutyFuByIds" parameterType="String">
+        delete from bdgl_teamduty_fu where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

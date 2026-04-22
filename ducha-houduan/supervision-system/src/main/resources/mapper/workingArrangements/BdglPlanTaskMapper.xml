@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.workingArrangements.mapper.BdglPlanTaskMapper">
+    
+    <resultMap type="BdglPlanTask" id="BdglPlanTaskResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="number"    column="number"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="file"    column="file"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="remark"    column="remark"    />
+        <result property="contents"    column="contents"    />
+        <result property="adminId"    column="admin_id"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="type"    column="type"    />
+        <result property="peopleName"    column="people_name"    />
+        <result property="unitName2"    column="unit_name2"    />
+        <result property="taskProgress"    column="task_progress"    />
+        <result property="userId"    column="user_id"    />
+        <result property="username"    column="username"    />
+    </resultMap>
+
+    <sql id="selectBdglPlanTaskVo">
+        select id, name, people_id, number, start_time, end_time, file, file_name, remark, contents, admin_id, unit_id, unit_name, createtime, updatetime, type, people_name, unit_name2,task_progress,common,user_id,username from bdgl_plan_task
+    </sql>
+
+    <select id="selectBdglPlanTaskList" parameterType="BdglPlanTask" resultMap="BdglPlanTaskResult">
+        <include refid="selectBdglPlanTaskVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="peopleId != null  and peopleId != ''"> and people_id = #{peopleId}</if>
+            <if test="number != null  and number != ''"> and number = #{number}</if>
+           <!-- <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>-->
+            <if test="startTime !=null and endTime !=null" >
+                and <![CDATA[
+                    start_time>#{startTime} and end_time < #{endTime}
+                ]]>
+            </if>
+            <if test="file != null  and file != ''"> and file = #{file}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="contents != null  and contents != ''"> and contents = #{contents}</if>
+            <if test="adminId != null "> and admin_id = #{adminId}</if>
+            <if test="unitId != null "> and unit_id like concat('%', #{unit_id}, '%')</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="createtime != null "> and createtime like concat('%', #{createtime}, '%')</if>
+            <if test="updatetime != null "> and updatetime = #{updatetime}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="peopleName != null  and peopleName != ''"> and people_name like concat('%', #{peopleName}, '%')</if>
+            <if test="unitName2 != null  and unitName2 != ''"> and unit_name2 = #{unitName2}</if>
+            <if test="taskProgress != null  and taskProgress != ''"> and task_progress = #{taskProgress}</if>
+        </where>
+        order by createtime desc
+    </select>
+    <select id="selectBdglPlanTaskLists" parameterType="BdglPlanTask" resultMap="BdglPlanTaskResult">
+        <include refid="selectBdglPlanTaskVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="number != null  and number != ''"> and number = #{number}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="file != null  and file != ''"> and file = #{file}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="contents != null  and contents != ''"> and contents = #{contents}</if>
+            <if test="unitId != null "> and unit_id like concat('%', #{unit_id}, '%')</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="createtime != null "> and createtime = #{createtime}</if>
+            <if test="updatetime != null "> and updatetime = #{updatetime}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="peopleName != null  and peopleName != ''"> and people_name like concat('%', #{peopleName}, '%')</if>
+            <if test="unitName2 != null  and unitName2 != ''"> and unit_name2 = #{unitName2}</if>
+            <if test="taskProgress != null  and taskProgress != ''"> and task_progress = #{taskProgress}</if>
+            <if test="userId !=null">
+                and (user_id=#{userId} or people_id like concat('%',#{userId},'%') )
+            </if>
+        </where>
+        order by createtime desc
+    </select>
+    
+    <select id="selectBdglPlanTaskById" parameterType="Integer" resultMap="BdglPlanTaskResult">
+        <include refid="selectBdglPlanTaskVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBdglPlanTask" parameterType="BdglPlanTask" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_plan_task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="peopleId != null">people_id,</if>
+            <if test="number != null and number != ''">number,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="file != null">file,</if>
+            <if test="fileName != null">file_name,</if>
+            <if test="remark != null">remark,</if>
+            <if test="contents != null">contents,</if>
+            <if test="adminId != null">admin_id,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="unitName != null">unit_name,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="type != null">type,</if>
+            <if test="peopleName != null">people_name,</if>
+            <if test="unitName2 != null">unit_name2,</if>
+            <if test="taskProgress != null">task_progress,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="username != null">username,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="number != null and number != ''">#{number},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="file != null">#{file},</if>
+            <if test="fileName != null">#{fileName},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="contents != null">#{contents},</if>
+            <if test="adminId != null">#{adminId},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="unitName != null">#{unitName},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="type != null">#{type},</if>
+            <if test="peopleName != null">#{peopleName},</if>
+            <if test="unitName2 != null">#{unitName2},</if>
+            <if test="taskProgress != null">#{taskProgress},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="username != null">#{username},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglPlanTask" parameterType="BdglPlanTask">
+        update bdgl_plan_task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="number != null and number != ''">number = #{number},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="file != null">file = #{file},</if>
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="contents != null">contents = #{contents},</if>
+            <if test="adminId != null">admin_id = #{adminId},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="peopleName != null">people_name = #{peopleName},</if>
+            <if test="unitName2 != null">unit_name2 = #{unitName2},</if>
+            <if test="taskProgress != null">task_progress = #{taskProgress},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglPlanTaskById" parameterType="Integer">
+        delete from bdgl_plan_task where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglPlanTaskByIds" parameterType="String">
+        delete from bdgl_plan_task where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

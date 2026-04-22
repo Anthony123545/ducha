@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.militaryvehicleManagement.mapper.BdglThebusConfigMapper">
+
+    <resultMap type="BdglThebusConfig" id="BdglThebusConfigResult">
+        <result property="id"    column="id"    />
+        <result property="shenpiname"    column="shenpiname"    />
+        <result property="oneshenpirenname"    column="oneshenpirenname"    />
+        <result property="onshenpirenid"    column="onshenpirenid"    />
+        <result property="twoshenpirenname"    column="twoshenpirenname"    />
+        <result property="twoshenpirenid"    column="twoshenpirenid"    />
+        <result property="threeshenpirenname"    column="threeshenpirenname"    />
+        <result property="threeshenpirenid"    column="threeshenpirenid"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="createid"    column="createid"    />
+    </resultMap>
+
+    <sql id="selectBdglThebusConfigVo">
+        select id, shenpiname, oneshenpirenname, onshenpirenid, twoshenpirenname, twoshenpirenid, threeshenpirenname, threeshenpirenid, createtime, updatetime, createid from bdgl_thebus_config
+    </sql>
+
+    <select id="selectBdglThebusConfigList" parameterType="BdglThebusConfig" resultMap="BdglThebusConfigResult">
+        <include refid="selectBdglThebusConfigVo"/>
+        <where>
+            <if test="shenpiname != null  and shenpiname != ''"> and shenpiname like concat('%', #{shenpiname}, '%')</if>
+            <if test="oneshenpirenname != null  and oneshenpirenname != ''"> and oneshenpirenname like concat('%', #{oneshenpirenname}, '%')</if>
+            <if test="onshenpirenid != null "> and onshenpirenid = #{onshenpirenid}</if>
+            <if test="twoshenpirenname != null  and twoshenpirenname != ''"> and twoshenpirenname like concat('%', #{twoshenpirenname}, '%')</if>
+            <if test="twoshenpirenid != null "> and twoshenpirenid = #{twoshenpirenid}</if>
+            <if test="threeshenpirenname != null  and threeshenpirenname != ''"> and threeshenpirenname like concat('%', #{threeshenpirenname}, '%')</if>
+            <if test="threeshenpirenid != null "> and threeshenpirenid = #{threeshenpirenid}</if>
+            <if test="createtime != null "> and createtime = #{createtime}</if>
+            <if test="updatetime != null "> and updatetime = #{updatetime}</if>
+            <if test="createid != null "> and createid = #{createid}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectBdglThebusConfigById" parameterType="Integer" resultMap="BdglThebusConfigResult">
+        <include refid="selectBdglThebusConfigVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglThebusConfig" parameterType="BdglThebusConfig" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_thebus_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shenpiname != null">shenpiname,</if>
+            <if test="oneshenpirenname != null">oneshenpirenname,</if>
+            <if test="onshenpirenid != null">onshenpirenid,</if>
+            <if test="twoshenpirenname != null">twoshenpirenname,</if>
+            <if test="twoshenpirenid != null">twoshenpirenid,</if>
+            <if test="threeshenpirenname != null">threeshenpirenname,</if>
+            <if test="threeshenpirenid != null">threeshenpirenid,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="createid != null">createid,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shenpiname != null">#{shenpiname},</if>
+            <if test="oneshenpirenname != null">#{oneshenpirenname},</if>
+            <if test="onshenpirenid != null">#{onshenpirenid},</if>
+            <if test="twoshenpirenname != null">#{twoshenpirenname},</if>
+            <if test="twoshenpirenid != null">#{twoshenpirenid},</if>
+            <if test="threeshenpirenname != null">#{threeshenpirenname},</if>
+            <if test="threeshenpirenid != null">#{threeshenpirenid},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="createid != null">#{createid},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglThebusConfig" parameterType="BdglThebusConfig">
+        update bdgl_thebus_config
+        <trim prefix="SET" suffixOverrides=",">
+            shenpiname = #{shenpiname},
+            oneshenpirenname = #{oneshenpirenname},
+            onshenpirenid = #{onshenpirenid},
+            twoshenpirenname = #{twoshenpirenname},
+            twoshenpirenid = #{twoshenpirenid},
+            threeshenpirenname = #{threeshenpirenname},
+            threeshenpirenid = #{threeshenpirenid},
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="createid != null">createid = #{createid},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglThebusConfigById" parameterType="Integer">
+        delete from bdgl_thebus_config where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglThebusConfigByIds" parameterType="String">
+        delete from bdgl_thebus_config where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

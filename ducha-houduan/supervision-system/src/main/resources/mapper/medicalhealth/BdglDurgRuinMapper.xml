@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.medicalhealth.mapper.BdglDurgRuinMapper">
+    
+    <resultMap type="BdglDurgRuin" id="BdglDurgRuinResult">
+        <result property="id"    column="id"    />
+        <result property="durgArchivesId"    column="durg_archives_id"    />
+        <result property="putIn"    column="put_in"    />
+        <result property="manufacturer"    column="manufacturer"    />
+        <result property="specifications"    column="specifications"    />
+        <result property="durgBrand"    column="durg_brand"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="putinId"    column="putin_id"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectBdglDurgRuinVo">
+        select id, durg_archives_id, put_in, manufacturer, specifications, durg_brand, createtime, putin_id, status from bdgl_durg_ruin
+    </sql>
+
+    <select id="selectBdglDurgRuinList" parameterType="BdglDurgRuin" resultMap="BdglDurgRuinResult">
+        <include refid="selectBdglDurgRuinVo"/>
+        <where>  
+            <if test="durgArchivesId != null "> and durg_archives_id = #{durgArchivesId}</if>
+            <if test="putIn != null  and putIn != ''"> and put_in = #{putIn}</if>
+            <if test="manufacturer != null  and manufacturer != ''"> and manufacturer = #{manufacturer}</if>
+            <if test="specifications != null  and specifications != ''"> and specifications = #{specifications}</if>
+            <if test="durgBrand != null  and durgBrand != ''"> and durg_brand = #{durgBrand}</if>
+            <if test="createtime != null  and createtime != ''"> and createtime = #{createtime}</if>
+            <if test="putinId != null "> and putin_id = #{putinId}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectBdglDurgRuinById" parameterType="Integer" resultMap="BdglDurgRuinResult">
+        <include refid="selectBdglDurgRuinVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBdglDurgRuin" parameterType="BdglDurgRuin" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_durg_ruin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="durgArchivesId != null">durg_archives_id,</if>
+            <if test="putIn != null">put_in,</if>
+            <if test="manufacturer != null">manufacturer,</if>
+            <if test="specifications != null">specifications,</if>
+            <if test="durgBrand != null">durg_brand,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="putinId != null">putin_id,</if>
+            <if test="status != null">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="durgArchivesId != null">#{durgArchivesId},</if>
+            <if test="putIn != null">#{putIn},</if>
+            <if test="manufacturer != null">#{manufacturer},</if>
+            <if test="specifications != null">#{specifications},</if>
+            <if test="durgBrand != null">#{durgBrand},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="putinId != null">#{putinId},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglDurgRuin" parameterType="BdglDurgRuin">
+        update bdgl_durg_ruin
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="durgArchivesId != null">durg_archives_id = #{durgArchivesId},</if>
+            <if test="putIn != null">put_in = #{putIn},</if>
+            <if test="manufacturer != null">manufacturer = #{manufacturer},</if>
+            <if test="specifications != null">specifications = #{specifications},</if>
+            <if test="durgBrand != null">durg_brand = #{durgBrand},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="putinId != null">putin_id = #{putinId},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglDurgRuinById" parameterType="Integer">
+        delete from bdgl_durg_ruin where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglDurgRuinByIds" parameterType="String">
+        delete from bdgl_durg_ruin where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

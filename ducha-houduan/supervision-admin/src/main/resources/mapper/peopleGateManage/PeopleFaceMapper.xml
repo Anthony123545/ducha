@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.supervision.web.Hikvision.peopleDoor.web.mapper.PeopleFaceMapper">
+
+    <resultMap id="PeopleFaceResultMap" type="com.supervision.web.Hikvision.peopleDoor.web.entity.PeopleFace">
+        <id property="id" column="id"/>
+        <result property="personId" column="person_id"/>
+        <result property="jobNumber" column="job_number"/>
+        <result property="name" column="name"/>
+        <result property="faceImgUrl" column="face_img_url"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="PeopleFaceResultMap">
+        SELECT * FROM new_people_face WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="PeopleFaceResultMap">
+        SELECT * FROM new_people_face
+    </select>
+
+    <insert id="insert" parameterType="com.supervision.web.Hikvision.peopleDoor.web.entity.PeopleFace" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO new_people_face(person_id, job_number, name, face_img_url, create_time, update_time)
+        VALUES(#{personId}, #{jobNumber}, #{name}, #{faceImgUrl}, NOW(), NOW())
+    </insert>
+
+    <update id="update" parameterType="com.supervision.web.Hikvision.peopleDoor.web.entity.PeopleFace">
+        UPDATE new_people_face
+        SET person_id=#{personId},
+        job_number=#{jobNumber},
+        name=#{name},
+        face_img_url=#{faceImgUrl},
+        update_time=NOW()
+        WHERE id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM new_people_face WHERE id = #{id}
+    </delete>
+
+</mapper>

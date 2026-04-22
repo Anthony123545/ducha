@@ -1,15 +1,15 @@
 # --- 后端 (Java/Idea) 屏蔽规则 ---
-**/backend/target/
-**/backend/.idea/
-**/backend/*.iml
-**/backend/.mvn/
-**/backend/bin/
+**/ducha-houduan/target/
+**/ducha-houduan/.idea/
+**/ducha-houduan/*.iml
+**/ducha-houduan/.mvn/
+**/ducha-houduan/bin/
 
 # --- 前端 (WebStorm/Node) 屏蔽规则 ---
-**/frontend/node_modules/
-**/frontend/dist/
-**/frontend/.project
-**/frontend/.DS_Store
+**/ducha-qianduan/node_modules/
+**/ducha-qianduan/dist/
+**/ducha-qianduan/.project
+**/ducha-qianduan/.DS_Store
 
 # --- 通用系统文件 ---
 .idea/

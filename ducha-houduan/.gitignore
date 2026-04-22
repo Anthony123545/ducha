@@ -1,0 +1,53 @@
+# 忽略项目及所有子模块的 target 文件夹
+**/target/
+
+# 忽略编译输出
+*.class
+
+# Maven / Gradle 相关
+*.jar
+*.war
+*.ear
+dependency-reduced-pom.xml
+build/
+bin/
+
+# IntelliJ IDEA 配置
+**/.idea/
+**/*.iml
+**/out/
+
+# Eclipse
+**/.metadata/
+**/.settings/
+**/*.tmp
+
+# VS Code
+**/.vscode/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 日志目录
+logs/
+log/
+**/*.log
+
+# 临时文件
+*.tmp
+*.swp
+*.swo
+*~
+*.bak
+*.orig
+
+# Spring Boot DevTools
+spring-boot-devtools.properties
+spring-boot-*.properties
+
+# 上传目录、临时目录
+upload/
+uploads/
+tmp/
+temp/

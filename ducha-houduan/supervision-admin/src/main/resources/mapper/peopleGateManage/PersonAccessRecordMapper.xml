@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.web.Hikvision.peopleDoor.web.mapper.PersonAccessRecordMapper">
+
+    <!-- 结果映射：与 Java 类 PersonAccessRecord 字段保持一致 -->
+    <resultMap id="BaseResultMap" type="com.supervision.web.Hikvision.peopleDoor.web.entity.PersonAccessRecord">
+        <id property="id" column="id"/>
+        <!-- 注意：以下字段名必须与 Java 类中的属性名完全一致（区分大小写） -->
+        <result property="deviceId" column="device_id"/>
+        <result property="majorType" column="major_type"/>
+        <result property="minorType" column="minor_type"/>
+        <result property="employeeNo" column="employee_no"/>
+        <result property="cardNo" column="card_no"/>
+        <result property="name" column="name"/>
+        <result property="eventType" column="event_type"/>
+        <result property="eventMessage" column="event_message"/>
+        <result property="captureTime" column="capture_time"/>
+        <result property="photoUrl" column="photo_url"/>
+        <result property="remark" column="remark"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <!-- 查询列表 -->
+    <select id="searchByCondition" resultMap="BaseResultMap">
+        SELECT *
+        FROM new_person_access_record
+        WHERE 1=1
+        <if test="deviceId != null">
+            AND device_id = #{deviceId}
+        </if>
+        <if test="majorType != null and majorType != ''">
+            AND major_type = #{majorType}
+        </if>
+        <if test="minorType != null and minorType != ''">
+            AND minor_type = #{minorType}
+        </if>
+        <if test="employeeNo != null and employeeNo != ''">
+            AND employee_no = #{employeeNo}
+        </if>
+        <if test="cardNo != null and cardNo != ''">
+            AND card_no = #{cardNo}
+        </if>
+        <if test="name != null and name != ''">
+            AND name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="eventType != null and eventType != ''">
+            AND event_type = #{eventType}
+        </if>
+        <if test="startTime != null">
+            AND capture_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            AND capture_time &lt;= #{endTime}
+        </if>
+        ORDER BY capture_time DESC
+    </select>
+
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.supervision.web.Hikvision.peopleDoor.web.entity.PersonAccessRecord">
+        INSERT INTO new_person_access_record
+            (device_id, major_type, minor_type, employee_no, card_no, name, event_type, event_message, capture_time, photo_url, remark, create_time, update_time)
+        VALUES
+            (#{deviceId}, #{majorType}, #{minorType}, #{employeeNo}, #{cardNo}, #{name}, #{eventType}, #{eventMessage}, #{captureTime}, #{photoUrl}, #{remark}, NOW(), NOW())
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="com.supervision.web.Hikvision.peopleDoor.web.entity.PersonAccessRecord">
+        UPDATE new_person_access_record
+        SET
+            device_id = #{deviceId},
+            major_type = #{majorType},
+            minor_type = #{minorType},
+            employee_no = #{employeeNo},
+            card_no = #{cardNo},
+            name = #{name},
+            event_type = #{eventType},
+            event_message = #{eventMessage},
+            capture_time = #{captureTime},
+            photo_url = #{photoUrl},
+            remark = #{remark},
+            update_time = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除单条 -->
+    <delete id="deleteById" parameterType="long">
+        DELETE FROM new_person_access_record WHERE id=#{id}
+    </delete>
+
+    <!-- 批量删除 -->
+    <delete id="batchDelete">
+        DELETE FROM new_person_access_record
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

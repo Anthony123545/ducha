@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglSoldierMapper">
+
+    <resultMap type="BdglSoldier" id="BdglSoldierResult">
+        <result property="id"    column="id"    />
+        <result property="convokeTime"    column="convoke_time"    />
+        <result property="address"    column="address"    />
+        <result property="compereId"    column="compere_id"    />
+        <result property="joinId"    column="join_id"    />
+        <result property="peopleIds"    column="people_ids"    />
+        <result property="absentIds"    column="absent_ids"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="title"    column="title"    />
+        <result property="contents"    column="contents"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="compereRen"    column="compere_ren"    />
+        <result property="peopleJiLu"    column="people_ji_lu"    />
+        <result property="fileUrl"    column="file_url"    />
+        <result property="meetingForm"    column="meeting_form"    />
+    </resultMap>
+
+    <sql id="selectBdglSoldierVo">
+        select id, convoke_time, address, compere_id, join_id, people_ids, absent_ids, people_id, title, contents, createtime, updatetime, unit_id ,dept_name,compere_ren,people_ji_lu,file_url,meeting_form from bdgl_soldier
+    </sql>
+
+    <select id="selectBdglSoldierList" parameterType="BdglSoldier" resultMap="BdglSoldierResult">
+        select id, convoke_time, address, compere_id, join_id, people_ids, absent_ids, people_id, title, contents, createtime, updatetime, unit_id ,s.dept_name,compere_ren,people_ji_lu,file_url,meeting_form
+        from bdgl_soldier s left join sys_dept t
+        on s.unit_id=t.dept_id
+        <where>
+            <if test="unitId != null ">
+             and (s.unit_id=#{unitId} or find_in_set(#{unitId}, t.ancestors))
+            </if>
+            <if test="convokeTime != null "> and s.convoke_time = #{convokeTime}</if>
+            <if test="address != null  and address != ''"> and s.address = #{address}</if>
+            <if test="compereId != null "> and s.compere_id = #{compereId}</if>
+            <if test="joinId != null  and joinId != ''"> and s.join_id = #{joinId}</if>
+            <if test="peopleIds != null  and peopleIds != ''"> and s.people_ids = #{peopleIds}</if>
+            <if test="absentIds != null  and absentIds != ''"> and s.absent_ids = #{absentIds}</if>
+            <if test="peopleId != null "> and s.people_id = #{peopleId}</if>
+            <if test="title != null  and title != ''"> and s.title = #{title}</if>
+            <if test="contents != null  and contents != ''"> and s.contents = #{contents}</if>
+            <if test="createtime != null  and createtime != ''"> and s.createtime = #{createtime}</if>
+            <if test="updatetime != null  and updatetime != ''"> and s.updatetime = #{updatetime}</if>
+            <if test="compereRen != null "> and s.compere_ren = #{compereRen}</if>
+            <if test="peopleJiLu != null "> and s.people_ji_lu = #{peopleJiLu}</if>
+            <if test="fileUrl != null "> and s.file_url = #{fileUrl}</if>
+            <if test="meetingForm != null "> and s.meeting_form = #{meetingForm}</if>
+            <if test="deptName != null "> and s.dept_name LIKE  concat('%', #{deptName}, '%')</if>
+
+        </where>
+        order by s.id desc
+    </select>
+
+    <select id="selectSoldierOnUnitList" parameterType="BdglSoldier" resultMap="BdglSoldierResult">
+        select id, convoke_time, address, compere_id, join_id, people_ids, absent_ids, people_id, title, contents, createtime, updatetime, unit_id ,dept_name,compere_ren,people_ji_lu,file_url,meeting_form
+        from bdgl_soldier
+        <where>
+            <if test="unitId != null"> and unit_id = #{unitId}</if>
+            <if test="year != null and year != ''"> and YEAR(convoke_time)= #{year}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectBdglSoldierById" parameterType="Integer" resultMap="BdglSoldierResult">
+        <include refid="selectBdglSoldierVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectSoldierByunitId" resultType="java.lang.Integer">
+        select count(*) from bdgl_soldier where unit_id = #{unitId} and YEAR(convoke_time)=#{year}
+    </select>
+
+    <insert id="insertBdglSoldier" parameterType="BdglSoldier" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_soldier
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="convokeTime != null">convoke_time,</if>
+            <if test="address != null">address,</if>
+            <if test="compereId != null">compere_id,</if>
+            <if test="joinId != null">join_id,</if>
+            <if test="peopleIds != null">people_ids,</if>
+            <if test="absentIds != null">absent_ids,</if>
+            <if test="peopleId != null">people_id,</if>
+            <if test="title != null">title,</if>
+            <if test="contents != null">contents,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="deptName != null">dept_name,</if>
+            <if test="compereRen != null">compere_ren,</if>
+            <if test="peopleJiLu != null">people_ji_lu,</if>
+            <if test="fileUrl != null">file_url,</if>
+            <if test="meetingForm != null">meeting_form,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="convokeTime != null">#{convokeTime},</if>
+            <if test="address != null">#{address},</if>
+            <if test="compereId != null">#{compereId},</if>
+            <if test="joinId != null">#{joinId},</if>
+            <if test="peopleIds != null">#{peopleIds},</if>
+            <if test="absentIds != null">#{absentIds},</if>
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="title != null">#{title},</if>
+            <if test="contents != null">#{contents},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="deptName != null">#{deptName},</if>
+            <if test="compereRen != null">#{compereRen},</if>
+            <if test="peopleJiLu != null">#{peopleJiLu},</if>
+            <if test="fileUrl != null">#{fileUrl},</if>
+            <if test="meetingForm != null">#{meetingForm},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglSoldier" parameterType="BdglSoldier">
+        update bdgl_soldier
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="convokeTime != null">convoke_time = #{convokeTime},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="compereId != null">compere_id = #{compereId},</if>
+            <if test="joinId != null">join_id = #{joinId},</if>
+            <if test="peopleIds != null">people_ids = #{peopleIds},</if>
+            <if test="absentIds != null">absent_ids = #{absentIds},</if>
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="contents != null">contents = #{contents},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="compereRen != null">compere_ren = #{compereRen},</if>
+            <if test="peopleJiLu != null">people_ji_lu = #{peopleJiLu},</if>
+            <if test="fileUrl != null">file_url = #{fileUrl},</if>
+            <if test="meetingForm != null">meeting_form = #{meetingForm},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglSoldierById" parameterType="Integer">
+        delete from bdgl_soldier where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglSoldierByIds" parameterType="String">
+        delete from bdgl_soldier where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

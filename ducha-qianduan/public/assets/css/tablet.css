@@ -1,0 +1,101 @@
+.tdd {
+
+    border: 1px solid #585a61;
+
+    height: 35px !important;
+
+    line-height: 26px;
+
+}
+
+
+
+.tdd_z {
+
+    text-align: right;
+
+}
+
+
+.tdd_c {
+
+    background: #389eb5;
+
+}
+
+
+
+.tdd_k {
+
+    width: 100px
+
+}
+
+.tdd_k1 {
+
+    width: 150px
+
+}
+
+
+
+
+.input_w {
+
+    border: none;
+
+}
+
+
+
+/*自适应宽度*/
+
+td {
+
+    white-space: nowrap;
+
+}
+
+
+
+.tab_w {
+
+    width: 950px;
+
+}
+
+
+
+.t_dl {
+
+    border: 1px solid red;
+
+
+
+    box-sizing: border-box;
+
+
+
+    display: inline-block;
+
+}
+
+
+
+.tdd-title {
+
+    width: 50px !important;
+
+    /* -webkit-writing-mode: vertical-rl;
+
+    writing-mode: vertical-rl; */
+
+    text-align: center;
+
+    line-height: 20px;
+
+    height: 120px !important;
+
+
+
+}

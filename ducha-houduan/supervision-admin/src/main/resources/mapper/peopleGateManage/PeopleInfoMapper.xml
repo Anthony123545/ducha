@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.supervision.web.Hikvision.peopleDoor.web.mapper.PeopleInfoMapper">
+
+    <resultMap id="PeopleInfoResultMap" type="com.supervision.web.Hikvision.peopleDoor.web.entity.PeopleInfo">
+        <id property="id" column="id"/>
+        <result property="personId" column="person_id"/>
+        <result property="deviceId" column="device_id"/>
+        <result property="longTerm" column="long_term"/>
+        <result property="isTemporary" column="is_temporary"/>
+        <result property="validPeriod" column="valid_period"/>
+        <result property="doorPermission" column="door_permission"/>
+        <result property="planTemplateId" column="plan_template_id"/>
+        <result property="authMethod" column="auth_method"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="PeopleInfoResultMap">
+        SELECT * FROM new_people_info WHERE id = #{id}
+    </select>
+
+    <select id="selectByIds" parameterType="java.util.List" resultMap="PeopleInfoResultMap">
+        SELECT *
+        FROM new_people_info
+        WHERE person_id IN
+        <foreach collection="personIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="selectAll" resultMap="PeopleInfoResultMap">
+        SELECT * FROM new_people_info
+    </select>
+    <select id="selectTotal" resultType="int">
+        SELECT COUNT(*) FROM new_people_info
+    </select>
+
+
+    <insert id="insert" parameterType="com.supervision.web.Hikvision.peopleDoor.web.entity.PeopleInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO new_people_info(person_id, name, device_id, is_temporary, long_term, valid_period, door_permission, plan_template_id, auth_method, create_time, update_time)
+        VALUES(#{personId}, #{name}, #{deviceId}, #{isTemporary}, #{longTerm}, #{validPeriod}, #{doorPermission}, #{planTemplateId}, #{authMethod}, NOW(), NOW())
+    </insert>
+
+    <update id="updatePersonId">
+        UPDATE new_people_info SET person_id = #{personId} WHERE id = #{id}
+    </update>
+
+    <update id="update" parameterType="com.supervision.web.Hikvision.peopleDoor.web.entity.PeopleInfo">
+        UPDATE new_people_info
+        SET person_id=#{personId},
+        device_id=#{deviceId},
+        name= #{name},
+        long_term=#{longTerm},
+        valid_period=#{validPeriod},
+        door_permission=#{doorPermission},
+        plan_template_id=#{planTemplateId},
+        auth_method=#{authMethod},
+        update_time=NOW()
+        WHERE id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM new_people_info WHERE id = #{id}
+    </delete>
+
+</mapper>

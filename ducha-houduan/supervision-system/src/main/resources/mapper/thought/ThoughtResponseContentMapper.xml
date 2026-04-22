@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.thought.mapper.ThoughtResponseContentMapper">
+    
+    <resultMap type="ThoughtResponseContent" id="ThoughtResponseContentResult">
+        <result property="id"    column="id"    />
+        <result property="planId"    column="plan_id"    />
+        <result property="planContent"    column="plan_content"    />
+        <result property="responseStatus"    column="response_status"    />
+        <result property="isresponse"    column="isresponse"    />
+    </resultMap>
+
+    <sql id="selectThoughtResponseContentVo">
+        select id, plan_id, plan_content, response_status,isresponse from thought_response_content
+    </sql>
+
+    <select id="selectThoughtResponseContentList" parameterType="ThoughtResponseContent" resultMap="ThoughtResponseContentResult">
+        <include refid="selectThoughtResponseContentVo"/>
+        <where>  
+            <if test="planId != null "> and plan_id = #{planId}</if>
+            <if test="planContent != null  and planContent != ''"> and plan_content = #{planContent}</if>
+            <if test="responseStatus != null  and responseStatus != ''"> and response_status = #{responseStatus}</if>
+            <if test="isresponse != null  and isresponse != ''"> and isresponse = #{isresponse}</if>
+        </where>
+    </select>
+    
+    <select id="selectThoughtResponseContentById" parameterType="Long" resultMap="ThoughtResponseContentResult">
+        <include refid="selectThoughtResponseContentVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertThoughtResponseContent" parameterType="ThoughtResponseContent" useGeneratedKeys="true" keyProperty="id">
+        insert into thought_response_content
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="planId != null">plan_id,</if>
+            <if test="planContent != null">plan_content,</if>
+            <if test="responseStatus != null">response_status,</if>
+            <if test="isresponse != null">isresponse,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="planId != null">#{planId},</if>
+            <if test="planContent != null">#{planContent},</if>
+            <if test="responseStatus != null">#{responseStatus},</if>
+            <if test="isresponse != null">#{isresponse},</if>
+         </trim>
+    </insert>
+
+    <update id="updateThoughtResponseContent" parameterType="ThoughtResponseContent">
+        update thought_response_content
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="planId != null">plan_id = #{planId},</if>
+            <if test="planContent != null">plan_content = #{planContent},</if>
+            <if test="responseStatus != null">response_status = #{responseStatus},</if>
+            <if test="isresponse != null">isresponse = #{isresponse},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteThoughtResponseContentById" parameterType="Long">
+        delete from thought_response_content where id = #{id}
+    </delete>
+
+    <delete id="deleteThoughtResponseContentByIds" parameterType="String">
+        delete from thought_response_content where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

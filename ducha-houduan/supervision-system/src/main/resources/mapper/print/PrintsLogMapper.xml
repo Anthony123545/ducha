@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.print.mapper.PrintsLogMapper">
+
+    <resultMap type="PrintsLog" id="PrintsLogResult">
+        <result property="id" column="id"/>
+        <result property="printId" column="print_id"/>
+        <result property="printName" column="print_name"/>
+        <result property="printNumber" column="print_number"/>
+        <result property="isReturn" column="is_return"/>
+        <result property="printfileName" column="printfile_name"/>
+        <result property="printTime" column="print_time"/>
+        <result property="statusG" column="status_g"/>
+        <result property="returnNumber" column="return_number"/>
+        <result property="printCode" column="print_code"/>
+        <result property="primaryPath" column="primary_path"/>
+        <result property="presentPath" column="present_path"/>
+        <result property="returnTime" column="return_time"/>
+        <result property="printRoom" column="print_room"/>
+        <result property="gotothree" column="gotothree"/>
+
+    </resultMap>
+
+    <sql id="selectPrintsLogVo">
+        select id,
+               print_id,
+               print_name,
+               print_number,
+               is_return,
+               printfile_name,
+               print_time,
+               status_g,
+               return_number,
+               print_code,
+               primary_path,
+               present_path,
+               return_time,
+               print_room,
+               gotothree
+        from prints_log
+    </sql>
+
+    <select id="selectPrintsLogList" parameterType="PrintsLog" resultMap="PrintsLogResult">
+        select l.id, l.print_id, l.print_name, l.print_number, l.is_return,
+        l.printfile_name, l.print_time, l.status_g, l.return_number,
+        l.print_code, l.primary_path, l.present_path,l.return_time,l.print_room,m.unit_id as unitId ,m.level_m as levelM
+        from prints_log l , prints_manage m
+        <where>
+            l.print_id=m.id
+            <if test="printId != null ">and l.print_id = #{printId}</if>
+            <if test="printName != null  and printName != ''">and l.print_name like concat('%', #{printName}, '%')</if>
+            <if test="printNumber != null ">and l.print_number = #{printNumber}</if>
+            <if test="isReturn != null ">and l.is_return = #{isReturn}</if>
+            <if test="printfileName != null  and printfileName != ''">and l.printfile_name like concat('%',
+                #{printfileName}, '%')
+            </if>
+            <if test="printTime != null ">and l.print_time = #{printTime}</if>
+            <if test="statusG != null ">and l.status_g = #{statusG}</if>
+            <if test="returnNumber != null ">and l.return_number = #{returnNumber}</if>
+            <if test="printCode != null  and printCode != ''">and l.print_code = #{printCode}</if>
+            <if test="primaryPath != null  and primaryPath != ''">and l.primary_path = #{primaryPath}</if>
+            <if test="presentPath != null  and presentPath != ''">and l.present_path = #{presentPath}</if>
+            <if test="returnTime != null ">and l.return_time = #{returnTime}</if>
+            <if test="printRoom != null ">and l.print_room = #{printRoom}</if>
+            <if test="unitId != null ">and m.unit_id = #{unitId}</if>
+            <if test="levelM != null ">and m.level_m = #{levelM}</if>
+        </where>
+        order by return_time desc
+    </select>
+
+    <select id="selectPrintsLogById" parameterType="Long" resultMap="PrintsLogResult">
+        <include refid="selectPrintsLogVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPrintsLog" parameterType="PrintsLog" useGeneratedKeys="true" keyProperty="id">
+        insert into prints_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="printId != null">print_id,</if>
+            <if test="printName != null">print_name,</if>
+            <if test="printNumber != null">print_number,</if>
+            <if test="isReturn != null">is_return,</if>
+            <if test="printfileName != null">printfile_name,</if>
+            <if test="printTime != null">print_time,</if>
+            <if test="statusG != null">status_g,</if>
+            <if test="returnNumber != null">return_number,</if>
+            <if test="printCode != null">print_code,</if>
+            <if test="primaryPath != null">primary_path,</if>
+            <if test="presentPath != null">present_path,</if>
+            <if test="returnTime != null">return_time,</if>
+            <if test="printRoom != null">print_room,</if>
+            <if test="gotothree != null">gotothree,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="printId != null">#{printId},</if>
+            <if test="printName != null">#{printName},</if>
+            <if test="printNumber != null">#{printNumber},</if>
+            <if test="isReturn != null">#{isReturn},</if>
+            <if test="printfileName != null">#{printfileName},</if>
+            <if test="printTime != null">#{printTime},</if>
+            <if test="statusG != null">#{statusG},</if>
+            <if test="returnNumber != null">#{returnNumber},</if>
+            <if test="printCode != null">#{printCode},</if>
+            <if test="primaryPath != null">#{primaryPath},</if>
+            <if test="presentPath != null">#{presentPath},</if>
+            <if test="returnTime != null">#{returnTime},</if>
+            <if test="printRoom != null">#{printRoom},</if>
+            <if test="gotothree != null">#{gotothree},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePrintsLog" parameterType="PrintsLog">
+        update prints_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="printId != null">print_id = #{printId},</if>
+            <if test="printName != null">print_name = #{printName},</if>
+            <if test="printNumber != null">print_number = #{printNumber},</if>
+            <if test="isReturn != null">is_return = #{isReturn},</if>
+            <if test="printfileName != null">printfile_name = #{printfileName},</if>
+            <if test="printTime != null">print_time = #{printTime},</if>
+            <if test="statusG != null">status_g = #{statusG},</if>
+            <if test="returnNumber != null">return_number = #{returnNumber},</if>
+            <if test="printCode != null">print_code = #{printCode},</if>
+            <if test="primaryPath != null">primary_path = #{primaryPath},</if>
+            <if test="presentPath != null">present_path = #{presentPath},</if>
+            <if test="returnTime != null">return_time = #{returnTime},</if>
+            <if test="printRoom != null">print_room = #{printRoom},</if>
+            <if test="gotothree != null">#{gotothree},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePrintsLogById" parameterType="Long">
+        delete
+        from prints_log
+        where id = #{id}
+    </delete>
+
+    <delete id="deletePrintsLogByIds" parameterType="String">
+        delete from prints_log where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- 计算出当月已归还和未归还的数量 -->
+    <select id="selectPrintsLogByMouth" parameterType="String" resultType="Map">
+
+        SELECT sum(print_number)               as                                        total,
+               sum(return_number)              as                                        returnNumber,
+               (SELECT sum(print_number)
+                FROM prints_log
+                WHERE is_return = 0
+                  AND print_time BETWEEN '2022-08-22 00:00:00'
+                    AND '2022-08-28 23:59:59') as                                        noReturnNumber,
+               ((SELECT sum(print_number)
+                 FROM prints_log
+                 WHERE is_return = 1
+                   AND print_time between #{times} and #{format2}) - sum(return_number)) weiReturnNumber
+        FROM prints_log
+        WHERE print_time between #{times} and #{format2}
+    </select>
+
+    <!-- 统计出无需归还的数据 -->
+    <select id="selectPringsLogByIsReturn" parameterType="String" resultType="Long">
+        SELECT count(0)
+        FROM prints_log
+        WHERE 1 = 1
+          and is_return = '0'
+          and print_time between #{times} and #{format2}
+    </select>
+    <select id="selectPrintsLogLists" parameterType="PrintsLog" resultMap="PrintsLogResult">
+        select l.id, l.print_id, l.print_name, l.print_number, l.is_return,
+        l.printfile_name, l.print_time, l.status_g, l.return_number,
+        l.print_code, l.primary_path, l.present_path,l.return_time,l.print_room,m.unit_id as unitId ,m.level_m as
+        levelM,m.unit_name as unitName,m.explain_info as explainInfo
+        from prints_log l , prints_manage m
+        <where>
+            l.print_id=m.id
+            <if test="printId != null ">and l.print_id = #{printId}</if>
+            <if test="printName != null  and printName != ''">and l.print_name like concat('%', #{printName}, '%')</if>
+            <if test="printNumber != null ">and l.print_number = #{printNumber}</if>
+            <if test="isReturn != null ">and l.is_return = #{isReturn}</if>
+            <if test="printfileName != null  and printfileName != ''">and l.printfile_name like concat('%',
+                #{printfileName}, '%')
+            </if>
+            <if test="printTime != null ">and print_time between #{startt} and #{endt}</if>
+            <if test="statusG != null ">and l.status_g = #{statusG}</if>
+            <if test="returnNumber != null ">and l.return_number = #{returnNumber}</if>
+            <if test="printCode != null  and printCode != ''">and l.print_code = #{printCode}</if>
+            <if test="primaryPath != null  and primaryPath != ''">and l.primary_path = #{primaryPath}</if>
+            <if test="presentPath != null  and presentPath != ''">and l.present_path = #{presentPath}</if>
+            <if test="returnTime != null ">and l.return_time = #{returnTime}</if>
+            <if test="printRoom != null ">and l.print_room = #{printRoom}</if>
+            <if test="unitId != null ">and m.unit_id = #{unitId}</if>
+            <if test="levelM != null ">and m.level_m = #{levelM}</if>
+        </where>
+    </select>
+    <select id="selectPrintsLogListstime" parameterType="PrintsLog" resultMap="PrintsLogResult">
+        select l.id, l.print_id, l.print_name, l.print_number, l.is_return,
+        l.printfile_name, l.print_time, l.status_g, l.return_number,
+        l.print_code, l.primary_path, l.present_path,l.return_time,l.print_room,m.unit_id as unitId ,m.level_m as
+        levelM,m.unit_name as unitName,m.explain_info as explainInfo
+        from prints_log l , prints_manage m
+        <where>
+            l.print_id=m.id
+            <if test="printId != null ">and l.print_id = #{printId}</if>
+            <if test="printName != null  and printName != ''">and l.print_name like concat('%', #{printName}, '%')</if>
+            <if test="printNumber != null ">and l.print_number = #{printNumber}</if>
+            <if test="isReturn != null ">and l.is_return = #{isReturn}</if>
+            <if test="printfileName != null  and printfileName != ''">and l.printfile_name like concat('%',
+                #{printfileName}, '%')
+            </if>
+            <if test="printTime != null ">and print_time between #{startt} and #{endt}</if>
+            <if test="statusG != null ">and l.status_g = #{statusG}</if>
+            <if test="returnNumber != null ">and l.return_number = #{returnNumber}</if>
+            <if test="printCode != null  and printCode != ''">and l.print_code = #{printCode}</if>
+            <if test="primaryPath != null  and primaryPath != ''">and l.primary_path = #{primaryPath}</if>
+            <if test="presentPath != null  and presentPath != ''">and l.present_path = #{presentPath}</if>
+            <if test="returnTime != null ">and l.return_time = #{returnTime}</if>
+            <if test="printRoom != null ">and l.print_room = #{printRoom}</if>
+            <if test="unitId != null ">and m.unit_id = #{unitId}</if>
+            <if test="levelM != null ">and m.level_m = #{levelM}</if>
+        </where>
+    </select>
+    <select id="selectPrintsLogListss" parameterType="PrintsLog" resultMap="PrintsLogResult">
+        select l.id, l.print_id, l.print_name, l.print_number, l.is_return,
+        l.printfile_name, l.print_time, l.status_g, l.return_number,
+        l.print_code, l.primary_path, l.present_path,l.return_time,l.print_room,m.unit_id as unitId ,m.level_m as
+        levelM,m.unit_name as unitName,m.explain_info as explainInfo
+        from prints_log l , prints_manage m
+        <where>
+            l.print_id=m.id and print_time &gt;= #{startt} and print_time &lt;= #{endt}
+            <if test="printId != null ">and l.print_id = #{printId}</if>
+            <if test="printName != null  and printName != ''">and l.print_name like concat('%', #{printName}, '%')</if>
+            <if test="printNumber != null ">and l.print_number = #{printNumber}</if>
+            <if test="isReturn != null ">and l.is_return = #{isReturn}</if>
+            <if test="printfileName != null  and printfileName != ''">and l.printfile_name like concat('%',
+                #{printfileName}, '%')
+            </if>
+            <if test="printTime != null ">and print_time between #{startt} and #{endt}</if>
+            <if test="statusG != null ">and l.status_g = #{statusG}</if>
+            <if test="returnNumber != null ">and l.return_number = #{returnNumber}</if>
+            <if test="printCode != null  and printCode != ''">and l.print_code = #{printCode}</if>
+            <if test="primaryPath != null  and primaryPath != ''">and l.primary_path = #{primaryPath}</if>
+            <if test="presentPath != null  and presentPath != ''">and l.present_path = #{presentPath}</if>
+            <if test="returnTime != null ">and l.return_time = #{returnTime}</if>
+            <if test="printRoom != null ">and l.print_room = #{printRoom}</if>
+            <if test="unitId != null ">and m.unit_id = #{unitId}</if>
+            <if test="levelM != null ">and m.level_m = #{levelM}</if>
+        </where>
+    </select>
+    <select id="selectCount" resultType="java.util.Map">
+        SELECT sum(print_number)                                                         AS total,
+               sum(return_number)                                                        AS returnNumber,
+               (SELECT sum(print_number)
+                FROM prints_log
+                WHERE is_return = 0 AND print_time BETWEEN #{times} AND #{format2})      AS noReturnNumber,
+               ((SELECT sum(print_number)
+                 FROM prints_log
+                 WHERE is_return = 1
+                   AND print_time BETWEEN #{times} and #{format2}) - sum(return_number)) as weiReturnNumber
+        FROM prints_log
+        WHERE print_time BETWEEN #{times} and #{format2}
+    </select>
+    <select id="selectprintremind" parameterType="PrintsLog" resultMap="PrintsLogResult">
+        select id, print_id, print_name, print_number, is_return, printfile_name, print_time, status_g, return_number,
+        print_code, primary_path, present_path,return_time,print_room,gotothree from prints_log
+        <where>
+
+            <if test="printfileName != null  and printfileName != ''">and printfile_name like
+                concat('%',#{printfileName}, '%')
+            </if>
+            <if test="returnTime != null ">and return_time like concat('%',#{returnTime}, '%')</if>
+            <if test="gotothree != null ">and gotothree like concat('%',#{gotothree} , '%')</if>
+            and status_g = 0
+        </where>
+        order by return_time desc
+    </select>
+    <select id="printCountss" resultType="java.util.Map">
+        select sum(print_number) print_number, sum(return_number) return_number from prints_log
+        <where>
+            is_return=1
+            <if test="printCode != null ">and print_time like concat('%',#{printCode}, '%')</if>
+        </where>
+    </select>
+</mapper>

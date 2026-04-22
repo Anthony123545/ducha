@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.thought.mapper.ThoughtWeekjobFuMapper">
+    
+    <resultMap type="ThoughtWeekjobFu" id="ThoughtWeekjobFuResult">
+        <result property="id"    column="id"    />
+        <result property="week"    column="week"    />
+        <result property="time"    column="time"    />
+        <result property="dateline"    column="dateline"    />
+        <result property="contents"    column="contents"    />
+        <result property="unitId1"    column="unit_id1"    />
+        <result property="peopleIds"    column="people_ids"    />
+        <result property="address"    column="address"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="weekjobId"    column="weekjob_id"    />
+        <result property="shouldArrive"    column="should_arrive"    />
+        <result property="realTo"    column="real_to"    />
+        <result property="percentage"    column="percentage"    />
+        <result property="organizer"    column="organizer"    />
+    </resultMap>
+
+    <sql id="selectThoughtWeekjobFuVo">
+        select id, week, time, dateline, contents, unit_id1, people_ids, address, start_time, end_time, weekjob_id, should_arrive, real_to, percentage, organizer from thought_weekjob_fu
+    </sql>
+
+    <select id="selectThoughtWeekjobFuList" parameterType="ThoughtWeekjobFu" resultMap="ThoughtWeekjobFuResult">
+        <include refid="selectThoughtWeekjobFuVo"/>
+        <where>  
+            <if test="week != null  and week != ''"> and week = #{week}</if>
+            <if test="time != null "> and time = #{time}</if>
+            <if test="dateline != null  and dateline != ''"> and dateline = #{dateline}</if>
+            <if test="contents != null  and contents != ''"> and contents = #{contents}</if>
+            <if test="unitId1 != null  and unitId1 != ''"> and unit_id1 = #{unitId1}</if>
+            <if test="peopleIds != null  and peopleIds != ''"> and people_ids = #{peopleIds}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="startTime != null  and startTime != ''"> and start_time = #{startTime}</if>
+            <if test="endTime != null  and endTime != ''"> and end_time = #{endTime}</if>
+            <if test="weekjobId != null "> and weekjob_id = #{weekjobId}</if>
+            <if test="shouldArrive != null "> and should_arrive = #{shouldArrive}</if>
+            <if test="realTo != null "> and real_to = #{realTo}</if>
+            <if test="percentage != null  and percentage != ''"> and percentage = #{percentage}</if>
+            <if test="organizer != null  and organizer != ''"> and organizer = #{organizer}</if>
+        </where>
+    </select>
+    
+    <select id="selectThoughtWeekjobFuById" parameterType="Long" resultMap="ThoughtWeekjobFuResult">
+        <include refid="selectThoughtWeekjobFuVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertThoughtWeekjobFu" parameterType="ThoughtWeekjobFu" useGeneratedKeys="true" keyProperty="id">
+        insert into thought_weekjob_fu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="week != null">week,</if>
+            <if test="time != null">time,</if>
+            <if test="dateline != null">dateline,</if>
+            <if test="contents != null">contents,</if>
+            <if test="unitId1 != null">unit_id1,</if>
+            <if test="peopleIds != null">people_ids,</if>
+            <if test="address != null">address,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="weekjobId != null">weekjob_id,</if>
+            <if test="shouldArrive != null">should_arrive,</if>
+            <if test="realTo != null">real_to,</if>
+            <if test="percentage != null">percentage,</if>
+            <if test="organizer != null">organizer,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="week != null">#{week},</if>
+            <if test="time != null">#{time},</if>
+            <if test="dateline != null">#{dateline},</if>
+            <if test="contents != null">#{contents},</if>
+            <if test="unitId1 != null">#{unitId1},</if>
+            <if test="peopleIds != null">#{peopleIds},</if>
+            <if test="address != null">#{address},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="weekjobId != null">#{weekjobId},</if>
+            <if test="shouldArrive != null">#{shouldArrive},</if>
+            <if test="realTo != null">#{realTo},</if>
+            <if test="percentage != null">#{percentage},</if>
+            <if test="organizer != null">#{organizer},</if>
+         </trim>
+    </insert>
+
+    <update id="updateThoughtWeekjobFu" parameterType="ThoughtWeekjobFu">
+        update thought_weekjob_fu
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="week != null">week = #{week},</if>
+            <if test="time != null">time = #{time},</if>
+            <if test="dateline != null">dateline = #{dateline},</if>
+            <if test="contents != null">contents = #{contents},</if>
+            <if test="unitId1 != null">unit_id1 = #{unitId1},</if>
+            <if test="peopleIds != null">people_ids = #{peopleIds},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="weekjobId != null">weekjob_id = #{weekjobId},</if>
+            <if test="shouldArrive != null">should_arrive = #{shouldArrive},</if>
+            <if test="realTo != null">real_to = #{realTo},</if>
+            <if test="percentage != null">percentage = #{percentage},</if>
+            <if test="organizer != null">organizer = #{organizer},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteThoughtWeekjobFuById" parameterType="Long">
+        delete from thought_weekjob_fu where id = #{id}
+    </delete>
+
+    <delete id="deleteThoughtWeekjobFuByIds" parameterType="String">
+        delete from thought_weekjob_fu where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

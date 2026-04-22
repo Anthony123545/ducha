@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.jobTask.mapper.JobTaskRecordMapper">
+
+    <resultMap type="JobTaskRecord" id="JobTaskRecordResult">
+        <result property="id"    column="id"    />
+        <result property="workName"    column="work_name"    />
+        <result property="workNum"    column="work_num"    />
+        <result property="workType"    column="work_type"    />
+        <result property="publishUnit"    column="publish_unit"    />
+        <result property="publishPeople"    column="publish_people"    />
+        <result property="workAnnexName"    column="work_annex_name"    />
+        <result property="workAnnex"    column="work_annex"    />
+        <result property="workDetail"    column="work_detail"    />
+        <result property="workRemark"    column="work_remark"    />
+        <result property="workStartTime"    column="work_start_time"    />
+        <result property="workEndTime"    column="work_end_time"    />
+        <result property="workPriority"    column="work_priority"    />
+        <result property="executorUnit"    column="executor_unit"  typeHandler="com.supervision.common.handler.ListToStringHandler"  />
+        <result property="executorPeople"    column="executor_people" typeHandler="com.supervision.common.handler.ListToStringHandler"/>
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectJobTaskRecordVo">
+        select id, work_name, work_num, work_type, publish_unit, publish_people,work_annex_name, work_annex, work_detail, work_remark, work_start_time, work_end_time, work_priority,executor_unit, executor_people,create_by, create_time from job_task_record
+    </sql>
+
+    <select id="selectJobTaskRecordList" parameterType="JobTaskRecord" resultMap="JobTaskRecordResult">
+        <include refid="selectJobTaskRecordVo"/>
+        <where>
+            <if test="workName != null  and workName != ''"> and work_name like concat('%', #{workName}, '%')</if>
+            <if test="workNum != null  and workNum != ''"> and work_num = #{workNum}</if>
+            <if test="workType != null  and workType != ''"> and work_type = #{workType}</if>
+            <if test="publishPeople != null  and publishPeople != ''"> and publish_people = #{publishPeople}</if>
+            <if test="workStartTime != null "> and work_start_time = #{workStartTime}</if>
+            <if test="workPriority != null  and workPriority != ''"> and work_priority = #{workPriority}</if>
+        </where>
+        order by work_priority ASC,create_time DESC
+    </select>
+
+    <select id="syselectJobTaskRecordList" resultType="com.supervision.jobTask.domain.vo.JobTaskRecordVo">
+        SELECT
+            j.id AS id,
+            j.work_name AS workName,
+            j.work_num AS workNum,
+            j.work_type AS workType,
+            j.publish_people AS publishPeople,
+            j.work_annex_name AS workAnnexName,
+            j.work_annex AS workAnnex,
+            j.work_detail AS workDetail,
+            j.work_remark AS workRemark,
+            j.work_start_time AS workStartTime,
+            j.work_end_time AS workEndTime,
+            j.work_priority AS workPriority,
+            e.executor_people AS executorPeople,
+            e.work_rate AS workRate,
+            e.work_finish_time AS workFinishTime,
+            e.work_feedback_file_name AS workFeedbackFileName,
+            e.work_feedback_file_url AS workFeedbackFileUrl,
+            e.work_feedback_remark AS workFeedbackRemark
+        FROM
+            job_task_record j,job_task_record_executor e
+        WHERE e.work_id = j.id
+          AND e.executor_people = #{nickName}
+          AND e.work_rate != 100
+        ORDER BY
+            j.work_priority
+    </select>
+
+    <select id="selectJobTaskRecordById" parameterType="Integer" resultMap="JobTaskRecordResult">
+        <include refid="selectJobTaskRecordVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectJobTaskList" resultType="com.supervision.jobTask.domain.vo.JobTaskRecordVo">
+        SELECT
+            j.id AS id,
+            j.work_name AS workName,
+            j.work_num AS workNum,
+            j.work_type AS workType,
+            j.publish_people AS publishPeople,
+            j.work_annex_name AS workAnnexName,
+            j.work_annex AS workAnnex,
+            j.work_detail AS workDetail,
+            j.work_remark AS workRemark,
+            j.work_start_time AS workStartTime,
+            j.work_end_time AS workEndTime,
+            j.work_priority AS workPriority,
+            e.executor_people AS executorPeople,
+            e.work_rate AS workRate,
+            e.work_finish_time AS workFinishTime,
+            e.work_feedback_file_name AS workFeedbackFileName,
+            e.work_feedback_file_url AS workFeedbackFileUrl,
+            e.work_feedback_remark AS workFeedbackRemark
+        FROM
+            job_task_record j,job_task_record_executor e
+        WHERE e.work_id = j.id and e.executor_people = #{nickName}
+        <if test="startTime != null and endTime != null">and j.work_start_time BETWEEN #{startTime} AND #{endTime}</if>
+        ORDER BY
+            j.work_priority,j.work_start_time
+    </select>
+    <select id="selectJobTask" resultType="com.supervision.jobTask.domain.vo.JobTaskRecordVo">
+        SELECT
+            j.id AS id,
+            j.work_name AS workName,
+            j.work_num AS workNum,
+            j.work_type AS workType,
+            j.publish_people AS publishPeople,
+            j.work_annex_name AS workAnnexName,
+            j.work_annex AS workAnnex,
+            j.work_detail AS workDetail,
+            j.work_remark AS workRemark,
+            j.work_start_time AS workStartTime,
+            j.work_end_time AS workEndTime,
+            j.work_priority AS workPriority,
+            e.executor_people AS executorPeople,
+            e.work_rate AS workRate,
+            e.work_finish_time AS workFinishTime,
+            e.work_feedback_file_name AS workFeedbackFileName,
+            e.work_feedback_file_url AS workFeedbackFileUrl,
+            e.work_feedback_remark AS workFeedbackRemark
+        FROM
+            job_task_record j,job_task_record_executor e
+        WHERE e.work_id = j.id
+          AND e.executor_people = #{nickName}
+          AND j.id = #{workId}
+        ORDER BY
+            j.work_priority
+    </select>
+
+    <insert id="insertJobTaskRecord" parameterType="JobTaskRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into job_task_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="workName != null">work_name,</if>
+            <if test="workNum != null">work_num,</if>
+            <if test="workType != null">work_type,</if>
+            <if test="publishUnit != null">publish_unit,</if>
+            <if test="publishPeople != null">publish_people,</if>
+            <if test="workAnnexName != null">work_annex_name,</if>
+            <if test="workAnnex != null">work_annex,</if>
+            <if test="workDetail != null">work_detail,</if>
+            <if test="workRemark != null">work_remark,</if>
+            <if test="workStartTime != null">work_start_time,</if>
+            <if test="workEndTime != null">work_end_time,</if>
+            <if test="workPriority != null">work_priority,</if>
+            <if test="executorUnit != null">executor_unit,</if>
+            <if test="executorPeople != null">executor_people,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="workName != null">#{workName},</if>
+            <if test="workNum != null">#{workNum},</if>
+            <if test="workType != null">#{workType},</if>
+            <if test="publishUnit != null">#{publishUnit},</if>
+            <if test="publishPeople != null">#{publishPeople},</if>
+            <if test="workAnnexName != null">#{workAnnexName},</if>
+            <if test="workAnnex != null">#{workAnnex},</if>
+            <if test="workDetail != null">#{workDetail},</if>
+            <if test="workRemark != null">#{workRemark},</if>
+            <if test="workStartTime != null">#{workStartTime},</if>
+            <if test="workEndTime != null">#{workEndTime},</if>
+            <if test="workPriority != null">#{workPriority},</if>
+            <if test="executorUnit != null">#{executorUnit,typeHandler=com.supervision.common.handler.ListToStringHandler},</if>
+            <if test="executorPeople != null">#{executorPeople,typeHandler=com.supervision.common.handler.ListToStringHandler},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJobTaskRecord" parameterType="JobTaskRecord">
+        update job_task_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="workName != null">work_name = #{workName},</if>
+            <if test="workNum != null">work_num = #{workNum},</if>
+            <if test="workType != null">work_type = #{workType},</if>
+            <if test="publishUnit != null">publish_unit = #{publishUnit},</if>
+            <if test="publishPeople != null">publish_people = #{publishPeople},</if>
+            <if test="workAnnexName != null">work_annex_name = #{workAnnexName},</if>
+            <if test="workAnnex != null">work_annex = #{workAnnex},</if>
+            <if test="workDetail != null">work_detail = #{workDetail},</if>
+            <if test="workRemark != null">work_remark = #{workRemark},</if>
+            <if test="workStartTime != null">work_start_time = #{workStartTime},</if>
+            <if test="workEndTime != null">work_end_time = #{workEndTime},</if>
+            <if test="workPriority != null">work_priority = #{workPriority},</if>
+            <if test="executorUnit != null">executor_unit = #{executorUnit,typeHandler=com.supervision.common.handler.ListToStringHandler},</if>
+            <if test="executorPeople != null">executor_people = #{executorPeople,typeHandler=com.supervision.common.handler.ListToStringHandler},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJobTaskRecordById" parameterType="Integer">
+        delete from job_task_record where id = #{id}
+    </delete>
+
+    <delete id="deleteJobTaskRecordByIds" parameterType="String">
+        delete from job_task_record where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.bdglregular.mapper.BdglSpecialMapper">
+
+    <resultMap type="BdglSpecial" id="BdglSpecialResult">
+        <result property="id"    column="id"    />
+        <result property="inspectedUnitId"    column="inspected_unit_id"    />
+        <result property="inspectedUnit"    column="inspected_unit"    />
+        <result property="inspectionTime"    column="inspection_time"    />
+        <result property="score"    column="score"    />
+        <result property="rectificationTime"    column="rectification_time"    />
+        <result property="currentState"    column="current_state"    />
+        <result property="question"    column="question"    />
+        <result property="chargePeopleId"    column="charge_people_id"    />
+        <result property="chargePeople"    column="charge_people"    />
+        <result property="correctiveAction"    column="corrective_action"    />
+        <result property="pictureProof"    column="picture_proof"    />
+        <result property="documentProof"    column="document_proof"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createUserId"    column="create_user_id"    />
+        <result property="createUser"    column="create_user"    />
+        <result property="updateTime"    column="update_time"    />
+
+        <result property="caoZuoType"    column="cao_zuo_type"    />
+        <result property="reasonReturn" column="reason_return" />
+        <result property="parentId" column="parent_id" />
+        <result property="unitCheckId" column="unit_check_id" />
+        <result property="paixuValue" column="paixu_value" />
+
+        <result property="wenjianname" column="wenjianname" />
+        <result property="unitCheckName"    column="unit_check_name"    />
+        <result property="inspectionType"    column="inspection_type"    />
+        <result property="inspectionSite"    column="inspection_site"    />
+    </resultMap>
+
+    <sql id="selectBdglSpecialVo">
+        select id, inspected_unit_id, inspected_unit, inspection_time, score, rectification_time, current_state, question, charge_people_id, charge_people, corrective_action, picture_proof, document_proof, create_time, create_user_id, create_user, update_time,cao_zuo_type,reason_return,parent_id,unit_check_id,paixu_value,wenjianname ,unit_check_name, inspection_type, inspection_site from bdgl_special
+    </sql>
+
+    <select id="selectBdglSpecialList" parameterType="BdglSpecial" resultMap="BdglSpecialResult">
+        <include refid="selectBdglSpecialVo"/>
+        <where>
+            <if test="inspectedUnitId != null "> and inspected_unit_id = #{inspectedUnitId}</if>
+            <if test="inspectedUnit != null  and inspectedUnit != ''"> and inspected_unit = #{inspectedUnit}</if>
+            <if test="inspectionTime != null  and inspectionTime != ''"> and inspection_time = #{inspectionTime}</if>
+            <if test="score != null "> and score = #{score}</if>
+            <if test="rectificationTime != null  and rectificationTime != ''"> and rectification_time = #{rectificationTime}</if>
+            <if test="currentState != null  and currentState != ''"> and current_state = #{currentState}</if>
+            <if test="question != null  and question != ''"> and question = #{question}</if>
+            <if test="chargePeopleId != null "> and charge_people_id = #{chargePeopleId}</if>
+            <if test="chargePeople != null  and chargePeople != ''"> and charge_people = #{chargePeople}</if>
+            <if test="correctiveAction != null  and correctiveAction != ''"> and corrective_action = #{correctiveAction}</if>
+            <if test="pictureProof != null  and pictureProof != ''"> and picture_proof = #{pictureProof}</if>
+            <if test="documentProof != null  and documentProof != ''"> and document_proof = #{documentProof}</if>
+            <if test="createUserId != null "> and create_user_id = #{createUserId}</if>
+            <if test="createUser != null  and createUser != ''"> and create_user = #{createUser}</if>
+
+            <if test="caoZuoType != null  and caoZuoType != ''"> and cao_zuo_type = #{caoZuoType}</if>
+            <if test="reasonReturn != null  and reasonReturn != ''"> and reason_return = #{reasonReturn}</if>
+            <if test="parentId != null "> and parent_id = #{parentId}</if>
+            <if test="unitCheckId != null "> and unit_check_id = #{unitCheckId}</if>
+            <if test="paixuValue != null and paixuValue != '' "> and paixu_value = #{paixuValue}</if>
+            <if test="wenjianname != null and wenjianname != '' "> and wenjianname = #{wenjianname}</if>
+            <if test="unitCheckName != null  and unitCheckName != ''"> and unit_check_name like concat('%', #{unitCheckName}, '%')</if>
+            <if test="inspectionType != null  and inspectionType != ''"> and inspection_type = #{inspectionType}</if>
+            <if test="inspectionSite != null  and inspectionSite != ''"> and inspection_site = #{inspectionSite}</if>
+            and YEAR(inspection_time) = YEAR(NOW())
+        </where>
+        order by paixu_value asc
+    </select>
+    <select id="selectBdglSpecialLists" parameterType="BdglSpecial" resultMap="BdglSpecialResult">
+        select id, inspected_unit_id, inspected_unit,wenjianname, inspection_time, s.score, rectification_time, current_state, question, charge_people_id, charge_people, corrective_action, picture_proof, document_proof, s.create_time, create_user_id, create_user, s.update_time,cao_zuo_type,reason_return,s.parent_id,unit_check_id,paixu_value ,unit_check_name, inspection_type, inspection_site
+        from bdgl_special s left join sys_dept d
+        on s.inspected_unit_id=d.dept_id
+        <where>
+            <if test="inspectedUnitId != null ">
+                and (s.inspected_unit_id = #{inspectedUnitId} or find_in_set(#{inspectedUnitId}, d.ancestors))
+            </if>
+            <if test="inspectedUnit != null  and inspectedUnit != ''"> and s.inspected_unit = #{inspectedUnit}</if>
+            <if test="inspectionTime != null  and inspectionTime != ''"> and s.inspection_time = #{inspectionTime}</if>
+            <if test="score != null "> and s.score = #{score}</if>
+            <if test="rectificationTime != null  and rectificationTime != ''"> and s.rectification_time = #{rectificationTime}</if>
+            <if test="currentState != null  and currentState != ''"> and s.current_state = #{currentState}</if>
+            <if test="question != null  and question != ''"> and s.question = #{question}</if>
+            <if test="chargePeopleId != null "> and s.charge_people_id = #{chargePeopleId}</if>
+            <if test="chargePeople != null  and chargePeople != ''"> and s.charge_people = #{chargePeople}</if>
+            <if test="correctiveAction != null  and correctiveAction != ''"> and s.corrective_action = #{correctiveAction}</if>
+            <if test="pictureProof != null  and pictureProof != ''"> and s.picture_proof = #{pictureProof}</if>
+            <if test="documentProof != null  and documentProof != ''"> and s.document_proof = #{documentProof}</if>
+            <if test="createUserId != null "> and s.create_user_id = #{createUserId}</if>
+            <if test="createUser != null  and createUser != ''"> and s.create_user = #{createUser}</if>
+
+            <if test="caoZuoType != null  and caoZuoType != ''"> and s.cao_zuo_type = #{caoZuoType}</if>
+            <if test="reasonReturn != null  and reasonReturn != ''"> and s.reason_return = #{reasonReturn}</if>
+            <if test="parentId != null "> and s.parent_id = #{parentId}</if>
+            <if test="unitCheckId != null "> and s.unit_check_id = #{unitCheckId}</if>
+            <if test="paixuValue != null and paixuValue != '' "> and s.paixu_value = #{paixuValue}</if>
+            <if test="wenjianname != null and wenjianname != '' "> and s.wenjianname = #{wenjianname}</if>
+            <if test="unitCheckName != null  and unitCheckName != ''"> and unit_check_name like concat('%', #{unitCheckName}, '%')</if>
+            <if test="inspectionType != null  and inspectionType != ''"> and inspection_type = #{inspectionType}</if>
+            <if test="inspectionSite != null  and inspectionSite != ''"> and inspection_site = #{inspectionSite}</if>
+            and YEAR(inspection_time) = YEAR(NOW())
+        </where>
+        ORDER BY paixu_value
+    </select>
+
+    <select id="selectBdglSpecialById" parameterType="Long" resultMap="BdglSpecialResult">
+        <include refid="selectBdglSpecialVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglSpecial" parameterType="BdglSpecial">
+        insert into bdgl_special
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="inspectedUnitId != null">inspected_unit_id,</if>
+            <if test="inspectedUnit != null">inspected_unit,</if>
+            <if test="inspectionTime != null">inspection_time,</if>
+            <if test="score != null">score,</if>
+            <if test="rectificationTime != null">rectification_time,</if>
+            <if test="currentState != null">current_state,</if>
+            <if test="question != null">question,</if>
+            <if test="chargePeopleId != null">charge_people_id,</if>
+            <if test="chargePeople != null">charge_people,</if>
+            <if test="correctiveAction != null">corrective_action,</if>
+            <if test="pictureProof != null">picture_proof,</if>
+            <if test="documentProof != null">document_proof,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createUserId != null">create_user_id,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="reasonReturn != null">reason_return,</if>
+            <if test="caoZuoType != null">cao_zuo_type,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="unitCheckId != null">unit_check_id,</if>
+            <if test="paixuValue != null">paixu_value,</if>
+            <if test="wenjianname != null">wenjianname,</if>
+            <if test="unitCheckName != null">unit_check_name,</if>
+            <if test="inspectionType != null">inspection_type,</if>
+            <if test="inspectionSite != null">inspection_site,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="inspectedUnitId != null">#{inspectedUnitId},</if>
+            <if test="inspectedUnit != null">#{inspectedUnit},</if>
+            <if test="inspectionTime != null">#{inspectionTime},</if>
+            <if test="score != null">#{score},</if>
+            <if test="rectificationTime != null">#{rectificationTime},</if>
+            <if test="currentState != null">#{currentState},</if>
+            <if test="question != null">#{question},</if>
+            <if test="chargePeopleId != null">#{chargePeopleId},</if>
+            <if test="chargePeople != null">#{chargePeople},</if>
+            <if test="correctiveAction != null">#{correctiveAction},</if>
+            <if test="pictureProof != null">#{pictureProof},</if>
+            <if test="documentProof != null">#{documentProof},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createUserId != null">#{createUserId},</if>
+            <if test="createUser != null">#{createUser},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="reasonReturn != null">#{reasonReturn},</if>
+            <if test="caoZuoType != null">#{caoZuoType},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="unitCheckId != null">#{unitCheckId},</if>
+            <if test="paixuValue != null">#{paixuValue},</if>
+            <if test="wenjianname != null">#{wenjianname},</if>
+            <if test="unitCheckName != null">#{unitCheckName},</if>
+            <if test="inspectionType != null">#{inspectionType},</if>
+            <if test="inspectionSite != null">#{inspectionSite},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglSpecial" parameterType="BdglSpecial">
+        update bdgl_special
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="inspectedUnitId != null">inspected_unit_id = #{inspectedUnitId},</if>
+            <if test="inspectedUnit != null">inspected_unit = #{inspectedUnit},</if>
+            <if test="inspectionTime != null">inspection_time = #{inspectionTime},</if>
+            <if test="score != null">score = #{score},</if>
+            <if test="rectificationTime != null">rectification_time = #{rectificationTime},</if>
+            <if test="currentState != null">current_state = #{currentState},</if>
+            <if test="question != null">question = #{question},</if>
+            <if test="chargePeopleId != null">charge_people_id = #{chargePeopleId},</if>
+            <if test="chargePeople != null">charge_people = #{chargePeople},</if>
+            <if test="correctiveAction != null">corrective_action = #{correctiveAction},</if>
+            <if test="pictureProof != null">picture_proof = #{pictureProof},</if>
+            <if test="documentProof != null">document_proof = #{documentProof},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createUserId != null">create_user_id = #{createUserId},</if>
+            <if test="createUser != null">create_user = #{createUser},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="reasonReturn != null">reason_return = #{reasonReturn},</if>
+            <if test="caoZuoType != null">cao_zuo_type = #{caoZuoType},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="unitCheckId != null">unit_check_id = #{unitCheckId},</if>
+            <if test="paixuValue != null">paixu_value = #{paixuValue},</if>
+            <if test="wenjianname != null">wenjianname = #{wenjianname},</if>
+            <if test="unitCheckName != null">unit_check_name = #{unitCheckName},</if>
+            <if test="inspectionType != null">inspection_type = #{inspectionType},</if>
+            <if test="inspectionSite != null">inspection_site = #{inspectionSite},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <!-- 查询当前部门以及部门下的数据 -->
+    <select id="selectDeptById" parameterType="Long"  resultMap="BdglSpecialResult">
+        <include refid="selectBdglSpecialVo"/>
+        where inspected_unit_id = #{deptId} or parent_id = #{deptId}
+    </select>
+
+    <!-- 查询当前部门以及部门下减分状态的数据 -->
+    <select id="selectDeptByIdAndStates"  resultMap="BdglSpecialResult">
+        <include refid="selectBdglSpecialVo"/>
+        where 1=1 and cao_zuo_type='0' and YEAR(inspection_time) = YEAR(NOW())
+        and (inspected_unit_id = #{deptId} or parent_id = #{deptId})
+    </select>
+
+    <delete id="deleteBdglSpecialById" parameterType="Long">
+        delete from bdgl_special where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglSpecialByIds" parameterType="String">
+        delete from bdgl_special where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

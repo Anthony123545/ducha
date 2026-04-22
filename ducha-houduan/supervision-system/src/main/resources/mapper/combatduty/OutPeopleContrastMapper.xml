@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.combatduty.mapper.OutPeopleContrastMapper">
+
+    <resultMap type="OutPeopleContrast" id="OutPeopleContrastResult">
+        <result property="leaveNum"    column="leave_num"    />
+        <result property="studyNum"    column="study_num"    />
+        <result property="speciaNum"    column="specia_num"    />
+        <result property="businessTravelNum"    column="business_travel_num"    />
+        <result property="vacationNum"    column="vacation_num"    />
+        <result property="isEnable"    column="is_enable"    />
+        <result property="id"    column="id"    />
+    </resultMap>
+
+    <sql id="selectOutPeopleContrastVo">
+        select leave_num, study_num, specia_num, business_travel_num, vacation_num, is_enable, id from out_people_contrast
+    </sql>
+
+    <select id="selectOutPeopleContrastList" parameterType="OutPeopleContrast" resultMap="OutPeopleContrastResult">
+        <include refid="selectOutPeopleContrastVo"/>
+        <where>
+            <if test="leaveNum != null "> and leave_num = #{leaveNum}</if>
+            <if test="studyNum != null "> and study_num = #{studyNum}</if>
+            <if test="speciaNum != null "> and specia_num = #{speciaNum}</if>
+            <if test="businessTravelNum != null "> and business_travel_num = #{businessTravelNum}</if>
+            <if test="vacationNum != null "> and vacation_num = #{vacationNum}</if>
+            <if test="isEnable != null  and isEnable != ''"> and is_enable = #{isEnable}</if>
+        </where>
+    </select>
+
+    <select id="selectOutPeopleContrastById" parameterType="Integer" resultMap="OutPeopleContrastResult">
+        <include refid="selectOutPeopleContrastVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertOutPeopleContrast" parameterType="OutPeopleContrast">
+        insert into out_people_contrast
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="leaveNum != null">leave_num,</if>
+            <if test="studyNum != null">study_num,</if>
+            <if test="speciaNum != null">specia_num,</if>
+            <if test="businessTravelNum != null">business_travel_num,</if>
+            <if test="vacationNum != null">vacation_num,</if>
+            <if test="isEnable != null">is_enable,</if>
+            <if test="id != null">id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="leaveNum != null">#{leaveNum},</if>
+            <if test="studyNum != null">#{studyNum},</if>
+            <if test="speciaNum != null">#{speciaNum},</if>
+            <if test="businessTravelNum != null">#{businessTravelNum},</if>
+            <if test="vacationNum != null">#{vacationNum},</if>
+            <if test="isEnable != null">#{isEnable},</if>
+            <if test="id != null">#{id},</if>
+        </trim>
+    </insert>
+
+    <update id="updateOutPeopleContrast" parameterType="OutPeopleContrast">
+        update out_people_contrast
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="leaveNum != null">leave_num = #{leaveNum},</if>
+            <if test="studyNum != null">study_num = #{studyNum},</if>
+            <if test="speciaNum != null">specia_num = #{speciaNum},</if>
+            <if test="businessTravelNum != null">business_travel_num = #{businessTravelNum},</if>
+            <if test="vacationNum != null">vacation_num = #{vacationNum},</if>
+            <if test="isEnable != null">is_enable = #{isEnable},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOutPeopleContrastById" parameterType="Integer">
+        delete from out_people_contrast where id = #{id}
+    </delete>
+
+    <delete id="deleteOutPeopleContrastByIds" parameterType="String">
+        delete from out_people_contrast where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

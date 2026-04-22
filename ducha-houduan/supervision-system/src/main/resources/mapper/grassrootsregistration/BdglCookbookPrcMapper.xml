@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglCookbookPrcMapper">
+    
+    <resultMap type="BdglCookbookPrc" id="BdglCookbookPrcResult">
+        <result property="id"    column="id"    />
+        <result property="urlImage"    column="url_image"    />
+        <result property="upPeople"    column="up_people"    />
+        <result property="upTime"    column="up_time"    />
+        <result property="upUnit"    column="up_unit"    />
+        <result property="remarks"    column="remarks"    />
+    </resultMap>
+
+    <sql id="selectBdglCookbookPrcVo">
+        select id, url_image, up_people, up_time, up_unit, remarks from bdgl_cookbook_prc
+    </sql>
+
+    <select id="selectBdglCookbookPrcList" parameterType="BdglCookbookPrc" resultMap="BdglCookbookPrcResult">
+        <include refid="selectBdglCookbookPrcVo"/>
+        <where>  
+            <if test="urlImage != null  and urlImage != ''"> and url_image = #{urlImage}</if>
+            <if test="upPeople != null  and upPeople != ''"> and up_people = #{upPeople}</if>
+            <if test="upTime != null "> and up_time = #{upTime}</if>
+            <if test="upUnit != null  and upUnit != ''"> and up_unit = #{upUnit}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+        </where>
+        order by up_time desc
+    </select>
+    
+    <select id="selectBdglCookbookPrcById" parameterType="Long" resultMap="BdglCookbookPrcResult">
+        <include refid="selectBdglCookbookPrcVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBdglCookbookPrc" parameterType="BdglCookbookPrc">
+        insert into bdgl_cookbook_prc
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="urlImage != null">url_image,</if>
+            <if test="upPeople != null">up_people,</if>
+            <if test="upTime != null">up_time,</if>
+            <if test="upUnit != null">up_unit,</if>
+            <if test="remarks != null">remarks,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="urlImage != null">#{urlImage},</if>
+            <if test="upPeople != null">#{upPeople},</if>
+            <if test="upTime != null">#{upTime},</if>
+            <if test="upUnit != null">#{upUnit},</if>
+            <if test="remarks != null">#{remarks},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglCookbookPrc" parameterType="BdglCookbookPrc">
+        update bdgl_cookbook_prc
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="urlImage != null">url_image = #{urlImage},</if>
+            <if test="upPeople != null">up_people = #{upPeople},</if>
+            <if test="upTime != null">up_time = #{upTime},</if>
+            <if test="upUnit != null">up_unit = #{upUnit},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglCookbookPrcById" parameterType="Long">
+        delete from bdgl_cookbook_prc where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglCookbookPrcByIds" parameterType="String">
+        delete from bdgl_cookbook_prc where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

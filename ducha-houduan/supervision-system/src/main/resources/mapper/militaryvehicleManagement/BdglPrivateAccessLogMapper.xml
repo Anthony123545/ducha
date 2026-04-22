@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.militaryvehicleManagement.mapper.BdglPrivateAccessLogMapper">
+
+    <resultMap type="BdglPrivateAccessLog" id="BdglPrivateAccessLogResult">
+        <result property="id"    column="id"    />
+        <result property="privateCarId"    column="private_car_id"    />
+        <result property="vehiclenumber"    column="vehiclenumber"    />
+        <result property="vehiclecategory"    column="vehiclecategory"    />
+        <result property="vehiclemodel"    column="vehiclemodel"    />
+        <result property="vehiclecolor"    column="vehiclecolor"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="peopleName"    column="people_name"    />
+        <result property="contactnumber"    column="contactnumber"    />
+        <result property="jinrushiajin"    column="jinrushiajin"    />
+        <result property="adminId"    column="admin_id"    />
+        <result property="likaishitian"    column="likaishitian"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectBdglPrivateAccessLogVo">
+        select id, private_car_id, vehiclenumber, vehiclecategory, vehiclemodel, vehiclecolor, people_id, people_name, contactnumber, jinrushiajin, admin_id, likaishitian, createtime, updatetime,remark from bdgl_private_access_log
+    </sql>
+
+    <select id="selectBdglPrivateAccessLogList" parameterType="BdglPrivateAccessLog" resultMap="BdglPrivateAccessLogResult">
+        <include refid="selectBdglPrivateAccessLogVo"/>
+        <where>
+            <if test="privateCarId != null "> and private_car_id = #{privateCarId}</if>
+            <if test="vehiclenumber != null  and vehiclenumber != ''"> and vehiclenumber = #{vehiclenumber}</if>
+            <if test="vehiclecategory != null  and vehiclecategory != ''"> and vehiclecategory = #{vehiclecategory}</if>
+            <if test="vehiclemodel != null  and vehiclemodel != ''"> and vehiclemodel = #{vehiclemodel}</if>
+            <if test="vehiclecolor != null  and vehiclecolor != ''"> and vehiclecolor = #{vehiclecolor}</if>
+            <if test="peopleId != null  and peopleId != ''"> and people_id = #{peopleId}</if>
+            <if test="peopleName != null  and peopleName != ''"> and people_name like concat('%', #{peopleName}, '%')</if>
+            <if test="contactnumber != null  and contactnumber != ''"> and contactnumber = #{contactnumber}</if>
+            <if test="jinrushiajin != null "> and jinrushiajin &gt;= #{jinrushiajin} </if>
+            <if test="adminId != null "> and admin_id = #{adminId}</if>
+            <if test="likaishitian != null "> and likaishitian &lt;= #{likaishitian}</if>
+            <if test="createtime != null "> and createtime = #{createtime}</if>
+            <if test="updatetime != null "> and updatetime = #{updatetime}</if>
+            <if test="remark != null "> and remark = #{remark}</if>
+        </where>
+    </select>
+
+    <select id="selectBdglPrivateAccessLog" parameterType="BdglPrivateAccessLog" resultMap="BdglPrivateAccessLogResult">
+        <include refid="selectBdglPrivateAccessLogVo"/>
+        <where>
+
+            DATEDIFF(jinrushiajin,NOW())=0
+
+
+        </where>
+    </select>
+
+    <select id="selectBdglPrivateAccessLogById" parameterType="Integer" resultMap="BdglPrivateAccessLogResult">
+        <include refid="selectBdglPrivateAccessLogVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectBdglPrivateAccessLogLists" resultMap="BdglPrivateAccessLogResult">
+        <include refid="selectBdglPrivateAccessLogVo"/>
+        where
+        <![CDATA[ jinrushiajin>=#{jinrushiajin}and jinrushiajin<=#{likaishitian}]]>
+    </select>
+    <select id="selectPersonalCarInStat"
+            resultType="com.supervision.militaryvehicleManagement.domain.vo.PersonalCarStat">
+        SELECT
+            vehiclenumber as chePaiNum,
+            count(vehiclenumber) AS inCount,
+            jinrushiajin as inTime,
+            likaishitian as outTime
+        FROM
+            bdgl_private_access_log
+        <where>
+            <if test="chePaiNum != null  and chePaiNum != ''">and vehiclenumber = #{chePaiNum}</if>
+            <if test="startTime != null  and endTime != null">and jinrushiajin BETWEEN #{startTime} AND #{endTime}</if>
+        </where>
+        GROUP BY vehiclenumber
+        ORDER BY inCount DESC
+    </select>
+    <select id="selectPersonalCarOutStat" resultType="java.lang.Long">
+        SELECT count(vehiclenumber) from bdgl_private_access_log
+        WHERE
+            vehiclenumber = #{chePaiNum} and
+            likaishitian BETWEEN #{startTime} AND #{endTime}
+    </select>
+
+    <insert id="insertBdglPrivateAccessLog" parameterType="BdglPrivateAccessLog" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_private_access_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="privateCarId != null">private_car_id,</if>
+            <if test="vehiclenumber != null">vehiclenumber,</if>
+            <if test="vehiclecategory != null">vehiclecategory,</if>
+            <if test="vehiclemodel != null">vehiclemodel,</if>
+            <if test="vehiclecolor != null">vehiclecolor,</if>
+            <if test="peopleId != null">people_id,</if>
+            <if test="peopleName != null">people_name,</if>
+            <if test="contactnumber != null">contactnumber,</if>
+            <if test="jinrushiajin != null">jinrushiajin,</if>
+            <if test="adminId != null">admin_id,</if>
+            <if test="likaishitian != null">likaishitian,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="privateCarId != null">#{privateCarId},</if>
+            <if test="vehiclenumber != null">#{vehiclenumber},</if>
+            <if test="vehiclecategory != null">#{vehiclecategory},</if>
+            <if test="vehiclemodel != null">#{vehiclemodel},</if>
+            <if test="vehiclecolor != null">#{vehiclecolor},</if>
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="peopleName != null">#{peopleName},</if>
+            <if test="contactnumber != null">#{contactnumber},</if>
+            <if test="jinrushiajin != null">#{jinrushiajin},</if>
+            <if test="adminId != null">#{adminId},</if>
+            <if test="likaishitian != null">#{likaishitian},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglPrivateAccessLog" parameterType="BdglPrivateAccessLog">
+        update bdgl_private_access_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="privateCarId != null">private_car_id = #{privateCarId},</if>
+            <if test="vehiclenumber != null">vehiclenumber = #{vehiclenumber},</if>
+            <if test="vehiclecategory != null">vehiclecategory = #{vehiclecategory},</if>
+            <if test="vehiclemodel != null">vehiclemodel = #{vehiclemodel},</if>
+            <if test="vehiclecolor != null">vehiclecolor = #{vehiclecolor},</if>
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="peopleName != null">people_name = #{peopleName},</if>
+            <if test="contactnumber != null">contactnumber = #{contactnumber},</if>
+            <if test="jinrushiajin != null">jinrushiajin = #{jinrushiajin},</if>
+            <if test="adminId != null">admin_id = #{adminId},</if>
+            <if test="likaishitian != null">likaishitian = #{likaishitian},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglPrivateAccessLogById" parameterType="Integer">
+        delete from bdgl_private_access_log where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglPrivateAccessLogByIds" parameterType="String">
+        delete from bdgl_private_access_log where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,10 @@
+{
+  "UserInfoCount": {         // 【只读 / 必填】用户数量对象
+    "userNumber": "${userNumber}"
+    // 【只读 / 必填】用户数量（int）
+    // range: 任意范围
+    // step: 无
+    // unit: 无
+    // unitType: 无
+  }
+}

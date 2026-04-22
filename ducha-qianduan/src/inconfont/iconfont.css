@@ -1,0 +1,67 @@
+@font-face {
+  font-family: "iconfont";
+  /* Project id 2786925 */
+  src: url('iconfont.woff2?t=1650105618782') format('woff2'),
+    url('iconfont.woff?t=1650105618782') format('woff'),
+    url('iconfont.ttf?t=1650105618782') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-logout:before {
+  content: "\e64b";
+}
+
+.icon-xianxingjuzi:before {
+  content: "\e702";
+}
+
+.icon-xianxinglizhi:before {
+  content: "\e703";
+}
+
+.icon-xianxingningmeng:before {
+  content: "\e704";
+}
+
+.icon-xianxingliulian:before {
+  content: "\e705";
+}
+
+.icon-xianxinghuolongguo:before {
+  content: "\e706";
+}
+
+.icon-xianxingshanzhu:before {
+  content: "\e707";
+}
+
+.icon-xianxingshiliu:before {
+  content: "\e708";
+}
+
+.icon-xianxingputao:before {
+  content: "\e709";
+}
+
+.icon-xianxingxigua:before {
+  content: "\e70a";
+}
+
+.icon-icon-star:before {
+  content: "\e60c";
+}
+
+.icon-mianxingguanzhutubiao:before {
+  content: "\e66b";
+}
+
+.icon-mianxinghuishoutubiao:before {
+  content: "\e66c";
+}

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.peopleManage.mapper.BdglPeopleTypeStatisticsMapper">
+
+    <resultMap type="BdglPeopleTypeStatistics" id="BdglPeopleTypeStatisticsResult">
+        <result property="id"    column="id"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="inpreparationGb"    column="inpreparation_gb"    />
+        <result property="inpreparationSg"    column="inpreparation_sg"    />
+        <result property="inpreparationYwb"    column="inpreparation_ywb"    />
+        <result property="incumbentsGb"    column="incumbents_gb"    />
+        <result property="incumbentsSg"    column="incumbents_sg"    />
+        <result property="incumbentsYwb"    column="incumbents_ywb"    />
+        <result property="outpreparationGb"    column="outpreparation_gb"    />
+        <result property="outpreparationSg"    column="outpreparation_sg"    />
+        <result property="outpreparationYwb"    column="outpreparation_ywb"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="unitName"    column="unit_name"    />
+    </resultMap>
+
+    <sql id="selectBdglPeopleTypeStatisticsVo">
+        select bdgl_people_type_statistics.id, bdgl_people_type_statistics.unit_id, inpreparation_gb, inpreparation_sg, inpreparation_ywb, incumbents_gb, incumbents_sg, incumbents_ywb, outpreparation_gb, outpreparation_sg, outpreparation_ywb, bdgl_people_type_statistics.create_time, bdgl_people_type_statistics.create_by,sys_dept.dept_name as unit_name
+        from bdgl_people_type_statistics
+        LEFT JOIN sys_dept ON bdgl_people_type_statistics.unit_id=sys_dept.dept_id
+    </sql>
+
+    <select id="selectBdglPeopleTypeStatisticsList" parameterType="BdglPeopleTypeStatistics" resultMap="BdglPeopleTypeStatisticsResult">
+        <include refid="selectBdglPeopleTypeStatisticsVo"/>
+        <where>
+            <if test="unitId != null "> and bdgl_people_type_statistics.unit_id = #{unitId}</if>
+            <if test="inpreparationGb != null "> and inpreparation_gb = #{inpreparationGb}</if>
+            <if test="inpreparationSg != null "> and inpreparation_sg = #{inpreparationSg}</if>
+            <if test="inpreparationYwb != null "> and inpreparation_ywb = #{inpreparationYwb}</if>
+            <if test="incumbentsGb != null "> and incumbents_gb = #{incumbentsGb}</if>
+            <if test="incumbentsSg != null "> and incumbents_sg = #{incumbentsSg}</if>
+            <if test="incumbentsYwb != null "> and incumbents_ywb = #{incumbentsYwb}</if>
+            <if test="outpreparationGb != null "> and outpreparation_gb = #{outpreparationGb}</if>
+            <if test="outpreparationSg != null "> and outpreparation_sg = #{outpreparationSg}</if>
+            <if test="outpreparationYwb != null "> and outpreparation_ywb = #{outpreparationYwb}</if>
+        </where>
+        order by bdgl_people_type_statistics.id desc
+    </select>
+
+    <select id="selectBdglPeopleTypeStatisticsById" parameterType="Long" resultMap="BdglPeopleTypeStatisticsResult">
+        <include refid="selectBdglPeopleTypeStatisticsVo"/>
+        where bdgl_people_type_statistics.id = #{id}
+    </select>
+
+    <insert id="insertBdglPeopleTypeStatistics" parameterType="BdglPeopleTypeStatistics" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_people_type_statistics
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="unitId != null">unit_id,</if>
+            <if test="inpreparationGb != null">inpreparation_gb,</if>
+            <if test="inpreparationSg != null">inpreparation_sg,</if>
+            <if test="inpreparationYwb != null">inpreparation_ywb,</if>
+            <if test="incumbentsGb != null">incumbents_gb,</if>
+            <if test="incumbentsSg != null">incumbents_sg,</if>
+            <if test="incumbentsYwb != null">incumbents_ywb,</if>
+            <if test="outpreparationGb != null">outpreparation_gb,</if>
+            <if test="outpreparationSg != null">outpreparation_sg,</if>
+            <if test="outpreparationYwb != null">outpreparation_ywb,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="unitId != null">#{unitId},</if>
+            <if test="inpreparationGb != null">#{inpreparationGb},</if>
+            <if test="inpreparationSg != null">#{inpreparationSg},</if>
+            <if test="inpreparationYwb != null">#{inpreparationYwb},</if>
+            <if test="incumbentsGb != null">#{incumbentsGb},</if>
+            <if test="incumbentsSg != null">#{incumbentsSg},</if>
+            <if test="incumbentsYwb != null">#{incumbentsYwb},</if>
+            <if test="outpreparationGb != null">#{outpreparationGb},</if>
+            <if test="outpreparationSg != null">#{outpreparationSg},</if>
+            <if test="outpreparationYwb != null">#{outpreparationYwb},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglPeopleTypeStatistics" parameterType="BdglPeopleTypeStatistics">
+        update bdgl_people_type_statistics
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="inpreparationGb != null">inpreparation_gb = #{inpreparationGb},</if>
+            <if test="inpreparationSg != null">inpreparation_sg = #{inpreparationSg},</if>
+            <if test="inpreparationYwb != null">inpreparation_ywb = #{inpreparationYwb},</if>
+            <if test="incumbentsGb != null">incumbents_gb = #{incumbentsGb},</if>
+            <if test="incumbentsSg != null">incumbents_sg = #{incumbentsSg},</if>
+            <if test="incumbentsYwb != null">incumbents_ywb = #{incumbentsYwb},</if>
+            <if test="outpreparationGb != null">outpreparation_gb = #{outpreparationGb},</if>
+            <if test="outpreparationSg != null">outpreparation_sg = #{outpreparationSg},</if>
+            <if test="outpreparationYwb != null">outpreparation_ywb = #{outpreparationYwb},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createBy != null and createBy != ''">create_by = #{createBy},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglPeopleTypeStatisticsById" parameterType="Long">
+        delete from bdgl_people_type_statistics where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglPeopleTypeStatisticsByIds" parameterType="String">
+        delete from bdgl_people_type_statistics where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

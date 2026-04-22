@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.medicalhealth.mapper.BdglExamineMapper">
+
+    <resultMap type="BdglExamine" id="BdglExamineResult">
+        <result property="id"    column="id"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="job"    column="job"    />
+        <result property="classId"    column="class_id"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="checkInformation"    column="check_information"    />
+        <result property="peopleName"    column="people_name"    />
+        <result property="yeardate"    column="yeardate"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="type"    column="type"    />
+        <result property="age"    column="age"    />
+        <result property="idMunber"    column="id_munber"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="filePath"    column="file_path"    />
+    </resultMap>
+
+    <sql id="selectBdglExamineVo">
+        select id, unit_id, people_id, job, class_id, createtime, check_information, people_name, yeardate, unit_name, type, age, id_munber, file_name, file_path from bdgl_examine
+    </sql>
+
+    <select id="selectBdglExamineList" parameterType="BdglExamine" resultMap="BdglExamineResult">
+        <include refid="selectBdglExamineVo"/>
+        <where>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="peopleId != null "> and people_id = #{peopleId}</if>
+            <if test="job != null  and job != ''"> and job = #{job}</if>
+            <if test="classId != null "> and class_id = #{classId}</if>
+            <if test="createtime != null "> and createtime = #{createtime}</if>
+            <if test="checkInformation != null  and checkInformation != ''"> and check_information = #{checkInformation}</if>
+            <if test="peopleName != null  and peopleName != ''"> and people_name like concat('%', #{peopleName}, '%')</if>
+            <if test="yeardate != null  and yeardate != ''"> and yeardate = #{yeardate}</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="idMunber != null  and idMunber != ''"> and id_munber = #{idMunber}</if>
+             <if test="minAge !=null">
+                 and age <![CDATA[ >= ]]> #{minAge} and age <![CDATA[ <= ]]> #{maxAge}
+             </if>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="filePath != null  and filePath != ''"> and file_path = #{filePath}</if>
+
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectBdglExamineById" parameterType="Integer" resultMap="BdglExamineResult">
+        <include refid="selectBdglExamineVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglExamine" parameterType="BdglExamine" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_examine
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="unitId != null">unit_id,</if>
+            <if test="peopleId != null">people_id,</if>
+            <if test="job != null">job,</if>
+            <if test="classId != null">class_id,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="checkInformation != null">check_information,</if>
+            <if test="peopleName != null">people_name,</if>
+            <if test="yeardate != null">yeardate,</if>
+            <if test="unitName != null">unit_name,</if>
+            <if test="type != null">type,</if>
+            <if test="age != null">age,</if>
+            <if test="idMunber != null">id_munber,</if>
+            <if test="fileName != null">file_name,</if>
+            <if test="filePath != null">file_path,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="unitId != null">#{unitId},</if>
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="job != null">#{job},</if>
+            <if test="classId != null">#{classId},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="checkInformation != null">#{checkInformation},</if>
+            <if test="peopleName != null">#{peopleName},</if>
+            <if test="yeardate != null">#{yeardate},</if>
+            <if test="unitName != null">#{unitName},</if>
+            <if test="type != null">#{type},</if>
+            <if test="age != null">#{age},</if>
+            <if test="idMunber != null">#{idMunber},</if>
+            <if test="fileName != null">#{fileName},</if>
+            <if test="filePath != null">#{filePath},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglExamine" parameterType="BdglExamine">
+        update bdgl_examine
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="job != null">job = #{job},</if>
+            <if test="classId != null">class_id = #{classId},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="checkInformation != null">check_information = #{checkInformation},</if>
+            <if test="peopleName != null">people_name = #{peopleName},</if>
+            <if test="yeardate != null">yeardate = #{yeardate},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="idMunber != null">id_munber = #{idMunber},</if>
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="filePath != null">file_path = #{filePath},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglExamineById" parameterType="Integer">
+        delete from bdgl_examine where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglExamineByIds" parameterType="String">
+        delete from bdgl_examine where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

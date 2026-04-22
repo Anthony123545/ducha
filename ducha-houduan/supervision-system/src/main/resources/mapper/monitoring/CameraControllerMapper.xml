@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.monitoring.mapper.CameraControllerMapper">
+    
+    <resultMap type="CameraController" id="CameraControllerResult">
+        <result property="id"    column="id"    />
+        <result property="cname"    column="cname"    />
+        <result property="caddr"    column="caddr"    />
+        <result property="cstatus"    column="cstatus"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="unitid"    column="unitid"    />
+        <result property="unitname"    column="unitname"    />
+        <result property="powerArea"    column="power_area"    />
+        <result property="belongLocal"    column="belong_local"    />
+    </resultMap>
+
+    <sql id="selectCameraControllerVo">
+        select id, cname, caddr, cstatus, createtime, unitid, unitname, power_area,belong_local from camera_controller
+    </sql>
+
+    <select id="selectCameraControllerList" parameterType="CameraController" resultMap="CameraControllerResult">
+        <include refid="selectCameraControllerVo"/>
+        <where>  
+            <if test="cname != null  and cname != ''"> and cname like concat('%', #{cname}, '%')</if>
+            <if test="caddr != null  and caddr != ''"> and caddr = #{caddr}</if>
+            <if test="cstatus != null  and cstatus != ''"> and cstatus = #{cstatus}</if>
+            <if test="createtime != null "> and createtime = #{createtime}</if>
+            <if test="unitid != null "> and unitid = #{unitid}</if>
+            <if test="unitname != null  and unitname != ''"> and unitname like concat('%', #{unitname}, '%')</if>
+            <if test="powerArea != null "> and power_area = #{powerArea}</if>
+            <if test="belongLocal != null "> and belong_local = #{belongLocal}</if>
+        </where>
+    </select>
+    
+    <select id="selectCameraControllerById" parameterType="Long" resultMap="CameraControllerResult">
+        <include refid="selectCameraControllerVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCameraController" parameterType="CameraController">
+        insert into camera_controller
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="cname != null">cname,</if>
+            <if test="caddr != null">caddr,</if>
+            <if test="cstatus != null">cstatus,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="unitid != null">unitid,</if>
+            <if test="unitname != null">unitname,</if>
+            <if test="powerArea != null">power_area,</if>
+            <if test="belongLocal != null">belong_local,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="cname != null">#{cname},</if>
+            <if test="caddr != null">#{caddr},</if>
+            <if test="cstatus != null">#{cstatus},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="unitid != null">#{unitid},</if>
+            <if test="unitname != null">#{unitname},</if>
+            <if test="powerArea != null">#{powerArea},</if>
+            <if test="belongLocal != null">#{belongLocal},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCameraController" parameterType="CameraController">
+        update camera_controller
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="cname != null">cname = #{cname},</if>
+            <if test="caddr != null">caddr = #{caddr},</if>
+            <if test="cstatus != null">cstatus = #{cstatus},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="unitid != null">unitid = #{unitid},</if>
+            <if test="unitname != null">unitname = #{unitname},</if>
+            <if test="powerArea != null">power_area = #{powerArea},</if>
+            <if test="belongLocal != null">belong_local = #{belongLocal},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCameraControllerById" parameterType="Long">
+        delete from camera_controller where id = #{id}
+    </delete>
+
+    <delete id="deleteCameraControllerByIds" parameterType="String">
+        delete from camera_controller where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

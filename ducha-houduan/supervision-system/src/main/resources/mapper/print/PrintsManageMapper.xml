@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.print.mapper.PrintsManageMapper">
+
+    <resultMap type="PrintsManage" id="PrintsManageResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="file"    column="file"    />
+        <result property="type"    column="type"    />
+        <result property="size"    column="size"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="levelM"    column="level_m"    />
+        <result property="sendId"    column="send_id"    />
+        <result property="sendName"    column="send_name"    />
+        <result property="creattime"    column="creattime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="explainInfo"    column="explain_info"    />
+        <result property="printStatus"    column="print_status"    />
+        <result property="receiveId"    column="receive_id"    />
+        <result property="receiveName"    column="receive_name"    />
+        <result property="sFile"    column="s_file"    />
+        <result property="printInfo"    column="print_info"    />
+        <result property="printNumber"    column="print_number"    />
+        <result property="isReturn"    column="is_return"    />
+        <result property="isPrintColor"    column="is_print_color"    />
+        <result property="isPrintTwo"    column="is_print_two"    />
+        <result property="printRoom"    column="print_room"    />
+        <result property="isShow"    column="is_show"    />
+        <result property="remark"    column="remark"    />
+        <result property="returnTime"    column="return_time"    />
+        <result property="isdelete"    column="isdelete"    />
+
+    </resultMap>
+
+    <sql id="selectPrintsManageVo">
+        select id, name, file, type, size, unit_id, unit_name, level_m, send_id, send_name, creattime, updatetime, explain_info, print_status, receive_id, receive_name, s_file, print_info, print_number, is_return, is_print_color, is_print_two,print_room,is_show,remark,return_time from prints_manage
+    </sql>
+
+    <select id="selectPrintsManageList" parameterType="PrintsManage" resultMap="PrintsManageResult">
+        <include refid="selectPrintsManageVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="file != null  and file != ''"> and file = #{file}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="size != null "> and size = #{size}</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="levelM != null "> and level_m = #{levelM}</if>
+            <if test="sendId != null "> and send_id = #{sendId}</if>
+            <if test="sendName != null  and sendName != ''"> and send_name like concat('%', #{sendName}, '%')</if>
+            <if test="creattime != null "> and creattime = #{creattime}</if>
+            <if test="updatetime != null "> and updatetime = #{updatetime}</if>
+            <if test="explainInfo != null  and explainInfo != ''"> and explain_info = #{explainInfo}</if>
+            <if test="printStatus != null "> and print_status = #{printStatus}</if>
+            <if test="receiveId != null "> and receive_id = #{receiveId}</if>
+            <if test="receiveName != null  and receiveName != ''"> and receive_name like concat('%', #{receiveName}, '%')</if>
+            <if test="sFile != null  and sFile != ''"> and s_file = #{sFile}</if>
+            <if test="printInfo != null  and printInfo != ''"> and print_info = #{printInfo}</if>
+            <if test="printNumber != null "> and print_number = #{printNumber}</if>
+            <if test="isReturn != null "> and is_return = #{isReturn}</if>
+            <if test="isPrintColor != null "> and is_print_color = #{isPrintColor}</if>
+            <if test="isPrintTwo != null "> and is_print_two = #{isPrintTwo}</if>
+            <if test="printRoom != null "> and print_room = #{printRoom}</if>
+            <if test="isShow != null "> and is_show = #{isShow}</if>
+            <if test="remark != null "> and remark = #{remark}</if>
+            <if test="returnTime != null "> and return_time = #{returnTime}</if>
+            <if test="isdelete != null "> and isdelete = #{isdelete}</if>
+        </where>
+        order by creattime desc
+    </select>
+
+    <select id="selectPrintsManageById" parameterType="Long" resultMap="PrintsManageResult">
+        <include refid="selectPrintsManageVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertPrintsManage" parameterType="PrintsManage" useGeneratedKeys="true" keyProperty="id">
+        insert into prints_manage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="file != null">file,</if>
+            <if test="type != null">type,</if>
+            <if test="size != null">size,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="unitName != null">unit_name,</if>
+            <if test="levelM != null">level_m,</if>
+            <if test="sendId != null">send_id,</if>
+            <if test="sendName != null">send_name,</if>
+            <if test="creattime != null">creattime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="explainInfo != null">explain_info,</if>
+            <if test="printStatus != null">print_status,</if>
+            <if test="receiveId != null">receive_id,</if>
+            <if test="receiveName != null">receive_name,</if>
+            <if test="sFile != null">s_file,</if>
+            <if test="printInfo != null">print_info,</if>
+            <if test="printNumber != null">print_number,</if>
+            <if test="isReturn != null">is_return,</if>
+            <if test="isPrintColor != null">is_print_color,</if>
+            <if test="isPrintTwo != null">is_print_two,</if>
+            <if test="printRoom != null">print_room,</if>
+
+            <if test="isShow != null ">  is_show,</if>
+            <if test="remark != null ">  remark,</if>
+            <if test="returnTime != null">return_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="file != null">#{file},</if>
+            <if test="type != null">#{type},</if>
+            <if test="size != null">#{size},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="unitName != null">#{unitName},</if>
+            <if test="levelM != null">#{levelM},</if>
+            <if test="sendId != null">#{sendId},</if>
+            <if test="sendName != null">#{sendName},</if>
+            <if test="creattime != null">#{creattime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="explainInfo != null">#{explainInfo},</if>
+            <if test="printStatus != null">#{printStatus},</if>
+            <if test="receiveId != null">#{receiveId},</if>
+            <if test="receiveName != null">#{receiveName},</if>
+            <if test="sFile != null">#{sFile},</if>
+            <if test="printInfo != null">#{printInfo},</if>
+            <if test="printNumber != null">#{printNumber},</if>
+            <if test="isReturn != null">#{isReturn},</if>
+            <if test="isPrintColor != null">#{isPrintColor},</if>
+            <if test="isPrintTwo != null">#{isPrintTwo},</if>
+            <if test="printRoom != null">#{printRoom},</if>
+
+            <if test="isShow != null "> #{isShow},</if>
+            <if test="remark != null "> #{remark},</if>
+            <if test="returnTime != null ">#{returnTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updatePrintsManage" parameterType="PrintsManage">
+        update prints_manage
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="file != null">file = #{file},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="size != null">size = #{size},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="levelM != null">level_m = #{levelM},</if>
+            <if test="sendId != null">send_id = #{sendId},</if>
+            <if test="sendName != null">send_name = #{sendName},</if>
+            <if test="creattime != null">creattime = #{creattime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="explainInfo != null">explain_info = #{explainInfo},</if>
+            <if test="printStatus != null">print_status = #{printStatus},</if>
+            <if test="receiveId != null">receive_id = #{receiveId},</if>
+            <if test="receiveName != null">receive_name = #{receiveName},</if>
+            <if test="sFile != null">s_file = #{sFile},</if>
+            <if test="printInfo != null">print_info = #{printInfo},</if>
+            <if test="printNumber != null">print_number = #{printNumber},</if>
+            <if test="isReturn != null">is_return = #{isReturn},</if>
+            <if test="isPrintColor != null">is_print_color = #{isPrintColor},</if>
+            <if test="isPrintTwo != null">is_print_two = #{isPrintTwo},</if>
+            <if test="printRoom != null">print_room = #{printRoom},</if>
+            <if test="isShow != null ">  is_show = #{isShow},</if>
+            <if test="remark != null ">  remark = #{remark},</if>
+            <if test="returnTime != null "> return_time = #{returnTime}</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="deletePrintsManageById" parameterType="Long">
+        update from prints_manage
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isdelete != null "> isdelete = #{isdelete}</if>
+        </trim>
+        where id = #{id}
+
+    </update>
+
+    <update id="deletePrintsManageByIds" parameterType="String">
+        update prints_manage set isdelete =1
+        where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>

@@ -1,0 +1,61 @@
+package com.supervision.grassrootsregistration.service;
+
+import java.util.List;
+import com.supervision.grassrootsregistration.domain.BdglFoodKind;
+
+/**
+ * 实物检查验收Service接口
+ * 
+ * @author supervision
+ * @date 2022-02-28
+ */
+public interface IBdglFoodKindService 
+{
+    /**
+     * 查询实物检查验收
+     * 
+     * @param id 实物检查验收主键
+     * @return 实物检查验收
+     */
+    public BdglFoodKind selectBdglFoodKindById(Integer id);
+
+    /**
+     * 查询实物检查验收列表
+     * 
+     * @param bdglFoodKind 实物检查验收
+     * @return 实物检查验收集合
+     */
+    public List<BdglFoodKind> selectBdglFoodKindList(BdglFoodKind bdglFoodKind);
+
+    /**
+     * 新增实物检查验收
+     * 
+     * @param bdglFoodKind 实物检查验收
+     * @return 结果
+     */
+    public int insertBdglFoodKind(BdglFoodKind bdglFoodKind);
+
+    /**
+     * 修改实物检查验收
+     * 
+     * @param bdglFoodKind 实物检查验收
+     * @return 结果
+     */
+    public int updateBdglFoodKind(BdglFoodKind bdglFoodKind);
+
+    /**
+     * 批量删除实物检查验收
+     * 
+     * @param ids 需要删除的实物检查验收主键集合
+     * @return 结果
+     */
+    public int deleteBdglFoodKindByIds(Integer[] ids);
+
+    /**
+     * 删除实物检查验收信息
+     * 
+     * @param id 实物检查验收主键
+     * @return 结果
+     */
+    public int deleteBdglFoodKindById(Integer id);
+}

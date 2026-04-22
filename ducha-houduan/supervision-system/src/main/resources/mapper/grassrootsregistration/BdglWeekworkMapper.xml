@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglWeekworkMapper">
+
+    <resultMap type="BdglWeekwork" id="BdglWeekworkResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="phone"    column="phone"    />
+        <result property="peopleId1"    column="people_id1"    />
+        <result property="peopleId2"    column="people_id2"    />
+        <result property="time"    column="time"    />
+        <result property="remark"    column="remark"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="adminId"    column="admin_id"    />
+        <result property="peopleName"    column="people_name"    />
+        <result property="people1Name"    column="people1_name"    />
+        <result property="people2Name"    column="people2_name"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="adminName"    column="admin_name"    />
+        <result property="organizer"    column="organizer"    />
+    </resultMap>
+
+    <resultMap id="BdglWeekworkBdglWeekworkRegisterResult" type="BdglWeekwork" extends="BdglWeekworkResult">
+        <collection property="bdglWeekworkRegisterList" notNullColumn="sub_id" javaType="java.util.List" resultMap="BdglWeekworkRegisterResult" />
+    </resultMap>
+
+    <resultMap type="BdglWeekworkRegister" id="BdglWeekworkRegisterResult">
+        <result property="id"    column="sub_id"    />
+        <result property="week"    column="sub_week"    />
+        <result property="time"    column="sub_time"    />
+        <result property="dateline"    column="sub_dateline"    />
+        <result property="contents"    column="sub_contents"    />
+        <result property="unitId1"    column="sub_unit_id1"    />
+        <result property="peopleIds"    column="sub_people_ids"    />
+        <result property="address"    column="sub_address"    />
+        <result property="startTime"    column="sub_start_time"    />
+        <result property="endTime"    column="sub_end_time"    />
+        <result property="weekworkId"    column="sub_weekwork_id"    />
+        <result property="shouldArrive"    column="sub_should_arrive"    />
+        <result property="realTo"    column="sub_real_to"    />
+        <result property="percentage"    column="sub_percentage"    />
+        <result property="organizer"    column="sub_organizer"    />
+        <result property="sort"    column="sort"    />
+    </resultMap>
+
+    <sql id="selectBdglWeekworkVo">
+        select id, name, start_time, end_time, people_id, phone, people_id1, people_id2, time, remark, unit_id, admin_id, people_name, people1_name, people2_name, unit_name, admin_name, organizer from bdgl_weekwork
+    </sql>
+
+    <select id="selectBdglWeekworkList" parameterType="BdglWeekwork" resultMap="BdglWeekworkResult">
+        select id, name, start_time, end_time, people_id, people_id1, people_id2, time, remark, unit_id, admin_id, people_name, people1_name, people2_name, unit_name, admin_name
+        from bdgl_weekwork
+        w left join sys_dept t on w.unit_id=t.dept_id
+        <where>
+            <if test="unitId != null ">
+                and (w.unit_id=#{unitId} or find_in_set(#{unitId}, t.ancestors))
+            </if>
+            <if test="name != null  and name != ''"> and w.name like concat('%', #{name}, '%')</if>
+            <if test="startTime != null "> and w.start_time = #{startTime}</if>
+            <if test="endTime != null "> and w.end_time = #{endTime}</if>
+            <if test="peopleId != null "> and w.people_id = #{peopleId}</if>
+            <if test="phone != null  and phone != ''"> and w.phone = #{phone}</if>
+            <if test="peopleId1 != null "> and w.people_id1 = #{peopleId1}</if>
+            <if test="peopleId2 != null "> and w.people_id2 = #{peopleId2}</if>
+            <if test="time != null "> and w.time = #{time}</if>
+            <if test="adminId != null "> and w.admin_id = #{adminId}</if>
+            <if test="peopleName != null  and peopleName != ''"> and w.people_name like concat('%', #{peopleName}, '%')</if>
+            <if test="people1Name != null  and people1Name != ''"> and w.people1_name like concat('%', #{people1Name}, '%')</if>
+            <if test="people2Name != null  and people2Name != ''"> and w.people2_name like concat('%', #{people2Name}, '%')</if>
+            <if test="unitName != null  and unitName != ''"> and w.unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="adminName != null  and adminName != ''"> and w.admin_name like concat('%', #{adminName}, '%')</if>
+            <if test="organizer != null  and organizer != ''"> and w.organizer like concat('%', #{organizer}, '%')</if>
+        </where>
+        order by w.id desc
+    </select>
+
+    <select id="selectBdglWeekworkById" parameterType="Integer" resultMap="BdglWeekworkBdglWeekworkRegisterResult">
+        select a.id, a.name, a.start_time, a.end_time, a.people_id, a.phone, a.people_id1, a.people_id2, a.time, a.remark, a.unit_id, a.admin_id, a.people_name, a.people1_name, a.people2_name, a.unit_name, a.admin_name,
+            b.id as sub_id, b.week as sub_week, b.time as sub_time, b.dateline as sub_dateline, b.contents as sub_contents, b.unit_id1 as sub_unit_id1, b.people_ids as sub_people_ids, b.address as sub_address, b.start_time as sub_start_time, b.end_time as sub_end_time, b.weekwork_id as sub_weekwork_id, b.should_arrive as sub_should_arrive, b.real_to as sub_real_to, b.percentage as sub_percentage,b.organizer as sub_organizer
+        from bdgl_weekwork a
+        left join bdgl_weekwork_register b on b.weekwork_id = a.id
+        where a.id = #{id}
+
+        ORDER BY b.time ,b.sort
+    </select>
+    <!--获取当前大队一周工作安排-->
+    <select id="selectBdglWeekwork"  resultMap="BdglWeekworkResult">
+        <include refid="selectBdglWeekworkVo"/>
+        where
+        <![CDATA[
+        start_time <= #{time} and end_time>=#{time}
+        ]]>
+        and unit_id=#{unitId}
+    </select>
+    <select id="selectBdglWeekworkLists" parameterType="BdglWeekwork" resultMap="BdglWeekworkResult">
+        <include refid="selectBdglWeekworkVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="peopleId != null "> and people_id = #{peopleId}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="peopleId1 != null "> and people_id1 = #{peopleId1}</if>
+            <if test="peopleId2 != null "> and people_id2 = #{peopleId2}</if>
+            <if test="time != null "> and time = #{time}</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="adminId != null "> and admin_id = #{adminId}</if>
+            <if test="peopleName != null  and peopleName != ''"> and people_name like concat('%', #{peopleName}, '%')</if>
+            <if test="people1Name != null  and people1Name != ''"> and people1_name like concat('%', #{people1Name}, '%')</if>
+            <if test="people2Name != null  and people2Name != ''"> and people2_name like concat('%', #{people2Name}, '%')</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="adminName != null  and adminName != ''"> and admin_name like concat('%', #{adminName}, '%')</if>
+            <if test="organizer != null  and organizer != ''"> and organizer = #{organizer}</if>
+        </where>
+    </select>
+
+    <insert id="insertBdglWeekwork" parameterType="BdglWeekwork" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_weekwork
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="peopleId != null">people_id,</if>
+            <if test="phone != null">phone,</if>
+            <if test="peopleId1 != null">people_id1,</if>
+            <if test="peopleId2 != null">people_id2,</if>
+            <if test="time != null">time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="adminId != null">admin_id,</if>
+            <if test="peopleName != null">people_name,</if>
+            <if test="people1Name != null">people1_name,</if>
+            <if test="people2Name != null">people2_name,</if>
+            <if test="unitName != null">unit_name,</if>
+            <if test="adminName != null">admin_name,</if>
+            <if test="organizer != null">organizer,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="peopleId1 != null">#{peopleId1},</if>
+            <if test="peopleId2 != null">#{peopleId2},</if>
+            <if test="time != null">#{time},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="adminId != null">#{adminId},</if>
+            <if test="peopleName != null">#{peopleName},</if>
+            <if test="people1Name != null">#{people1Name},</if>
+            <if test="people2Name != null">#{people2Name},</if>
+            <if test="unitName != null">#{unitName},</if>
+            <if test="adminName != null">#{adminName},</if>
+            <if test="organizer != null">#{organizer},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglWeekwork" parameterType="BdglWeekwork">
+        update bdgl_weekwork
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="peopleId1 != null">people_id1 = #{peopleId1},</if>
+            <if test="peopleId2 != null">people_id2 = #{peopleId2},</if>
+            <if test="time != null">time = #{time},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="adminId != null">admin_id = #{adminId},</if>
+            <if test="peopleName != null">people_name = #{peopleName},</if>
+            <if test="people1Name != null">people1_name = #{people1Name},</if>
+            <if test="people2Name != null">people2_name = #{people2Name},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="adminName != null">admin_name = #{adminName},</if>
+            <if test="organizer != null">organizer = #{organizer},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglWeekworkById" parameterType="Integer">
+        delete from bdgl_weekwork where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglWeekworkByIds" parameterType="String">
+        delete from bdgl_weekwork where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBdglWeekworkRegisterByWeekworkIds" parameterType="String">
+        delete from bdgl_weekwork_register where weekwork_id in
+        <foreach item="weekworkId" collection="array" open="(" separator="," close=")">
+            #{weekworkId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteBdglWeekworkRegisterByWeekworkId" parameterType="Integer">
+        delete from bdgl_weekwork_register where weekwork_id = #{weekworkId}
+    </delete>
+
+    <insert id="batchBdglWeekworkRegister">
+        insert into bdgl_weekwork_register( id, week, time, dateline, contents, unit_id1, people_ids, address, start_time, end_time, weekwork_id, should_arrive, real_to, percentage,organizer,sort,unit_id) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.id}, #{item.week}, #{item.time}, #{item.dateline}, #{item.contents}, #{item.unitId1}, #{item.peopleIds}, #{item.address}, #{item.startTime}, #{item.endTime}, #{item.weekworkId}, #{item.shouldArrive}, #{item.realTo}, #{item.percentage},#{item.organizer},#{item.sort},#{item.unitId})
+        </foreach>
+    </insert>
+</mapper>

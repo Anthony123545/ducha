@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.materialManagement.mapper.BdglPropertyChangeMapper">
+
+    <resultMap type="BdglPropertyChange" id="BdglPropertyChangeResult">
+        <result property="id"    column="id"    />
+        <result property="barcode"    column="barcode"    />
+        <result property="propertyId"    column="property_id"    />
+        <result property="name"    column="name"    />
+        <result property="rukuNumber"    column="ruku_number"    />
+        <result property="changeTime"    column="change_time"    />
+        <result property="beforeUnitId"    column="before_unit_id"    />
+        <result property="afterUnitId"    column="after_unit_id"    />
+        <result property="beforePeopleId"    column="before_people_id"    />
+        <result property="afterPeopleId"    column="after_people_id"    />
+        <result property="remark"    column="remark"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="beforeUnitName"    column="before_unit_name"    />
+        <result property="afterUnitName"    column="after_unit_name"    />
+        <result property="beforePeopleName"    column="before_people_name"    />
+        <result property="afterPeopleName"    column="after_people_name"    />
+    </resultMap>
+
+    <sql id="selectBdglPropertyChangeVo">
+        select id,barcode, property_id, name, ruku_number, change_time, before_unit_id, after_unit_id, before_people_id, after_people_id, remark, createtime, updatetime, before_unit_name, after_unit_name, before_people_name, after_people_name from bdgl_property_change
+    </sql>
+
+    <select id="selectBdglPropertyChangeList" parameterType="BdglPropertyChange" resultMap="BdglPropertyChangeResult">
+        <include refid="selectBdglPropertyChangeVo"/>
+        <where>
+            <if test="propertyId != null "> and property_id = #{propertyId}</if>
+            <if test="barcode != null and barcode != ''">and barcode =#{barcode}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="rukuNumber != null  and rukuNumber != ''"> and ruku_number = #{rukuNumber}</if>
+            <if test="changeTime != null "> and change_time = #{changeTime}</if>
+            <if test="beforeUnitId != null "> and before_unit_id = #{beforeUnitId}</if>
+            <if test="afterUnitId != null "> and after_unit_id = #{afterUnitId}</if>
+            <if test="beforePeopleId != null "> and before_people_id = #{beforePeopleId}</if>
+            <if test="afterPeopleId != null "> and after_people_id = #{afterPeopleId}</if>
+            <if test="createtime != null "> and createtime = #{createtime}</if>
+            <if test="updatetime != null "> and updatetime = #{updatetime}</if>
+            <if test="beforeUnitName != null  and beforeUnitName != ''"> and before_unit_name like concat('%', #{beforeUnitName}, '%')</if>
+            <if test="afterUnitName != null  and afterUnitName != ''"> and after_unit_name like concat('%', #{afterUnitName}, '%')</if>
+            <if test="beforePeopleName != null  and beforePeopleName != ''"> and before_people_name like concat('%', #{beforePeopleName}, '%')</if>
+            <if test="afterPeopleName != null  and afterPeopleName != ''"> and after_people_name like concat('%', #{afterPeopleName}, '%')</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectBdglPropertyChangeById" parameterType="Integer" resultMap="BdglPropertyChangeResult">
+        <include refid="selectBdglPropertyChangeVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglPropertyChange" parameterType="BdglPropertyChange" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_property_change
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="propertyId != null">property_id,</if>
+            <if test="barcode != null">barcode,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="rukuNumber != null">ruku_number,</if>
+            <if test="changeTime != null">change_time,</if>
+            <if test="beforeUnitId != null">before_unit_id,</if>
+            <if test="afterUnitId != null">after_unit_id,</if>
+            <if test="beforePeopleId != null">before_people_id,</if>
+            <if test="afterPeopleId != null">after_people_id,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="beforeUnitName != null">before_unit_name,</if>
+            <if test="afterUnitName != null">after_unit_name,</if>
+            <if test="beforePeopleName != null">before_people_name,</if>
+            <if test="afterPeopleName != null">after_people_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="propertyId != null">#{propertyId},</if>
+            <if test="barcode != null">#{barcode},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="rukuNumber != null">#{rukuNumber},</if>
+            <if test="changeTime != null">#{changeTime},</if>
+            <if test="beforeUnitId != null">#{beforeUnitId},</if>
+            <if test="afterUnitId != null">#{afterUnitId},</if>
+            <if test="beforePeopleId != null">#{beforePeopleId},</if>
+            <if test="afterPeopleId != null">#{afterPeopleId},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="beforeUnitName != null">#{beforeUnitName},</if>
+            <if test="afterUnitName != null">#{afterUnitName},</if>
+            <if test="beforePeopleName != null">#{beforePeopleName},</if>
+            <if test="afterPeopleName != null">#{afterPeopleName},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglPropertyChange" parameterType="BdglPropertyChange">
+        update bdgl_property_change
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="propertyId != null">property_id = #{propertyId},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="rukuNumber != null">ruku_number = #{rukuNumber},</if>
+            <if test="changeTime != null">change_time = #{changeTime},</if>
+            <if test="beforeUnitId != null">before_unit_id = #{beforeUnitId},</if>
+            <if test="afterUnitId != null">after_unit_id = #{afterUnitId},</if>
+            <if test="beforePeopleId != null">before_people_id = #{beforePeopleId},</if>
+            <if test="afterPeopleId != null">after_people_id = #{afterPeopleId},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="beforeUnitName != null">before_unit_name = #{beforeUnitName},</if>
+            <if test="afterUnitName != null">after_unit_name = #{afterUnitName},</if>
+            <if test="beforePeopleName != null">before_people_name = #{beforePeopleName},</if>
+            <if test="afterPeopleName != null">after_people_name = #{afterPeopleName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglPropertyChangeById" parameterType="Integer">
+        delete from bdgl_property_change where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglPropertyChangeByIds" parameterType="String">
+        delete from bdgl_property_change where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

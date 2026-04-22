@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglFoodBoardWagesMapper">
+    
+    <resultMap type="BdglFoodBoardWages" id="BdglFoodBoardWagesResult">
+        <result property="id"    column="id"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="type"    column="type"    />
+        <result property="sky"    column="sky"    />
+        <result property="standard"    column="standard"    />
+        <result property="money"    column="money"    />
+        <result property="foodId"    column="food_id"    />
+        <result property="peopleName"    column="people_name"    />
+    </resultMap>
+
+    <sql id="selectBdglFoodBoardWagesVo">
+        select id, people_id, type, sky, standard, money, food_id,people_name from bdgl_food_board_wages
+    </sql>
+
+    <select id="selectBdglFoodBoardWagesList" parameterType="BdglFoodBoardWages" resultMap="BdglFoodBoardWagesResult">
+        <include refid="selectBdglFoodBoardWagesVo"/>
+        <where>  
+            <if test="peopleId != null "> and people_id = #{peopleId}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="sky != null "> and sky = #{sky}</if>
+            <if test="standard != null "> and standard = #{standard}</if>
+            <if test="money != null "> and money = #{money}</if>
+            <if test="foodId != null "> and food_id = #{foodId}</if>
+            <if test="peopleName != null "> and people_name = #{peopleName}</if>
+        </where>
+        order by id desc
+    </select>
+    
+    <select id="selectBdglFoodBoardWagesById" parameterType="Integer" resultMap="BdglFoodBoardWagesResult">
+        <include refid="selectBdglFoodBoardWagesVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBdglFoodBoardWages" parameterType="BdglFoodBoardWages" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_food_board_wages
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="peopleId != null">people_id,</if>
+            <if test="type != null">type,</if>
+            <if test="sky != null">sky,</if>
+            <if test="standard != null">standard,</if>
+            <if test="money != null">money,</if>
+            <if test="foodId != null">food_id,</if>
+            <if test="peopleName != null">people_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="type != null">#{type},</if>
+            <if test="sky != null">#{sky},</if>
+            <if test="standard != null">#{standard},</if>
+            <if test="money != null">#{money},</if>
+            <if test="foodId != null">#{foodId},</if>
+            <if test="peopleName != null">#{peopleName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglFoodBoardWages" parameterType="BdglFoodBoardWages">
+        update bdgl_food_board_wages
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="sky != null">sky = #{sky},</if>
+            <if test="standard != null">standard = #{standard},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="foodId != null">food_id = #{foodId},</if>
+            <if test="peopleName != null">people_name = #{peopleName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglFoodBoardWagesById" parameterType="Integer">
+        delete from bdgl_food_board_wages where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglFoodBoardWagesByIds" parameterType="String">
+        delete from bdgl_food_board_wages where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteBdglFoodBoardWages">
+            delete from bdgl_food_board_wages where food_id = #{id}
+    </delete>
+</mapper>

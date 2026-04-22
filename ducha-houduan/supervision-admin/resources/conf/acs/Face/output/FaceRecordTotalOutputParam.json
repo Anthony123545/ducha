@@ -1,0 +1,28 @@
+{
+  "requestURL": "${requestURL}",                 // 【可选】请求URL（字符串类型，占位符）
+  "statusCode": 1,                               // 【可选】状态码（1 表示成功且无特殊状态，无法用1表示时必须返回，占位符）
+  "statusString": "${statusString}",             // 【可选】状态描述（ok 表示成功且无特殊状态，无法用ok表示时必须返回，占位符）
+  "subStatusCode": "${subStatusCode}",           // 【可选】子状态码（ok 表示成功且无特殊状态，无法用ok表示时必须返回，占位符）
+  "errorCode": "${errorCode}",                     // 【可选】错误码（当 statusCode ≠ 1 时返回，对应 subStatusCode，占位符）
+  "errorMsg": "${errorMsg}",                     // 【可选】错误信息（当 statusCode ≠ 1 时必须返回，用于说明错误原因，占位符）
+  "FDRecordDataInfo": [                          // 【可选】人脸库记录信息列表（数组，对象类型）
+    {
+    "FDID": "${FDID}",                            // 【必填】人脸库ID（字符串类型，占位符，最大长度63字节）
+    "faceLibType": "${faceLibType}",              // 【必填】人脸库类型 [blackFD 名单库, staticFD 静态库，占位符]
+    "name": "${name}",                            // 【可选】人脸库名称（字符串类型，占位符）
+    "recordDataNumber": "${recordDataNumber}",      // 【可选】记录数量（整数类型，占位符，表示该库内人脸记录数）
+    "libArmingType": "${libArmingType}",          // 【可选】布防类型 [armingLib 布防库, unArmingLib 未布防库，占位符]
+    "libAttribute": "${libAttribute}",            // 【可选】库属性 [general 普通库, important 重点库, temporary 临时库，占位符]
+    "personnelFileEnabled": "${personnelFileEnabled}"  // 【可选】是否启用人员档案（true 表示启用，占位符）
+    }
+  ],
+  "totalRecordDataNumber": "${totalRecordDataNumber}",   // 【可选】系统总记录数（整数类型，占位符，所有人脸库记录总量）,
+  "FDCapacity": {                                 // 【可选】人脸库容量信息（对象类型）
+  "total": "${total}",                              // 【可选】总容量（单位：条，占位符）
+  "use": "${use},                                  // 【可选】已使用容量（单位：条，占位符）,,
+  "remain": "${remain}",                            // 【可选】剩余容量（单位：条，占位符）
+  "maxRecordDataNumber": "${maxRecordDataNumber}",  // 【可选】最大支持人脸记录数量（单位：条，占位符）,,
+  "useRecordDataNumber": "${useRecordDataNumber}",  // 【可选】当前已使用人脸记录数量（单位：条，占位符）,,
+  "remainRecordDataNumber": "${remainRecordDataNumber}" // 【可选】剩余可用人脸记录数量（单位：条，占位符）
+  }
+}

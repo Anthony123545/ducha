@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.system.mapper.SetTimeMapper">
+
+    <resultMap type="SetTime" id="SetTimeResult">
+        <result property="id"    column="id"    />
+        <result property="time"    column="time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="updateName"    column="update_name"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectSetTimeVo">
+        select id, time, update_id, update_name, update_time from set_time
+    </sql>
+
+    <select id="selectSetTimeList" parameterType="SetTime" resultMap="SetTimeResult">
+        <include refid="selectSetTimeVo"/>
+        <where>
+            <if test="time != null  and time != ''"> and time = #{time}</if>
+            <if test="updateId != null "> and update_id = #{updateId}</if>
+            <if test="updateName != null  and updateName != ''"> and update_name like concat('%', #{updateName}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectSetTimeById" parameterType="Integer" resultMap="SetTimeResult">
+        <include refid="selectSetTimeVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertSetTime" parameterType="SetTime">
+        insert into set_time
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="time != null">time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateName != null">update_name,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="time != null">#{time},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateName != null">#{updateName},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateSetTime" parameterType="SetTime">
+        update set_time
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="time != null">time = #{time},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateName != null">update_name = #{updateName},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSetTimeById" parameterType="Integer">
+        delete from set_time where id = #{id}
+    </delete>
+
+    <delete id="deleteSetTimeByIds" parameterType="String">
+        delete from set_time where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.thought.mapper.ThoughtWeekjobMapper">
+    
+    <resultMap type="ThoughtWeekjob" id="ThoughtWeekjobResult">
+        <result property="id"    column="id"    />
+        <result property="creatTime"    column="creat_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="creatName"    column="creat_name"    />
+        <result property="creatId"    column="creat_id"    />
+        <result property="remark"    column="remark"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="dutyLeader"    column="duty_leader"    />
+        <result property="dutyLeaderId"    column="duty_leader_id"    />
+        <result property="phone"    column="phone"    />
+        <result property="militaryOfficer"    column="military_officer"    />
+        <result property="militaryOfficerId"    column="military_officer_id"    />
+        <result property="politicalOfficer"    column="political_officer"    />
+        <result property="politicalOfficerId"    column="political_officer_id"    />
+        <result property="jobTitle"    column="job_title"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+    </resultMap>
+
+    <sql id="selectThoughtWeekjobVo">
+        select id, creat_time, update_time, creat_name, creat_id, remark, unit_name, unit_id, duty_leader, duty_leader_id, phone, military_officer, military_officer_id, political_officer, political_officer_id, job_title, start_time, end_time from thought_weekjob
+    </sql>
+
+    <select id="selectThoughtWeekjobList" parameterType="ThoughtWeekjob" resultMap="ThoughtWeekjobResult">
+        <include refid="selectThoughtWeekjobVo"/>
+        <where>  
+            <if test="creatTime != null "> and creat_time = #{creatTime}</if>
+            <if test="creatName != null  and creatName != ''"> and creat_name like concat('%', #{creatName}, '%')</if>
+            <if test="creatId != null "> and creat_id = #{creatId}</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="dutyLeader != null  and dutyLeader != ''"> and duty_leader = #{dutyLeader}</if>
+            <if test="dutyLeaderId != null "> and duty_leader_id = #{dutyLeaderId}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="militaryOfficer != null  and militaryOfficer != ''"> and military_officer = #{militaryOfficer}</if>
+            <if test="militaryOfficerId != null  and militaryOfficerId != ''"> and military_officer_id = #{militaryOfficerId}</if>
+            <if test="politicalOfficer != null  and politicalOfficer != ''"> and political_officer = #{politicalOfficer}</if>
+            <if test="politicalOfficerId != null "> and Political_officer_id = #{politicalOfficerId}</if>
+            <if test="jobTitle != null  and jobTitle != ''"> and job_title = #{jobTitle}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+        </where>
+        order by id desc
+    </select>
+    
+    <select id="selectThoughtWeekjobById" parameterType="Long" resultMap="ThoughtWeekjobResult">
+        <include refid="selectThoughtWeekjobVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertThoughtWeekjob" parameterType="ThoughtWeekjob" useGeneratedKeys="true" keyProperty="id">
+        insert into thought_weekjob
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="creatTime != null">creat_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="creatName != null">creat_name,</if>
+            <if test="creatId != null">creat_id,</if>
+            <if test="remark != null">remark,</if>
+            <if test="unitName != null">unit_name,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="dutyLeader != null">duty_leader,</if>
+            <if test="dutyLeaderId != null">duty_leader_id,</if>
+            <if test="phone != null">phone,</if>
+            <if test="militaryOfficer != null">military_officer,</if>
+            <if test="militaryOfficerId != null">military_officer_id,</if>
+            <if test="politicalOfficer != null">political_officer,</if>
+            <if test="politicalOfficerId != null">political_officer_id,</if>
+            <if test="jobTitle != null">job_title,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="creatTime != null">#{creatTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="creatName != null">#{creatName},</if>
+            <if test="creatId != null">#{creatId},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="unitName != null">#{unitName},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="dutyLeader != null">#{dutyLeader},</if>
+            <if test="dutyLeaderId != null">#{dutyLeaderId},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="militaryOfficer != null">#{militaryOfficer},</if>
+            <if test="militaryOfficerId != null">#{militaryOfficerId},</if>
+            <if test="politicalOfficer != null">#{politicalOfficer},</if>
+            <if test="politicalOfficerId != null">#{politicalOfficerId},</if>
+            <if test="jobTitle != null">#{jobTitle},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateThoughtWeekjob" parameterType="ThoughtWeekjob">
+        update thought_weekjob
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="creatTime != null">creat_time = #{creatTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="creatName != null">creat_name = #{creatName},</if>
+            <if test="creatId != null">creat_id = #{creatId},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="dutyLeader != null">duty_leader = #{dutyLeader},</if>
+            <if test="dutyLeaderId != null">duty_leader_id = #{dutyLeaderId},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="militaryOfficer != null">military_officer = #{militaryOfficer},</if>
+            <if test="militaryOfficerId != null">military_officer_id = #{militaryOfficerId},</if>
+            <if test="politicalOfficer != null">political_officer = #{politicalOfficer},</if>
+            <if test="politicalOfficerId != null">political_officer_id = #{politicalOfficerId},</if>
+            <if test="jobTitle != null">job_title = #{jobTitle},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteThoughtWeekjobById" parameterType="Long">
+        delete from thought_weekjob where id = #{id}
+    </delete>
+
+    <delete id="deleteThoughtWeekjobByIds" parameterType="String">
+        delete from thought_weekjob where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

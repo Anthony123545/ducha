@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.militaryvehicleManagement.mapper.BdglThebusAccessLogMapper">
+
+    <resultMap type="BdglThebusAccessLog" id="BdglThebusAccessLogResult">
+        <result property="id"    column="id"    />
+        <result property="thebusId"    column="thebus_id"    />
+        <result property="vehiclenumber"    column="vehiclenumber"    />
+        <result property="vehiclemodel"    column="vehiclemodel"    />
+        <result property="parkingspacenumber"    column="parkingspacenumber"    />
+        <result property="vehiclecolor"    column="vehiclecolor"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="driverId"    column="driver_id"    />
+        <result property="driverName"    column="driver_name"    />
+        <result property="contactnumber"    column="contactnumber"    />
+        <result property="waichushijian"    column="waichushijian"    />
+        <result property="fanhuishijian"    column="fanhuishijian"    />
+        <result property="adminId"    column="admin_id"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="cutoffTime"    column="cutoff_time"    />
+        <result property="outType"    column="out_type"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectBdglThebusAccessLogVo">
+        select id, thebus_id, vehiclenumber, vehiclemodel, parkingspacenumber, vehiclecolor, unit_id, driver_id, driver_name, contactnumber, waichushijian, fanhuishijian, admin_id, createtime, updatetime, unit_name, cutoff_time, out_type,remark from bdgl_thebus_access_log
+    </sql>
+
+    <select id="selectBdglThebusAccessLogList" parameterType="BdglThebusAccessLog" resultMap="BdglThebusAccessLogResult">
+        <include refid="selectBdglThebusAccessLogVo"/>
+        <where>
+            <if test="thebusId != null "> and thebus_id = #{thebusId}</if>
+            <if test="vehiclenumber != null  and vehiclenumber != ''"> and vehiclenumber like concat('%', #{vehiclenumber}, '%')</if>
+            <if test="vehiclemodel != null  and vehiclemodel != ''"> and vehiclemodel = #{vehiclemodel}</if>
+            <if test="parkingspacenumber != null  and parkingspacenumber != ''"> and parkingspacenumber = #{parkingspacenumber}</if>
+            <if test="vehiclecolor != null  and vehiclecolor != ''"> and vehiclecolor = #{vehiclecolor}</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="driverId != null "> and driver_id = #{driverId}</if>
+            <if test="driverName != null  and driverName != ''"> and driver_name like concat('%', #{driverName}, '%')</if>
+            <if test="contactnumber != null  and contactnumber != ''"> and contactnumber = #{contactnumber}</if>
+            <if test="waichushijian != null "> and waichushijian like concat('%', #{waichushijian}, '%')</if>
+            <if test="fanhuishijian != null "> and fanhuishijian = #{fanhuishijian}</if>
+            <if test="adminId != null "> and admin_id = #{adminId}</if>
+            <if test="createtime != null "> and createtime = #{createtime}</if>
+            <if test="updatetime != null "> and updatetime = #{updatetime}</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="cutoffTime != null "> and cutoff_time = #{cutoffTime}</if>
+            <if test="outType != null  and outType != ''"> and out_type = #{outType}</if>
+            <if test="remark != null  and remark != ''"> and remark = #{remark}</if>
+
+        </where>
+        order by waichushijian DESC
+    </select>
+
+    <select id="selectBdglThebusAccessLogById" parameterType="Integer" resultMap="BdglThebusAccessLogResult">
+        <include refid="selectBdglThebusAccessLogVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectBdglThebusAccessLogLists" resultMap="BdglThebusAccessLogResult">
+        select t1.* from bdgl_thebus_access_log t1
+                             inner join (
+            select max(id) as id, vehiclenumber
+            from bdgl_thebus_access_log
+            where waichushijian is not null
+              and waichushijian like concat('%', #{waichushijian}, '%')
+            group by vehiclenumber
+        ) t2 on t1.id = t2.id
+    </select>
+
+    <insert id="insertBdglThebusAccessLog" parameterType="BdglThebusAccessLog" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_thebus_access_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="thebusId != null">thebus_id,</if>
+            <if test="vehiclenumber != null">vehiclenumber,</if>
+            <if test="vehiclemodel != null">vehiclemodel,</if>
+            <if test="parkingspacenumber != null">parkingspacenumber,</if>
+            <if test="vehiclecolor != null">vehiclecolor,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="driverId != null">driver_id,</if>
+            <if test="driverName != null">driver_name,</if>
+            <if test="contactnumber != null">contactnumber,</if>
+            <if test="waichushijian != null">waichushijian,</if>
+            <if test="fanhuishijian != null">fanhuishijian,</if>
+            <if test="adminId != null">admin_id,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="unitName != null">unit_name,</if>
+            <if test="cutoffTime != null">cutoff_time,</if>
+            <if test="outType != null">out_type,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="thebusId != null">#{thebusId},</if>
+            <if test="vehiclenumber != null">#{vehiclenumber},</if>
+            <if test="vehiclemodel != null">#{vehiclemodel},</if>
+            <if test="parkingspacenumber != null">#{parkingspacenumber},</if>
+            <if test="vehiclecolor != null">#{vehiclecolor},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="driverId != null">#{driverId},</if>
+            <if test="driverName != null">#{driverName},</if>
+            <if test="contactnumber != null">#{contactnumber},</if>
+            <if test="waichushijian != null">#{waichushijian},</if>
+            <if test="fanhuishijian != null">#{fanhuishijian},</if>
+            <if test="adminId != null">#{adminId},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="unitName != null">#{unitName},</if>
+            <if test="cutoffTime != null">#{cutoffTime},</if>
+            <if test="outType != null">#{outType},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglThebusAccessLog" parameterType="BdglThebusAccessLog">
+        update bdgl_thebus_access_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="thebusId != null">thebus_id = #{thebusId},</if>
+            <if test="vehiclenumber != null">vehiclenumber = #{vehiclenumber},</if>
+            <if test="vehiclemodel != null">vehiclemodel = #{vehiclemodel},</if>
+            <if test="parkingspacenumber != null">parkingspacenumber = #{parkingspacenumber},</if>
+            <if test="vehiclecolor != null">vehiclecolor = #{vehiclecolor},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="driverId != null">driver_id = #{driverId},</if>
+            <if test="driverName != null">driver_name = #{driverName},</if>
+            <if test="contactnumber != null">contactnumber = #{contactnumber},</if>
+            <if test="waichushijian != null">waichushijian = #{waichushijian},</if>
+            <if test="fanhuishijian != null">fanhuishijian = #{fanhuishijian},</if>
+            <if test="adminId != null">admin_id = #{adminId},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="cutoffTime != null">cutoff_time = #{cutoffTime},</if>
+            <if test="outType != null">out_type = #{outType},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglThebusAccessLogById" parameterType="Integer">
+        delete from bdgl_thebus_access_log where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglThebusAccessLogByIds" parameterType="String">
+        delete from bdgl_thebus_access_log where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

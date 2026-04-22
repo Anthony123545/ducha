@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.militaryvehicleManagement.mapper.TcTodayInouttimeMapper">
+
+    <resultMap type="TcTodayInouttime" id="TcTodayInouttimeResult">
+        <result property="pKey"    column="P_KEY"    />
+        <result property="carno"    column="CarNO"    />
+        <result property="inTime"    column="In_time"    />
+        <result property="outTime"    column="Out_time"    />
+        <result property="remark"    column="ReMark"    />
+    </resultMap>
+
+    <sql id="selectTcTodayInouttimeVo">
+        select P_KEY, CarNO,  In_time, Out_time,ReMark   from TC_Inoutls
+    </sql>
+
+    <select id="selectTcTodayInouttimeList" parameterType="TcTodayInouttime" resultMap="TcTodayInouttimeResult">
+        select P_KEY, CarNO,  In_time, Out_time,ReMark   from TC_Inoutls where P_KEY>#{pKey}
+    </select>
+
+
+</mapper>

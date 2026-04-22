@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglWeekworkRegisterMapper">
+    
+    <resultMap type="BdglWeekworkRegister" id="BdglWeekworkRegisterResult">
+        <result property="id"    column="id"    />
+        <result property="week"    column="week"    />
+        <result property="time"    column="time"    />
+        <result property="dateline"    column="dateline"    />
+        <result property="contents"    column="contents"    />
+        <result property="unitId1"    column="unit_id1"    />
+        <result property="peopleIds"    column="people_ids"    />
+        <result property="address"    column="address"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="weekworkId"    column="weekwork_id"    />
+        <result property="shouldArrive"    column="should_arrive"    />
+        <result property="realTo"    column="real_to"    />
+        <result property="percentage"    column="percentage"    />
+        <result property="organizer"    column="organizer"    />
+        <result property="sort"    column="sort"    />
+        <result property="unitId"    column="unit_id"    />
+    </resultMap>
+
+    <sql id="selectBdglWeekworkRegisterVo">
+        select id, week, time, dateline, contents, unit_id1, people_ids, address, start_time, end_time, weekwork_id, should_arrive, real_to, percentage,organizer,sort,unit_id from bdgl_weekwork_register
+    </sql>
+
+    <select id="selectBdglWeekworkRegisterList" parameterType="BdglWeekworkRegister" resultMap="BdglWeekworkRegisterResult">
+        <include refid="selectBdglWeekworkRegisterVo"/>
+        <where>  
+            <if test="week != null  and week != ''"> and week = #{week}</if>
+            <if test="time != null "> and time = #{time}</if>
+            <if test="dateline != null  and dateline != ''"> and dateline = #{dateline}</if>
+            <if test="contents != null  and contents != ''"> and contents = #{contents}</if>
+            <if test="unitId1 != null "> and unit_id1 = #{unitId1}</if>
+            <if test="peopleIds != null  and peopleIds != ''"> and people_ids = #{peopleIds}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="startTime != null  and startTime != ''"> and start_time = #{startTime}</if>
+            <if test="endTime != null  and endTime != ''"> and end_time = #{endTime}</if>
+            <if test="weekworkId != null "> and weekwork_id = #{weekworkId}</if>
+            <if test="shouldArrive != null "> and should_arrive = #{shouldArrive}</if>
+            <if test="realTo != null "> and real_to = #{realTo}</if>
+            <if test="percentage != null  and percentage != ''"> and percentage = #{percentage}</if>
+            <if test="organizer != null  and organizer != ''"> and organizer = #{organizer}</if>
+            <if test="sort != null  and sort != ''"> and sort = #{sort}</if>
+            <if test="unitId != null  "> and unit_id = #{unitId}</if>
+        </where>
+        order by start_time asc
+    </select>
+    
+    <select id="selectBdglWeekworkRegisterById" parameterType="Long" resultMap="BdglWeekworkRegisterResult">
+        <include refid="selectBdglWeekworkRegisterVo"/>
+        where id = #{id}
+    </select>
+    <select id="getWeekworkRegisterList" parameterType="BdglWeekworkRegister"
+            resultType="com.supervision.grassrootsregistration.resultVo.BdglWeekworkRegisterVo">
+        SELECT
+            dateline,
+            should_arrive as shouldArrive,
+            real_to as realTo,
+            percentage,
+            GROUP_CONCAT(concat(start_time,'-',end_time,' ',contents,' ','(组织人:',organizer,')')) AS contents
+        FROM
+            bdgl_weekwork_register
+        WHERE
+            weekwork_id = #{weekworkId}
+            and time=#{time}
+        GROUP BY dateline
+        ORDER BY sort
+    </select>
+    <select id="selectBdglWeekworkRegisterLists" parameterType="BdglWeekworkRegister" resultMap="BdglWeekworkRegisterResult">
+        <include refid="selectBdglWeekworkRegisterVo"/>
+        <where>
+            <if test="week != null  and week != ''"> and week = #{week}</if>
+            <if test="startTime != null "> and
+                <![CDATA[
+                    time>=#{startTime} and  time<=#{endTime}
+                 ]]>
+            </if>
+            <if test="dateline != null  and dateline != ''"> and dateline = #{dateline}</if>
+            <if test="contents != null  and contents != ''"> and contents = #{contents}</if>
+            <if test="unitId1 != null "> and unit_id1 = #{unitId1}</if>
+            <if test="peopleIds != null  and peopleIds != ''"> and people_ids = #{peopleIds}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="weekworkId != null "> and weekwork_id = #{weekworkId}</if>
+            <if test="shouldArrive != null "> and should_arrive = #{shouldArrive}</if>
+            <if test="realTo != null "> and real_to = #{realTo}</if>
+            <if test="percentage != null  and percentage != ''"> and percentage = #{percentage}</if>
+            <if test="organizer != null  and organizer != ''"> and organizer = #{organizer}</if>
+            <if test="sort != null  and sort != ''"> and sort = #{sort}</if>
+            <if test="unitId != null  "> and unit_id = #{unitId}</if>
+        </where>
+        order by start_time asc
+    </select>
+
+    <select id="getWeekworkRegisterList2" parameterType="BdglWeekworkRegister"
+            resultType="com.supervision.grassrootsregistration.resultVo.BdglWeekworkRegisterVo">
+        SELECT
+            dateline,
+            should_arrive as shouldArrive,
+            real_to as realTo,
+            percentage
+        FROM
+            bdgl_weekwork_register
+        WHERE
+            weekwork_id = #{weekworkId}
+          and time=#{time}
+        ORDER BY sort
+    </select>
+
+
+
+
+    <insert id="insertBdglWeekworkRegister" parameterType="BdglWeekworkRegister" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_weekwork_register
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="week != null">week,</if>
+            <if test="time != null">time,</if>
+            <if test="dateline != null">dateline,</if>
+            <if test="contents != null">contents,</if>
+            <if test="unitId1 != null">unit_id1,</if>
+            <if test="peopleIds != null">people_ids,</if>
+            <if test="address != null">address,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="weekworkId != null">weekwork_id,</if>
+            <if test="shouldArrive != null">should_arrive,</if>
+            <if test="realTo != null">real_to,</if>
+            <if test="percentage != null">percentage,</if>
+            <if test="organizer != null">organizer,</if>
+            <if test="sort != null">sort,</if>
+            <if test="unitId != null">unit_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="week != null">#{week},</if>
+            <if test="time != null">#{time},</if>
+            <if test="dateline != null">#{dateline},</if>
+            <if test="contents != null">#{contents},</if>
+            <if test="unitId1 != null">#{unitId1},</if>
+            <if test="peopleIds != null">#{peopleIds},</if>
+            <if test="address != null">#{address},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="weekworkId != null">#{weekworkId},</if>
+            <if test="shouldArrive != null">#{shouldArrive},</if>
+            <if test="realTo != null">#{realTo},</if>
+            <if test="percentage != null">#{percentage},</if>
+            <if test="organizer != null">#{organizer},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="unitId != null">#{unitId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglWeekworkRegister" parameterType="BdglWeekworkRegister">
+        update bdgl_weekwork_register
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="week != null">week = #{week},</if>
+            <if test="time != null">time = #{time},</if>
+            <if test="dateline != null">dateline = #{dateline},</if>
+            <if test="contents != null">contents = #{contents},</if>
+            <if test="unitId1 != null">unit_id1 = #{unitId1},</if>
+            <if test="peopleIds != null">people_ids = #{peopleIds},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="weekworkId != null">weekwork_id = #{weekworkId},</if>
+            <if test="shouldArrive != null">should_arrive = #{shouldArrive},</if>
+            <if test="realTo != null">real_to = #{realTo},</if>
+            <if test="percentage != null">percentage = #{percentage},</if>
+            <if test="organizer != null">organizer = #{organizer},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglWeekworkRegisterById" parameterType="Long">
+        delete from bdgl_weekwork_register where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglWeekworkRegisterByIds" parameterType="String">
+        delete from bdgl_weekwork_register where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

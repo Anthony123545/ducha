@@ -1,0 +1,14 @@
+{
+  "UserInfoDetail": { // 【可选】用户信息对象
+    "mode": "all", // 【必填】删除模式（枚举类型：string）可选值：- all：删除设备上所有人员 - byEmployeeNo：按人员ID列表删除指定人员
+    "EmployeeNoList": [ // 【可选】人员ID列表（数组，元素类型为 object）当 mode = byEmployeeNo 时需填写此字段
+      {
+        "employeeNo": "${employeeNo}" // 【可选】工号（人员ID），字符串类型
+      }
+    ],
+    "operateType": "${operateType}", // 【可选】操作类型（枚举类型：string）可选值：- byTerminal：按终端操作 - byOrg：按组织操作 - byTerminalOrg：按终端组织操作
+    // 描述：指定删除操作的执行范围
+    "terminalNoList": [${terminalNoList}], // 【可选】终端号列表（数组类型，元素为 int）// 当 operateType = byTerminal 时需填写该字段
+    "orgNoList": [${orgNoList}] // 【可选】组织编号列表（数组类型，元素为 int）// 当 operateType = byOrg 或 byTerminalOrg 时需填写该字段
+  }
+}

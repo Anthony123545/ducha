@@ -1,0 +1,337 @@
+.form-horizontal {
+    display: flex;
+    flex-wrap: wrap;
+    width: 750px;
+}
+
+.huiyuan .col-sm-4 {
+    width: 100% !important;
+}
+
+.gy,
+.jynr,
+.bzjy,
+.iqk,
+.nqk,
+.nbz,
+.trainnr,
+.taskbz,
+.taskms,
+.rbz,
+.rtitle,
+.czwt,
+.zgcs,
+.fxfj {
+    min-width: 96%;
+    max-width: 96%;
+}
+
+.upload {
+    min-width: 101%;
+    max-width: 96%;
+}
+
+.control-label {
+    width: 50px;
+}
+
+.col-sm-2 {
+    width: 100% !important;
+}
+
+.qt,
+.blxd,
+.drgz {
+    min-width: 90%;
+}
+
+.njcr,
+.njctime {
+    max-width: 25%;
+}
+
+.rzt,
+.cd{
+    max-width: 24%;
+}
+
+.danweizb {
+    min-width: 35%;
+}
+
+.nbjcdanwei{
+    min-width: 46%;
+}
+.trainlb,
+.task,
+.fbdanwei,
+.start,
+.end,
+.rqz {
+    min-width: 41%;
+    max-width: 41%;
+}
+
+.fjsc,
+.qk,
+.bz {
+    max-width: 70%;
+    min-width: 79%;
+}
+
+.danweidz,
+.ctdd,
+.taskzxdanwei,
+.taskid {
+    max-width: 70%;
+    min-width: 55%;
+}
+
+.fj{
+    max-width: 80%;
+    min-width: 82%;
+}
+
+.taskzxdanwei .col-sm-4 {
+    min-width: 278px;
+    margin-right: 13px;
+}
+
+
+.upload .col-sm-8 {
+    max-width: 86% !important;
+}
+
+.fxfj .col-sm-8 {
+    min-width: 80% !important;
+    max-width: 94.5% !important;
+}
+
+.un {
+    padding-left: 30px !important;
+}
+
+.ctdd,
+.cttc,
+.gczb,
+.bjcdanwei {
+    min-width: 32%;
+}
+
+.danweigj {
+    min-width: 240px;
+}
+
+.danwei {
+    margin-left: -21px;
+    min-width: 64%;
+}
+  .neww {
+    margin-top: -24px;
+    min-width: 100px;
+    max-height: 20px;
+    margin-left: 20px;
+    padding-left: 0 !important;
+}
+
+.zbtime,
+.zbszzw,
+.bgphone,
+.zbszphone,
+.zby,
+.zbdh,
+.zbsz,
+.ssphone,
+.zbzw,
+.zbsj,
+.fd1,
+.fd2,
+.fd3,
+.fd1n,
+.fd2n,
+.fd3n,
+.zwnum,
+.wcnum,
+.dt,
+.szbsy,
+.szbwh,
+.szbfc,
+.tzbsy,
+.tzbwh,
+.tzbfc,
+.sbfs,
+.tbfs,
+.zbdw,
+.drzb,
+.crzb,
+.jczb,
+.zbzb,
+.time,
+.ynum,
+.snum,
+.zcr,
+.jlr,
+.jytm,
+.jylb,
+.zzbm,
+.jytime,
+.jcr,
+.sb,
+.jctime,
+.lby,
+.trainkm,
+.trainnum,
+.trainr,
+.traintime,
+.trainltime,
+.dwld,
+.jsz,
+.yhm,
+.name,
+.password,
+.email,
+.hphone,
+.huiyuanchoice,
+.sjdanwei,
+.fzr,
+.zgstart,
+.zgend,
+.wcqk,
+.jcname {
+    min-width: 32%;
+    max-width: 32%;
+}
+
+.zbsz,
+.ssphone,
+.zbzw,
+.zbgw,
+.zbgw,
+.fd2,
+.fd2n {
+    margin-left: 6px;
+}
+
+.bjdw{
+    min-width: 79%;
+}
+
+.zbgw,
+.jccy,
+.danweijy,
+.address,.traindw{
+    min-width: 64%;
+}
+
+.an {
+    margin-left: 20px !important;
+    /* display: block; */
+}
+
+.taskzxr {
+    margin-left: -88px;
+    max-width: 70%;
+    min-width: 51%;
+}
+
+.taskzxdanwei .col-sm-7 {
+    min-width: 77% !important;
+    margin-left: -102px;
+    margin-right: 100px;
+}
+
+.taskzxr label {
+    padding-left: 0 !important;
+}
+
+.dutybus .zwnum {
+    margin-right: 38px;
+    margin-left: -50px;
+}
+
+.dutybus input {
+    width: 230px !important;
+}
+
+.dutybus .bootstrap-select>.dropdown-toggle {
+    width: 230px;
+}
+
+.dutybus .dt {
+    margin-left: 30px;
+}
+
+.dutybus .num input {
+    width: 100px !important;
+}
+
+.dutybus dt,
+dd {
+    line-height: 2.228571;
+}
+
+.fxdanwei,
+.fxleixing,
+.fxtitle,
+.fxjibie,
+.fxrenyuan {
+    min-width: 45%;
+    max-width: 45%;
+}
+
+.rfj,
+.rule {
+    min-width: 48%;
+    max-width: 46%;
+}
+
+.fxend,
+.fxstart {
+    max-width: 22.5%;
+}
+
+
+.task .n-error,.trainlb .n-error  {
+    margin-left: -253px !important;
+    margin-top: 3px !important;
+}
+
+.taskzxdanwei .n-error,
+.taskid .n-error{
+    margin-left: -349px !important;
+    margin-top: 3px !important;
+}
+
+.zbsz .n-error,
+.zbszzw .n-error,
+.zby .n-error,
+.zbzw .n-error,
+.zcr .n-error, 
+.jlr .n-error,
+.jylb .n-error,
+.jcr .n-error,
+.sb .n-error,
+.lby .n-error,
+.bjcdanwei .n-error,
+.trainr .n-error,
+.dwld .n-error,.trainlb .n-error{
+    margin-left: -187px !important;
+    margin-top: 3px !important;
+}
+.njcr .n-error{
+    margin-left: -133px !important;
+    margin-top: 3px !important;
+}
+.daliyjcr .n-error{
+    margin-right: 133px !important;
+    margin-top: 28px !important;
+}
+.riskexamine .addbtn {
+    width: 65px;
+}
+.riskexamine .fieldlist dd ins {
+    font-weight: normal;
+}
+.riskexamine .question .control-label{
+    font-weight: bold !important;
+}

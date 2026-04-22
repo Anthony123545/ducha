@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.zbqk.mapper.BdglZbqkFileInfoMapper">
+    
+    <resultMap type="BdglZbqkFileInfo" id="BdglZbqkFileInfoResult">
+        <result property="id"    column="id"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="readVolume"    column="read_volume"    />
+        <result property="theNumberPages"    column="the_number_pages"    />
+        <result property="createUser"    column="create_user"    />
+        <result property="createUserid"    column="create_userid"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="directoryId"    column="directory_id"    />
+        <result property="directoryName"    column="directory_name"    />
+        <result property="parentDirId"    column="parent_dir_id"    />
+        <result property="parentDirName"    column="parent_dir_name"    />
+        <result property="fileSize"    column="file_size"    />
+    </resultMap>
+
+    <sql id="selectBdglZbqkFileInfoVo">
+        select id, file_name, read_volume, the_number_pages, create_user, create_userid, create_time, directory_id, directory_name, parent_dir_id, parent_dir_name, file_size from bdgl_zbqk_file_info
+    </sql>
+
+    <select id="selectBdglZbqkFileInfoList" parameterType="BdglZbqkFileInfo" resultMap="BdglZbqkFileInfoResult">
+        <include refid="selectBdglZbqkFileInfoVo"/>
+        <where>  
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="readVolume != null "> and read_volume = #{readVolume}</if>
+            <if test="theNumberPages != null "> and the_number_pages = #{theNumberPages}</if>
+            <if test="createUser != null  and createUser != ''"> and create_user = #{createUser}</if>
+            <if test="createUserid != null "> and create_userid = #{createUserid}</if>
+            <if test="directoryId != null "> and directory_id = #{directoryId}</if>
+            <if test="directoryName != null  and directoryName != ''"> and directory_name like concat('%', #{directoryName}, '%')</if>
+            <if test="parentDirId != null  and parentDirId != ''"> and parent_dir_id = #{parentDirId}</if>
+            <if test="parentDirName != null  and parentDirName != ''"> and parent_dir_name like concat('%', #{parentDirName}, '%')</if>
+            <if test="fileSize != null  and fileSize != ''"> and file_size = #{fileSize}</if>
+        </where>
+        order by create_time desc
+    </select>
+    
+    <select id="selectBdglZbqkFileInfoById" parameterType="Long" resultMap="BdglZbqkFileInfoResult">
+        <include refid="selectBdglZbqkFileInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBdglZbqkFileInfo" parameterType="BdglZbqkFileInfo">
+        insert into bdgl_zbqk_file_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="fileName != null">file_name,</if>
+            <if test="readVolume != null">read_volume,</if>
+            <if test="theNumberPages != null">the_number_pages,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="createUserid != null">create_userid,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="directoryId != null">directory_id,</if>
+            <if test="directoryName != null">directory_name,</if>
+            <if test="parentDirId != null">parent_dir_id,</if>
+            <if test="parentDirName != null">parent_dir_name,</if>
+            <if test="fileSize != null">file_size,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="fileName != null">#{fileName},</if>
+            <if test="readVolume != null">#{readVolume},</if>
+            <if test="theNumberPages != null">#{theNumberPages},</if>
+            <if test="createUser != null">#{createUser},</if>
+            <if test="createUserid != null">#{createUserid},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="directoryId != null">#{directoryId},</if>
+            <if test="directoryName != null">#{directoryName},</if>
+            <if test="parentDirId != null">#{parentDirId},</if>
+            <if test="parentDirName != null">#{parentDirName},</if>
+            <if test="fileSize != null">#{fileSize},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglZbqkFileInfo" parameterType="BdglZbqkFileInfo">
+        update bdgl_zbqk_file_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="readVolume != null">read_volume = #{readVolume},</if>
+            <if test="theNumberPages != null">the_number_pages = #{theNumberPages},</if>
+            <if test="createUser != null">create_user = #{createUser},</if>
+            <if test="createUserid != null">create_userid = #{createUserid},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="directoryId != null">directory_id = #{directoryId},</if>
+            <if test="directoryName != null">directory_name = #{directoryName},</if>
+            <if test="parentDirId != null">parent_dir_id = #{parentDirId},</if>
+            <if test="parentDirName != null">parent_dir_name = #{parentDirName},</if>
+            <if test="fileSize != null">file_size = #{fileSize},</if>
+        </trim>
+        where id = #{id}
+
+    </update>
+
+    <delete id="deleteBdglZbqkFileInfoById" parameterType="Long">
+        delete from bdgl_zbqk_file_info where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglZbqkFileInfoByIds" parameterType="String">
+        delete from bdgl_zbqk_file_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

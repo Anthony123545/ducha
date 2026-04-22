@@ -1,0 +1,7 @@
+{
+  "statusCode": 1,          // 状态码：1 表示成功且无特殊状态；非 1 表示失败或异常状态
+  "statusString": "ok",     // 状态描述：ok 表示成功；无法用 "ok" 表示时需返回具体描述
+  "subStatusCode": "ok",    // 子状态码：ok 表示无特殊状态，否则需返回具体说明
+  "errorCode": 1,           // 错误码：当 statusCode ≠ 1 时使用，对应 subStatusCode 的具体错误类型
+  "errorMsg": "ok"          // 错误信息：当 statusCode ≠ 1 时必须返回，用于解释错误原因
+}

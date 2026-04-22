@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglFoodMealMapper">
+    
+    <resultMap type="BdglFoodMeal" id="BdglFoodMealResult">
+        <result property="id"    column="id"    />
+        <result property="stapleFood"    column="staple_food"    />
+        <result property="menu"    column="menu"    />
+        <result property="type1"    column="type1"    />
+        <result property="jiucanCount"    column="jiucan_count"    />
+        <result property="lianduiCount"    column="liandui_count"    />
+        <result property="wailaiCount"    column="wailai_count"    />
+        <result property="mianfen"    column="mianfen"    />
+        <result property="dami"    column="dami"    />
+        <result property="rolei"    column="rolei"    />
+        <result property="yulei"    column="yulei"    />
+        <result property="youlei"    column="youlei"    />
+        <result property="huangdo"    column="huangdo"    />
+        <result property="suchai"    column="suchai"    />
+        <result property="shuiguo"    column="shuiguo"    />
+        <result property="tang"    column="tang"    />
+        <result property="ranliao"    column="ranliao"    />
+        <result property="tiaoliao"    column="tiaoliao"    />
+        <result property="foodId"    column="food_id"    />
+    </resultMap>
+
+    <sql id="selectBdglFoodMealVo">
+        select id, staple_food, menu, type1, jiucan_count, liandui_count, wailai_count, mianfen, dami, rolei, yulei, youlei, huangdo, suchai, shuiguo, tang, ranliao, tiaoliao, food_id from bdgl_food_meal
+    </sql>
+
+    <select id="selectBdglFoodMealList" parameterType="BdglFoodMeal" resultMap="BdglFoodMealResult">
+        <include refid="selectBdglFoodMealVo"/>
+        <where>  
+            <if test="stapleFood != null  and stapleFood != ''"> and staple_food = #{stapleFood}</if>
+            <if test="menu != null  and menu != ''"> and menu = #{menu}</if>
+            <if test="type1 != null  and type1 != ''"> and type1 = #{type1}</if>
+            <if test="jiucanCount != null "> and jiucan_count = #{jiucanCount}</if>
+            <if test="lianduiCount != null "> and liandui_count = #{lianduiCount}</if>
+            <if test="wailaiCount != null "> and wailai_count = #{wailaiCount}</if>
+            <if test="mianfen != null "> and mianfen = #{mianfen}</if>
+            <if test="dami != null "> and dami = #{dami}</if>
+            <if test="rolei != null "> and rolei = #{rolei}</if>
+            <if test="yulei != null "> and yulei = #{yulei}</if>
+            <if test="youlei != null "> and youlei = #{youlei}</if>
+            <if test="huangdo != null "> and huangdo = #{huangdo}</if>
+            <if test="suchai != null "> and suchai = #{suchai}</if>
+            <if test="shuiguo != null "> and shuiguo = #{shuiguo}</if>
+            <if test="tang != null "> and tang = #{tang}</if>
+            <if test="ranliao != null "> and ranliao = #{ranliao}</if>
+            <if test="tiaoliao != null "> and tiaoliao = #{tiaoliao}</if>
+            <if test="foodId != null "> and food_id = #{foodId}</if>
+        </where>
+    </select>
+    
+    <select id="selectBdglFoodMealById" parameterType="Integer" resultMap="BdglFoodMealResult">
+        <include refid="selectBdglFoodMealVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBdglFoodMeal" parameterType="BdglFoodMeal" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_food_meal
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="stapleFood != null">staple_food,</if>
+            <if test="menu != null">menu,</if>
+            <if test="type1 != null">type1,</if>
+            <if test="jiucanCount != null">jiucan_count,</if>
+            <if test="lianduiCount != null">liandui_count,</if>
+            <if test="wailaiCount != null">wailai_count,</if>
+            <if test="mianfen != null">mianfen,</if>
+            <if test="dami != null">dami,</if>
+            <if test="rolei != null">rolei,</if>
+            <if test="yulei != null">yulei,</if>
+            <if test="youlei != null">youlei,</if>
+            <if test="huangdo != null">huangdo,</if>
+            <if test="suchai != null">suchai,</if>
+            <if test="shuiguo != null">shuiguo,</if>
+            <if test="tang != null">tang,</if>
+            <if test="ranliao != null">ranliao,</if>
+            <if test="tiaoliao != null">tiaoliao,</if>
+            <if test="foodId != null">food_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="stapleFood != null">#{stapleFood},</if>
+            <if test="menu != null">#{menu},</if>
+            <if test="type1 != null">#{type1},</if>
+            <if test="jiucanCount != null">#{jiucanCount},</if>
+            <if test="lianduiCount != null">#{lianduiCount},</if>
+            <if test="wailaiCount != null">#{wailaiCount},</if>
+            <if test="mianfen != null">#{mianfen},</if>
+            <if test="dami != null">#{dami},</if>
+            <if test="rolei != null">#{rolei},</if>
+            <if test="yulei != null">#{yulei},</if>
+            <if test="youlei != null">#{youlei},</if>
+            <if test="huangdo != null">#{huangdo},</if>
+            <if test="suchai != null">#{suchai},</if>
+            <if test="shuiguo != null">#{shuiguo},</if>
+            <if test="tang != null">#{tang},</if>
+            <if test="ranliao != null">#{ranliao},</if>
+            <if test="tiaoliao != null">#{tiaoliao},</if>
+            <if test="foodId != null">#{foodId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglFoodMeal" parameterType="BdglFoodMeal">
+        update bdgl_food_meal
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="stapleFood != null">staple_food = #{stapleFood},</if>
+            <if test="menu != null">menu = #{menu},</if>
+            <if test="type1 != null">type1 = #{type1},</if>
+            <if test="jiucanCount != null">jiucan_count = #{jiucanCount},</if>
+            <if test="lianduiCount != null">liandui_count = #{lianduiCount},</if>
+            <if test="wailaiCount != null">wailai_count = #{wailaiCount},</if>
+            <if test="mianfen != null">mianfen = #{mianfen},</if>
+            <if test="dami != null">dami = #{dami},</if>
+            <if test="rolei != null">rolei = #{rolei},</if>
+            <if test="yulei != null">yulei = #{yulei},</if>
+            <if test="youlei != null">youlei = #{youlei},</if>
+            <if test="huangdo != null">huangdo = #{huangdo},</if>
+            <if test="suchai != null">suchai = #{suchai},</if>
+            <if test="shuiguo != null">shuiguo = #{shuiguo},</if>
+            <if test="tang != null">tang = #{tang},</if>
+            <if test="ranliao != null">ranliao = #{ranliao},</if>
+            <if test="tiaoliao != null">tiaoliao = #{tiaoliao},</if>
+            <if test="foodId != null">food_id = #{foodId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglFoodMealById" parameterType="Integer">
+        delete from bdgl_food_meal where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglFoodMealByIds" parameterType="String">
+        delete from bdgl_food_meal where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

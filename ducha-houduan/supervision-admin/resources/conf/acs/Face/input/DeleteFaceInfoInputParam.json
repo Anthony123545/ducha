@@ -1,0 +1,10 @@
+{
+  "FPID": [                                      // 【可选】人脸记录ID列表（数组，对象类型）
+    {
+      "value": "${value}",                       // 【必填】人脸记录ID（字符串类型，长度0–63字节）
+      "rowKey": "${rowKey}"                      // 【可选】数据库主键（rowKey，可提高查询效率，轻量级产品中必填，最大64字节）
+    }
+  ],
+  "operateType": "${operateType}",               // 【可选】操作类型 [byTerminal 按终端操作]
+  "terminalNoList": "${terminalNoList}"          // 【可选】终端ID列表（byTerminal/byTerminalOrg时必填，仅支持单个终端）
+}

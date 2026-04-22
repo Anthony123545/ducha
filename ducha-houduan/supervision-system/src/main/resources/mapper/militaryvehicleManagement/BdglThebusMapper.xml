@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.militaryvehicleManagement.mapper.BdglThebusMapper">
+
+    <resultMap type="BdglThebus" id="BdglThebusResult">
+        <result property="id"    column="id"    />
+        <result property="vehiclenumber"    column="vehiclenumber"    />
+        <result property="vehiclemodel"    column="vehiclemodel"    />
+        <result property="vehiclecolor"    column="vehiclecolor"    />
+        <result property="parkingspacenumber"    column="parkingspacenumber"    />
+        <result property="contactnumber"    column="contactnumber"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="adminId"    column="admin_id"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="status"    column="status"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="engineNumber"    column="engine_number"    />
+        <result property="frameNumber"    column="frame_number"    />
+        <result property="source"    column="source"    />
+        <result property="date1"    column="date1"    />
+        <result property="etcBrand"    column="etc_brand"    />
+        <result property="chelaingleibie"    column="chelaingleibie"    />
+        <result property="etcNumber"    column="etc_number"    />
+        <result property="position"    column="position"    />
+        <result property="isListing"    column="is_listing"    />
+        <result property="seatCount"    column="seat_count"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="shenhejieguo"    column="shenhejieguo"    />
+        <result property="peopleNames"    column="people_names"    />
+        <result property="orders"    column="orders"    />
+        <result property="carUse"    column="car_use"    />
+    </resultMap>
+
+    <sql id="selectBdglThebusVo">
+        select id, vehiclenumber, vehiclemodel, vehiclecolor, parkingspacenumber, contactnumber, remarks, admin_id, createtime, updatetime, status, unit_id, people_id, engine_number, frame_number, source, date1, etc_brand, chelaingleibie, etc_number, position, is_listing, seat_count, unit_name, shenhejieguo,people_names,orders,car_use from bdgl_thebus
+    </sql>
+
+    <select id="selectBdglThebusList" parameterType="BdglThebus" resultMap="BdglThebusResult">
+        <include refid="selectBdglThebusVo"/>
+        <where>
+            <if test="vehiclenumber != null  and vehiclenumber != ''"> vehiclenumber like concat('%', #{vehiclenumber}, '%')</if>
+            <if test="vehiclemodel != null "> and vehiclemodel = #{vehiclemodel}</if>
+            <if test="vehiclecolor != null  and vehiclecolor != ''"> and vehiclecolor = #{vehiclecolor}</if>
+            <if test="parkingspacenumber != null  and parkingspacenumber != ''"> and parkingspacenumber = #{parkingspacenumber}</if>
+            <if test="contactnumber != null  and contactnumber != ''"> and contactnumber = #{contactnumber}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="adminId != null "> and admin_id = #{adminId}</if>
+            <if test="createtime != null  and createtime != ''"> and createtime = #{createtime}</if>
+            <if test="updatetime != null  and updatetime != ''"> and updatetime = #{updatetime}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="peopleId != null "> and people_id = #{peopleId}</if>
+            <if test="engineNumber != null  and engineNumber != ''"> and engine_number = #{engineNumber}</if>
+            <if test="frameNumber != null  and frameNumber != ''"> and frame_number = #{frameNumber}</if>
+            <if test="source != null  and source != ''"> and source = #{source}</if>
+            <if test="date1 != null "> and date1 = #{date1}</if>
+            <if test="etcBrand != null  and etcBrand != ''"> and etc_brand = #{etcBrand}</if>
+            <if test="chelaingleibie != null  and chelaingleibie != ''"> and chelaingleibie = #{chelaingleibie}</if>
+            <if test="etcNumber != null  and etcNumber != ''"> and etc_number = #{etcNumber}</if>
+            <if test="position != null  and position != ''"> and position = #{position}</if>
+            <if test="isListing != null  and isListing != ''"> and is_listing = #{isListing}</if>
+            <if test="seatCount != null "> and seat_count = #{seatCount}</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="shenhejieguo != null  and shenhejieguo != ''"> and shenhejieguo = #{shenhejieguo}</if>
+            <if test="peopleNames != null  and peopleNames != ''"> and peopleNames = #{people_names}</if>
+            <if test="orders != null  and orders != ''"> and orders = #{orders}</if>
+            <if test="carUse != null  and carUse != ''"> and car_use = #{carUse}</if>
+
+             <if test="idList!=null and idList.size()>0">
+                and id in
+                 <foreach collection="idList" item="id" open="(" separator="," close=")">
+                     #{id}
+                 </foreach>
+             </if>
+        </where>
+        ORDER BY orders IS NULL, orders ASC,id DESC
+    </select>
+
+    <select id="selectBdglThebusById" parameterType="Long" resultMap="BdglThebusResult">
+        <include refid="selectBdglThebusVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectVehicleModelList" resultType="java.util.Map">
+        SELECT DISTINCT
+            b.vehiclemodel AS dictValue,
+            d.dict_label   AS dictLabel,
+            b.vehiclenumber AS dictCode
+        FROM bdgl_thebus b
+                 LEFT JOIN sys_dict_data d
+                           ON b.vehiclemodel = d.dict_value
+                               AND d.dict_type = 'brand'
+        WHERE b.vehiclemodel IS NOT NULL AND b.vehiclemodel != '' AND b.status = 1
+        ORDER BY d.dict_label
+    </select>
+
+    <insert id="insertBdglThebus" parameterType="BdglThebus" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_thebus
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="vehiclenumber != null">vehiclenumber,</if>
+            <if test="vehiclemodel != null">vehiclemodel,</if>
+            <if test="vehiclecolor != null">vehiclecolor,</if>
+            <if test="parkingspacenumber != null">parkingspacenumber,</if>
+            <if test="contactnumber != null">contactnumber,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="adminId != null">admin_id,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="status != null">status,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="peopleId != null">people_id,</if>
+            <if test="engineNumber != null">engine_number,</if>
+            <if test="frameNumber != null">frame_number,</if>
+            <if test="source != null">source,</if>
+            <if test="date1 != null">date1,</if>
+            <if test="etcBrand != null">etc_brand,</if>
+            <if test="chelaingleibie != null">chelaingleibie,</if>
+            <if test="etcNumber != null">etc_number,</if>
+            <if test="position != null">position,</if>
+            <if test="isListing != null">is_listing,</if>
+            <if test="seatCount != null">seat_count,</if>
+            <if test="unitName != null">unit_name,</if>
+            <if test="shenhejieguo != null">shenhejieguo,</if>
+            <if test="peopleNames != null ">  people_names ,</if>
+            <if test="orders != null ">  orders ,</if>
+            <if test="carUse != null "> car_use ,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="vehiclenumber != null">#{vehiclenumber},</if>
+            <if test="vehiclemodel != null">#{vehiclemodel},</if>
+            <if test="vehiclecolor != null">#{vehiclecolor},</if>
+            <if test="parkingspacenumber != null">#{parkingspacenumber},</if>
+            <if test="contactnumber != null">#{contactnumber},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="adminId != null">#{adminId},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="engineNumber != null">#{engineNumber},</if>
+            <if test="frameNumber != null">#{frameNumber},</if>
+            <if test="source != null">#{source},</if>
+            <if test="date1 != null">#{date1},</if>
+            <if test="etcBrand != null">#{etcBrand},</if>
+            <if test="chelaingleibie != null">#{chelaingleibie},</if>
+            <if test="etcNumber != null">#{etcNumber},</if>
+            <if test="position != null">#{position},</if>
+            <if test="isListing != null">#{isListing},</if>
+            <if test="seatCount != null">#{seatCount},</if>
+            <if test="unitName != null">#{unitName},</if>
+            <if test="shenhejieguo != null">#{shenhejieguo},</if>
+            <if test="peopleNames != null ">  #{peopleNames},</if>
+            <if test="orders != null ">  #{orders},</if>
+            <if test="carUse != null ">  #{carUse},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglThebus" parameterType="BdglThebus">
+        update bdgl_thebus
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="vehiclenumber != null">vehiclenumber = #{vehiclenumber},</if>
+            <if test="vehiclemodel != null">vehiclemodel = #{vehiclemodel},</if>
+            <if test="vehiclecolor != null">vehiclecolor = #{vehiclecolor},</if>
+            <if test="parkingspacenumber != null">parkingspacenumber = #{parkingspacenumber},</if>
+            <if test="contactnumber != null">contactnumber = #{contactnumber},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="adminId != null">admin_id = #{adminId},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="engineNumber != null">engine_number = #{engineNumber},</if>
+            <if test="frameNumber != null">frame_number = #{frameNumber},</if>
+            <if test="source != null">source = #{source},</if>
+            <if test="date1 != null">date1 = #{date1},</if>
+            <if test="etcBrand != null">etc_brand = #{etcBrand},</if>
+            <if test="chelaingleibie != null">chelaingleibie = #{chelaingleibie},</if>
+            <if test="etcNumber != null">etc_number = #{etcNumber},</if>
+            <if test="position != null">position = #{position},</if>
+            <if test="isListing != null">is_listing = #{isListing},</if>
+            <if test="seatCount != null">seat_count = #{seatCount},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="shenhejieguo != null">shenhejieguo = #{shenhejieguo},</if>
+            <if test="peopleNames != null ">  people_names = #{peopleNames},</if>
+            <if test="orders != null ">  orders = #{orders},</if>
+            <if test="carUse != null  and carUse != ''">car_use = #{carUse}</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglThebusById" parameterType="Long">
+        delete from bdgl_thebus where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglThebusByIds" parameterType="String">
+        delete from bdgl_thebus where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="updateBatchForStatusByIdList" parameterType="Long">
+        update bdgl_thebus set `status`=1
+        where id in
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>

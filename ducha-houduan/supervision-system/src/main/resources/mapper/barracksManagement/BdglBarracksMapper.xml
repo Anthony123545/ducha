@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.barracksManagement.mapper.BdglBarracksMapper">
+    
+    <resultMap type="BdglBarracks" id="BdglBarracksResult">
+        <result property="id"    column="id"    />
+        <result property="number"    column="number"    />
+        <result property="number1"    column="number1"    />
+        <result property="name"    column="name"    />
+        <result property="behoof"    column="behoof"    />
+        <result property="statusQuo"    column="status_quo"    />
+        <result property="period"    column="period"    />
+        <result property="area"    column="area"    />
+        <result property="remark"    column="remark"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+    </resultMap>
+
+    <sql id="selectBdglBarracksVo">
+        select id, number, number1, name, behoof, status_quo, period, area, remark, createtime, updatetime from bdgl_barracks
+    </sql>
+
+    <select id="selectBdglBarracksList" parameterType="BdglBarracks" resultMap="BdglBarracksResult">
+        <include refid="selectBdglBarracksVo"/>
+        <where>  
+            <if test="number != null  and number != ''"> and number like concat('%', #{number}, '%')</if>
+            <if test="number1 != null  and number1 != ''"> and number1 like concat('%', #{number1}, '%')</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="behoof != null  and behoof != ''"> and behoof = #{behoof}</if>
+            <if test="statusQuo != null  and statusQuo != ''"> and status_quo = #{statusQuo}</if>
+            <if test="period != null  and period != ''"> and period = #{period}</if>
+            <if test="area != null  and area != ''"> and area = #{area}</if>
+            <if test="createtime != null  and createtime != ''"> and createtime = #{createtime}</if>
+            <if test="updatetime != null  and updatetime != ''"> and updatetime = #{updatetime}</if>
+        </where>
+        order by id desc
+    </select>
+    
+    <select id="selectBdglBarracksById" parameterType="Integer" resultMap="BdglBarracksResult">
+        <include refid="selectBdglBarracksVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectBdglBarracksCount" resultType="java.lang.Integer">
+        select count(*) from bdgl_barracks
+    </select>
+
+    <insert id="insertBdglBarracks" parameterType="BdglBarracks" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_barracks
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null">number,</if>
+            <if test="number1 != null">number1,</if>
+            <if test="name != null">name,</if>
+            <if test="behoof != null">behoof,</if>
+            <if test="statusQuo != null">status_quo,</if>
+            <if test="period != null">period,</if>
+            <if test="area != null">area,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null">#{number},</if>
+            <if test="number1 != null">#{number1},</if>
+            <if test="name != null">#{name},</if>
+            <if test="behoof != null">#{behoof},</if>
+            <if test="statusQuo != null">#{statusQuo},</if>
+            <if test="period != null">#{period},</if>
+            <if test="area != null">#{area},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglBarracks" parameterType="BdglBarracks">
+        update bdgl_barracks
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null">number = #{number},</if>
+            <if test="number1 != null">number1 = #{number1},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="behoof != null">behoof = #{behoof},</if>
+            <if test="statusQuo != null">status_quo = #{statusQuo},</if>
+            <if test="period != null">period = #{period},</if>
+            <if test="area != null">area = #{area},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglBarracksById" parameterType="Integer">
+        delete from bdgl_barracks where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglBarracksByIds" parameterType="String">
+        delete from bdgl_barracks where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

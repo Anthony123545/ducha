@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.regulations.mapper.BdglFileInfoMapper">
+    
+    <resultMap type="BdglFileInfo" id="BdglFileInfoResult">
+        <result property="id"    column="id"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="readVolume"    column="read_volume"    />
+        <result property="theNumberPages"    column="the_number_pages"    />
+        <result property="createUser"    column="create_user"    />
+        <result property="createUserid"    column="create_userid"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="directoryId"    column="directory_id"    />
+        <result property="directoryName"    column="directory_name"    />
+        <result property="parentDirId"    column="parent_dir_id"    />
+        <result property="parentDirName"    column="parent_dir_name"    />
+        <result property="fileSize"    column="file_size"    />
+    </resultMap>
+
+    <sql id="selectBdglFileInfoVo">
+        select id, file_name, read_volume, the_number_pages, create_user, create_userid, create_time, directory_id, directory_name, parent_dir_id, parent_dir_name, file_size from bdgl_file_info
+    </sql>
+
+    <select id="selectBdglFileInfoList" parameterType="BdglFileInfo" resultMap="BdglFileInfoResult">
+        <include refid="selectBdglFileInfoVo"/>
+        <where>  
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="readVolume != null "> and read_volume = #{readVolume}</if>
+            <if test="theNumberPages != null "> and the_number_pages = #{theNumberPages}</if>
+            <if test="createUser != null  and createUser != ''"> and create_user = #{createUser}</if>
+            <if test="createUserid != null "> and create_userid = #{createUserid}</if>
+            <if test="directoryId != null "> and directory_id = #{directoryId}</if>
+            <if test="directoryName != null  and directoryName != ''"> and directory_name like concat('%', #{directoryName}, '%')</if>
+            <if test="parentDirId != null "> and parent_dir_id = #{parentDirId}</if>
+            <if test="parentDirName != null  and parentDirName != ''"> and parent_dir_name like concat('%', #{parentDirName}, '%')</if>
+            <if test="fileSize != null "> and file_size = #{fileSize}</if>
+        </where>
+        ORDER BY id DESC
+    </select>
+    <select id="selectParentIdfile" parameterType="BdglFileInfo" resultMap="BdglFileInfoResult">
+        SELECT m.id as pid,l.id,l.directory_id,l.file_name,l.parent_dir_id,l.parent_dir_name,m.parent_id,l.the_number_pages,l.create_user,l.read_volume,l.create_time from bdgl_rule_directory m,bdgl_file_info l
+        <where>
+            l.directory_id=m.id
+           and m.parent_id = #{parentid}
+        </where>
+        ORDER BY
+        l.id DESC
+    </select>
+    <select id="selectBdglFileInfoById" parameterType="Long" resultMap="BdglFileInfoResult">
+        <include refid="selectBdglFileInfoVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectResdNumber" resultType="java.util.Map">
+        SELECT
+            read_number readnumber1,
+            document_category documentCategory,
+            directory_id
+        FROM
+            bdgl_file_resd
+        WHERE
+            MONTH = #{s}
+        ORDER BY
+            read_number DESC
+    </select>
+
+
+    <insert id="insertBdglFileInfo" parameterType="BdglFileInfo">
+        insert into bdgl_file_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="fileName != null">file_name,</if>
+            <if test="readVolume != null">read_volume,</if>
+            <if test="theNumberPages != null">the_number_pages,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="createUserid != null">create_userid,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="directoryId != null">directory_id,</if>
+            <if test="directoryName != null">directory_name,</if>
+            <if test="parentDirId != null">parent_dir_id,</if>
+            <if test="parentDirName != null">parent_dir_name,</if>
+            <if test="fileSize != null">file_size,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="fileName != null">#{fileName},</if>
+            <if test="readVolume != null">#{readVolume},</if>
+            <if test="theNumberPages != null">#{theNumberPages},</if>
+            <if test="createUser != null">#{createUser},</if>
+            <if test="createUserid != null">#{createUserid},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="directoryId != null">#{directoryId},</if>
+            <if test="directoryName != null">#{directoryName},</if>
+            <if test="parentDirId != null">#{parentDirId},</if>
+            <if test="parentDirName != null">#{parentDirName},</if>
+            <if test="fileSize != null">#{fileSize},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglFileInfo" parameterType="BdglFileInfo">
+        update bdgl_file_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="readVolume != null">read_volume = #{readVolume},</if>
+            <if test="theNumberPages != null">the_number_pages = #{theNumberPages},</if>
+            <if test="createUser != null">create_user = #{createUser},</if>
+            <if test="createUserid != null">create_userid = #{createUserid},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="directoryId != null">directory_id = #{directoryId},</if>
+            <if test="directoryName != null">directory_name = #{directoryName},</if>
+            <if test="parentDirId != null">parent_dir_id = #{parentDirId},</if>
+            <if test="parentDirName != null">parent_dir_name = #{parentDirName},</if>
+            <if test="fileSize != null">file_size = #{fileSize},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglFileInfoById" parameterType="Long">
+        delete from bdgl_file_info where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglFileInfoByIds" parameterType="String">
+        delete from bdgl_file_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

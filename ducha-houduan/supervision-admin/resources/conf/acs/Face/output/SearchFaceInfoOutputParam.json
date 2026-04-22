@@ -1,0 +1,35 @@
+{
+  "FDSearchResult": {                                 // 【必填】人脸搜索结果对象
+    "version": "${version}",                          // 【必填】接口版本号（固定值 2.0）
+    "searchID": "${searchID}",                        // 【必填】搜索任务ID（每次搜索唯一）
+    "searchResultPosition": ${searchResultPosition},  // 【可选】搜索结果起始位置（整数）
+    "numOfMatches": ${numOfMatches},                  // 【必填】本次返回的匹配结果数量
+    "totalMatches": ${totalMatches},                  // 【必填】总匹配结果数量
+    "MatchList": [                                   // 【可选】匹配结果列表
+      {
+        "positionNo": ${positionNo},                  // 【可选】结果序号
+        "similarity": ${similarity},                  // 【可选】相似度（0~100）
+        "facePicURL": "${facePicURL}",                // 【可选】人脸图片 URL
+        "targetPicURL": "${targetPicURL}",            // 【可选】目标图片 URL
+        "deviceID": "${deviceID}",                    // 【可选】设备编号
+        "captureTime": "${captureTime}",              // 【可选】抓拍时间（格式 YYYY-MM-DDTHH:mm:ssZ）
+        "personInfo": {                               // 【可选】匹配到的人员信息
+          "personID": "${personID}",                  // 【可选】人员唯一ID
+          "name": "${name}",                          // 【可选】姓名
+          "sex": "${sex}",                            // 【可选】性别 [male / female / unknown]
+          "birthday": "${birthday}",                  // 【可选】出生日期（格式 YYYY-MM-DD）
+          "certificateType": "${certificateType}",    // 【可选】证件类型 [ID / Passport / Other]
+          "certificateNumber": "${certificateNumber}",// 【可选】证件号码
+          "nation": "${nation}",                      // 【可选】民族
+          "address": "${address}",                    // 【可选】地址
+          "personType": "${personType}",              // 【可选】人员类型 [staff / visitor / stranger]
+          "facePicURL": "${facePicURL}"               // 【可选】人员登记照 URL
+        },
+        "faceFeatureValue": "${faceFeatureValue}"      // 【可选】人脸特征值（Base64 编码）
+      }
+    ],
+    "FDID": "${FDID}",                                // 【可选】人脸库ID
+    "startTime": "${startTime}",                      // 【可选】搜索起始时间（格式 YYYY-MM-DDTHH:mm:ssZ）
+    "endTime": "${endTime}"                           // 【可选】搜索结束时间（格式 YYYY-MM-DDTHH:mm:ssZ）
+  }
+}

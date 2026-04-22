@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglCookbookMapper">
+
+    <resultMap type="BdglCookbook" id="BdglCookbookResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="messOfficer"    column="mess_officer"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="contents"    column="contents"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="messOfficerName"    column="mess_officer_name"    />
+        <result property="peopleName"    column="people_name"    />
+        <result property="unitName"    column="unit_name"    />
+    </resultMap>
+
+    <sql id="selectBdglCookbookVo">
+        select id, title, start_time, end_time, mess_officer, people_id, contents, unit_id, createtime, updatetime, mess_officer_name, people_name, unit_name from bdgl_cookbook
+    </sql>
+
+    <select id="selectBdglCookbookList" parameterType="BdglCookbook" resultMap="BdglCookbookResult">
+        select id, title, start_time, end_time, mess_officer, people_id, contents, unit_id, createtime, updatetime, mess_officer_name, people_name, unit_name
+        from bdgl_cookbook c left join sys_dept t
+        on c.unit_id=t.dept_id
+        <where>
+            <if test="unitId != null ">
+                and (c.unit_id=#{unitId} or find_in_set(#{unitId}, t.ancestors))
+            </if>
+            <if test="title != null  and title != ''"> and c.title = #{title}</if>
+            <if test="startTime != null "> and c.start_time = #{startTime}</if>
+            <if test="endTime != null "> and c.end_time = #{endTime}</if>
+            <if test="messOfficer != null "> and c.mess_officer = #{messOfficer}</if>
+            <if test="peopleId != null "> and c.people_id = #{peopleId}</if>
+            <if test="contents != null  and contents != ''"> and c.contents = #{contents}</if>
+            <if test="createtime != null  and createtime != ''"> and c.createtime = #{createtime}</if>
+            <if test="updatetime != null  and updatetime != ''"> and c.updatetime = #{updatetime}</if>
+            <if test="messOfficerName != null  and messOfficerName != ''"> and c.mess_officer_name like concat('%', #{messOfficerName}, '%')</if>
+            <if test="peopleName != null  and peopleName != ''"> and c.people_name like concat('%', #{peopleName}, '%')</if>
+            <if test="unitName != null  and unitName != ''"> and c.unit_name like concat('%', #{unitName}, '%')</if>
+        </where>
+        order by end_time,c.id desc
+    </select>
+
+    <select id="selectBdglCookbookById" parameterType="Integer" resultMap="BdglCookbookResult">
+        <include refid="selectBdglCookbookVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglCookbook" parameterType="BdglCookbook" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_cookbook
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">title,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="messOfficer != null">mess_officer,</if>
+            <if test="peopleId != null">people_id,</if>
+            <if test="contents != null">contents,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="messOfficerName != null">mess_officer_name,</if>
+            <if test="peopleName != null">people_name,</if>
+            <if test="unitName != null">unit_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">#{title},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="messOfficer != null">#{messOfficer},</if>
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="contents != null">#{contents},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="messOfficerName != null">#{messOfficerName},</if>
+            <if test="peopleName != null">#{peopleName},</if>
+            <if test="unitName != null">#{unitName},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglCookbook" parameterType="BdglCookbook">
+        update bdgl_cookbook
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="messOfficer != null">mess_officer = #{messOfficer},</if>
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="contents != null">contents = #{contents},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="messOfficerName != null">mess_officer_name = #{messOfficerName},</if>
+            <if test="peopleName != null">people_name = #{peopleName},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglCookbookById" parameterType="Integer">
+        delete from bdgl_cookbook where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglCookbookByIds" parameterType="String">
+        delete from bdgl_cookbook where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

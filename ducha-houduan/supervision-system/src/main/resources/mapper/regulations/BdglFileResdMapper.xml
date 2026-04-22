@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.regulations.mapper.BdglFileResdMapper">
+
+    <resultMap type="BdglFileResd" id="BdglFileResdResult">
+        <result property="id"    column="id"    />
+        <result property="documentCategory"    column="document_category"    />
+        <result property="month"    column="month"    />
+        <result property="readNumber"    column="read_number"    />
+        <result property="directoryId"    column="directory_id"    />
+    </resultMap>
+
+    <sql id="selectBdglFileResdVo">
+        select id, document_category, month, read_number, directory_id from bdgl_file_resd
+    </sql>
+
+    <select id="selectBdglFileResdList" parameterType="BdglFileResd" resultMap="BdglFileResdResult">
+        <include refid="selectBdglFileResdVo"/>
+        <where>
+            <if test="documentCategory != null  and documentCategory != ''"> and document_category = #{documentCategory}</if>
+            <if test="month != null  and month != ''"> and month = #{month}</if>
+            <if test="readNumber != null "> and read_number = #{readNumber}</if>
+            <if test="directoryId != null "> and directory_id = #{directoryId}</if>
+        </where>
+    </select>
+
+    <select id="selectBdglFileResdById" parameterType="Long" resultMap="BdglFileResdResult">
+        <include refid="selectBdglFileResdVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectResdNumber" resultMap="BdglFileResdResult">
+        <include refid="selectBdglFileResdVo"/>
+        <where>
+            <if test="documentCategory != null  and documentCategory != ''"> and document_category = #{documentCategory}</if>
+            <if test="month != null  and month != ''"> and month = #{month}</if>
+            <if test="readNumber != null "> and read_number = #{readNumber}</if>
+            <if test="directoryId != null "> and directory_id = #{directoryId}</if>
+        </where>
+    </select>
+
+    <insert id="insertBdglFileResd" parameterType="BdglFileResd" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_file_resd
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="documentCategory != null">document_category,</if>
+            <if test="month != null">month,</if>
+            <if test="readNumber != null">read_number,</if>
+            <if test="directoryId != null">directory_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="documentCategory != null">#{documentCategory},</if>
+            <if test="month != null">#{month},</if>
+            <if test="readNumber != null">#{readNumber},</if>
+            <if test="directoryId != null">#{directoryId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglFileResd" parameterType="BdglFileResd">
+        update bdgl_file_resd
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="documentCategory != null">document_category = #{documentCategory},</if>
+            <if test="month != null">month = #{month},</if>
+            <if test="readNumber != null">read_number = #{readNumber},</if>
+            <if test="directoryId != null">directory_id = #{directoryId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglFileResdById" parameterType="Long">
+        delete from bdgl_file_resd where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglFileResdByIds" parameterType="String">
+        delete from bdgl_file_resd where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

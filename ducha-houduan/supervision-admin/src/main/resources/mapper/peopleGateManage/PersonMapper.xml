@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.supervision.web.Hikvision.peopleDoor.web.mapper.PersonMapper">
+
+    <select id="getAllPersons" resultType="com.supervision.web.Hikvision.peopleDoor.web.entity.PeopleInfo">
+        SELECT
+        id,
+        person_id AS personId,
+        job_number AS jobNumber,
+        name,
+        long_term AS longTerm,
+        valid_period AS validPeriod,
+        door_permission AS doorPermission,
+        plan_template_id AS planTemplateId,
+        auth_method AS authMethod,
+        create_time AS createTime,
+        update_time AS updateTime
+        FROM new_people_manage;
+    </select>
+
+    <!-- 根据设备ID获取人员完整信息 -->
+<!--    <select id="getPersonsByDeviceId" resultType="com.supervision.web.peopleGateManage.entity.PeopleInfo">-->
+<!--        SELECT-->
+<!--            p.id,-->
+<!--            p.person_id AS personId,-->
+<!--            p.job_number AS jobNumber,-->
+<!--            p.name,-->
+<!--            p.long_term AS longTerm,-->
+<!--            p.valid_period AS validPeriod,-->
+<!--            p.door_permission AS doorPermission,-->
+<!--            p.plan_template_id AS planTemplateId,-->
+<!--            p.auth_method AS authMethod,-->
+<!--            p.create_time AS createTime,-->
+<!--            p.update_time AS updateTime-->
+<!--        FROM new_people_manage p-->
+<!--                 INNER JOIN new_people_device d ON p.person_id = d.person_id-->
+<!--        WHERE d.device_id = #{deviceId}-->
+<!--    </select>-->
+
+
+    <insert id="insertPerson" parameterType="com.supervision.web.Hikvision.peopleDoor.web.entity.PeopleInfo"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO new_people_manage (
+        person_id,
+        job_number,
+        name,
+        long_term,
+        valid_period,
+        door_permission,
+        plan_template_id,
+        auth_method,
+        create_time,
+        update_time
+        ) VALUES (
+        #{personId},
+        #{jobNumber},
+        #{name},
+        #{longTerm},
+        #{validPeriod,jdbcType=TIMESTAMP},
+        #{doorPermission},
+        #{planTemplateId},
+        #{authMethod},
+        NOW(),
+        NOW()
+        )
+    </insert>
+
+    <update id="updatePerson" parameterType="com.supervision.web.Hikvision.peopleDoor.web.entity.PeopleInfo">
+        UPDATE new_people_manage
+        SET
+        job_number = #{jobNumber},
+        name = #{name},
+        long_term = #{longTerm},
+        valid_period = #{validPeriod,jdbcType=TIMESTAMP},
+        door_permission = #{doorPermission},
+        plan_template_id = #{planTemplateId},
+        auth_method = #{authMethod},
+        update_time = NOW()
+        WHERE person_id = #{personId}
+    </update>
+
+    <delete id="deletePerson" parameterType="long">
+        DELETE FROM new_people_manage WHERE id = #{id}
+    </delete>
+
+</mapper>

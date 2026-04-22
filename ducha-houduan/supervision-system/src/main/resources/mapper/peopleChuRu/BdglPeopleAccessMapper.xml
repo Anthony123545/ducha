@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.peopleChuRu.mapper.BdglPeopleAccessMapper">
+    
+    <!-- 通用查询映射结果 -->
+    <resultMap type="com.supervision.peopleChuRu.domain.BdglPeopleAccess" id="BdglPeopleAccessResult">
+        <result property="userId" column="user_id" /> 
+        <result property="userName" column="user_name" /> 
+        <result property="deptId" column="dept_id" /> 
+        <result property="deptName" column="deptName" /> 
+        <result property="action" column="action" /> 
+        <result property="time" column="time" /> 
+        <result property="employeeNumber" column="employee_number" /> 
+        <result property="peopleType" column="people_type" /> 
+    </resultMap>
+
+    <!-- 查询条件封装 -->
+    <sql id="selectBdglPeopleAccessVo">
+        select user_id, user_name, dept_id, deptName, action, time, employee_number, people_type from bdgl_people_access
+    </sql>
+
+    <!-- 查询列表 -->
+    <select id="selectBdglPeopleAccessList" parameterType="com.supervision.peopleChuRu.domain.BdglPeopleAccess" resultMap="BdglPeopleAccessResult">
+        <include refid="selectBdglPeopleAccessVo" /> 
+        <where>
+            <if test="userId != null and userId != 0">
+                AND user_id = #{userId}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND user_name like concat('%', #{userName}, '%')
+            </if>
+            <if test="deptId != null and deptId != 0">
+                AND dept_id = #{deptId}
+            </if>
+            <if test="deptName != null and deptName != ''">
+                AND deptName like concat('%', #{deptName}, '%')
+            </if>
+            <if test="action != null and action != ''">
+                AND action = #{action}
+            </if>
+            <if test="time != null">
+                AND time &gt;= #{time}
+            </if>
+            <if test="employeeNumber != null and employeeNumber != ''">
+                AND employee_number like concat('%', #{employeeNumber}, '%')
+            </if>
+            <if test="peopleType != null and peopleType != ''">
+                AND people_type = #{peopleType}
+            </if>
+        </where>
+        ORDER BY time DESC
+    </select>
+
+    <!-- 查询所有数据 -->
+    <select id="selectBdglPeopleAccessAll" resultMap="BdglPeopleAccessResult">
+        <include refid="selectBdglPeopleAccessVo" /> 
+    </select>
+
+    <!-- 通过user_id查询单条数据 -->
+    <select id="selectBdglPeopleAccessByUserId" parameterType="Long" resultMap="BdglPeopleAccessResult">
+        <include refid="selectBdglPeopleAccessVo" /> 
+        where user_id = #{userId}
+    </select>
+
+    <!-- 新增数据 -->
+    <insert id="insertBdglPeopleAccess" parameterType="com.supervision.peopleChuRu.domain.BdglPeopleAccess">
+        insert into bdgl_people_access(user_id, user_name, dept_id, deptName, action, time, employee_number, people_type)
+        values(#{userId}, #{userName}, #{deptId}, #{deptName}, #{action}, #{time}, #{employeeNumber}, #{peopleType})
+    </insert>
+
+    <!-- 修改数据 -->
+    <update id="updateBdglPeopleAccess" parameterType="com.supervision.peopleChuRu.domain.BdglPeopleAccess">
+        update bdgl_people_access
+        <set>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="deptId != null and deptId != 0">
+                dept_id = #{deptId},
+            </if>
+            <if test="deptName != null and deptName != ''">
+                deptName = #{deptName},
+            </if>
+            <if test="action != null and action != ''">
+                action = #{action},
+            </if>
+            <if test="time != null">
+                time = #{time},
+            </if>
+            <if test="employeeNumber != null and employeeNumber != ''">
+                employee_number = #{employeeNumber},
+            </if>
+            <if test="peopleType != null and peopleType != ''">
+                people_type = #{peopleType},
+            </if>
+        </set>
+        where user_id = #{userId}
+    </update>
+
+    <!-- 删除数据 -->
+    <delete id="deleteBdglPeopleAccessByUserId" parameterType="Long">
+        delete from bdgl_people_access where user_id = #{userId}
+    </delete>
+
+    <!-- 批量删除 -->
+    <delete id="deleteBdglPeopleAccessByUserIds" parameterType="Long[]">
+        delete from bdgl_people_access where user_id in 
+        <foreach item="userId" collection="array" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+
+    <!-- 统计数据 -->
+    <select id="countBdglPeopleAccess" parameterType="com.supervision.peopleChuRu.domain.BdglPeopleAccess" resultType="Long">
+        select count(1) from bdgl_people_access
+        <where>
+            <if test="userId != null and userId != 0">
+                AND user_id = #{userId}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND user_name like concat('%', #{userName}, '%')
+            </if>
+            <if test="deptId != null and deptId != 0">
+                AND dept_id = #{deptId}
+            </if>
+            <if test="deptName != null and deptName != ''">
+                AND deptName like concat('%', #{deptName}, '%')
+            </if>
+            <if test="action != null and action != ''">
+                AND action = #{action}
+            </if>
+            <if test="time != null">
+                AND time &gt;= #{time}
+            </if>
+            <if test="employeeNumber != null and employeeNumber != ''">
+                AND employee_number like concat('%', #{employeeNumber}, '%')
+            </if>
+            <if test="peopleType != null and peopleType != ''">
+                AND people_type = #{peopleType}
+            </if>
+        </where>
+    </select>
+
+    <select id="countBdglPeopleAccessByDate" resultType="java.lang.Long">
+        select count(1) from bdgl_people_access
+        where DATE(time) = #{date}
+    </select>
+
+    <select id="selectBdglPeopleAccessByEmployeeNumber" resultMap="BdglPeopleAccessResult">
+        <include refid="selectBdglPeopleAccessVo" />
+        where employee_number = #{employeeNumber}
+    </select>
+
+    <delete id="deleteBdglPeopleAccessByEmployeeNumbers">
+        delete from bdgl_people_access where employee_number in
+        <foreach item="employeeNumber" collection="array" open="(" separator="," close=")">
+            #{employeeNumber}
+        </foreach>
+    </delete>
+</mapper>

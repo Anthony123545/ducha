@@ -1,0 +1,580 @@
+.dropdown-menu {
+    min-width: 110px !important;
+}
+div.sp_button {
+    left: 85px;
+}
+.sp_result_area {
+ width: 110px;   
+}
+
+.sexlist input {
+    width: 100px;
+}
+
+.form-horizontal {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.form-group {
+    margin-bottom: 12px;
+}
+.sp_container {
+    margin-top: 30px;
+    margin-left: -151px;
+}
+.n-right .msg-wrap.msg-wrap {
+    margin-top: 30px;
+    margin-left: -98px;
+}
+.input {
+    margin-left: 208px;
+    margin-top: -52px;
+}
+
+.form-horizontal .form-group {
+    width: 325px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    margin-left: -12px;
+    margin-right: -62px;
+}
+.idcard .msg-wrap,.origin .msg-wrap,.job .msg-wrap{
+    margin-top: 30px !important;
+    margin-left: -242px !important;
+}
+.unitid .bootstrap-select.btn-group:not(.input-group-btn),
+.bootstrap-select.btn-group {
+    width: 345px;
+    margin-left: -150px;
+}
+
+.unitid .btn-group>.btn:first-child {
+    width: 110px;
+}
+
+.dutyid .sp_container {
+    margin-left: -105px;
+    width: 110px !important;
+}
+
+.avatar {
+    position: absolute;
+    left: 605px;
+    top: 51px
+}
+
+.avatar input {
+    margin-left: -145px;
+    margin-top: 52px;
+}
+
+.list-inline>li {
+    width: 150px;
+    height: 128px;
+}
+
+.plupload-preview a:first-child,.faupload-preview a:first-child {
+    height: 151px;
+    width: 113px;
+    margin-top: 2px;
+    margin-left: -2px;
+}
+
+.plupload-preview a img,
+.faupload-preview a img {
+    height: 150px;
+    margin-top: -4px;
+}
+.limit {
+    display: flex;
+    flex-wrap: wrap;
+    width: 850px;
+}
+
+.avatar .input-group .doublebtn span:first-child button {
+    margin-top: 2px;
+    margin-left: -170px;
+    width: 115px;
+}
+
+.twobtn {
+    margin-top: 87px;
+}
+.btn-xs, .btn-group-xs>.btn {
+    margin-top: 37px;
+    margin-left: -1px;
+    width: 115px;
+    height: 31px;
+}
+
+.form-control {
+    width: 110px;
+    margin-top: 28px;
+    margin-left: -120px;
+}
+
+form.form-horizontal .control-label {
+    text-align: right;
+    margin-left: -4px;
+    width: 113px;
+}
+
+.btn-group>.btn:first-child {
+    width: 110px;
+}
+
+.bootstrap-select.btn-group:not(.input-group-btn),
+.bootstrap-select.btn-group {
+    width: 100px;
+    margin-left: -121px;
+
+}
+
+.form-horizontal .sexlist {
+    margin-left: -118px;
+}
+
+.form-horizontal .birthdate {
+    margin-left: -118px;
+}
+
+.form-horizontal .dutyid {
+    margin-left: -159px;
+    margin-top: 4px;
+}
+
+.educationid .control-label,
+.degreeid .control-label,
+.nationid .control-label,
+.unitid .control-label {
+    width: 80px !important;
+    margin-left: -7px !important;
+}
+.unitid .control-label {
+    width: 60px !important;
+    margin-left: -5px !important;
+}
+.postid .control-label {
+    width: 60px !important;
+    margin-left: -7px !important;
+}
+
+.nationid .control-label,
+.educationid .control-label,
+.degreeid .control-label {
+    text-align: left !important;
+}
+
+.origin .sp_container,
+.nationid .sp_container {
+    width: 100px !important;
+}
+
+.form-horizontal .origin {
+    margin-left: 28px;
+}
+
+.form-horizontal .nationid {
+    margin-left: -87px !important;
+}
+
+.form-horizontal .phone {
+    margin: 6px 6px 0 -56px;
+}
+
+.form-horizontal .educationid {
+    margin-left: -118px;
+}
+
+.educationid .sp_container {
+    width: 116px !important;
+}
+
+.degreeid .sp_container {
+    margin-top: 30px;
+    margin-left: -151px;
+    width: 225px !important;
+}
+
+.form-horizontal .school {
+    margin-left: -117px;
+    margin-top: 8px;
+}
+
+.form-horizontal .degreeid {
+    margin-left: 19px;
+}
+
+.form-horizontal .graduationdate {
+    margin-left: -149px;
+    margin-top: 8px;
+}
+
+.form-horizontal .military {
+    margin-left: -12px;
+}
+
+.form-horizontal .enlistdate {
+    margin-left: 29px;
+}
+
+.form-horizontal .age {
+    margin-left: -118px;
+}
+
+.form-horizontal .command {
+    margin-left: -115px !important;
+}
+
+.form-horizontal .job {
+    margin-left: -147px;
+}
+
+.form-horizontal .unitid {
+    margin-left: 17px;
+}
+
+.form-horizontal .enlistaddress {
+    margin-left: -104px;
+}
+
+.form-horizontal .postid {
+    margin-left: 19px;
+}
+
+.form-horizontal .skillid {
+    margin-left: 88px;
+    margin-top: 6px;
+}
+
+.form-horizontal .address {
+    margin: 6px 0 6px 10px !important;
+}
+
+.form-horizontal .skilldate {
+    margin-left: -146px;
+    margin-right: 0 !important;
+    width: 150px;
+    margin-top: 8px;
+}
+
+.skilldate .control-label,
+.leveldate .control-label {
+    width: 139px !important;
+}
+
+.form-horizontal .postdate {
+    margin-left: -151px;
+    width: 150px;
+    margin-top: 8px;
+}
+
+.title,.titletwo {
+    width: 850px;
+    margin-top: 10px;
+    font-size: 17px;
+    font-weight: 900;
+}
+.dutyid .control-label {
+    width: 116px !important;
+}
+
+.command .control-label {
+    width: 101px !important;
+}
+
+.postid .sp_container {
+    width: 110px !important;
+}
+
+.skillid .control-label {
+    width: 86px !important;
+    margin-left: -6px !important;
+}
+
+.postdate .control-label {
+    width: 140px !important;
+}
+
+.skillid .sp_container {
+    /* margin-left: -149px; */
+    width: 110px !important;
+}
+
+.form-horizontal .levelid {
+    margin-left: 16px;
+}
+
+.levelid .sp_container {
+    margin-left: -149px;
+    width: 110px !important;
+}
+
+.rankid .sp_container {
+    margin-left: -149px;
+    width: 110px !important;
+}
+
+.rankid .control-label {
+    width: 60px !important;
+}
+
+.form-horizontal .rankdate {
+    margin-left: -121px;
+}
+
+.classid .sp_container {
+    width: 110px !important;
+}
+
+.form-horizontal .rankid {
+    margin-left: -91px;
+    width: 300px;
+}
+
+.sp_container .input {
+    margin-right: 0px;
+}
+
+.form-horizontal .classid {
+    margin-left: 58px;
+    margin-top: 4px;
+}
+
+.form-horizontal .leveldate {
+    margin-left: -142px;
+    margin-top: 8px;
+}
+
+.childrenlist .control-label,
+.training .control-label,
+.prize .control-label {
+    width: 114px !important;
+}
+
+.address .control-label {
+    width: 90px !important;
+}
+
+.partydate .control-label {
+    width: 114px !important;
+
+}
+
+.levelid .control-label {
+    width: 87px !important;
+    margin-left: -5px !important;
+}
+
+.rankdate .control-label {
+    width: 113px !important;
+}
+
+.classid .control-label {
+    width: 86px !important;
+    margin-left: -7px !important;
+}
+.classid .msg-wrap {
+    margin-top: 3px !important;
+}
+.partyid .control-label {
+    width: 86px !important;
+    margin-left: -8px !important;
+}
+.gradeid .control-label {
+    width: 60px !important;
+    margin-left: -7px !important;
+}
+
+.gradeid .sp_container {
+    width: 110px !important;
+}
+
+.form-horizontal .partyid {
+    margin-left: -85px;
+    margin-top: 4px;
+    width: 150px
+}
+
+.partyid input {
+    margin-left: 10px;
+}
+
+.partyid .sp_container {
+    width: 110px !important;
+}
+
+.form-horizontal .gradeid {
+    margin-left: -114px;
+    margin-top: 6px;
+}
+
+.form-horizontal .partydate {
+    margin-left: -13px;
+}
+
+.form-horizontal .marrylist {
+    margin-left: -12px;
+}
+
+.form-horizontal .childrenlist {
+    margin-left: -117px;
+}
+
+.marrylist .control-label {
+    text-align: right;
+    margin-left: -2px !important;
+    width: 113px;
+}
+
+.form-horizontal .prize {
+    margin-right: 300px;
+}
+
+.form-horizontal .training {
+    margin-left: 145px;
+    margin-right: 200px;
+}
+
+.training .control-label {
+    text-align: right;
+    margin-left: -161px !important;
+    width: 113px;
+    margin-top: 4px;
+}
+
+.training .input {
+    margin-left: 0;
+    margin-top: -52px;
+}
+
+.training textarea.form-control {
+    margin-top: 53px;
+    margin-left: -277px;
+}
+
+textarea.form-control {
+    height: auto;
+    width: 695px;
+}
+
+.resumeone {
+    margin-top: 26px;
+    margin-left: 5px;
+
+}
+.input-group .input-group-addon {
+    background-color: transparent !important;
+}
+
+.input {
+    margin-left: 144px !important;
+    margin-top: -25px !important;
+}
+
+.name .control-label,
+.sexlist .control-label,
+.age .control-label,
+.origin .control-label {
+    width: 88px !important;
+}
+
+.readmefile .control-label {
+    /* width: 90px !important; */
+    width: 67px !important;
+
+}
+.plupload-preview li, .faupload-preview li {
+    margin-top: -2px;
+    margin-left: -13px;
+}
+.list-inline {
+    margin-left: -143px !important;
+    margin-top: 35px !important;
+}
+#p-avatar {
+    width: 115px !important;
+    height: 154px !important;
+}
+.plupload-preview .thumbnail, .faupload-preview .thumbnail {
+    margin-bottom: 17px;
+}
+.fa-trash {
+    /* background-color: aqua; */
+    margin-top: 7px;
+}
+/* .readmefile .col-xs-12 {
+    width: 100%;
+    margin-left: 13px;
+} */
+.form-horizontal .readmefile {
+    margin-left: 12px;
+}
+.panel {
+    width: 695px;
+}
+.note-input {
+    width: 570px;
+    margin-left: -2px;
+    margin-top: 2px;
+}
+.content {
+    padding-left: 25px;
+}
+
+.readmefile .btn-group>.btn:first-child {
+    width: 62px;
+}
+
+div.sp_clear_btn {
+    right: 20px;}
+    .nationid div.sp_clear_btn {
+        right: 10px;
+    }
+    .educationid   div.sp_clear_btn {
+        right: 26px;
+    }
+ .command .form-control {
+        width: 253px;
+    }
+    .command   .n-right {
+        margin-top: 5px;
+        margin-left: -140px;
+    }
+ .job   .n-right {
+        margin-left: 144px;
+    }
+    .form-horizontal .admissiondate {
+        width: 120px;
+        margin-left: -148px;
+        margin-right: 175px;
+        margin-top: 8px;
+ }
+ .healthy input,.bloodtype input {
+     width: 110px !important;
+ }
+ .bloodtype .control-label {
+    width: 88px !important;
+ }
+ .form-horizontal .healthy{
+    margin-left: -118px;
+    margin-right: -166px;
+    margin-top: 6px;
+}
+.form-horizontal .major{
+    margin-left: -116px;
+    margin-top: 6px;
+}
+.major .control-label {
+    width: 88px !important;
+}
+.form-horizontal .mobilephonemodel{
+    margin-left: -116px;
+    margin-top: 6px;
+    margin-right: -20px;
+}
+.admissiondate .bootstrap-datetimepicker-widget,.jobtime .bootstrap-datetimepicker-widget,.posttime .bootstrap-datetimepicker-widget{
+  margin-left: -115px;
+}

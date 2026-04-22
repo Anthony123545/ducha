@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.workingArrangements.mapper.BdglWorkTaskPlanDetailMapper">
+    
+    <resultMap type="BdglWorkTaskPlanDetail" id="BdglWorkTaskPlanDetailResult">
+        <result property="id"    column="id"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="taskDescription"    column="task_description"    />
+        <result property="taskStatus"    column="task_status"    />
+        <result property="taskPlanId"    column="task_plan_id"    />
+        <result property="feedbackTime"    column="feedback_time"    />
+        <result property="feedbackDescription"    column="feedback_description"    />
+        <result property="rejectContent"    column="reject_content"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectBdglWorkTaskPlanDetailVo">
+        select id, unit_id, people_id, task_description, task_status, task_plan_id, feedback_time, feedback_description,create_time,reject_content from bdgl_work_task_plan_detail
+    </sql>
+
+    <select id="selectBdglWorkTaskPlanDetailList" parameterType="BdglWorkTaskPlanDetail" resultMap="BdglWorkTaskPlanDetailResult">
+        <include refid="selectBdglWorkTaskPlanDetailVo"/>
+        <where>  
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="peopleId != null  and peopleId != ''"> and people_id = #{peopleId}</if>
+            <if test="taskDescription != null  and taskDescription != ''"> and task_description = #{taskDescription}</if>
+            <if test="taskStatus != null "> and task_status = #{taskStatus}</if>
+            <if test="taskPlanId != null "> and task_plan_id = #{taskPlanId}</if>
+            <if test="feedbackTime != null "> and feedback_time = #{feedbackTime}</if>
+            <if test="feedbackDescription != null  and feedbackDescription != ''"> and feedback_description = #{feedbackDescription}</if>
+        </where>
+    </select>
+    
+    <select id="selectBdglWorkTaskPlanDetailById" parameterType="Long" resultMap="BdglWorkTaskPlanDetailResult">
+        <include refid="selectBdglWorkTaskPlanDetailVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectWorkTaskPlanDetailListByTaskPlanId" parameterType="Long" resultMap="BdglWorkTaskPlanDetailResult">
+        <include refid="selectBdglWorkTaskPlanDetailVo"/>
+        where task_plan_id = #{taskPlanId}
+    </select>
+
+    <select id="selectWorkTaskPlanDetailListByUserId" parameterType="Long" resultMap="BdglWorkTaskPlanDetailResult">
+        <include refid="selectBdglWorkTaskPlanDetailVo"/>
+        where people_id = #{peopleId}
+    </select>
+
+    <insert id="insertBdglWorkTaskPlanDetail" parameterType="BdglWorkTaskPlanDetail" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_work_task_plan_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="unitId != null">unit_id,</if>
+            <if test="peopleId != null and peopleId != ''">people_id,</if>
+            <if test="taskDescription != null and taskDescription != ''">task_description,</if>
+            <if test="taskStatus != null">task_status,</if>
+            <if test="taskPlanId != null">task_plan_id,</if>
+            <if test="feedbackTime != null">feedback_time,</if>
+            <if test="feedbackDescription != null">feedback_description,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="unitId != null">#{unitId},</if>
+            <if test="peopleId != null and peopleId != ''">#{peopleId},</if>
+            <if test="taskDescription != null and taskDescription != ''">#{taskDescription},</if>
+            <if test="taskStatus != null">#{taskStatus},</if>
+            <if test="taskPlanId != null">#{taskPlanId},</if>
+            <if test="feedbackTime != null">#{feedbackTime},</if>
+            <if test="feedbackDescription != null">#{feedbackDescription},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglWorkTaskPlanDetail" parameterType="BdglWorkTaskPlanDetail">
+        update bdgl_work_task_plan_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="peopleId != null and peopleId != ''">people_id = #{peopleId},</if>
+            <if test="taskDescription != null and taskDescription != ''">task_description = #{taskDescription},</if>
+            <if test="taskStatus != null">task_status = #{taskStatus},</if>
+            <if test="taskPlanId != null">task_plan_id = #{taskPlanId},</if>
+            <if test="feedbackTime != null">feedback_time = #{feedbackTime},</if>
+            <if test="feedbackDescription != null">feedback_description = #{feedbackDescription},</if>
+            <if test="rejectContent != null">reject_content = #{rejectContent},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglWorkTaskPlanDetailById" parameterType="Long">
+        delete from bdgl_work_task_plan_detail where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglWorkTaskPlanDetailByIds" parameterType="String">
+        delete from bdgl_work_task_plan_detail where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <!--根据任务ID批量删除任务详情-->
+    <delete id="deletePlanDetailByTaskPlanId" parameterType="Long">
+        delete from bdgl_work_task_plan_detail where task_plan_id = #{taskPlanId}
+    </delete>
+</mapper>

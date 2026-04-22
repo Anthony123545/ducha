@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.militaryvehicleManagement.mapper.BdglDriverMapper">
+
+    <resultMap type="BdglDriver" id="BdglDriverResult">
+        <result property="id"    column="id"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="contact"    column="contact"    />
+        <result property="driversLicense"    column="drivers_license"    />
+        <result property="birthDate"    column="birth_date"    />
+        <result property="enlistDate"    column="enlist_date"    />
+        <result property="sexList"    column="sex_list"    />
+        <result property="rankId"    column="rank_id"    />
+        <result property="drivingAge"    column="driving_age"    />
+        <result property="drivingModel"    column="driving_model"    />
+        <result property="chulingriq"    column="chulingriq"    />
+        <result property="hefariqi"    column="hefariqi"    />
+        <result property="result"    column="result"    />
+        <result property="youxiaoriqi"    column="youxiaoriqi"    />
+        <result property="vocationalSkills"    column="vocational_skills"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="peopleName"    column="people_name"    />
+        <result property="unitName"    column="unit_name"    />
+    </resultMap>
+
+    <sql id="selectBdglDriverVo">
+        select id, people_id, unit_id, contact, drivers_license, birth_date, enlist_date, sex_list, rank_id, driving_age, driving_model, chulingriq, hefariqi, result, youxiaoriqi, vocational_skills, createtime, updatetime, people_name, unit_name from bdgl_driver
+    </sql>
+
+    <select id="selectBdglDriverList" parameterType="BdglDriver" resultMap="BdglDriverResult">
+        <include refid="selectBdglDriverVo"/>
+        <where>
+            <if test="peopleId != null "> and people_id = #{peopleId}</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="contact != null  and contact != ''"> and contact = #{contact}</if>
+            <if test="driversLicense != null  and driversLicense != ''"> and drivers_license = #{driversLicense}</if>
+            <if test="birthDate != null  and birthDate != ''"> and birth_date = #{birthDate}</if>
+            <if test="enlistDate != null  and enlistDate != ''"> and enlist_date = #{enlistDate}</if>
+            <if test="sexList != null  and sexList != ''"> and sex_list = #{sexList}</if>
+            <if test="rankId != null "> and rank_id = #{rankId}</if>
+            <if test="drivingAge != null "> and driving_age = #{drivingAge}</if>
+            <if test="drivingModel != null  and drivingModel != ''"> and driving_model = #{drivingModel}</if>
+            <if test="chulingriq != null "> and chulingriq = #{chulingriq}</if>
+            <if test="hefariqi != null "> and hefariqi = #{hefariqi}</if>
+            <if test="result != null  and result != ''"> and result = #{result}</if>
+            <if test="youxiaoriqi != null "> and youxiaoriqi = #{youxiaoriqi}</if>
+            <if test="vocationalSkills != null  and vocationalSkills != ''"> and vocational_skills = #{vocationalSkills}</if>
+            <if test="createtime != null "> and createtime = #{createtime}</if>
+            <if test="updatetime != null "> and updatetime = #{updatetime}</if>
+            <if test="peopleName != null  and peopleName != ''"> and people_name like concat('%', #{peopleName}, '%')</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectBdglDriverById" parameterType="Integer" resultMap="BdglDriverResult">
+        <include refid="selectBdglDriverVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglDriver" parameterType="BdglDriver" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_driver
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="peopleId != null">people_id,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="contact != null">contact,</if>
+            <if test="driversLicense != null">drivers_license,</if>
+            <if test="birthDate != null">birth_date,</if>
+            <if test="enlistDate != null">enlist_date,</if>
+            <if test="sexList != null">sex_list,</if>
+            <if test="rankId != null">rank_id,</if>
+            <if test="drivingAge != null">driving_age,</if>
+            <if test="drivingModel != null">driving_model,</if>
+            <if test="chulingriq != null">chulingriq,</if>
+            <if test="hefariqi != null">hefariqi,</if>
+            <if test="result != null">result,</if>
+            <if test="youxiaoriqi != null">youxiaoriqi,</if>
+            <if test="vocationalSkills != null">vocational_skills,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="peopleName != null">people_name,</if>
+            <if test="unitName != null">unit_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="contact != null">#{contact},</if>
+            <if test="driversLicense != null">#{driversLicense},</if>
+            <if test="birthDate != null">#{birthDate},</if>
+            <if test="enlistDate != null">#{enlistDate},</if>
+            <if test="sexList != null">#{sexList},</if>
+            <if test="rankId != null">#{rankId},</if>
+            <if test="drivingAge != null">#{drivingAge},</if>
+            <if test="drivingModel != null">#{drivingModel},</if>
+            <if test="chulingriq != null">#{chulingriq},</if>
+            <if test="hefariqi != null">#{hefariqi},</if>
+            <if test="result != null">#{result},</if>
+            <if test="youxiaoriqi != null">#{youxiaoriqi},</if>
+            <if test="vocationalSkills != null">#{vocationalSkills},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="peopleName != null">#{peopleName},</if>
+            <if test="unitName != null">#{unitName},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglDriver" parameterType="BdglDriver">
+        update bdgl_driver
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="contact != null">contact = #{contact},</if>
+            <if test="driversLicense != null">drivers_license = #{driversLicense},</if>
+            <if test="birthDate != null">birth_date = #{birthDate},</if>
+            <if test="enlistDate != null">enlist_date = #{enlistDate},</if>
+            <if test="sexList != null">sex_list = #{sexList},</if>
+            <if test="rankId != null">rank_id = #{rankId},</if>
+            <if test="drivingAge != null">driving_age = #{drivingAge},</if>
+            <if test="drivingModel != null">driving_model = #{drivingModel},</if>
+            <if test="chulingriq != null">chulingriq = #{chulingriq},</if>
+            <if test="hefariqi != null">hefariqi = #{hefariqi},</if>
+            <if test="result != null">result = #{result},</if>
+            <if test="youxiaoriqi != null">youxiaoriqi = #{youxiaoriqi},</if>
+            <if test="vocationalSkills != null">vocational_skills = #{vocationalSkills},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="peopleName != null">people_name = #{peopleName},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglDriverById" parameterType="Integer">
+        delete from bdgl_driver where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglDriverByIds" parameterType="String">
+        delete from bdgl_driver where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

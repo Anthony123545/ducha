@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.thought.mapper.ThoughtParliamentMapper">
+    
+    <resultMap type="ThoughtParliament" id="ThoughtParliamentResult">
+        <result property="id"    column="id"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="createName"    column="create_name"    />
+        <result property="createId"    column="create_id"    />
+        <result property="filePath"    column="file_path"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="talkContent"    column="talk_content"    />
+        <result property="recorder"    column="recorder"    />
+        <result property="recorderId"    column="recorder_id"    />
+        <result property="participants"    column="participants"    />
+        <result property="participantsId"    column="participants_id"    />
+        <result property="organizer"    column="organizer"    />
+        <result property="organizerId"    column="organizer_id"    />
+        <result property="talkTheme"    column="talk_theme"    />
+    </resultMap>
+
+    <sql id="selectThoughtParliamentVo">
+        select id, unit_name, unit_id, start_time, end_time, create_time, update_time, create_name, create_id, file_path, file_name, talk_content, recorder, recorder_id, participants, participants_id, organizer, organizer_id, talk_theme from thought_parliament
+    </sql>
+
+    <select id="selectThoughtParliamentList" parameterType="ThoughtParliament" resultMap="ThoughtParliamentResult">
+        <include refid="selectThoughtParliamentVo"/>
+        <where>  
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="createName != null  and createName != ''"> and create_name like concat('%', #{createName}, '%')</if>
+            <if test="createId != null "> and create_id = #{createId}</if>
+            <if test="filePath != null  and filePath != ''"> and file_path = #{filePath}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="talkContent != null  and talkContent != ''"> and talk_content = #{talkContent}</if>
+            <if test="recorder != null  and recorder != ''"> and recorder = #{recorder}</if>
+            <if test="recorderId != null  and recorderId != ''"> and recorder_id = #{recorderId}</if>
+            <if test="participants != null  and participants != ''"> and participants = #{participants}</if>
+            <if test="participantsId != null  and participantsId != ''"> and participants_id = #{participantsId}</if>
+            <if test="organizer != null  and organizer != ''"> and organizer = #{organizer}</if>
+            <if test="organizerId != null  and organizerId != ''"> and organizer_id = #{organizerId}</if>
+            <if test="talkTheme != null  and talkTheme != ''"> and talk_theme = #{talkTheme}</if>
+        </where>
+        order by id desc
+    </select>
+    
+    <select id="selectThoughtParliamentById" parameterType="Long" resultMap="ThoughtParliamentResult">
+        <include refid="selectThoughtParliamentVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertThoughtParliament" parameterType="ThoughtParliament" useGeneratedKeys="true" keyProperty="id">
+        insert into thought_parliament
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="unitName != null">unit_name,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createName != null">create_name,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="filePath != null">file_path,</if>
+            <if test="fileName != null">file_name,</if>
+            <if test="talkContent != null">talk_content,</if>
+            <if test="recorder != null">recorder,</if>
+            <if test="recorderId != null">recorder_id,</if>
+            <if test="participants != null">participants,</if>
+            <if test="participantsId != null">participants_id,</if>
+            <if test="organizer != null">organizer,</if>
+            <if test="organizerId != null">organizer_id,</if>
+            <if test="talkTheme != null">talk_theme,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="unitName != null">#{unitName},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createName != null">#{createName},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="filePath != null">#{filePath},</if>
+            <if test="fileName != null">#{fileName},</if>
+            <if test="talkContent != null">#{talkContent},</if>
+            <if test="recorder != null">#{recorder},</if>
+            <if test="recorderId != null">#{recorderId},</if>
+            <if test="participants != null">#{participants},</if>
+            <if test="participantsId != null">#{participantsId},</if>
+            <if test="organizer != null">#{organizer},</if>
+            <if test="organizerId != null">#{organizerId},</if>
+            <if test="talkTheme != null">#{talkTheme},</if>
+         </trim>
+    </insert>
+
+    <update id="updateThoughtParliament" parameterType="ThoughtParliament">
+        update thought_parliament
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createName != null">create_name = #{createName},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="filePath != null">file_path = #{filePath},</if>
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="talkContent != null">talk_content = #{talkContent},</if>
+            <if test="recorder != null">recorder = #{recorder},</if>
+            <if test="recorderId != null">recorder_id = #{recorderId},</if>
+            <if test="participants != null">participants = #{participants},</if>
+            <if test="participantsId != null">participants_id = #{participantsId},</if>
+            <if test="organizer != null">organizer = #{organizer},</if>
+            <if test="organizerId != null">organizer_id = #{organizerId},</if>
+            <if test="talkTheme != null">talk_theme = #{talkTheme},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteThoughtParliamentById" parameterType="Long">
+        delete from thought_parliament where id = #{id}
+    </delete>
+
+    <delete id="deleteThoughtParliamentByIds" parameterType="String">
+        delete from thought_parliament where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

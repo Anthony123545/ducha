@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.thought.mapper.ThoughtPlanResponsesMapper">
+    
+    <resultMap type="ThoughtPlanResponses" id="ThoughtPlanResponsesResult">
+        <result property="id"    column="id"    />
+        <result property="planName"    column="plan_name"    />
+        <result property="planStartTime"    column="plan_start_time"    />
+        <result property="planEndTime"    column="plan_end_time"    />
+        <result property="planIntroduction"    column="plan_introduction"    />
+        <result property="filePath"    column="file_path"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="createName"    column="create_name"    />
+        <result property="createId"    column="create_id"    />
+        <result property="remark"    column="remark"    />
+        <result property="planNumber"    column="plan_number"    />
+        <result property="responseNumber"    column="response_number"    />
+        <result property="state"    column="state"    />
+        <result property="planId"    column="plan_id"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="reasons"    column="reasons"    />
+    </resultMap>
+
+    <sql id="selectThoughtPlanResponsesVo">
+        select id, plan_name, plan_start_time, plan_end_time, plan_introduction, file_path, file_name, create_time, update_time, create_name, create_id, remark, plan_number, response_number, state,plan_id,unit_id,reasons from thought_plan_responses
+    </sql>
+
+    <select id="selectThoughtPlanResponsesList" parameterType="ThoughtPlanResponses" resultMap="ThoughtPlanResponsesResult">
+        <include refid="selectThoughtPlanResponsesVo"/>
+        <where>  
+            <if test="planName != null  and planName != ''"> and plan_name like concat('%', #{planName}, '%')</if>
+            <if test="planStartTime != null "> and plan_start_time = #{planStartTime}</if>
+            <if test="planEndTime != null "> and plan_end_time = #{planEndTime}</if>
+            <if test="planIntroduction != null  and planIntroduction != ''"> and plan_introduction = #{planIntroduction}</if>
+            <if test="filePath != null  and filePath != ''"> and file_path = #{filePath}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="createName != null  and createName != ''"> and create_name like concat('%', #{createName}, '%')</if>
+            <if test="createId != null "> and create_id = #{createId}</if>
+            <if test="planNumber != null "> and plan_number = #{planNumber}</if>
+            <if test="responseNumber != null "> and response_number = #{responseNumber}</if>
+            <if test="state != null "> and state = #{state}</if>
+            <if test="planId != null "> and plan_id = #{planId}</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="reasons != null "> and reasons = #{reasons}</if>
+        </where>
+        order by id desc
+    </select>
+    
+    <select id="selectThoughtPlanResponsesById" parameterType="Long" resultMap="ThoughtPlanResponsesResult">
+        <include refid="selectThoughtPlanResponsesVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertThoughtPlanResponses" parameterType="ThoughtPlanResponses" useGeneratedKeys="true" keyProperty="id">
+        insert into thought_plan_responses
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="planName != null">plan_name,</if>
+            <if test="planStartTime != null">plan_start_time,</if>
+            <if test="planEndTime != null">plan_end_time,</if>
+            <if test="planIntroduction != null">plan_introduction,</if>
+            <if test="filePath != null">file_path,</if>
+            <if test="fileName != null">file_name,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createName != null">create_name,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="remark != null">remark,</if>
+            <if test="planNumber != null">plan_number,</if>
+            <if test="responseNumber != null">response_number,</if>
+            <if test="state != null">state,</if>
+            <if test="planId != null">plan_id,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="reasons != null">reasons,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="planName != null">#{planName},</if>
+            <if test="planStartTime != null">#{planStartTime},</if>
+            <if test="planEndTime != null">#{planEndTime},</if>
+            <if test="planIntroduction != null">#{planIntroduction},</if>
+            <if test="filePath != null">#{filePath},</if>
+            <if test="fileName != null">#{fileName},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createName != null">#{createName},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="planNumber != null">#{planNumber},</if>
+            <if test="responseNumber != null">#{responseNumber},</if>
+            <if test="state != null">#{state},</if>
+            <if test="planId != null">#{planId},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="reasons != null">#{reasons},</if>
+         </trim>
+    </insert>
+
+    <update id="updateThoughtPlanResponses" parameterType="ThoughtPlanResponses">
+        update thought_plan_responses
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="planName != null">plan_name = #{planName},</if>
+            <if test="planStartTime != null">plan_start_time = #{planStartTime},</if>
+            <if test="planEndTime != null">plan_end_time = #{planEndTime},</if>
+            <if test="planIntroduction != null">plan_introduction = #{planIntroduction},</if>
+            <if test="filePath != null">file_path = #{filePath},</if>
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createName != null">create_name = #{createName},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="planNumber != null">plan_number = #{planNumber},</if>
+            <if test="responseNumber != null">response_number = #{responseNumber},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="planId != null">plan_id = #{planId},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="reasons != null">reasons = #{reasons},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteThoughtPlanResponsesById" parameterType="Long">
+        delete from thought_plan_responses where id = #{id}
+    </delete>
+
+    <delete id="deleteThoughtPlanResponsesByIds" parameterType="String">
+        delete from thought_plan_responses where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

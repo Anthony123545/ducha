@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.medicalhealth.mapper.BdglAntiepidemicArchivesMapper">
+
+    <resultMap type="BdglAntiepidemicArchives" id="BdglAntiepidemicArchivesResult">
+        <result property="id"    column="id"    />
+        <result property="durgName"    column="durg_name"    />
+        <result property="durgBrand"    column="durg_brand"    />
+        <result property="specifications"    column="specifications"    />
+        <result property="storeHouse"    column="store_house"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="amount"    column="amount"    />
+        <result property="putIn"    column="put_in"    />
+        <result property="putOut"    column="put_out"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="adminId"    column="admin_id"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="userName"    column="user_name"    />
+        <result property="overdueQuantity"    column="overdue_quantity"    />
+        <result property="barCode"    column="bar_code"    />
+    </resultMap>
+
+    <sql id="selectBdglAntiepidemicArchivesVo">
+        select id, durg_name, durg_brand, specifications, store_house, unit_id, amount, put_in, put_out, remarks, admin_id, createtime, updatetime, unit_name, user_name,overdue_quantity,bar_code from bdgl_antiepidemic_archives
+    </sql>
+
+    <select id="selectBdglAntiepidemicArchivesList" parameterType="BdglAntiepidemicArchives" resultMap="BdglAntiepidemicArchivesResult">
+        <include refid="selectBdglAntiepidemicArchivesVo"/>
+        <where>
+            <if test="durgName != null  and durgName != ''"> and durg_name like concat('%', #{durgName}, '%')</if>
+            <if test="durgBrand != null  and durgBrand != ''"> and durg_brand = #{durgBrand}</if>
+            <if test="specifications != null  and specifications != ''"> and specifications = #{specifications}</if>
+            <if test="storeHouse != null "> and store_house = #{storeHouse}</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="amount != null "> and amount = #{amount}</if>
+            <if test="putIn != null "> and put_in = #{putIn}</if>
+            <if test="putOut != null "> and put_out = #{putOut}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="adminId != null "> and admin_id = #{adminId}</if>
+            <if test="createtime != null  and createtime != ''"> and createtime = #{createtime}</if>
+            <if test="updatetime != null  and updatetime != ''"> and updatetime = #{updatetime}</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="overdueQuantity != null  "> and overdue_quantity like concat('%', #{overdueQuantity}, '%')</if>
+            <if test="barCode != null  "> and bar_code = #{barCode} </if>
+        </where>
+    </select>
+
+    <select id="selectBdglAntiepidemicArchivesById" parameterType="Long" resultMap="BdglAntiepidemicArchivesResult">
+        <include refid="selectBdglAntiepidemicArchivesVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectBdglAntiepidemicArchivesByBarCode" parameterType="BdglAntiepidemicArchives" resultMap="BdglAntiepidemicArchivesResult">
+        <include refid="selectBdglAntiepidemicArchivesVo"/>
+        where bar_code = #{barCode}
+    </select>
+
+    <insert id="insertBdglAntiepidemicArchives" parameterType="BdglAntiepidemicArchives" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_antiepidemic_archives
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="durgName != null">durg_name,</if>
+            <if test="durgBrand != null">durg_brand,</if>
+            <if test="specifications != null">specifications,</if>
+            <if test="storeHouse != null">store_house,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="amount != null">amount,</if>
+            <if test="putIn != null">put_in,</if>
+            <if test="putOut != null">put_out,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="adminId != null">admin_id,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="unitName != null">unit_name,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="overdueQuantity != null">overdue_quantity,</if>
+            <if test="barCode != null">bar_code,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="durgName != null">#{durgName},</if>
+            <if test="durgBrand != null">#{durgBrand},</if>
+            <if test="specifications != null">#{specifications},</if>
+            <if test="storeHouse != null">#{storeHouse},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="putIn != null">#{putIn},</if>
+            <if test="putOut != null">#{putOut},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="adminId != null">#{adminId},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="unitName != null">#{unitName},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="overdueQuantity != null">#{overdueQuantity},</if>
+            <if test="barCode != null">#{barCode},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglAntiepidemicArchives" parameterType="BdglAntiepidemicArchives">
+        update bdgl_antiepidemic_archives
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="durgName != null">durg_name = #{durgName},</if>
+            <if test="durgBrand != null">durg_brand = #{durgBrand},</if>
+            <if test="specifications != null">specifications = #{specifications},</if>
+            <if test="storeHouse != null">store_house = #{storeHouse},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="putIn != null">put_in = #{putIn},</if>
+            <if test="putOut != null">put_out = #{putOut},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="adminId != null">admin_id = #{adminId},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="overdueQuantity != null">overdue_quantity = #{overdueQuantity},</if>
+            <if test="barCode != null">bar_code=#{barCode},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglAntiepidemicArchivesById" parameterType="Long">
+        delete from bdgl_antiepidemic_archives where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglAntiepidemicArchivesByIds" parameterType="String">
+        delete from bdgl_antiepidemic_archives where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

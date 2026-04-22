@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.militaryvehicleManagement.mapper.BdglThebusApplyMapper">
+
+    <resultMap type="BdglThebusApply" id="BdglThebusApplyResult">
+        <result property="id"    column="id"    />
+        <result property="model"    column="model"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="thebusId"    column="thebus_id"    />
+        <result property="contact"    column="contact"    />
+        <result property="cause"    column="cause"    />
+        <result property="authStime"    column="auth_stime"    />
+        <result property="authEtime"    column="auth_etime"    />
+        <result property="thebusThemplateId"    column="thebus_themplate_id"    />
+        <result property="people1Id"    column="people1_id"    />
+        <result property="people1State"    column="people1_state"    />
+        <result property="people1Name"    column="people1_name"    />
+        <result property="people1Remark"    column="people1_remark"    />
+        <result property="people1Authtime"    column="people1_authtime"    />
+        <result property="people2Id"    column="people2_id"    />
+        <result property="people2State"    column="people2_state"    />
+        <result property="status"    column="status"    />
+        <result property="people2Remark"    column="people2_remark"    />
+        <result property="people2Authtime"    column="people2_authtime"    />
+        <result property="outstatus"    column="outstatus"    />
+        <result property="people2Name"    column="people2_name"    />
+        <result property="adminId"    column="admin_id"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="people3Id"    column="people3_id"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="people3State"    column="people3_state"    />
+        <result property="driver"    column="driver"    />
+        <result property="people3Remark"    column="people3_remark"    />
+        <result property="driverContact"    column="driver_contact"    />
+        <result property="people3Authtime"    column="people3_authtime"    />
+        <result property="people3Name"    column="people3_name"    />
+        <result property="peopleCount"    column="people_count"    />
+        <result property="unitPeopleId"    column="unit_people_id"    />
+        <result property="unitPeopleState"    column="unit_people_state"    />
+        <result property="unitPeopleRemark"    column="unit_people_remark"    />
+        <result property="chushenState"    column="chushen_state"    />
+        <result property="chushenRemark"    column="chushen_remark"    />
+        <result property="route"    column="route"    />
+        <result property="outtime"    column="outtime" />
+        <result property="carNames"    column="car_names"    />
+        <result property="carIds"    column="car_ids"    />
+        <result property="unitPeopleName"    column="unit_people_name"    />
+        <result property="shenpijiedian"    column="shenpijiedian"    />
+
+        <result property="isTeShu"    column="is_teshu"    />
+        <result property="yjtsYuanyin"    column="yjts_yuanyin"    />
+        <result property="cstsYuanyin"    column="csts_yuanyin"    />
+        <result property="ojtsYuanyin"    column="ojts_yuanyin"    />
+        <result property="tjtsYuanyin"    column="tjts_yuanyin"    />
+        <result property="sjtsYuanyin"    column="sjts_yuanyin"    />
+
+        <result property="peopleName"    column="people_name"    />
+        <result property="unitName"    column="unit_name"    />
+
+        <result property="bdglDepartureYuanyin"    column="bdgl_departure_yuanyin"    />
+
+        <result property="isTeshuYongChe"    column="isTeshuYongChe"    />
+        <result property="placeState"    column="place_state"    />
+        <result property="carUnitId"    column="car_unit_id"    />
+        <result property="remarkInfo"    column="remark_info"    />
+        <result property="pepelonamed"    column="pepelonamed"    />
+        <result property="battaliontime"    column="battaliontime" />
+        <result property="vehicleType"    column="vehicle_type" />
+    </resultMap>
+
+    <sql id="selectBdglThebusApplyVo">
+        select id, model, unit_id, people_id, thebus_id, contact, cause, auth_stime, auth_etime, thebus_themplate_id, people1_id, people1_state, people1_name, people1_remark, people1_authtime, people2_id, people2_state, status, people2_remark, people2_authtime, outstatus, people2_name, admin_id, createtime, people3_id, updatetime, people3_state, driver, people3_remark, driver_contact, people3_authtime, people3_name, people_count, unit_people_id, unit_people_state, unit_people_remark, chushen_state, chushen_remark, route, outtime, car_names, car_ids, unit_people_name,shenpijiedian,is_teshu,yjts_yuanyin,csts_yuanyin,ojts_yuanyin,tjts_yuanyin,sjts_yuanyin,people_name,unit_name,bdgl_departure_yuanyin,isTeshuYongChe,place_state,car_unit_id,remark_info,pepelonamed,battaliontime,vehicle_type  from bdgl_thebus_apply
+    </sql>
+
+    <update id="updateKeChuChe" parameterType="com.supervision.militaryvehicleManagement.domain.BdglThebusApply">
+        UPDATE bdgl_thebus_apply
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="model != null">model = #{model},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="thebusId != null">thebus_id = #{thebusId},</if>
+            <if test="contact != null">contact = #{contact},</if>
+            <if test="cause != null">cause = #{cause},</if>
+            <if test="authStime != null">auth_stime = #{authStime},</if>
+            <if test="authEtime != null">auth_etime = #{authEtime},</if>
+            <if test="thebusThemplateId != null">thebus_themplate_id = #{thebusThemplateId},</if>
+            <if test="people1Id != null">people1_id = #{people1Id},</if>
+            <if test="people1State != null">people1_state = #{people1State},</if>
+            <if test="people1Name != null">people1_name = #{people1Name},</if>
+            <if test="people1Remark != null">people1_remark = #{people1Remark},</if>
+            <if test="people1Authtime != null">people1_authtime = #{people1Authtime},</if>
+            <if test="people2Id != null">people2_id = #{people2Id},</if>
+            <if test="people2State != null">people2_state = #{people2State},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="people2Remark != null">people2_remark = #{people2Remark},</if>
+            <if test="people2Authtime != null">people2_authtime = #{people2Authtime},</if>
+            <if test="outstatus != null">outstatus = #{outstatus},</if>
+            <if test="people2Name != null">people2_name = #{people2Name},</if>
+            <if test="adminId != null">admin_id = #{adminId},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="people3Id != null">people3_id = #{people3Id},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="people3State != null">people3_state = #{people3State},</if>
+            <if test="driver != null">driver = #{driver},</if>
+            <if test="people3Remark != null">people3_remark = #{people3Remark},</if>
+            <if test="driverContact != null">driver_contact = #{driverContact},</if>
+            <if test="people3Authtime != null">people3_authtime = #{people3Authtime},</if>
+            <if test="people3Name != null">people3_name = #{people3Name},</if>
+            <if test="peopleCount != null">people_count = #{peopleCount},</if>
+            <if test="unitPeopleId != null">unit_people_id = #{unitPeopleId},</if>
+            <if test="unitPeopleState != null">unit_people_state = #{unitPeopleState},</if>
+            <if test="unitPeopleRemark != null">unit_people_remark = #{unitPeopleRemark},</if>
+            <if test="chushenState != null">chushen_state = #{chushenState},</if>
+            <if test="chushenRemark != null">chushen_remark = #{chushenRemark},</if>
+            <if test="route != null">route = #{route},</if>
+            <if test="outtime != null">outtime = #{outtime},</if>
+            <if test="carNames != null">car_names = #{carNames},</if>
+            <if test="carIds != null">car_ids = #{carIds},</if>
+            <if test="unitPeopleName != null">unit_people_name = #{unitPeopleName},</if>
+            <if test="shenpijiedian != null  ">  shenpijiedian = #{shenpijiedian},</if>
+            <if test="isTeShu != null  and isTeShu != ''">   is_teShu =  #{shenpijiedian},</if>
+            <if test="yjtsYuanyin != null  and yjtsYuanyin != ''">  yjts_yuanyin = #{yjtsYuanyin},</if>
+            <if test="cstsYuanyin != null  and cstsYuanyin != ''">  csts_yuanyin = #{cstsYuanyin},</if>
+            <if test="ojtsYuanyin != null  and ojtsYuanyin != ''">  ojts_yuanyin = #{ojtsYuanyin},</if>
+            <if test="tjtsYuanyin != null  and tjtsYuanyin != ''">  tjts_yuanyin = #{tjtsYuanyin},</if>
+            <if test="sjtsYuanyin != null  and sjtsYuanyin != ''">  sjts_yuanyin = #{sjtsYuanyin},</if>
+            <if test="peopleName != null  and peopleName != ''">  people_name = #{peopleName},</if>
+            <if test="unitName != null  and unitName != ''">  unit_name = #{unitName},</if>
+            <if test="bdglDepartureYuanyin != null  and bdglDepartureYuanyin != ''">  bdgl_departure_yuanyin = #{bdglDepartureYuanyin},</if>
+            <if test="isTeshuYongChe  != null  and isTeshuYongChe  != ''">  isTeshuYongChe  = #{isTeshuYongChe},</if>
+            <if test="placeState  != null  and placeState  != ''">  place_state  = #{placeState},</if>
+            <if test="carUnitId  != null  and carUnitId  != ''">  car_unit_id  = #{carUnitId},</if>
+            <if test="remarkInfo  != null  and remarkInfo  != ''">  remark_info  = #{remarkInfo},</if>
+            <if test="pepelonamed  != null  and pepelonamed  != ''">  pepelonamed  = #{pepelonamed},</if>
+            <if test="battaliontime  != null  and battaliontime  != ''">  battaliontime  = #{battaliontime},</if>
+            <if test="vehicleType != null and vehicleType != ''">vehicle_type = #{vehicleType}</if>
+        </trim>
+        WHERE id = #{id}
+    </update>
+
+
+    <select id="selectBdglThebusApplyList" parameterType="BdglThebusApply" resultMap="BdglThebusApplyResult">
+        <include refid="selectBdglThebusApplyVo"/>
+        <where>
+            <if test="model != null  and model != ''"> and model = #{model}</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="peopleId != null "> and people_id = #{peopleId}</if>
+            <if test="thebusId != null "> and thebus_id = #{thebusId}</if>
+            <if test="contact != null  and contact != ''"> and contact = #{contact}</if>
+            <if test="cause != null  and cause != ''"> and cause = #{cause}</if>
+            <if test="authStime != null "> and auth_stime = #{authStime}</if>
+            <if test="authEtime != null "> and auth_etime = #{authEtime}</if>
+            <if test="thebusThemplateId != null "> and thebus_themplate_id = #{thebusThemplateId}</if>
+            <if test="people1Id != null "> and people1_id = #{people1Id}</if>
+            <if test="people1State != null "> and people1_state = #{people1State}</if>
+            <if test="people1Name != null  and people1Name != ''"> and people1_name like concat('%', #{people1Name}, '%')</if>
+            <if test="people1Remark != null  and people1Remark != ''"> and people1_remark = #{people1Remark}</if>
+            <if test="people1Authtime != null "> and people1_authtime = #{people1Authtime}</if>
+            <if test="people2Id != null "> and people2_id = #{people2Id}</if>
+            <if test="people2State != null "> and people2_state = #{people2State}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="people2Remark != null  and people2Remark != ''"> and people2_remark = #{people2Remark}</if>
+            <if test="people2Authtime != null "> and people2_authtime = #{people2Authtime}</if>
+            <if test="outstatus != null "> and outstatus = #{outstatus}</if>
+            <if test="people2Name != null  and people2Name != ''"> and people2_name like concat('%', #{people2Name}, '%')</if>
+            <if test="adminId != null "> and admin_id = #{adminId}</if>
+            <if test="createtime != null  and createtime != ''"> and createtime = #{createtime}</if>
+            <if test="people3Id != null "> and people3_id = #{people3Id}</if>
+            <if test="updatetime != null  and updatetime != ''"> and updatetime = #{updatetime}</if>
+            <if test="people3State != null "> and people3_state = #{people3State}</if>
+            <if test="driver != null  and driver != ''"> and driver = #{driver}</if>
+            <if test="people3Remark != null  and people3Remark != ''"> and people3_remark = #{people3Remark}</if>
+            <if test="driverContact != null  and driverContact != ''"> and driver_contact = #{driverContact}</if>
+            <if test="people3Authtime != null "> and people3_authtime = #{people3Authtime}</if>
+            <if test="people3Name != null  and people3Name != ''"> and people3_name like concat('%', #{people3Name}, '%')</if>
+            <if test="peopleCount != null "> and people_count = #{peopleCount}</if>
+            <if test="unitPeopleId != null "> and unit_people_id = #{unitPeopleId}</if>
+            <if test="unitPeopleState != null "> and unit_people_state = #{unitPeopleState}</if>
+            <if test="unitPeopleRemark != null  and unitPeopleRemark != ''"> and unit_people_remark = #{unitPeopleRemark}</if>
+            <if test="chushenState != null "> and chushen_state = #{chushenState}</if>
+            <if test="chushenRemark != null  and chushenRemark != ''"> and chushen_remark = #{chushenRemark}</if>
+            <if test="route != null  and route != ''"> and route = #{route}</if>
+
+            <if test="outtime != null "> and outtime = #{outtime}</if>
+
+            <if test="carNames != null  and carNames != ''"> and car_names = #{carNames}</if>
+            <if test="carIds != null  and carIds != ''"> and car_ids = #{carIds}</if>
+            <if test="unitPeopleName != null  and unitPeopleName != ''"> and unit_people_name like concat('%', #{unitPeopleName}, '%')</if>
+            <if test="shenpijiedian != null  and shenpijiedian != ''"> and shenpijiedian = #{shenpijiedian}</if>
+
+            <if test="isTeShu != null  and isTeShu != ''"> and is_teShu = #{shenpijiedian}</if>
+            <if test="yjtsYuanyin != null  and yjtsYuanyin != ''"> and yjts_yuanyin = #{yjtsYuanyin}</if>
+            <if test="cstsYuanyin != null  and cstsYuanyin != ''"> and csts_yuanyin = #{cstsYuanyin}</if>
+            <if test="ojtsYuanyin != null  and ojtsYuanyin != ''"> and ojts_yuanyin = #{ojtsYuanyin}</if>
+            <if test="tjtsYuanyin != null  and tjtsYuanyin != ''"> and tjts_yuanyin = #{tjtsYuanyin}</if>
+            <if test="sjtsYuanyin != null  and sjtsYuanyin != ''"> and sjts_yuanyin = #{sjtsYuanyin}</if>
+
+            <if test="peopleName != null  and peopleName != ''"> and people_name LIKE CONCAT('%', #{peopleName}, '%')</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name = #{unitName}</if>
+
+            <if test="bdglDepartureYuanyin != null  and bdglDepartureYuanyin != ''"> and bdgl_departure_yuanyin = #{bdglDepartureYuanyin}</if>
+
+            <if test="isTeshuYongChe  != null  and isTeshuYongChe  != ''"> and isTeshuYongChe  = #{isTeshuYongChe}</if>
+            <if test="placeState  != null  and placeState  != ''"> and place_state  = #{placeState}</if>
+            <if test="pepelonamed  != null  and pepelonamed  != ''"> and pepelonamed  = #{pepelonamed}</if>
+            <if test="battaliontime  != null  and battaliontime  != ''"> and battaliontime  = #{battaliontime}</if>
+            <if test="vehicleType != null and vehicleType != ''"> and vehicle_type = #{vehicleType}</if>
+        </where>
+        order by auth_stime desc
+    </select>
+
+    <select id="selectBdglThebusApplyById" parameterType="Long" resultMap="BdglThebusApplyResult">
+<!--        <include refid="selectBdglThebusApplyVo"/>-->
+<!--        where id = #{id}-->
+        SELECT a.*, d.dict_label AS modelLabel
+        FROM bdgl_thebus_apply a
+        LEFT JOIN sys_dict_data d ON a.model = d.dict_value AND d.dict_type = 'brand'
+        WHERE a.id = #{id}
+    </select>
+    <select id="selectBdglThebusApplyLists" resultMap="BdglThebusApplyResult">
+        <include refid="selectBdglThebusApplyVo"/>
+        <where>
+            <if test="model != null  and model != ''"> and model = #{model}</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="peopleId != null "> and people_id = #{peopleId}</if>
+            <if test="thebusId != null "> and thebus_id = #{thebusId}</if>
+            <if test="contact != null  and contact != ''"> and contact = #{contact}</if>
+            <if test="cause != null  and cause != ''"> and cause = #{cause}</if>
+            <if test="authStime != null "> and auth_stime = #{authStime}</if>
+            <if test="authEtime != null "> and auth_etime = #{authEtime}</if>
+            <if test="thebusThemplateId != null "> and thebus_themplate_id = #{thebusThemplateId}</if>
+            <if test="people1Id != null "> and people1_id = #{people1Id}</if>
+            <if test="people1State != null "> and people1_state = #{people1State}</if>
+            <if test="people1Name != null  and people1Name != ''"> and people1_name like concat('%', #{people1Name}, '%')</if>
+            <if test="people1Remark != null  and people1Remark != ''"> and people1_remark = #{people1Remark}</if>
+            <if test="people1Authtime != null "> and people1_authtime = #{people1Authtime}</if>
+            <if test="people2Id != null "> and people2_id = #{people2Id}</if>
+            <if test="people2State != null "> and people2_state = #{people2State}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="people2Remark != null  and people2Remark != ''"> and people2_remark = #{people2Remark}</if>
+            <if test="people2Authtime != null "> and people2_authtime = #{people2Authtime}</if>
+            <if test="outstatus != null "> and outstatus = #{outstatus}</if>
+            <if test="people2Name != null  and people2Name != ''"> and people2_name like concat('%', #{people2Name}, '%')</if>
+            <if test="adminId != null "> and admin_id = #{adminId}</if>
+            <if test="createtime != null  and createtime != ''"> and createtime = #{createtime}</if>
+            <if test="people3Id != null "> and people3_id = #{people3Id}</if>
+            <if test="updatetime != null  and updatetime != ''"> and updatetime = #{updatetime}</if>
+            <if test="people3State != null "> and people3_state = #{people3State}</if>
+            <if test="driver != null  and driver != ''"> and driver = #{driver}</if>
+            <if test="people3Remark != null  and people3Remark != ''"> and people3_remark = #{people3Remark}</if>
+            <if test="driverContact != null  and driverContact != ''"> and driver_contact = #{driverContact}</if>
+            <if test="people3Authtime != null "> and people3_authtime = #{people3Authtime}</if>
+            <if test="people3Name != null  and people3Name != ''"> and people3_name like concat('%', #{people3Name}, '%')</if>
+            <if test="peopleCount != null "> and people_count = #{peopleCount}</if>
+            <if test="unitPeopleId != null "> and unit_people_id = #{unitPeopleId}</if>
+            <if test="unitPeopleState != null "> and unit_people_state = #{unitPeopleState}</if>
+            <if test="unitPeopleRemark != null  and unitPeopleRemark != ''"> and unit_people_remark = #{unitPeopleRemark}</if>
+            <if test="chushenState != null "> and chushen_state = #{chushenState}</if>
+            <if test="chushenRemark != null  and chushenRemark != ''"> and chushen_remark = #{chushenRemark}</if>
+            <if test="route != null  and route != ''"> and route = #{route}</if>
+
+            <if test="outtime != null"> and DATE_FORMAT(outtime,'%Y-%m-%d') = DATE_FORMAT(#{outtime,jdbcType=TIMESTAMP},'%Y-%m-%d')</if>
+
+            <if test="carNames != null  and carNames != ''"> and car_names = #{carNames}</if>
+            <if test="carIds != null  and carIds != ''"> and car_ids = #{carIds}</if>
+            <if test="unitPeopleName != null  and unitPeopleName != ''"> and unit_people_name like concat('%', #{unitPeopleName}, '%')</if>
+            <if test="shenpijiedian != null  and shenpijiedian != ''"> and shenpijiedian = #{shenpijiedian}</if>
+
+            <if test="isTeShu != null  and isTeShu != ''"> and is_teShu = #{shenpijiedian}</if>
+            <if test="yjtsYuanyin != null  and yjtsYuanyin != ''"> and yjts_yuanyin = #{yjtsYuanyin}</if>
+            <if test="cstsYuanyin != null  and cstsYuanyin != ''"> and csts_yuanyin = #{cstsYuanyin}</if>
+            <if test="ojtsYuanyin != null  and ojtsYuanyin != ''"> and ojts_yuanyin = #{ojtsYuanyin}</if>
+            <if test="tjtsYuanyin != null  and tjtsYuanyin != ''"> and tjts_yuanyin = #{tjtsYuanyin}</if>
+            <if test="sjtsYuanyin != null  and sjtsYuanyin != ''"> and sjts_yuanyin = #{sjtsYuanyin}</if>
+
+            <if test="peopleName != null  and peopleName != ''"> and people_name = #{peopleName}</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name = #{unitName}</if>
+
+            <if test="bdglDepartureYuanyin != null  and bdglDepartureYuanyin != ''"> and bdgl_departure_yuanyin = #{bdglDepartureYuanyin}</if>
+
+            <if test="isTeshuYongChe  != null  and isTeshuYongChe  != ''"> and isTeshuYongChe  = #{isTeshuYongChe}</if>
+            <if test="placeState  != null  and placeState  != ''"> and place_state  = #{placeState}</if>
+            <if test="pepelonamed  != null  and pepelonamed  != ''"> and pepelonamed  = #{pepelonamed}</if>
+
+            <if test="battaliontime  != null  and battaliontime  != ''"> and battaliontime  = #{battaliontime}</if>
+            <if test="vehicleType != null and vehicleType != ''">vehicle_type = #{vehicleType}</if>
+
+        </where>
+        order by id desc
+    </select>
+
+    <insert id="insertBdglThebusApply" parameterType="BdglThebusApply" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_thebus_apply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="model != null">model,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="peopleId != null">people_id,</if>
+            <if test="thebusId != null">thebus_id,</if>
+            <if test="contact != null">contact,</if>
+            <if test="cause != null">cause,</if>
+            <if test="authStime != null">auth_stime,</if>
+            <if test="authEtime != null">auth_etime,</if>
+            <if test="thebusThemplateId != null">thebus_themplate_id,</if>
+            <if test="people1Id != null">people1_id,</if>
+            <if test="people1State != null">people1_state,</if>
+            <if test="people1Name != null">people1_name,</if>
+            <if test="people1Remark != null">people1_remark,</if>
+            <if test="people1Authtime != null">people1_authtime,</if>
+            <if test="people2Id != null">people2_id,</if>
+            <if test="people2State != null">people2_state,</if>
+            <if test="status != null">status,</if>
+            <if test="people2Remark != null">people2_remark,</if>
+            <if test="people2Authtime != null">people2_authtime,</if>
+            <if test="outstatus != null">outstatus,</if>
+            <if test="people2Name != null">people2_name,</if>
+            <if test="adminId != null">admin_id,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="people3Id != null">people3_id,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="people3State != null">people3_state,</if>
+            <if test="driver != null">driver,</if>
+            <if test="people3Remark != null">people3_remark,</if>
+            <if test="driverContact != null">driver_contact,</if>
+            <if test="people3Authtime != null">people3_authtime,</if>
+            <if test="people3Name != null">people3_name,</if>
+            <if test="peopleCount != null">people_count,</if>
+            <if test="unitPeopleId != null">unit_people_id,</if>
+            <if test="unitPeopleState != null">unit_people_state,</if>
+            <if test="unitPeopleRemark != null">unit_people_remark,</if>
+            <if test="chushenState != null">chushen_state,</if>
+            <if test="chushenRemark != null">chushen_remark,</if>
+            <if test="route != null">route,</if>
+            <if test="outtime != null">outtime,</if>
+            <if test="carNames != null">car_names,</if>
+            <if test="carIds != null">car_ids,</if>
+            <if test="unitPeopleName != null">unit_people_name,</if>
+            <if test="shenpijiedian != null ">  shenpijiedian ,</if>
+            <if test="isTeShu != null ">  is_teShu ,</if>
+            <if test="yjtsYuanyin != null ">  yjts_yuanyin ,</if>
+            <if test="cstsYuanyin != null  ">  csts_yuanyin ,</if>
+            <if test="ojtsYuanyin != null  ">  ojts_yuanyin,</if>
+            <if test="tjtsYuanyin != null  ">  tjts_yuanyin ,</if>
+            <if test="sjtsYuanyin != null ">  sjts_yuanyin ,</if>
+
+            <if test="peopleName != null  ">  people_name ,</if>
+            <if test="unitName != null ">  unit_name ,</if>
+            <if test="bdglDepartureYuanyin != null  ">  bdgl_departure_yuanyin ,</if>
+            <if test="isTeshuYongChe  != null  ">  isTeshuYongChe ,</if>
+            <if test="placeState  != null  ">  place_state ,</if>
+            <if test="pepelonamed  != null  ">  pepelonamed ,</if>
+            <if test="battaliontime  != null  ">  battaliontime ,</if>
+            <if test="vehicleType != null">  vehicle_type ,</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="model != null">#{model},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="thebusId != null">#{thebusId},</if>
+            <if test="contact != null">#{contact},</if>
+            <if test="cause != null">#{cause},</if>
+            <if test="authStime != null">#{authStime},</if>
+            <if test="authEtime != null">#{authEtime},</if>
+            <if test="thebusThemplateId != null">#{thebusThemplateId},</if>
+            <if test="people1Id != null">#{people1Id},</if>
+            <if test="people1State != null">#{people1State},</if>
+            <if test="people1Name != null">#{people1Name},</if>
+            <if test="people1Remark != null">#{people1Remark},</if>
+            <if test="people1Authtime != null">#{people1Authtime},</if>
+            <if test="people2Id != null">#{people2Id},</if>
+            <if test="people2State != null">#{people2State},</if>
+            <if test="status != null">#{status},</if>
+            <if test="people2Remark != null">#{people2Remark},</if>
+            <if test="people2Authtime != null">#{people2Authtime},</if>
+            <if test="outstatus != null">#{outstatus},</if>
+            <if test="people2Name != null">#{people2Name},</if>
+            <if test="adminId != null">#{adminId},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="people3Id != null">#{people3Id},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="people3State != null">#{people3State},</if>
+            <if test="driver != null">#{driver},</if>
+            <if test="people3Remark != null">#{people3Remark},</if>
+            <if test="driverContact != null">#{driverContact},</if>
+            <if test="people3Authtime != null">#{people3Authtime},</if>
+            <if test="people3Name != null">#{people3Name},</if>
+            <if test="peopleCount != null">#{peopleCount},</if>
+            <if test="unitPeopleId != null">#{unitPeopleId},</if>
+            <if test="unitPeopleState != null">#{unitPeopleState},</if>
+            <if test="unitPeopleRemark != null">#{unitPeopleRemark},</if>
+            <if test="chushenState != null">#{chushenState},</if>
+            <if test="chushenRemark != null">#{chushenRemark},</if>
+            <if test="route != null">#{route},</if>
+            <if test="outtime != null">#{outtime},</if>
+            <if test="carNames != null">#{carNames},</if>
+            <if test="carIds != null">#{carIds},</if>
+            <if test="unitPeopleName != null">#{unitPeopleName},</if>
+            <if test="shenpijiedian != null ">  #{shenpijiedian},</if>
+
+            <if test="isTeShu != null  "> #{shenpijiedian},</if>
+            <if test="yjtsYuanyin != null ">    #{yjtsYuanyin},</if>
+            <if test="cstsYuanyin != null ">    #{cstsYuanyin},</if>
+            <if test="ojtsYuanyin != null  ">    #{ojtsYuanyin},</if>
+            <if test="tjtsYuanyin != null  ">  #{tjtsYuanyin},</if>
+            <if test="sjtsYuanyin != null  ">  #{sjtsYuanyin},</if>
+
+            <if test="peopleName != null  "> #{peopleName},</if>
+            <if test="unitName != null  ">  #{unitName},</if>
+            <if test="bdglDepartureYuanyin != null ">  #{bdglDepartureYuanyin},</if>
+            <if test="isTeshuYongChe  != null"> #{isTeshuYongChe},</if>
+            <if test="placeState  != null"> #{placeState},</if>
+            <if test="pepelonamed  != null"> #{pepelonamed},</if>
+            <if test="battaliontime  != null"> #{battaliontime},</if>
+            <if test="vehicleType != null">  #{vehicleType},</if>
+
+        </trim>
+    </insert>
+
+    <update id="updateBdglThebusApply" parameterType="BdglThebusApply">
+        update bdgl_thebus_apply
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="model != null">model = #{model},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="thebusId != null">thebus_id = #{thebusId},</if>
+            <if test="contact != null">contact = #{contact},</if>
+            <if test="cause != null">cause = #{cause},</if>
+            <if test="authStime != null">auth_stime = #{authStime},</if>
+            <if test="authEtime != null">auth_etime = #{authEtime},</if>
+            <if test="thebusThemplateId != null">thebus_themplate_id = #{thebusThemplateId},</if>
+            <if test="people1Id != null">people1_id = #{people1Id},</if>
+            <if test="people1State != null">people1_state = #{people1State},</if>
+            <if test="people1Name != null">people1_name = #{people1Name},</if>
+            <if test="people1Remark != null">people1_remark = #{people1Remark},</if>
+            <if test="people1Authtime != null">people1_authtime = #{people1Authtime},</if>
+            <if test="people2Id != null">people2_id = #{people2Id},</if>
+            <if test="people2State != null">people2_state = #{people2State},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="people2Remark != null">people2_remark = #{people2Remark},</if>
+            <if test="people2Authtime != null">people2_authtime = #{people2Authtime},</if>
+            <if test="outstatus != null">outstatus = #{outstatus},</if>
+            <if test="people2Name != null">people2_name = #{people2Name},</if>
+            <if test="adminId != null">admin_id = #{adminId},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="people3Id != null">people3_id = #{people3Id},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="people3State != null">people3_state = #{people3State},</if>
+            <if test="driver != null">driver = #{driver},</if>
+            <if test="people3Remark != null">people3_remark = #{people3Remark},</if>
+            <if test="driverContact != null">driver_contact = #{driverContact},</if>
+            <if test="people3Authtime != null">people3_authtime = #{people3Authtime},</if>
+            <if test="people3Name != null">people3_name = #{people3Name},</if>
+            <if test="peopleCount != null">people_count = #{peopleCount},</if>
+            <if test="unitPeopleId != null">unit_people_id = #{unitPeopleId},</if>
+            <if test="unitPeopleState != null">unit_people_state = #{unitPeopleState},</if>
+            <if test="unitPeopleRemark != null">unit_people_remark = #{unitPeopleRemark},</if>
+            <if test="chushenState != null">chushen_state = #{chushenState},</if>
+            <if test="chushenRemark != null">chushen_remark = #{chushenRemark},</if>
+            <if test="route != null">route = #{route},</if>
+            <if test="outtime != null">outtime = #{outtime},</if>
+            <if test="carNames != null">car_names = #{carNames},</if>
+            <if test="carIds != null">car_ids = #{carIds},</if>
+            <if test="unitPeopleName != null">unit_people_name = #{unitPeopleName},</if>
+            <if test="shenpijiedian != null  ">  shenpijiedian = #{shenpijiedian},</if>
+            <if test="isTeShu != null  and isTeShu != ''">   is_teShu =  #{shenpijiedian},</if>
+            <if test="yjtsYuanyin != null  and yjtsYuanyin != ''">  yjts_yuanyin = #{yjtsYuanyin},</if>
+            <if test="cstsYuanyin != null  and cstsYuanyin != ''">  csts_yuanyin = #{cstsYuanyin},</if>
+            <if test="ojtsYuanyin != null  and ojtsYuanyin != ''">  ojts_yuanyin = #{ojtsYuanyin},</if>
+            <if test="tjtsYuanyin != null  and tjtsYuanyin != ''">  tjts_yuanyin = #{tjtsYuanyin},</if>
+            <if test="sjtsYuanyin != null  and sjtsYuanyin != ''">  sjts_yuanyin = #{sjtsYuanyin},</if>
+            <if test="peopleName != null  and peopleName != ''">  people_name = #{peopleName},</if>
+            <if test="unitName != null  and unitName != ''">  unit_name = #{unitName},</if>
+            <if test="bdglDepartureYuanyin != null  and bdglDepartureYuanyin != ''">  bdgl_departure_yuanyin = #{bdglDepartureYuanyin},</if>
+            <if test="isTeshuYongChe  != null  and isTeshuYongChe  != ''">  isTeshuYongChe  = #{isTeshuYongChe},</if>
+            <if test="placeState  != null  and placeState  != ''">  place_state  = #{placeState},</if>
+            <if test="carUnitId  != null  and carUnitId  != ''">  car_unit_id  = #{carUnitId},</if>
+            <if test="remarkInfo  != null  and remarkInfo  != ''">  remark_info  = #{remarkInfo},</if>
+            <if test="pepelonamed  != null  and pepelonamed  != ''">  pepelonamed  = #{pepelonamed},</if>
+            <if test="battaliontime  != null  and battaliontime  != ''">  battaliontime  = #{battaliontime},</if>
+            <if test="vehicleType != null and vehicleType != ''">vehicle_type = #{vehicleType}</if>
+
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglThebusApplyById" parameterType="Long">
+        delete from bdgl_thebus_apply where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglThebusApplyByIds" parameterType="String">
+        delete from bdgl_thebus_apply where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

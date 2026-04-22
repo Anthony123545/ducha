@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.doormanManage.mapper.BdglVisitMapper">
+
+    <resultMap type="BdglVisit" id="BdglVisitResult">
+        <result property="id"    column="id"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="name"    column="name"    />
+        <result property="arriveTime"    column="arrive_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="adminId"    column="admin_id"    />
+        <result property="contents"    column="contents"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="numberPlate"    column="number_plate"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="peopleName"    column="people_name"    />
+    </resultMap>
+
+    <sql id="selectBdglVisitVo">
+        select id, unit_id, people_id, name, arrive_time, end_time, admin_id, contents, createtime, updatetime, number_plate, unit_name, people_name from bdgl_visit
+    </sql>
+
+    <select id="selectBdglVisitList" parameterType="BdglVisit" resultMap="BdglVisitResult">
+        <include refid="selectBdglVisitVo"/>
+        <where>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="peopleId != null "> and people_id = #{peopleId}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="arriveTime != null "> and arrive_time = #{arriveTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="adminId != null "> and admin_id = #{adminId}</if>
+            <if test="contents != null  and contents != ''"> and contents = #{contents}</if>
+            <if test="createtime != null  and createtime != ''"> and createtime = #{createtime}</if>
+            <if test="updatetime != null  and updatetime != ''"> and updatetime = #{updatetime}</if>
+            <if test="numberPlate != null  and numberPlate != ''"> and number_plate = #{numberPlate}</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="peopleName != null  and peopleName != ''"> and people_name like concat('%', #{peopleName}, '%')</if>
+        </where>
+        order by createtime desc
+    </select>
+
+    <select id="selectBdglVisitById" parameterType="Integer" resultMap="BdglVisitResult">
+        <include refid="selectBdglVisitVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglVisit" parameterType="BdglVisit" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_visit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="unitId != null">unit_id,</if>
+            <if test="peopleId != null">people_id,</if>
+            <if test="name != null">name,</if>
+            <if test="arriveTime != null">arrive_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="adminId != null">admin_id,</if>
+            <if test="contents != null">contents,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="numberPlate != null">number_plate,</if>
+            <if test="unitName != null">unit_name,</if>
+            <if test="peopleName != null">people_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="unitId != null">#{unitId},</if>
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="name != null">#{name},</if>
+            <if test="arriveTime != null">#{arriveTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="adminId != null">#{adminId},</if>
+            <if test="contents != null">#{contents},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="numberPlate != null">#{numberPlate},</if>
+            <if test="unitName != null">#{unitName},</if>
+            <if test="peopleName != null">#{peopleName},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglVisit" parameterType="BdglVisit">
+        update bdgl_visit
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="arriveTime != null">arrive_time = #{arriveTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="adminId != null">admin_id = #{adminId},</if>
+            <if test="contents != null">contents = #{contents},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="numberPlate != null">number_plate = #{numberPlate},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="peopleName != null">people_name = #{peopleName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglVisitById" parameterType="Integer">
+        delete from bdgl_visit where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglVisitByIds" parameterType="String">
+        delete from bdgl_visit where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

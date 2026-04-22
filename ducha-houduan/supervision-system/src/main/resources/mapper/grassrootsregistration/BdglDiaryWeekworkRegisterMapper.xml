@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglDiaryWeekworkRegisterMapper">
+    
+    <resultMap type="BdglDiaryWeekworkRegister" id="BdglDiaryWeekworkRegisterResult">
+        <result property="id"    column="id"    />
+        <result property="bdglDiaryId"    column="bdgl_diary_id"    />
+        <result property="dateline"    column="dateline"    />
+        <result property="contents"    column="contents"    />
+        <result property="shouldArrive"    column="should_arrive"    />
+        <result property="realTo"    column="real_to"    />
+        <result property="percentage"    column="percentage"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectBdglDiaryWeekworkRegisterVo">
+        select id, bdgl_diary_id, dateline, contents, should_arrive, real_to, percentage, create_time from bdgl_diary_weekwork_register
+    </sql>
+
+    <select id="selectBdglDiaryWeekworkRegisterList" parameterType="BdglDiaryWeekworkRegister" resultMap="BdglDiaryWeekworkRegisterResult">
+        <include refid="selectBdglDiaryWeekworkRegisterVo"/>
+        <where>  
+            <if test="bdglDiaryId != null "> and bdgl_diary_id = #{bdglDiaryId}</if>
+            <if test="dateline != null  and dateline != ''"> and dateline = #{dateline}</if>
+            <if test="contents != null  and contents != ''"> and contents = #{contents}</if>
+            <if test="shouldArrive != null "> and should_arrive = #{shouldArrive}</if>
+            <if test="realTo != null "> and real_to = #{realTo}</if>
+            <if test="percentage != null  and percentage != ''"> and percentage = #{percentage}</if>
+        </where>
+    </select>
+    
+    <select id="selectBdglDiaryWeekworkRegisterById" parameterType="Long" resultMap="BdglDiaryWeekworkRegisterResult">
+        <include refid="selectBdglDiaryWeekworkRegisterVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBdglDiaryWeekworkRegister" parameterType="BdglDiaryWeekworkRegister" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_diary_weekwork_register
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bdglDiaryId != null">bdgl_diary_id,</if>
+            <if test="dateline != null">dateline,</if>
+            <if test="contents != null">contents,</if>
+            <if test="shouldArrive != null">should_arrive,</if>
+            <if test="realTo != null">real_to,</if>
+            <if test="percentage != null">percentage,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bdglDiaryId != null">#{bdglDiaryId},</if>
+            <if test="dateline != null">#{dateline},</if>
+            <if test="contents != null">#{contents},</if>
+            <if test="shouldArrive != null">#{shouldArrive},</if>
+            <if test="realTo != null">#{realTo},</if>
+            <if test="percentage != null">#{percentage},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglDiaryWeekworkRegister" parameterType="BdglDiaryWeekworkRegister">
+        update bdgl_diary_weekwork_register
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="bdglDiaryId != null">bdgl_diary_id = #{bdglDiaryId},</if>
+            <if test="dateline != null">dateline = #{dateline},</if>
+            <if test="contents != null">contents = #{contents},</if>
+            <if test="shouldArrive != null">should_arrive = #{shouldArrive},</if>
+            <if test="realTo != null">real_to = #{realTo},</if>
+            <if test="percentage != null">percentage = #{percentage},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglDiaryWeekworkRegisterById" parameterType="Long">
+        delete from bdgl_diary_weekwork_register where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglDiaryWeekworkRegisterByIds" parameterType="String">
+        delete from bdgl_diary_weekwork_register where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

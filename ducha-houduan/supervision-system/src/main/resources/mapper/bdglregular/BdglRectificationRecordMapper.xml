@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.bdglregular.mapper.BdglRectificationRecordMapper">
+    
+    <resultMap type="BdglRectificationRecord" id="BdglRectificationRecordResult">
+        <result property="id"    column="id"    />
+        <result property="inspectedUnitId"    column="inspected_unit_id"    />
+        <result property="inspectedUnit"    column="inspected_unit"    />
+        <result property="inspectionType"    column="inspection_type"    />
+        <result property="unitCheckId"    column="unit_check_id"    />
+        <result property="unitCheck"    column="unit_check"    />
+        <result property="inspectionTime"    column="inspection_time"    />
+        <result property="inspectionSite"    column="inspection_site"    />
+        <result property="score"    column="score"    />
+        <result property="rectificationTime"    column="rectification_time"    />
+        <result property="question"    column="question"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createUserId"    column="create_user_id"    />
+        <result property="createUser"    column="create_user"    />
+        <result property="chargePeople"    column="charge_people"    />
+        <result property="correctiveAction"    column="corrective_action"    />
+        <result property="pictureProof"    column="picture_proof"    />
+        <result property="documentProof"    column="document_proof"    />
+        <result property="caozuoType"    column="caozuo_type"    />
+        <result property="wjId"    column="wj_id"    />
+        <result property="chargePeopleId"    column="charge_people_id"    />
+    </resultMap>
+
+    <sql id="selectBdglRectificationRecordVo">
+        select id, inspected_unit_id, inspected_unit, inspection_type, unit_check_id, unit_check, inspection_time, inspection_site, score, rectification_time, question, create_time, create_user_id, create_user, charge_people, corrective_action, picture_proof, document_proof, caozuo_type, wj_id, charge_people_id from bdgl_rectification_record
+    </sql>
+
+    <select id="selectBdglRectificationRecordList" parameterType="BdglRectificationRecord" resultMap="BdglRectificationRecordResult">
+        <include refid="selectBdglRectificationRecordVo"/>
+        <where>  
+            <if test="inspectedUnitId != null "> and inspected_unit_id = #{inspectedUnitId}</if>
+            <if test="inspectedUnit != null  and inspectedUnit != ''"> and inspected_unit = #{inspectedUnit}</if>
+            <if test="inspectionType != null  and inspectionType != ''"> and inspection_type = #{inspectionType}</if>
+            <if test="unitCheckId != null "> and unit_check_id = #{unitCheckId}</if>
+            <if test="unitCheck != null  and unitCheck != ''"> and unit_check = #{unitCheck}</if>
+            <if test="inspectionTime != null  and inspectionTime != ''"> and inspection_time = #{inspectionTime}</if>
+            <if test="inspectionSite != null  and inspectionSite != ''"> and inspection_site = #{inspectionSite}</if>
+            <if test="score != null "> and score = #{score}</if>
+            <if test="rectificationTime != null  and rectificationTime != ''"> and rectification_time = #{rectificationTime}</if>
+            <if test="question != null  and question != ''"> and question = #{question}</if>
+            <if test="createUserId != null "> and create_user_id = #{createUserId}</if>
+            <if test="createUser != null  and createUser != ''"> and create_user = #{createUser}</if>
+            <if test="chargePeople != null  and chargePeople != ''"> and charge_people = #{chargePeople}</if>
+            <if test="correctiveAction != null  and correctiveAction != ''"> and corrective_action = #{correctiveAction}</if>
+            <if test="pictureProof != null  and pictureProof != ''"> and picture_proof = #{pictureProof}</if>
+            <if test="documentProof != null  and documentProof != ''"> and document_proof = #{documentProof}</if>
+            <if test="caozuoType != null  and caozuoType != ''"> and caozuo_type = #{caozuoType}</if>
+            <if test="wjId != null "> and wj_id = #{wjId}</if>
+            <if test="chargePeopleId != null "> and charge_people_id = #{chargePeopleId}</if>
+        </where>
+    </select>
+    
+    <select id="selectBdglRectificationRecordById" parameterType="Long" resultMap="BdglRectificationRecordResult">
+        <include refid="selectBdglRectificationRecordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBdglRectificationRecord" parameterType="BdglRectificationRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_rectification_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="inspectedUnitId != null">inspected_unit_id,</if>
+            <if test="inspectedUnit != null">inspected_unit,</if>
+            <if test="inspectionType != null">inspection_type,</if>
+            <if test="unitCheckId != null">unit_check_id,</if>
+            <if test="unitCheck != null">unit_check,</if>
+            <if test="inspectionTime != null">inspection_time,</if>
+            <if test="inspectionSite != null">inspection_site,</if>
+            <if test="score != null">score,</if>
+            <if test="rectificationTime != null">rectification_time,</if>
+            <if test="question != null">question,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createUserId != null">create_user_id,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="chargePeople != null">charge_people,</if>
+            <if test="correctiveAction != null">corrective_action,</if>
+            <if test="pictureProof != null">picture_proof,</if>
+            <if test="documentProof != null">document_proof,</if>
+            <if test="caozuoType != null">caozuo_type,</if>
+            <if test="wjId != null">wj_id,</if>
+            <if test="chargePeopleId != null">charge_people_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="inspectedUnitId != null">#{inspectedUnitId},</if>
+            <if test="inspectedUnit != null">#{inspectedUnit},</if>
+            <if test="inspectionType != null">#{inspectionType},</if>
+            <if test="unitCheckId != null">#{unitCheckId},</if>
+            <if test="unitCheck != null">#{unitCheck},</if>
+            <if test="inspectionTime != null">#{inspectionTime},</if>
+            <if test="inspectionSite != null">#{inspectionSite},</if>
+            <if test="score != null">#{score},</if>
+            <if test="rectificationTime != null">#{rectificationTime},</if>
+            <if test="question != null">#{question},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createUserId != null">#{createUserId},</if>
+            <if test="createUser != null">#{createUser},</if>
+            <if test="chargePeople != null">#{chargePeople},</if>
+            <if test="correctiveAction != null">#{correctiveAction},</if>
+            <if test="pictureProof != null">#{pictureProof},</if>
+            <if test="documentProof != null">#{documentProof},</if>
+            <if test="caozuoType != null">#{caozuoType},</if>
+            <if test="wjId != null">#{wjId},</if>
+            <if test="chargePeopleId != null">#{chargePeopleId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglRectificationRecord" parameterType="BdglRectificationRecord">
+        update bdgl_rectification_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="inspectedUnitId != null">inspected_unit_id = #{inspectedUnitId},</if>
+            <if test="inspectedUnit != null">inspected_unit = #{inspectedUnit},</if>
+            <if test="inspectionType != null">inspection_type = #{inspectionType},</if>
+            <if test="unitCheckId != null">unit_check_id = #{unitCheckId},</if>
+            <if test="unitCheck != null">unit_check = #{unitCheck},</if>
+            <if test="inspectionTime != null">inspection_time = #{inspectionTime},</if>
+            <if test="inspectionSite != null">inspection_site = #{inspectionSite},</if>
+            <if test="score != null">score = #{score},</if>
+            <if test="rectificationTime != null">rectification_time = #{rectificationTime},</if>
+            <if test="question != null">question = #{question},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createUserId != null">create_user_id = #{createUserId},</if>
+            <if test="createUser != null">create_user = #{createUser},</if>
+            <if test="chargePeople != null">charge_people = #{chargePeople},</if>
+            <if test="correctiveAction != null">corrective_action = #{correctiveAction},</if>
+            <if test="pictureProof != null">picture_proof = #{pictureProof},</if>
+            <if test="documentProof != null">document_proof = #{documentProof},</if>
+            <if test="caozuoType != null">caozuo_type = #{caozuoType},</if>
+            <if test="wjId != null">wj_id = #{wjId},</if>
+            <if test="chargePeopleId != null">charge_people_id = #{chargePeopleId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglRectificationRecordById" parameterType="Long">
+        delete from bdgl_rectification_record where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglRectificationRecordByIds" parameterType="String">
+        delete from bdgl_rectification_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

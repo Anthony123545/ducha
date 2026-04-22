@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.combatduty.mapper.BdglMilitarydutyMapper">
+
+    <resultMap type="BdglMilitaryduty" id="BdglMilitarydutyResult">
+        <result property="id"    column="id"    />
+        <result property="attendedTime"    column="attended_time"    />
+        <result property="numberPlateId"    column="number_plate_id"    />
+        <result property="numberPlateName"    column="number_plate_name"    />
+        <result property="carUnitId"    column="car_unit_id"    />
+        <result property="carUnitName"    column="car_unit_name"    />
+        <result property="carType"    column="car_type"    />
+        <result property="carStates"    column="car_states"    />
+        <result property="adress"    column="adress"    />
+        <result property="driverId"    column="driver_id"    />
+        <result property="driverName"    column="driver_name"    />
+        <result property="telephone"    column="telephone"    />
+        <result property="modelInfo"    column="model_info"    />
+        <result property="modelText"    column="model_text"    />
+        <result property="color"    column="color"    />
+        <result property="driverUnit"    column="driver_unit"    />
+        <result property="driverUnitId"    column="driver_unit_id"    />
+    </resultMap>
+
+    <sql id="selectBdglMilitarydutyVo">
+        select id, attended_time, number_plate_id, number_plate_name, car_unit_id, car_unit_name, car_type, car_states, adress, driver_id, driver_name, telephone, model_info, model_text, color, driver_unit, driver_unit_id from bdgl_militaryduty
+    </sql>
+
+    <select id="selectBdglMilitarydutyList" parameterType="BdglMilitaryduty" resultMap="BdglMilitarydutyResult">
+        <include refid="selectBdglMilitarydutyVo"/>
+        <where>
+            <if test="attendedTime != null  and attendedTime != ''"> and attended_time = #{attendedTime}</if>
+            <if test="numberPlateId != null "> and number_plate_id = #{numberPlateId}</if>
+            <if test="numberPlateName != null  and numberPlateName != ''"> and number_plate_name like concat('%', #{numberPlateName}, '%')</if>
+            <if test="carUnitId != null "> and car_unit_id = #{carUnitId}</if>
+            <if test="carUnitName != null  and carUnitName != ''"> and car_unit_name like concat('%', #{carUnitName}, '%')</if>
+            <if test="carType != null  and carType != ''"> and car_type = #{carType}</if>
+            <if test="carStates != null  and carStates != ''"> and car_states = #{carStates}</if>
+            <if test="adress != null  and adress != ''"> and adress = #{adress}</if>
+            <if test="driverId != null "> and driver_id = #{driverId}</if>
+            <if test="driverName != null  and driverName != ''"> and driver_name like concat('%', #{driverName}, '%')</if>
+            <if test="telephone != null  and telephone != ''"> and telephone = #{telephone}</if>
+            <if test="modelInfo != null  and modelInfo != ''"> and model_info = #{modelInfo}</if>
+            <if test="modelText != null  and modelText != ''"> and model_text = #{modelText}</if>
+            <if test="color != null  and color != ''"> and color = #{color}</if>
+            <if test="driverUnit != null  and driverUnit != ''"> and driver_unit = #{driverUnit}</if>
+            <if test="driverUnitId != null "> and driver_unit_id = #{driverUnitId}</if>
+            <if test="attendedTimeGe != null"> and attended_time &gt;= #{attendedTimeGe}</if>
+            <if test="attendedTimeLe != null"> and attended_time &lt;= #{attendedTimeLe}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectBdglMilitarydutyById" parameterType="Long" resultMap="BdglMilitarydutyResult">
+        <include refid="selectBdglMilitarydutyVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglMilitaryduty" parameterType="BdglMilitaryduty" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_militaryduty
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="attendedTime != null">attended_time,</if>
+            <if test="numberPlateId != null">number_plate_id,</if>
+            <if test="numberPlateName != null">number_plate_name,</if>
+            <if test="carUnitId != null">car_unit_id,</if>
+            <if test="carUnitName != null">car_unit_name,</if>
+            <if test="carType != null">car_type,</if>
+            <if test="carStates != null">car_states,</if>
+            <if test="adress != null">adress,</if>
+            <if test="driverId != null">driver_id,</if>
+            <if test="driverName != null">driver_name,</if>
+            <if test="telephone != null">telephone,</if>
+            <if test="modelInfo != null">model_info,</if>
+            <if test="modelText != null">model_text,</if>
+            <if test="color != null">color,</if>
+            <if test="driverUnit != null">driver_unit,</if>
+            <if test="driverUnitId != null">driver_unit_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="attendedTime != null">#{attendedTime},</if>
+            <if test="numberPlateId != null">#{numberPlateId},</if>
+            <if test="numberPlateName != null">#{numberPlateName},</if>
+            <if test="carUnitId != null">#{carUnitId},</if>
+            <if test="carUnitName != null">#{carUnitName},</if>
+            <if test="carType != null">#{carType},</if>
+            <if test="carStates != null">#{carStates},</if>
+            <if test="adress != null">#{adress},</if>
+            <if test="driverId != null">#{driverId},</if>
+            <if test="driverName != null">#{driverName},</if>
+            <if test="telephone != null">#{telephone},</if>
+            <if test="modelInfo != null">#{modelInfo},</if>
+            <if test="modelText != null">#{modelText},</if>
+            <if test="color != null">#{color},</if>
+            <if test="driverUnit != null">#{driverUnit},</if>
+            <if test="driverUnitId != null">#{driverUnitId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglMilitaryduty" parameterType="BdglMilitaryduty">
+        update bdgl_militaryduty
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="attendedTime != null">attended_time = #{attendedTime},</if>
+            <if test="numberPlateId != null">number_plate_id = #{numberPlateId},</if>
+            <if test="numberPlateName != null">number_plate_name = #{numberPlateName},</if>
+            <if test="carUnitId != null">car_unit_id = #{carUnitId},</if>
+            <if test="carUnitName != null">car_unit_name = #{carUnitName},</if>
+            <if test="carType != null">car_type = #{carType},</if>
+            <if test="carStates != null">car_states = #{carStates},</if>
+            <if test="adress != null">adress = #{adress},</if>
+            <if test="driverId != null">driver_id = #{driverId},</if>
+            <if test="driverName != null">driver_name = #{driverName},</if>
+            <if test="telephone != null">telephone = #{telephone},</if>
+            <if test="modelInfo != null">model_info = #{modelInfo},</if>
+            <if test="modelText != null">model_text = #{modelText},</if>
+            <if test="color != null">color = #{color},</if>
+            <if test="driverUnit != null">driver_unit = #{driverUnit},</if>
+            <if test="driverUnitId != null">driver_unit_id = #{driverUnitId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglMilitarydutyById" parameterType="Long">
+        delete from bdgl_militaryduty where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglMilitarydutyByIds" parameterType="String">
+        delete from bdgl_militaryduty where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectDutyListByAttendedTime" resultMap="BdglMilitarydutyResult">
+        SELECT id,number_plate_id FROM  bdgl_militaryduty where STR_TO_DATE(attended_time,'%Y-%m-%d') &gt;= CURDATE()
+    </select>
+</mapper>

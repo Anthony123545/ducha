@@ -1,0 +1,6 @@
+Application Version: ${ruoyi.version}
+Spring Boot Version: ${spring-boot.version}
+////////////////////////////////////////////////////////////////////
+//                          _ooOoo_                               //
+//                         o8888888o                              //
+                       智能督察管理平台启动中

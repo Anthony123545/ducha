@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.peoplefiverates.mapper.BdglDutyOutfitMapper">
+    
+    <resultMap type="BdglDutyOutfit" id="BdglDutyOutfitResult">
+        <result property="id"    column="id"    />
+        <result property="zbbz"    column="zbbz"    />
+        <result property="zbsy"    column="zbsy"    />
+        <result property="zbky"    column="zbky"    />
+        <result property="sjpt"    column="sjpt"    />
+        <result property="bzpt"    column="bzpt"    />
+        <result property="cczb"    column="cczb"    />
+        <result property="zbcd"    column="zbcd"    />
+    </resultMap>
+
+    <sql id="selectBdglDutyOutfitVo">
+        select id, zbbz, zbsy, zbky, sjpt, bzpt, cczb, zbcd from bdgl_duty_outfit
+    </sql>
+
+    <select id="selectBdglDutyOutfitList" parameterType="BdglDutyOutfit" resultMap="BdglDutyOutfitResult">
+        <include refid="selectBdglDutyOutfitVo"/>
+        <where>  
+            <if test="zbbz != null "> and zbbz = #{zbbz}</if>
+            <if test="zbsy != null "> and zbsy = #{zbsy}</if>
+            <if test="zbky != null "> and zbky = #{zbky}</if>
+            <if test="sjpt != null "> and sjpt = #{sjpt}</if>
+            <if test="bzpt != null "> and bzpt = #{bzpt}</if>
+            <if test="cczb != null "> and cczb = #{cczb}</if>
+            <if test="zbcd != null "> and zbcd = #{zbcd}</if>
+        </where>
+    </select>
+    
+    <select id="selectBdglDutyOutfitById" parameterType="Integer" resultMap="BdglDutyOutfitResult">
+        <include refid="selectBdglDutyOutfitVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBdglDutyOutfit" parameterType="BdglDutyOutfit" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_duty_outfit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="zbbz != null">zbbz,</if>
+            <if test="zbsy != null">zbsy,</if>
+            <if test="zbky != null">zbky,</if>
+            <if test="sjpt != null">sjpt,</if>
+            <if test="bzpt != null">bzpt,</if>
+            <if test="cczb != null">cczb,</if>
+            <if test="zbcd != null">zbcd,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="zbbz != null">#{zbbz},</if>
+            <if test="zbsy != null">#{zbsy},</if>
+            <if test="zbky != null">#{zbky},</if>
+            <if test="sjpt != null">#{sjpt},</if>
+            <if test="bzpt != null">#{bzpt},</if>
+            <if test="cczb != null">#{cczb},</if>
+            <if test="zbcd != null">#{zbcd},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglDutyOutfit" parameterType="BdglDutyOutfit">
+        update bdgl_duty_outfit
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="zbbz != null">zbbz = #{zbbz},</if>
+            <if test="zbsy != null">zbsy = #{zbsy},</if>
+            <if test="zbky != null">zbky = #{zbky},</if>
+            <if test="sjpt != null">sjpt = #{sjpt},</if>
+            <if test="bzpt != null">bzpt = #{bzpt},</if>
+            <if test="cczb != null">cczb = #{cczb},</if>
+            <if test="zbcd != null">zbcd = #{zbcd},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglDutyOutfitById" parameterType="Integer">
+        delete from bdgl_duty_outfit where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglDutyOutfitByIds" parameterType="String">
+        delete from bdgl_duty_outfit where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

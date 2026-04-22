@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglAttendanceRecordMapper">
+
+    <resultMap type="BdglAttendanceRecord" id="BdglAttendanceRecordResult">
+        <result property="id"    column="id"    />
+        <result property="sid"    column="sid"    />
+        <result property="verify"    column="verify"    />
+        <result property="checktime"    column="checktime"    />
+        <result property="sn"    column="sn"    />
+        <result property="alias"    column="alias"    />
+        <result property="pin"    column="pin"    />
+        <result property="ename"    column="ename"    />
+        <result property="deptnumber"    column="deptnumber"    />
+        <result property="deptname"    column="deptname"    />
+        <result property="temperature"    column="temperature"    />
+        <result property="maskFlag"    column="mask_flag"    />
+        <result property="stateno"    column="stateno"    />
+        <result property="state"    column="state"    />
+        <result property="photograph"    column="photograph"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="ipAddressId"    column="ip_address_id"    />
+        <result property="starttime"    column="starttime"    />
+        <result property="endtime"    column="endtime"    />
+        <result property="startTime"    column="startTime"    />
+        <result property="endTime"    column="endTime"    />
+
+        <association property="bdglIpaddressConfig">
+            <result property="id"    column="cid"    />
+            <result property="name"    column="name"    />
+            <result property="ip"    column="ip"    />
+        </association>
+    </resultMap>
+
+    <sql id="selectBdglAttendanceRecordVo">
+        select bdgl_attendance_record.id, sid, verify, checktime, sn, alias, pin, ename, deptnumber, deptname, temperature, mask_flag, stateno, state, photograph, bdgl_attendance_record.create_time, ip_address_id,
+               bdgl_ipaddress_config.id AS cid,bdgl_ipaddress_config.ip,bdgl_ipaddress_config.`name`
+        from bdgl_attendance_record
+                 LEFT JOIN bdgl_ipaddress_config ON bdgl_attendance_record.ip_address_id=bdgl_ipaddress_config.id
+    </sql>
+
+    <select id="selectBdglAttendanceRecordList" parameterType="BdglAttendanceRecord" resultMap="BdglAttendanceRecordResult">
+        <include refid="selectBdglAttendanceRecordVo"/>
+        <where>
+            <if test="sid != null "> and sid = #{sid}</if>
+            <if test="verify != null "> and verify = #{verify}</if>
+
+            <if test="sn != null  and sn != ''"> and sn = #{sn}</if>
+            <if test="alias != null  and alias != ''"> and alias = #{alias}</if>
+            <if test="pin != null  and pin != ''"> and pin = #{pin}</if>
+            <if test="ename != null  and ename != ''"> and ename like concat('%', #{ename}, '%')</if>
+            <if test="deptnumber != null  and deptnumber != ''"> and deptnumber = #{deptnumber}</if>
+            <if test="deptname != null  and deptname != ''"> and deptname like concat('%', #{deptname}, '%')</if>
+            <if test="temperature != null  and temperature != ''"> and temperature = #{temperature}</if>
+            <if test="maskFlag != null "> and mask_flag = #{maskFlag}</if>
+            <if test="stateno != null "> and stateno = #{stateno}</if>
+            <if test="state != null  and state != ''"> and state = #{state}</if>
+            <if test="photograph != null  and photograph != ''"> and photograph = #{photograph}</if>
+            <if test="ipAddressId != null "> and ip_address_id = #{ipAddressId}</if>
+            <if test="startTime != null"> and checktime >= #{startTime} </if>
+            <if test="endTime != null"> and checktime &lt;= #{endTime} </if>
+
+        </where>
+        order by checktime desc
+    </select>
+
+    <select id="selectBdglAttendanceRecordById" parameterType="Long" resultMap="BdglAttendanceRecordResult">
+        <include refid="selectBdglAttendanceRecordVo"/>
+        where bdgl_attendance_record.id = #{id}
+    </select>
+
+    <select id="selectBdglAttendanceRecordLists" resultMap="BdglAttendanceRecordResult">
+        <include refid="selectBdglAttendanceRecordVo"/>
+        where to_days(checktime) = to_days(now())
+        and stateno = #{stateno}
+        ORDER BY checktime
+    </select>
+    <select id="selectBdglAttendanceRecords" resultMap="BdglAttendanceRecordResult">
+        <include refid="selectBdglAttendanceRecordVo"/>
+        WHERE pin = #{pin} AND stateno = 2
+        ORDER BY create_time
+        LIMIT 1
+    </select>
+    <select id="select" resultMap="BdglAttendanceRecordResult">
+        <include refid="selectBdglAttendanceRecordVo"/>
+        where checktime = #{departureTime}
+    </select>
+    <select id="selectBdglAttendanceRecord" resultMap="BdglAttendanceRecordResult">
+        <include refid="selectBdglAttendanceRecordVo"/>
+        WHERE ename = #{ename} AND sn = #{sn} and checktime > #{checktime}
+        ORDER BY checktime DESC
+        LIMIT 1
+    </select>
+
+    <insert id="insertBdglAttendanceRecord" parameterType="BdglAttendanceRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_attendance_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sid != null">sid,</if>
+            <if test="verify != null">verify,</if>
+            <if test="checktime != null">checktime,</if>
+            <if test="sn != null">sn,</if>
+            <if test="alias != null">alias,</if>
+            <if test="pin != null">pin,</if>
+            <if test="ename != null">ename,</if>
+            <if test="deptnumber != null">deptnumber,</if>
+            <if test="deptname != null">deptname,</if>
+            <if test="temperature != null">temperature,</if>
+            <if test="maskFlag != null">mask_flag,</if>
+            <if test="stateno != null">stateno,</if>
+            <if test="state != null">state,</if>
+            <if test="photograph != null">photograph,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="ipAddressId != null">ip_address_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sid != null">#{sid},</if>
+            <if test="verify != null">#{verify},</if>
+            <if test="checktime != null">#{checktime},</if>
+            <if test="sn != null">#{sn},</if>
+            <if test="alias != null">#{alias},</if>
+            <if test="pin != null">#{pin},</if>
+            <if test="ename != null">#{ename},</if>
+            <if test="deptnumber != null">#{deptnumber},</if>
+            <if test="deptname != null">#{deptname},</if>
+            <if test="temperature != null">#{temperature},</if>
+            <if test="maskFlag != null">#{maskFlag},</if>
+            <if test="stateno != null">#{stateno},</if>
+            <if test="state != null">#{state},</if>
+            <if test="photograph != null">#{photograph},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="ipAddressId != null">#{ipAddressId},</if>
+         </trim>
+    </insert>
+
+    <insert id="batchInsertBdglAttendanceRecord" parameterType="Map">
+        insert into bdgl_attendance_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dataMap.record.sid != null">sid,</if>
+            <if test="dataMap.record.verify != null">verify,</if>
+            <if test="dataMap.record.checktime != null">checktime,</if>
+            <if test="dataMap.record.sn != null">sn,</if>
+            <if test="dataMap.record.alias != null">alias,</if>
+            <if test="dataMap.record.pin != null">pin,</if>
+            <if test="dataMap.record.ename != null">ename,</if>
+            <if test="dataMap.record.deptnumber != null">deptnumber,</if>
+            <if test="dataMap.record.deptname != null">deptname,</if>
+            <if test="dataMap.record.temperature != null">temperature,</if>
+            <if test="dataMap.record.maskFlag != null">mask_flag,</if>
+            <if test="dataMap.record.stateno != null">stateno,</if>
+            <if test="dataMap.record.state != null">state,</if>
+            <if test="dataMap.record.photograph != null">photograph,</if>
+            <if test="dataMap.record.createTime != null">create_time,</if>
+            <if test="dataMap.record.ipAddressId != null">ip_address_id,</if>
+        </trim>
+        <foreach collection="dataMap.recordList" open="VALUES" item="item" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.sid != null">#{item.sid},</if>
+                <if test="item.verify != null">#{item.verify},</if>
+                <if test="item.checktime != null">#{item.checktime},</if>
+                <if test="item.sn != null">#{item.sn},</if>
+                <if test="item.alias != null">#{item.alias},</if>
+                <if test="item.pin != null">#{item.pin},</if>
+                <if test="item.ename != null">#{item.ename},</if>
+                <if test="item.deptnumber != null">#{item.deptnumber},</if>
+                <if test="item.deptname != null">#{item.deptname},</if>
+                <if test="item.temperature != null">#{item.temperature},</if>
+                <if test="item.maskFlag != null">#{item.maskFlag},</if>
+                <if test="item.stateno != null">#{item.stateno},</if>
+                <if test="item.state != null">#{item.state},</if>
+                <if test="item.photograph != null">#{item.photograph},</if>
+                <if test="item.createTime != null">#{item.createTime},</if>
+                <if test="item.ipAddressId != null">#{item.ipAddressId},</if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <update id="updateBdglAttendanceRecord" parameterType="BdglAttendanceRecord">
+        update bdgl_attendance_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sid != null">sid = #{sid},</if>
+            <if test="verify != null">verify = #{verify},</if>
+            <if test="checktime != null">checktime = #{checktime},</if>
+            <if test="sn != null">sn = #{sn},</if>
+            <if test="alias != null">alias = #{alias},</if>
+            <if test="pin != null">pin = #{pin},</if>
+            <if test="ename != null">ename = #{ename},</if>
+            <if test="deptnumber != null">deptnumber = #{deptnumber},</if>
+            <if test="deptname != null">deptname = #{deptname},</if>
+            <if test="temperature != null">temperature = #{temperature},</if>
+            <if test="maskFlag != null">mask_flag = #{maskFlag},</if>
+            <if test="stateno != null">stateno = #{stateno},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="photograph != null">photograph = #{photograph},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="ipAddressId != null">ip_address_id = #{ipAddressId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglAttendanceRecordById" parameterType="Long">
+        delete from bdgl_attendance_record where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglAttendanceRecordByIds" parameterType="String">
+        delete from bdgl_attendance_record where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglFoodShoppingMapper">
+
+    <resultMap type="BdglFoodShopping" id="BdglFoodShoppingResult">
+        <result property="id"    column="id"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="zName"    column="z_name"    />
+        <result property="zWeight"    column="z_weight"    />
+        <result property="zMoney"    column="z_money"    />
+        <result property="total"    column="total"    />
+        <result property="foodId"    column="food_id"    />
+        <result property="fName"    column="f_name"    />
+        <result property="fWeight"    column="f_weight"    />
+        <result property="fMoney"    column="f_money"    />
+        <result property="qName"    column="q_name"    />
+        <result property="qWeight"    column="q_weight"    />
+        <result property="qMoney"    column="q_money"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="peoplename"    column="peoplename"    />
+    </resultMap>
+
+    <sql id="selectBdglFoodShoppingVo">
+        select id, people_id, z_name, z_weight, z_money, total, food_id, f_name, f_weight, f_money, q_name, q_weight, q_money, createtime, updatetime,peoplename from bdgl_food_shopping
+    </sql>
+
+    <select id="selectBdglFoodShoppingList" parameterType="BdglFoodShopping" resultMap="BdglFoodShoppingResult">
+        <include refid="selectBdglFoodShoppingVo"/>
+        <where>
+            <if test="peopleId != null "> and people_id = #{peopleId}</if>
+            <if test="zName != null  and zName != ''"> and z_name like concat('%', #{zName}, '%')</if>
+            <if test="zWeight != null "> and z_weight = #{zWeight}</if>
+            <if test="zMoney != null "> and z_money = #{zMoney}</if>
+            <if test="total != null "> and total = #{total}</if>
+            <if test="foodId != null "> and food_id = #{foodId}</if>
+            <if test="fName != null  and fName != ''"> and f_name like concat('%', #{fName}, '%')</if>
+            <if test="fWeight != null "> and f_weight = #{fWeight}</if>
+            <if test="fMoney != null "> and f_money = #{fMoney}</if>
+            <if test="qName != null  and qName != ''"> and q_name like concat('%', #{qName}, '%')</if>
+            <if test="qWeight != null "> and q_weight = #{qWeight}</if>
+            <if test="qMoney != null "> and q_money = #{qMoney}</if>
+            <if test="createtime != null "> and createtime = #{createtime}</if>
+            <if test="updatetime != null "> and updatetime = #{updatetime}</if>
+            <if test="peoplename != null "> and peoplename = #{peoplename}</if>
+        </where>
+    </select>
+
+    <select id="selectBdglFoodShoppingById" parameterType="Integer" resultMap="BdglFoodShoppingResult">
+        <include refid="selectBdglFoodShoppingVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglFoodShopping" parameterType="BdglFoodShopping" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_food_shopping
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="peopleId != null">people_id,</if>
+            <if test="zName != null">z_name,</if>
+            <if test="zWeight != null">z_weight,</if>
+            <if test="zMoney != null">z_money,</if>
+            <if test="total != null">total,</if>
+            <if test="foodId != null">food_id,</if>
+            <if test="fName != null">f_name,</if>
+            <if test="fWeight != null">f_weight,</if>
+            <if test="fMoney != null">f_money,</if>
+            <if test="qName != null">q_name,</if>
+            <if test="qWeight != null">q_weight,</if>
+            <if test="qMoney != null">q_money,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="peoplename != null">peoplename,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="zName != null">#{zName},</if>
+            <if test="zWeight != null">#{zWeight},</if>
+            <if test="zMoney != null">#{zMoney},</if>
+            <if test="total != null">#{total},</if>
+            <if test="foodId != null">#{foodId},</if>
+            <if test="fName != null">#{fName},</if>
+            <if test="fWeight != null">#{fWeight},</if>
+            <if test="fMoney != null">#{fMoney},</if>
+            <if test="qName != null">#{qName},</if>
+            <if test="qWeight != null">#{qWeight},</if>
+            <if test="qMoney != null">#{qMoney},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="peoplename != null">#{peoplename},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglFoodShopping" parameterType="BdglFoodShopping">
+        update bdgl_food_shopping
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="zName != null">z_name = #{zName},</if>
+            <if test="zWeight != null">z_weight = #{zWeight},</if>
+            <if test="zMoney != null">z_money = #{zMoney},</if>
+            <if test="total != null">total = #{total},</if>
+            <if test="foodId != null">food_id = #{foodId},</if>
+            <if test="fName != null">f_name = #{fName},</if>
+            <if test="fWeight != null">f_weight = #{fWeight},</if>
+            <if test="fMoney != null">f_money = #{fMoney},</if>
+            <if test="qName != null">q_name = #{qName},</if>
+            <if test="qWeight != null">q_weight = #{qWeight},</if>
+            <if test="qMoney != null">q_money = #{qMoney},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="peoplename != null">peoplename = #{peoplename},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglFoodShoppingById" parameterType="Integer">
+        delete from bdgl_food_shopping where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglFoodShoppingByIds" parameterType="String">
+        delete from bdgl_food_shopping where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteBdglFoodShopping">
+        delete from bdgl_food_shopping where food_id = #{id}
+    </delete>
+</mapper>

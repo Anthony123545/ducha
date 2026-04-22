@@ -1,0 +1,51 @@
+{
+  "UserInfo": {  // 人员信息对象
+    "employeeNo": "${employeeNo}",  // 【必填】工号（人员ID）
+    "name": "${name}",  // 【可选】姓名
+    "userType": "${userType}",  // 【必填】人员类型 [normal 普通人, visitor 来宾, blackList 黑名单人员]
+    "closeDelayEnabled": ${closeDelayEnabled},  // 【可选】是否启用关门延迟（布尔类型）
+    "Valid": {  // 【可选】有效期设置
+      "enable": ${enable},  // 【必填】是否启用有效期（布尔类型）
+      "beginTime": "${beginTime}",  // 【必填】有效期开始时间（本地或UTC）
+      "endTime": "${endTime}",  // 【必填】有效期结束时间（本地或UTC）
+      "timeType": "${timeType}"  // 【可选】时间类型 [local 设备本地时间, UTC 标准时间]
+    },
+    "belongGroup": "${belongGroup}",  // 【可选】所属群组（多个群组用逗号分隔）
+    "password": "${password}",  // 【可选】开门密码
+    "doorRight": "${doorRight}",  // 【可选】门权限（多个门用逗号分隔）
+    "RightPlan": [  // 【可选】门权限计划（锁权限计划）
+      {
+      "doorNo": ${doorNo},  // 门编号（锁ID）
+      "planTemplateNo": "${planTemplateNo}"  // 计划模板编号（多个模板编号取“或”关系）
+      }
+    ],
+    "maxOpenDoorTime": ${maxOpenDoorTime},  // 【可选】最大认证次数（0 表示无限制）
+    "openDoorTime": ${openDoorTime},  // 【可选】已认证次数
+    "roomNumber": ${roomNumber},  // 【可选】房间号
+    "floorNumber": ${floorNumber},  // 【可选】楼层号
+    "doubleLockRight": ${doubleLockRight},  // 【可选】是否具备反锁开门权限（布尔类型）
+    "localUIRight": ${localUIRight},  // 【可选】是否可使用设备本地UI操作（布尔类型）
+    "userVerifyMode": "${userVerifyMode}",  // 【可选】验证方式
+    // 示例枚举：
+    // [cardAndPw, card, cardOrPw, fp, fpAndPw, fpOrCard, fpAndCard, fpAndCardAndPw,
+    //  faceOrFpOrCardOrPw, faceAndFp, faceAndPw, faceAndCard, face, employeeNoAndPw,
+    //  fpOrPw, employeeNoAndFp, employeeNoAndFpAndPw, faceAndFpAndCard,
+    //  faceAndPwAndFp, employeeNoAndFace, faceOrfaceAndCard, fpOrface, cardOrfaceOrPw]
+    "checkUser": ${checkUser},  // 【可选】是否校验重复添加人员（true 开启重复校验）
+    "numOfFace": ${numOfFace},  // 【可选】关联人脸数量
+    "numOfFP": ${numOfFP},  // 【可选】关联指纹数量
+    "numOfCard": ${numOfCard},  // 【可选】关联卡数量
+    "gender": "${gender}",  // 【可选】性别 [male 男, female 女, unknown 未知]
+    "PersonInfoExtends": [  // 【可选】人员信息扩展
+      {
+      "value": "${extendValue}"  // 扩展内容（可自定义）
+      }
+    ],
+    "operateType": "${operateType}",  // 【可选】操作类型，如 byTerminal 表示按终端操作
+    "terminalNoList": [${terminalNoList}],  // 【可选】终端ID列表（type 为 byTerminal 时必填）
+    "dynamicCode": "${dynamicCode}",  // 【可选】动态权限码
+    "callNumbers": [${callNumbers}],  // 【可选】呼叫号码列表（如 "1-1-1-401"）
+    "floorNumbers": [${floorNumbers}],  // 【可选】楼层列表（可配置多层）
+    "groupName": "${groupName}"  // 【可选】组织架构名称
+  }
+}

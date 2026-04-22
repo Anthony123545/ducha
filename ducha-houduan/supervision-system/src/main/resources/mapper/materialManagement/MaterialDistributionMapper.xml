@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.materialManagement.mapper.MaterialDistributionMapper">
+
+    <resultMap type="MaterialDistribution" id="MaterialDistributionResult">
+        <result property="id"    column="id"    />
+        <result property="barcode"    column="barcode"    />
+        <result property="wuPinType"    column="wu_pin_type"    />
+        <result property="name"    column="name"    />
+        <result property="materialSpecification"    column="material_specification"    />
+        <result property="materialXh"    column="material_xh"    />
+        <result property="yingJuType"    column="ying_ju_type"    />
+        <result property="responsibilityUnit"    column="responsibility_unit"    />
+        <result property="personLiable"    column="person_liable"    />
+        <result property="putOut"    column="put_out"    />
+        <result property="createName"    column="create_name"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="putOutTime"    column="put_out_time"    />
+        <result property="storageLocation"    column="storage_location"    />
+        <result property="buyingTime"    column="buying_time"    />
+        <result property="price"    column="price"    />
+        <result property="remark"    column="remark"    />
+        <result property="warehouse"    column="warehouse"    />
+        <result property="archivesId"    column="archives_id"    />
+        <result property="total"    column="total"    />
+        <result property="outUnit"    column="out_unit"    />
+        <result property="outPeople"    column="out_people"    />
+        <result property="recipient"    column="recipient"    />
+        <result property="registrationId"    column="registration_id"    />
+        <result property="responsibilityUnitId"    column="responsibility_unit_id"    />
+        <result property="personLiableId"    column="person_liable_id"    />
+        <result property="createId"    column="create_id"    />
+        <result property="outUnitId"    column="out_unit_id"    />
+        <result property="recipientId"    column="recipient_id"    />
+        <result property="outPeopleId"    column="out_people_id"    />
+    </resultMap>
+
+    <sql id="selectMaterialDistributionVo">
+        select id,barcode, wu_pin_type, name, material_specification, material_xh, ying_ju_type, responsibility_unit, person_liable, put_out, create_name, create_time, put_out_time, storage_location, buying_time, price, remark, warehouse, archives_id, total, out_unit, out_people, recipient, registration_id, responsibility_unit_id, person_liable_id, create_id, out_unit_id, recipient_id, out_people_id from material_distribution
+    </sql>
+
+    <select id="selectMaterialDistributionList" parameterType="MaterialDistribution" resultMap="MaterialDistributionResult">
+        <include refid="selectMaterialDistributionVo"/>
+        <where>
+            <if test="wuPinType != null  and wuPinType != ''"> and wu_pin_type = #{wuPinType}</if>
+            <if test="barcode != null  and barcode != ''"> and barcode = #{barcode}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="materialSpecification != null  and materialSpecification != ''"> and material_specification = #{materialSpecification}</if>
+            <if test="materialXh != null  and materialXh != ''"> and material_xh = #{materialXh}</if>
+            <if test="yingJuType != null  and yingJuType != ''"> and ying_ju_type = #{yingJuType}</if>
+            <if test="responsibilityUnit != null  and responsibilityUnit != ''"> and responsibility_unit = #{responsibilityUnit}</if>
+            <if test="personLiable != null  and personLiable != ''"> and person_liable = #{personLiable}</if>
+            <if test="putOut != null "> and put_out = #{putOut}</if>
+            <if test="createName != null  and createName != ''"> and create_name like concat('%', #{createName}, '%')</if>
+            <if test="putOutTime != null "> and put_out_time = #{putOutTime}</if>
+            <if test="storageLocation != null  and storageLocation != ''"> and storage_location = #{storageLocation}</if>
+            <if test="buyingTime != null "> and buying_time = #{buyingTime}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="warehouse != null  and warehouse != ''"> and warehouse = #{warehouse}</if>
+            <if test="archivesId != null "> and archives_id = #{archivesId}</if>
+            <if test="total != null "> and total = #{total}</if>
+            <if test="outUnit != null  and outUnit != ''"> and out_unit = #{outUnit}</if>
+            <if test="outPeople != null  and outPeople != ''"> and out_people = #{outPeople}</if>
+            <if test="recipient != null  and recipient != ''"> and recipient = #{recipient}</if>
+            <if test="registrationId != null "> and registration_id = #{registrationId}</if>
+            <if test="responsibilityUnitId != null "> and responsibility_unit_id = #{responsibilityUnitId}</if>
+            <if test="personLiableId != null "> and person_liable_id = #{personLiableId}</if>
+            <if test="createId != null "> and create_id = #{createId}</if>
+            <if test="outUnitId != null "> and out_unit_id = #{outUnitId}</if>
+            <if test="recipientId != null "> and recipient_id = #{recipientId}</if>
+            <if test="outPeopleId != null "> and out_people_id = #{outPeopleId}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectMaterialDistributionById" parameterType="Long" resultMap="MaterialDistributionResult">
+        <include refid="selectMaterialDistributionVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertMaterialDistribution" parameterType="MaterialDistribution">
+        insert into material_distribution
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="barcode != null">barcode,</if>
+            <if test="wuPinType != null">wu_pin_type,</if>
+            <if test="name != null">name,</if>
+            <if test="materialSpecification != null">material_specification,</if>
+            <if test="materialXh != null">material_xh,</if>
+            <if test="yingJuType != null">ying_ju_type,</if>
+            <if test="responsibilityUnit != null">responsibility_unit,</if>
+            <if test="personLiable != null">person_liable,</if>
+            <if test="putOut != null">put_out,</if>
+            <if test="createName != null">create_name,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="putOutTime != null">put_out_time,</if>
+            <if test="storageLocation != null">storage_location,</if>
+            <if test="buyingTime != null">buying_time,</if>
+            <if test="price != null">price,</if>
+            <if test="remark != null">remark,</if>
+            <if test="warehouse != null">warehouse,</if>
+            <if test="archivesId != null">archives_id,</if>
+            <if test="total != null">total,</if>
+            <if test="outUnit != null">out_unit,</if>
+            <if test="outPeople != null">out_people,</if>
+            <if test="recipient != null">recipient,</if>
+            <if test="registrationId != null">registration_id,</if>
+            <if test="responsibilityUnitId != null">responsibility_unit_id,</if>
+            <if test="personLiableId != null">person_liable_id,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="outUnitId != null">out_unit_id,</if>
+            <if test="recipientId != null">recipient_id,</if>
+            <if test="outPeopleId != null">out_people_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="barcode != null">#{barcode},</if>
+            <if test="wuPinType != null">#{wuPinType},</if>
+            <if test="name != null">#{name},</if>
+            <if test="materialSpecification != null">#{materialSpecification},</if>
+            <if test="materialXh != null">#{materialXh},</if>
+            <if test="yingJuType != null">#{yingJuType},</if>
+            <if test="responsibilityUnit != null">#{responsibilityUnit},</if>
+            <if test="personLiable != null">#{personLiable},</if>
+            <if test="putOut != null">#{putOut},</if>
+            <if test="createName != null">#{createName},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="putOutTime != null">#{putOutTime},</if>
+            <if test="storageLocation != null">#{storageLocation},</if>
+            <if test="buyingTime != null">#{buyingTime},</if>
+            <if test="price != null">#{price},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="warehouse != null">#{warehouse},</if>
+            <if test="archivesId != null">#{archivesId},</if>
+            <if test="total != null">#{total},</if>
+            <if test="outUnit != null">#{outUnit},</if>
+            <if test="outPeople != null">#{outPeople},</if>
+            <if test="recipient != null">#{recipient},</if>
+            <if test="registrationId != null">#{registrationId},</if>
+            <if test="responsibilityUnitId != null">#{responsibilityUnitId},</if>
+            <if test="personLiableId != null">#{personLiableId},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="outUnitId != null">#{outUnitId},</if>
+            <if test="recipientId != null">#{recipientId},</if>
+            <if test="outPeopleId != null">#{outPeopleId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateMaterialDistribution" parameterType="MaterialDistribution">
+        update material_distribution
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="wuPinType != null">wu_pin_type = #{wuPinType},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="materialSpecification != null">material_specification = #{materialSpecification},</if>
+            <if test="materialXh != null">material_xh = #{materialXh},</if>
+            <if test="yingJuType != null">ying_ju_type = #{yingJuType},</if>
+            <if test="responsibilityUnit != null">responsibility_unit = #{responsibilityUnit},</if>
+            <if test="personLiable != null">person_liable = #{personLiable},</if>
+            <if test="putOut != null">put_out = #{putOut},</if>
+            <if test="createName != null">create_name = #{createName},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="putOutTime != null">put_out_time = #{putOutTime},</if>
+            <if test="storageLocation != null">storage_location = #{storageLocation},</if>
+            <if test="buyingTime != null">buying_time = #{buyingTime},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="warehouse != null">warehouse = #{warehouse},</if>
+            <if test="archivesId != null">archives_id = #{archivesId},</if>
+            <if test="total != null">total = #{total},</if>
+            <if test="outUnit != null">out_unit = #{outUnit},</if>
+            <if test="outPeople != null">out_people = #{outPeople},</if>
+            <if test="recipient != null">recipient = #{recipient},</if>
+            <if test="registrationId != null">registration_id = #{registrationId},</if>
+            <if test="responsibilityUnitId != null">responsibility_unit_id = #{responsibilityUnitId},</if>
+            <if test="personLiableId != null">person_liable_id = #{personLiableId},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="outUnitId != null">out_unit_id = #{outUnitId},</if>
+            <if test="recipientId != null">recipient_id = #{recipientId},</if>
+            <if test="outPeopleId != null">out_people_id = #{outPeopleId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMaterialDistributionById" parameterType="Long">
+        delete from material_distribution where id = #{id}
+    </delete>
+
+    <delete id="deleteMaterialDistributionByIds" parameterType="String">
+        delete from material_distribution where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

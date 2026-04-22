@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglDailyInspectMapper">
+
+    <resultMap type="BdglDailyInspect" id="BdglDailyInspectResult">
+        <result property="id"    column="id"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="diaryId"    column="diary_id"    />
+        <result property="peopleName"    column="people_name"    />
+        <result property="sentryId"    column="sentry_id"    />
+        <result property="sentryName"    column="sentry_name"    />
+        <result property="foremanId"    column="foreman_id"    />
+        <result property="foremanName"    column="foreman_name"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="testName"    column="test_name"    />
+        <result property="dialogue"    column="dialogue"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="field1"    column="field1"    />
+        <result property="examineDate"    column="examine_date"    />
+        <result property="contents"    column="contents"    />
+    </resultMap>
+
+    <sql id="selectBdglDailyInspectVo">
+        select id, people_id, diary_id, people_name, sentry_id, sentry_name, foreman_id, foreman_name, unit_id, test_name, dialogue, createtime, updatetime, field1, examine_date, contents from bdgl_daily_inspect
+    </sql>
+
+    <select id="selectBdglDailyInspectList" parameterType="BdglDailyInspect" resultMap="BdglDailyInspectResult">
+        <include refid="selectBdglDailyInspectVo"/>
+        <where>
+            <if test="peopleId != null "> and people_id = #{peopleId}</if>
+            <if test="diaryId != null "> and diary_id = #{diaryId}</if>
+            <if test="peopleName != null  and peopleName != ''"> and people_name like concat('%', #{peopleName}, '%')</if>
+            <if test="sentryId != null "> and sentry_id = #{sentryId}</if>
+            <if test="sentryName != null  and sentryName != ''"> and sentry_name like concat('%', #{sentryName}, '%')</if>
+            <if test="foremanId != null "> and foreman_id = #{foremanId}</if>
+            <if test="foremanName != null  and foremanName != ''"> and foreman_name like concat('%', #{foremanName}, '%')</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="testName != null  and testName != ''"> and test_name like concat('%', #{testName}, '%')</if>
+            <if test="dialogue != null  and dialogue != ''"> and dialogue = #{dialogue}</if>
+            <if test="createtime != null "> and createtime  like concat('%', #{createtime}, '%')</if>
+            <if test="updatetime != null "> and updatetime = #{updatetime}</if>
+            <if test="field1 != null  and field1 != ''"> and field1 = #{field1}</if>
+            <if test="examineDate != null "> and examine_date = #{examineDate}</if>
+            <if test="contents != null  and contents != ''"> and contents = #{contents}</if>
+            <if test="diaryIdList!=null and diaryIdList.size()>0">
+                and diary_id in
+                <foreach collection="diaryIdList" item="id" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectBdglDailyInspectById" parameterType="Integer" resultMap="BdglDailyInspectResult">
+        <include refid="selectBdglDailyInspectVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglDailyInspect" parameterType="BdglDailyInspect" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_daily_inspect
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="peopleId != null">people_id,</if>
+            <if test="diaryId != null">diary_id,</if>
+            <if test="peopleName != null">people_name,</if>
+            <if test="sentryId != null">sentry_id,</if>
+            <if test="sentryName != null">sentry_name,</if>
+            <if test="foremanId != null">foreman_id,</if>
+            <if test="foremanName != null">foreman_name,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="testName != null">test_name,</if>
+            <if test="dialogue != null">dialogue,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="field1 != null">field1,</if>
+            <if test="examineDate != null">examine_date,</if>
+            <if test="contents != null">contents,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="diaryId != null">#{diaryId},</if>
+            <if test="peopleName != null">#{peopleName},</if>
+            <if test="sentryId != null">#{sentryId},</if>
+            <if test="sentryName != null">#{sentryName},</if>
+            <if test="foremanId != null">#{foremanId},</if>
+            <if test="foremanName != null">#{foremanName},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="testName != null">#{testName},</if>
+            <if test="dialogue != null">#{dialogue},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="field1 != null">#{field1},</if>
+            <if test="examineDate != null">#{examineDate},</if>
+            <if test="contents != null">#{contents},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglDailyInspect" parameterType="BdglDailyInspect">
+        update bdgl_daily_inspect
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="diaryId != null">diary_id = #{diaryId},</if>
+            <if test="peopleName != null">people_name = #{peopleName},</if>
+            <if test="sentryId != null">sentry_id = #{sentryId},</if>
+            <if test="sentryName != null">sentry_name = #{sentryName},</if>
+            <if test="foremanId != null">foreman_id = #{foremanId},</if>
+            <if test="foremanName != null">foreman_name = #{foremanName},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="testName != null">test_name = #{testName},</if>
+            <if test="dialogue != null">dialogue = #{dialogue},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="field1 != null">field1 = #{field1},</if>
+            <if test="examineDate != null">examine_date = #{examineDate},</if>
+            <if test="contents != null">contents = #{contents},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglDailyInspectById" parameterType="Integer">
+        delete from bdgl_daily_inspect where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglDailyInspectByIds" parameterType="String">
+        delete from bdgl_daily_inspect where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteBdglDailyInspect">
+            delete from bdgl_daily_inspect where diary_id = #{diaryId}
+    </delete>
+
+    <select id="selectBdglDailyInspectListByTime"  resultMap="BdglDailyInspectResult">
+        SELECT people_name FROM bdgl_daily_inspect WHERE createtime &gt;= #{starttime} AND createtime &lt;= #{endtime} AND unit_id = #{unitid}
+    </select>
+    <select id="selectBdglDailyInspects" resultMap="BdglDailyInspectResult">
+        SELECT people_name FROM bdgl_daily_inspect WHERE createtime  like concat('%', #{timeParameter}, '%') AND unit_id = #{deptId}
+
+    </select>
+</mapper>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.supervision.peopleChuRu.mapper.BdglPeopleAccessMapper">
+    
+    <!-- 通用查询映射结果 -->
+    <resultMap type="com.ruoyi.project.supervision.peopleChuRu.domain.BdglPeopleAccess" id="BdglPeopleAccessResult">
+        <result property="userId" column="user_id" />
+        <result property="userName" column="user_name" />
+        <result property="deptId" column="dept_id" />
+        <result property="deptName" column="deptName" />
+        <result property="actionType" column="actionType" />
+        <result property="time" column="time" />
+    </resultMap>
+    
+    <!-- 查询条件封装 -->
+    <sql id="selectBdglPeopleAccessVo">
+        select user_id, user_name, dept_id, deptName, actionType, time from bdgl_people_access
+    </sql>
+    
+    <!-- 查询列表 -->
+    <select id="selectBdglPeopleAccessList" parameterType="com.ruoyi.project.supervision.peopleChuRu.domain.BdglPeopleAccess" resultMap="BdglPeopleAccessResult">
+        <include refid="selectBdglPeopleAccessVo" />
+        <where>
+            <if test="userId != null and userId != 0">
+                AND user_id = #{userId}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND user_name like concat('%', #{userName}, '%')
+            </if>
+            <if test="deptId != null and deptId != 0">
+                AND dept_id = #{deptId}
+            </if>
+            <if test="deptName != null and deptName != ''">
+                AND deptName like concat('%', #{deptName}, '%')
+            </if>
+            <if test="actionType != null and actionType != ''">
+                AND actionType = #{actionType}
+            </if>
+            <if test="beginTime != null">
+                AND time &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null">
+                AND time &lt;= #{endTime}
+            </if>
+        </where>
+        <orderByClause />
+    </select>
+    
+    <!-- 查询所有数据 -->
+    <select id="selectBdglPeopleAccessAll" resultMap="BdglPeopleAccessResult">
+        <include refid="selectBdglPeopleAccessVo" />
+    </select>
+    
+    <!-- 通过user_id查询单条数据 -->
+    <select id="selectBdglPeopleAccessByUserId" parameterType="Long" resultMap="BdglPeopleAccessResult">
+        <include refid="selectBdglPeopleAccessVo" />
+        where user_id = #{userId}
+    </select>
+    
+    <!-- 新增数据 -->
+    <insert id="insertBdglPeopleAccess" parameterType="com.ruoyi.project.supervision.peopleChuRu.domain.BdglPeopleAccess">
+        insert into bdgl_people_access(user_id, user_name, dept_id, deptName, actionType, time)
+        values(#{userId}, #{userName}, #{deptId}, #{deptName}, #{actionType}, #{time})
+    </insert>
+    
+    <!-- 修改数据 -->
+    <update id="updateBdglPeopleAccess" parameterType="com.ruoyi.project.supervision.peopleChuRu.domain.BdglPeopleAccess">
+        update bdgl_people_access
+        <set>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="deptId != null and deptId != 0">
+                dept_id = #{deptId},
+            </if>
+            <if test="deptName != null and deptName != ''">
+                deptName = #{deptName},
+            </if>
+            <if test="actionType != null and actionType != ''">
+                actionType = #{actionType},
+            </if>
+            <if test="time != null">
+                time = #{time},
+            </if>
+        </set>
+        where user_id = #{userId}
+    </update>
+    
+    <!-- 删除数据 -->
+    <delete id="deleteBdglPeopleAccessByUserId" parameterType="Long">
+        delete from bdgl_people_access where user_id = #{userId}
+    </delete>
+    
+    <!-- 批量删除 -->
+    <delete id="deleteBdglPeopleAccessByUserIds" parameterType="Long[]">
+        delete from bdgl_people_access where user_id in 
+        <foreach item="userId" collection="array" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+    
+    <!-- 统计数据 -->
+    <select id="countBdglPeopleAccess" parameterType="com.ruoyi.project.supervision.peopleChuRu.domain.BdglPeopleAccess" resultType="Long">
+        select count(1) from bdgl_people_access
+        <where>
+            <if test="userId != null and userId != 0">
+                AND user_id = #{userId}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND user_name like concat('%', #{userName}, '%')
+            </if>
+            <if test="deptId != null and deptId != 0">
+                AND dept_id = #{deptId}
+            </if>
+            <if test="deptName != null and deptName != ''">
+                AND deptName like concat('%', #{deptName}, '%')
+            </if>
+            <if test="actionType != null and actionType != ''">
+                AND actionType = #{actionType}
+            </if>
+            <if test="beginTime != null">
+                AND time &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null">
+                AND time &lt;= #{endTime}
+            </if>
+        </where>
+    </select>
+</mapper>

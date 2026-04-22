@@ -1,0 +1,10 @@
+{
+  "requestURL": "${requestURL}",           // 【可选】请求URL（字符串类型，占位符）
+  "statusCode": 1,                         // 【必填】状态码（整数类型，占位符）
+  "statusString": "${statusString}",       // 【必填】状态描述（字符串类型，占位符）
+  "subStatusCode": "${subStatusCode}",     // 【必填】子状态码（字符串类型，占位符）
+  "errorCode": "${errorCode}",             // 【可选】错误码（当 statusCode ≠ 1 时返回，占位符）
+  "errorMsg": "${errorMsg}",               // 【可选】错误描述（当 statusCode ≠ 1 时返回，占位符）
+  "FPID": "${FPID}",                       // 【可选】人脸记录ID（添加成功后返回，占位符，最大长度63字节）
+  "rowKey": "${rowKey}"                    // 【可选】人脸记录 rowKey（添加成功后返回，占位符，最大长度64字节）
+}

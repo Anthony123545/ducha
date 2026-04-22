@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.combatduty.mapper.BdglTaskdutyFuMapper">
+    
+    <resultMap type="BdglTaskdutyFu" id="BdglTaskdutyFuResult">
+        <result property="id"    column="id"    />
+        <result property="filename"    column="filename"    />
+        <result property="filepath"    column="filepath"    />
+        <result property="bdglTaskdutyId"    column="bdgl_taskduty_id"    />
+    </resultMap>
+
+    <sql id="selectBdglTaskdutyFuVo">
+        select id, filename, filepath, bdgl_taskduty_id from bdgl_taskduty_fu
+    </sql>
+
+    <select id="selectBdglTaskdutyFuList" parameterType="BdglTaskdutyFu" resultMap="BdglTaskdutyFuResult">
+        <include refid="selectBdglTaskdutyFuVo"/>
+        <where>  
+            <if test="filename != null  and filename != ''"> and filename like concat('%', #{filename}, '%')</if>
+            <if test="filepath != null  and filepath != ''"> and filepath = #{filepath}</if>
+            <if test="bdglTaskdutyId != null "> and bdgl_taskduty_id = #{bdglTaskdutyId}</if>
+        </where>
+    </select>
+    
+    <select id="selectBdglTaskdutyFuById" parameterType="Long" resultMap="BdglTaskdutyFuResult">
+        <include refid="selectBdglTaskdutyFuVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBdglTaskdutyFu" parameterType="BdglTaskdutyFu">
+        insert into bdgl_taskduty_fu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="filename != null">filename,</if>
+            <if test="filepath != null">filepath,</if>
+            <if test="bdglTaskdutyId != null">bdgl_taskduty_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="filename != null">#{filename},</if>
+            <if test="filepath != null">#{filepath},</if>
+            <if test="bdglTaskdutyId != null">#{bdglTaskdutyId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglTaskdutyFu" parameterType="BdglTaskdutyFu">
+        update bdgl_taskduty_fu
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="filename != null">filename = #{filename},</if>
+            <if test="filepath != null">filepath = #{filepath},</if>
+            <if test="bdglTaskdutyId != null">bdgl_taskduty_id = #{bdglTaskdutyId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglTaskdutyFuById" parameterType="Long">
+        delete from bdgl_taskduty_fu where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglTaskdutyFuByIds" parameterType="String">
+        delete from bdgl_taskduty_fu where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteBdglTaskdutyFu">
+        delete from bdgl_taskduty_fu where bdgl_taskduty_id = #{bdglTaskdutyId}
+    </delete>
+</mapper>

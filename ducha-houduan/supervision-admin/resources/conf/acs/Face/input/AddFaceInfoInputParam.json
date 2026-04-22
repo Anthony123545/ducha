@@ -1,0 +1,34 @@
+{
+  "faceURL": "$faceURL",                          // 【可选】人脸URL（字符串类型）
+  "faceLibType": "$faceLibType",                  // 【必填】人脸库类型 [blackFD 名单库, staticFD 静态库]，最大长度32
+  "FDID": "$FDID",                                // 【必填】人脸库ID（多个库以逗号分隔），最大长度63字节
+  "FPID": "$FPID",                                // 【可选】人脸记录ID（与人员ID一致），最大长度63字节
+  "name": "$name",                                // 【必填】人员姓名，最大长度96字节
+  "gender": "$gender",                            // 【可选】性别 [male 男, female 女, unknown 未知]，最大长度32
+  "bornTime": "$bornTime",                        // 【必填】出生日期，最大长度20字节
+  "city": "$city",                                // 【可选】出生城市编号（详见全国城市列表），最大长度32字节
+  "certificateType": "$certificateType",          // 【可选】证件类型 [ID 身份证, other 其他]，最大长度10字节
+  "certificateNumber": "$certificateNumber",      // 【可选】证件号（0-9a-zA-Z 组成），最大长度32字节
+  "caseInfo": "$caseInfo",                        // 【可选】备注信息（当类型为 blackFD 时有效），最大长度192字节
+  "tag": "$tag",                                  // 【可选】自定义标签（最多4个，英文逗号分隔），最大长度195字节（单个≤48字节）
+  "address": "$address",                          // 【可选】住址（当类型为 staticFD 时有效），最大长度192字节
+  "customInfo": "$customInfo",                    // 【可选】自定义信息（当类型为 staticFD 时有效），最大长度192字节
+  "modelData": "$modelData",                      // 【可选】模型数据（base64 编码的二进制建模数据）
+  "transfer": "$transfer",                        // 【可选】是否PBG转存（布尔值，设备需开启微视云安全认证）
+  "operateType": "$operateType",                  // 【可选】操作类型 [byTerminal 按终端操作]
+  "terminalNoList": ["$terminalNoList"],          // 【可选】终端ID列表（byTerminal/byTerminalOrg时必填，仅支持单个终端）
+  "PicFeaturePoints": [                           // 【可选】图片特征点坐标数组
+    {
+      "featurePointType": "$featurePointType",     // 【必填】特征点类型 [face 人脸, leftEye 左眼, rightEye 右眼, leftMouthCorner 左嘴角, rightMouthCorner 右嘴角, nose 鼻子]
+      "coordinatePoint": {                        // 【可选】坐标点对象（原点位于左上角）
+        "x": "$x",                                // 【必填】x坐标（0-1000，归一化）
+        "y": "$y",                                // 【必填】y坐标（0-1000，归一化）
+        "width": "$width",                        // 【可选】宽度（featurePointType 为 face 时必填）
+        "height": "$height"                       // 【可选】高度（featurePointType 为 face 时必填）
+      }
+    }
+  ],
+  "faceType": "$faceType",                        // 【可选】人脸类型 [normalFace 普通, patrolFace 巡更, hijackFace 胁迫, superFace 超级人脸]
+  "saveFacePic": "$saveFacePic",                  // 【可选】是否保存人脸底图（布尔类型）
+  "leaderPermission": ["$doorNo1", "$doorNo2"]    // 【可选】首次认证权限（门编号数组，为空表示清空）
+}

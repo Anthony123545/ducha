@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglCookbookRegistrationMapper">
+
+    <resultMap type="BdglCookbookRegistration" id="BdglCookbookRegistrationResult">
+        <result property="id"    column="id"    />
+        <result property="cookbookId"    column="cookbook_id"    />
+        <result property="typelist"    column="typelist"    />
+        <result property="timelist"    column="timelist"    />
+        <result property="weeklist"    column="weeklist"    />
+        <result property="cookcategoryIds"    column="cookcategory_ids"    />
+        <result property="peopleIds"    column="people_ids"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="cookcategoryNames"    column="cookcategory_names"    />
+        <result property="peopleNames"    column="people_names"    />
+    </resultMap>
+
+    <sql id="selectBdglCookbookRegistrationVo">
+        select id, cookbook_id, typelist, timelist, weeklist, cookcategory_ids, people_ids, createtime, updatetime, cookcategory_names, people_names from bdgl_cookbook_registration
+    </sql>
+
+    <select id="selectBdglCookbookRegistrationList" parameterType="BdglCookbookRegistration" resultMap="BdglCookbookRegistrationResult">
+        <include refid="selectBdglCookbookRegistrationVo"/>
+        <where>
+            <if test="cookbookId != null "> and cookbook_id = #{cookbookId}</if>
+            <if test="typelist != null  and typelist != ''"> and typelist = #{typelist}</if>
+            <if test="timelist != null  and timelist != ''"> and timelist = #{timelist}</if>
+            <if test="weeklist != null  and weeklist != ''"> and weeklist = #{weeklist}</if>
+            <if test="cookcategoryIds != null  and cookcategoryIds != ''"> and cookcategory_ids = #{cookcategoryIds}</if>
+            <if test="peopleIds != null  and peopleIds != ''"> and people_ids = #{peopleIds}</if>
+            <if test="createtime != null  and createtime != ''"> and createtime = #{createtime}</if>
+            <if test="updatetime != null  and updatetime != ''"> and updatetime = #{updatetime}</if>
+            <if test="cookcategoryNames != null  and cookcategoryNames != ''"> and cookcategory_names = #{cookcategoryNames}</if>
+            <if test="peopleNames != null  and peopleNames != ''"> and people_names = #{peopleNames}</if>
+        </where>
+    </select>
+
+    <select id="selectBdglCookbookRegistrationById" parameterType="Integer" resultMap="BdglCookbookRegistrationResult">
+        <include refid="selectBdglCookbookRegistrationVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglCookbookRegistration" parameterType="BdglCookbookRegistration" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_cookbook_registration
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cookbookId != null">cookbook_id,</if>
+            <if test="typelist != null and typelist != ''">typelist,</if>
+            <if test="timelist != null and timelist != ''">timelist,</if>
+            <if test="weeklist != null">weeklist,</if>
+            <if test="cookcategoryIds != null">cookcategory_ids,</if>
+            <if test="peopleIds != null">people_ids,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="cookcategoryNames != null">cookcategory_names,</if>
+            <if test="peopleNames != null">people_names,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cookbookId != null">#{cookbookId},</if>
+            <if test="typelist != null and typelist != ''">#{typelist},</if>
+            <if test="timelist != null and timelist != ''">#{timelist},</if>
+            <if test="weeklist != null">#{weeklist},</if>
+            <if test="cookcategoryIds != null">#{cookcategoryIds},</if>
+            <if test="peopleIds != null">#{peopleIds},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="cookcategoryNames != null">#{cookcategoryNames},</if>
+            <if test="peopleNames != null">#{peopleNames},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglCookbookRegistration" parameterType="BdglCookbookRegistration">
+        update bdgl_cookbook_registration
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="cookbookId != null">cookbook_id = #{cookbookId},</if>
+            <if test="typelist != null and typelist != ''">typelist = #{typelist},</if>
+            <if test="timelist != null and timelist != ''">timelist = #{timelist},</if>
+            <if test="weeklist != null">weeklist = #{weeklist},</if>
+            <if test="cookcategoryIds != null">cookcategory_ids = #{cookcategoryIds},</if>
+            <if test="peopleIds != null">people_ids = #{peopleIds},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="cookcategoryNames != null">cookcategory_names = #{cookcategoryNames},</if>
+            <if test="peopleNames != null">people_names = #{peopleNames},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglCookbookRegistrationById" parameterType="Integer">
+        delete from bdgl_cookbook_registration where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglCookbookRegistrationByIds" parameterType="String">
+        delete from bdgl_cookbook_registration where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

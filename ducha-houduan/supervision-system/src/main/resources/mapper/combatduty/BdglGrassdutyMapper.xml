@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.combatduty.mapper.BdglGrassdutyMapper">
+    
+    <resultMap type="BdglGrassduty" id="BdglGrassdutyResult">
+        <result property="id"    column="id"    />
+        <result property="attendedTime"    column="attended_time"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="chiefDutyName"    column="chief_duty_name"    />
+        <result property="chiefDutyId"    column="chief_duty_id"    />
+        <result property="chiefDutyZhiwu"    column="chief_duty_zhiwu"    />
+        <result property="telephoneBg"    column="telephone_bg"    />
+        <result property="telephoneSs"    column="telephone_ss"    />
+        <result property="chiefDutyPhone"    column="chief_duty_phone"    />
+        <result property="dutyOffierName"    column="duty_offier_name"    />
+        <result property="dutyOffierId"    column="duty_offier_id"    />
+        <result property="dutyOffierZw"    column="duty_offier_zw"    />
+        <result property="dutyOffierPhone"    column="duty_offier_phone"    />
+        <result property="dutyPhone"    column="duty_phone"    />
+        <result property="dutyGangwei"    column="duty_gangwei"    />
+    </resultMap>
+
+    <sql id="selectBdglGrassdutyVo">
+        select id, attended_time, unit_name, unit_id, chief_duty_name, chief_duty_id, chief_duty_zhiwu, telephone_bg, telephone_ss, chief_duty_phone, duty_offier_name, duty_offier_id, duty_offier_zw, duty_offier_phone, duty_phone, duty_gangwei from bdgl_grassduty
+    </sql>
+
+    <select id="selectBdglGrassdutyList" parameterType="BdglGrassduty" resultMap="BdglGrassdutyResult">
+        select id, attended_time, unit_name, unit_id, chief_duty_name, chief_duty_id, chief_duty_zhiwu, telephone_bg, telephone_ss, chief_duty_phone, duty_offier_name, duty_offier_id, duty_offier_zw, duty_offier_phone, duty_phone, duty_gangwei from
+        bdgl_grassduty g
+        left join sys_dept t
+        on g.unit_id=t.dept_id
+        <where>
+            <if test="unitId != null ">
+                and (g.unit_id=#{unitId} or find_in_set(#{unitId}, t.ancestors))
+            </if>
+            <if test="attendedTime != null  and attendedTime != ''"> and g.attended_time = #{attendedTime}</if>
+            <if test="unitName != null  and unitName != ''"> and g.unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="chiefDutyName != null  and chiefDutyName != ''"> and g.chief_duty_name like concat('%', #{chiefDutyName}, '%')</if>
+            <if test="chiefDutyId != null "> and g.chief_duty_id = #{chiefDutyId}</if>
+            <if test="chiefDutyZhiwu != null  and chiefDutyZhiwu != ''"> and g.chief_duty_zhiwu = #{chiefDutyZhiwu}</if>
+            <if test="telephoneBg != null  and telephoneBg != ''"> and g.telephone_bg = #{telephoneBg}</if>
+            <if test="telephoneSs != null  and telephoneSs != ''"> and g.telephone_ss = #{telephoneSs}</if>
+            <if test="chiefDutyPhone != null  and chiefDutyPhone != ''"> and g.chief_duty_phone = #{chiefDutyPhone}</if>
+            <if test="dutyOffierName != null  and dutyOffierName != ''"> and g.duty_offier_name like concat('%', #{dutyOffierName}, '%')</if>
+            <if test="dutyOffierId != null "> and g.duty_offier_id = #{dutyOffierId}</if>
+            <if test="dutyOffierZw != null  and dutyOffierZw != ''"> and g.duty_offier_zw = #{dutyOffierZw}</if>
+            <if test="dutyOffierPhone != null  and dutyOffierPhone != ''"> and g.duty_offier_phone = #{dutyOffierPhone}</if>
+            <if test="dutyPhone != null  and dutyPhone != ''"> and g.duty_phone = #{dutyPhone}</if>
+            <if test="dutyGangwei != null  and dutyGangwei != ''"> and g.duty_gangwei = #{dutyGangwei}</if>
+        </where>
+        order by g.id desc
+    </select>
+
+    <select id="selectGrassdutyList" parameterType="BdglGrassduty" resultMap="BdglGrassdutyResult">
+        select g.id, g.attended_time, g.unit_name, g.chief_duty_name, g.chief_duty_zhiwu, g.telephone_bg,
+        g.telephone_ss, g.chief_duty_phone, g.duty_offier_name, g.duty_offier_zw, g.duty_offier_phone, g.duty_phone, t.dept_name as dutyGangweiName
+        from
+        bdgl_grassduty g
+        left join sys_dept t
+        on g.duty_gangwei=t.dept_id
+        <where>
+            <if test="unitId != null ">
+                and (g.unit_id=#{unitId} or find_in_set(#{unitId}, t.ancestors))
+            </if>
+            <if test="attendedTime != null  and attendedTime != ''"> and g.attended_time = #{attendedTime}</if>
+            <if test="unitName != null  and unitName != ''"> and g.unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="chiefDutyName != null  and chiefDutyName != ''"> and g.chief_duty_name like concat('%', #{chiefDutyName}, '%')</if>
+            <if test="chiefDutyId != null "> and g.chief_duty_id = #{chiefDutyId}</if>
+            <if test="chiefDutyZhiwu != null  and chiefDutyZhiwu != ''"> and g.chief_duty_zhiwu = #{chiefDutyZhiwu}</if>
+            <if test="telephoneBg != null  and telephoneBg != ''"> and g.telephone_bg = #{telephoneBg}</if>
+            <if test="telephoneSs != null  and telephoneSs != ''"> and g.telephone_ss = #{telephoneSs}</if>
+            <if test="chiefDutyPhone != null  and chiefDutyPhone != ''"> and g.chief_duty_phone = #{chiefDutyPhone}</if>
+            <if test="dutyOffierName != null  and dutyOffierName != ''"> and g.duty_offier_name like concat('%', #{dutyOffierName}, '%')</if>
+            <if test="dutyOffierId != null "> and g.duty_offier_id = #{dutyOffierId}</if>
+            <if test="dutyOffierZw != null  and dutyOffierZw != ''"> and g.duty_offier_zw = #{dutyOffierZw}</if>
+            <if test="dutyOffierPhone != null  and dutyOffierPhone != ''"> and g.duty_offier_phone = #{dutyOffierPhone}</if>
+            <if test="dutyPhone != null  and dutyPhone != ''"> and g.duty_phone = #{dutyPhone}</if>
+            <if test="dutyGangwei != null  and dutyGangwei != ''"> and g.duty_gangwei = #{dutyGangwei}</if>
+        </where>
+        order by g.id desc
+    </select>
+    
+    <select id="selectBdglGrassdutyById" parameterType="Long" resultMap="BdglGrassdutyResult">
+        <include refid="selectBdglGrassdutyVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectBdglGrassdutyLists" parameterType="BdglGrassduty" resultMap="BdglGrassdutyResult">
+        <include refid="selectBdglGrassdutyVo"/>
+        <where>
+            <if test="attendedTime != null  and attendedTime != ''"> and attended_time = #{attendedTime}</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="chiefDutyName != null  and chiefDutyName != ''"> and chief_duty_name like concat('%', #{chiefDutyName}, '%')</if>
+            <if test="chiefDutyId != null "> and chief_duty_id = #{chiefDutyId}</if>
+            <if test="chiefDutyZhiwu != null  and chiefDutyZhiwu != ''"> and chief_duty_zhiwu = #{chiefDutyZhiwu}</if>
+            <if test="telephoneBg != null  and telephoneBg != ''"> and telephone_bg = #{telephoneBg}</if>
+            <if test="telephoneSs != null  and telephoneSs != ''"> and telephone_ss = #{telephoneSs}</if>
+            <if test="chiefDutyPhone != null  and chiefDutyPhone != ''"> and chief_duty_phone = #{chiefDutyPhone}</if>
+            <if test="dutyOffierName != null  and dutyOffierName != ''"> and duty_offier_name like concat('%', #{dutyOffierName}, '%')</if>
+            <if test="dutyOffierId != null "> and duty_offier_id = #{dutyOffierId}</if>
+            <if test="dutyOffierZw != null  and dutyOffierZw != ''"> and duty_offier_zw = #{dutyOffierZw}</if>
+            <if test="dutyOffierPhone != null  and dutyOffierPhone != ''"> and duty_offier_phone = #{dutyOffierPhone}</if>
+            <if test="dutyPhone != null  and dutyPhone != ''"> and duty_phone = #{dutyPhone}</if>
+            <if test="dutyGangwei != null  and dutyGangwei != ''"> and duty_gangwei = #{dutyGangwei}</if>
+        </where>
+        order by id desc
+    </select>
+    <select id="selectDutyWithToday" resultType="com.supervision.combatduty.domain.dto.ApiStatDutyDto">
+        SELECT
+            b.attended_time as zbTime,
+            b.unit_name as dwmc,
+            b.chief_duty_name as zbsz,
+            b.duty_offier_name as zby,
+            b.duty_phone as phone,
+            s.dept_name AS zbgw
+        FROM
+            bdgl_grassduty b LEFT JOIN sys_dept s ON b.duty_gangwei = s.dept_id
+        WHERE attended_time = #{date}
+          and unit_id in
+            <foreach item="id" collection="list"  index="index" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+    </select>
+
+    <insert id="insertBdglGrassduty" parameterType="BdglGrassduty">
+        insert into bdgl_grassduty
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="attendedTime != null">attended_time,</if>
+            <if test="unitName != null">unit_name,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="chiefDutyName != null">chief_duty_name,</if>
+            <if test="chiefDutyId != null">chief_duty_id,</if>
+            <if test="chiefDutyZhiwu != null">chief_duty_zhiwu,</if>
+            <if test="telephoneBg != null">telephone_bg,</if>
+            <if test="telephoneSs != null">telephone_ss,</if>
+            <if test="chiefDutyPhone != null">chief_duty_phone,</if>
+            <if test="dutyOffierName != null">duty_offier_name,</if>
+            <if test="dutyOffierId != null">duty_offier_id,</if>
+            <if test="dutyOffierZw != null">duty_offier_zw,</if>
+            <if test="dutyOffierPhone != null">duty_offier_phone,</if>
+            <if test="dutyPhone != null">duty_phone,</if>
+            <if test="dutyGangwei != null">duty_gangwei,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="attendedTime != null">#{attendedTime},</if>
+            <if test="unitName != null">#{unitName},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="chiefDutyName != null">#{chiefDutyName},</if>
+            <if test="chiefDutyId != null">#{chiefDutyId},</if>
+            <if test="chiefDutyZhiwu != null">#{chiefDutyZhiwu},</if>
+            <if test="telephoneBg != null">#{telephoneBg},</if>
+            <if test="telephoneSs != null">#{telephoneSs},</if>
+            <if test="chiefDutyPhone != null">#{chiefDutyPhone},</if>
+            <if test="dutyOffierName != null">#{dutyOffierName},</if>
+            <if test="dutyOffierId != null">#{dutyOffierId},</if>
+            <if test="dutyOffierZw != null">#{dutyOffierZw},</if>
+            <if test="dutyOffierPhone != null">#{dutyOffierPhone},</if>
+            <if test="dutyPhone != null">#{dutyPhone},</if>
+            <if test="dutyGangwei != null">#{dutyGangwei},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglGrassduty" parameterType="BdglGrassduty">
+        update bdgl_grassduty
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="attendedTime != null">attended_time = #{attendedTime},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="chiefDutyName != null">chief_duty_name = #{chiefDutyName},</if>
+            <if test="chiefDutyId != null">chief_duty_id = #{chiefDutyId},</if>
+            <if test="chiefDutyZhiwu != null">chief_duty_zhiwu = #{chiefDutyZhiwu},</if>
+            <if test="telephoneBg != null">telephone_bg = #{telephoneBg},</if>
+            <if test="telephoneSs != null">telephone_ss = #{telephoneSs},</if>
+            <if test="chiefDutyPhone != null">chief_duty_phone = #{chiefDutyPhone},</if>
+            <if test="dutyOffierName != null">duty_offier_name = #{dutyOffierName},</if>
+            <if test="dutyOffierId != null">duty_offier_id = #{dutyOffierId},</if>
+            <if test="dutyOffierZw != null">duty_offier_zw = #{dutyOffierZw},</if>
+            <if test="dutyOffierPhone != null">duty_offier_phone = #{dutyOffierPhone},</if>
+            <if test="dutyPhone != null">duty_phone = #{dutyPhone},</if>
+            <if test="dutyGangwei != null">duty_gangwei = #{dutyGangwei},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglGrassdutyById" parameterType="Long">
+        delete from bdgl_grassduty where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglGrassdutyByIds" parameterType="String">
+        delete from bdgl_grassduty where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

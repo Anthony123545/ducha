@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.workingArrangements.mapper.BdglPlanProgressMapper">
+    
+    <resultMap type="BdglPlanProgress" id="BdglPlanProgressResult">
+        <result property="id"    column="id"    />
+        <result property="taskId"    column="task_id"    />
+        <result property="taskName"    column="task_name"    />
+        <result property="stauts"    column="stauts"    />
+        <result property="file"    column="file"    />
+        <result property="remark"    column="remark"    />
+        <result property="accomplishTime"    column="accomplish_time"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="adminId"    column="admin_id"    />
+        <result property="peopleName"    column="people_name"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="schedule"    column="schedule"    />
+        <result property="publisher"    column="publisher"    />
+        <result property="publisherId"    column="publisher_id"    />
+        <result property="unitname"    column="unitname"    />
+        <result property="filename"    column="filename"    />
+    </resultMap>
+
+    <sql id="selectBdglPlanProgressVo">
+        select id, task_id, task_name, stauts, file, remark, accomplish_time, createtime, updatetime, admin_id, people_name, people_id, schedule,publisher,publisher_id,unitname,filename from bdgl_plan_progress
+    </sql>
+
+    <select id="selectBdglPlanProgressList" parameterType="BdglPlanProgress" resultMap="BdglPlanProgressResult">
+        <include refid="selectBdglPlanProgressVo"/>
+        <where>  
+            <if test="taskId != null "> and task_id = #{taskId}</if>
+            <if test="taskName != null  and taskName != ''"> and task_name like concat('%', #{taskName}, '%')</if>
+            <if test="stauts != null "> and stauts = #{stauts}</if>
+            <if test="file != null  and file != ''"> and file = #{file}</if>
+            <if test="accomplishTime != null "> and accomplish_time = #{accomplishTime}</if>
+            <if test="createtime != null "> and createtime = #{createtime}</if>
+            <if test="updatetime != null "> and updatetime = #{updatetime}</if>
+            <if test="adminId != null "> and admin_id = #{adminId}</if>
+            <if test="peopleName != null  and peopleName != ''"> and people_name like concat('%', #{peopleName}, '%')</if>
+            <if test="peopleId != null "> and people_id = #{peopleId}</if>
+            <if test="schedule != null "> and schedule = #{schedule}</if>
+            <if test="publisher != null  and publisher != ''"> and publisher = #{publisher}</if>
+            <if test="publisherId != null "> and publisher_id = #{publisherId}</if>
+            <if test="unitname != null  and unitname != ''"> and unitname like concat('%', #{unitname}, '%')</if>
+            <if test="filename != null  and filename != ''"> and unitname like concat('%', #{unitname}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectBdglPlanProgressById" parameterType="Integer" resultMap="BdglPlanProgressResult">
+        <include refid="selectBdglPlanProgressVo"/>
+        where id = #{id}
+    </select>
+    <select id="select" resultMap="BdglPlanProgressResult">
+        <include refid="selectBdglPlanProgressVo"/>
+        where task_id = #{taskId} and people_id = #{peopleId}
+    </select>
+
+    <insert id="insertBdglPlanProgress" parameterType="BdglPlanProgress" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_plan_progress
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="taskId != null">task_id,</if>
+            <if test="taskName != null">task_name,</if>
+            <if test="stauts != null">stauts,</if>
+            <if test="file != null">file,</if>
+            <if test="remark != null">remark,</if>
+            <if test="accomplishTime != null">accomplish_time,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="adminId != null">admin_id,</if>
+            <if test="peopleName != null">people_name,</if>
+            <if test="peopleId != null">people_id,</if>
+            <if test="schedule != null">schedule,</if>
+            <if test="publisher != null">publisher,</if>
+            <if test="publisherId != null">publisher_id,</if>
+            <if test="unitname != null">unitname,</if>
+            <if test="filename != null">filename,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="taskId != null">#{taskId},</if>
+            <if test="taskName != null">#{taskName},</if>
+            <if test="stauts != null">#{stauts},</if>
+            <if test="file != null">#{file},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="accomplishTime != null">#{accomplishTime},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="adminId != null">#{adminId},</if>
+            <if test="peopleName != null">#{peopleName},</if>
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="schedule != null">#{schedule},</if>
+            <if test="publisher != null">#{publisher},</if>
+            <if test="publisherId != null">#{publisherId},</if>
+            <if test="unitname != null">#{unitname},</if>
+            <if test="filename != null">#{filename},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglPlanProgress" parameterType="BdglPlanProgress">
+        update bdgl_plan_progress
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="taskId != null">task_id = #{taskId},</if>
+            <if test="taskName != null">task_name = #{taskName},</if>
+            <if test="stauts != null">stauts = #{stauts},</if>
+            <if test="file != null">file = #{file},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="accomplishTime != null">accomplish_time = #{accomplishTime},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="adminId != null">admin_id = #{adminId},</if>
+            <if test="peopleName != null">people_name = #{peopleName},</if>
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="schedule != null">schedule = #{schedule},</if>
+            <if test="publisher != null">publisher = #{publisher},</if>
+            <if test="publisherId != null">publisher_id = #{publisherId},</if>
+            <if test="unitname != null">unitname = #{unitname},</if>
+            <if test="filename != null">filename = #{filename},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglPlanProgressById" parameterType="Integer">
+        delete from bdgl_plan_progress where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglPlanProgressByIds" parameterType="String">
+        delete from bdgl_plan_progress where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteBdglPlanProgress">
+         delete from bdgl_plan_progress where task_id = #{taskId}
+    </delete>
+</mapper>

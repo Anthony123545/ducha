@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.grassrootsregistration.mapper.BdglDiaryKinsfolkMapper">
+
+    <resultMap type="BdglDiaryKinsfolk" id="BdglDiaryKinsfolkResult">
+        <result property="id"    column="id"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="diaryId"    column="diary_id"    />
+        <result property="name"    column="name"    />
+        <result property="relation"    column="relation"    />
+        <result property="comeDate"    column="come_date"    />
+        <result property="leaveDate"    column="leave_date"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="peopleName"    column="people_name"    />
+        <result property="unitName"    column="unit_name"    />
+    </resultMap>
+
+    <sql id="selectBdglDiaryKinsfolkVo">
+        select id, people_id, diary_id, name, relation, come_date, leave_date, createtime, updatetime, unit_id, people_name, unit_name from bdgl_diary_kinsfolk
+    </sql>
+
+    <select id="selectBdglDiaryKinsfolkList" parameterType="BdglDiaryKinsfolk" resultMap="BdglDiaryKinsfolkResult">
+        <include refid="selectBdglDiaryKinsfolkVo"/>
+        <where>
+            <if test="peopleId != null "> and people_id = #{peopleId}</if>
+            <if test="diaryId != null "> and diary_id = #{diaryId}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="relation != null  and relation != ''"> and relation = #{relation}</if>
+            <if test="comeDate != null "> and come_date = #{comeDate}</if>
+            <if test="leaveDate != null "> and leave_date = #{leaveDate}</if>
+            <if test="createtime != null  and createtime != ''"> and createtime = #{createtime}</if>
+            <if test="updatetime != null  and updatetime != ''"> and updatetime = #{updatetime}</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="peopleName != null  and peopleName != ''"> and people_name like concat('%', #{peopleName}, '%')</if>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectBdglDiaryKinsfolkById" parameterType="Integer" resultMap="BdglDiaryKinsfolkResult">
+        <include refid="selectBdglDiaryKinsfolkVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglDiaryKinsfolk" parameterType="BdglDiaryKinsfolk" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_diary_kinsfolk
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="peopleId != null">people_id,</if>
+            <if test="diaryId != null">diary_id,</if>
+            <if test="name != null">name,</if>
+            <if test="relation != null">relation,</if>
+            <if test="comeDate != null">come_date,</if>
+            <if test="leaveDate != null">leave_date,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="peopleName != null">people_name,</if>
+            <if test="unitName != null">unit_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="diaryId != null">#{diaryId},</if>
+            <if test="name != null">#{name},</if>
+            <if test="relation != null">#{relation},</if>
+            <if test="comeDate != null">#{comeDate},</if>
+            <if test="leaveDate != null">#{leaveDate},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="peopleName != null">#{peopleName},</if>
+            <if test="unitName != null">#{unitName},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglDiaryKinsfolk" parameterType="BdglDiaryKinsfolk">
+        update bdgl_diary_kinsfolk
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="diaryId != null">diary_id = #{diaryId},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="relation != null">relation = #{relation},</if>
+            <if test="comeDate != null">come_date = #{comeDate},</if>
+            <if test="leaveDate != null">leave_date = #{leaveDate},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="peopleName != null">people_name = #{peopleName},</if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglDiaryKinsfolkById" parameterType="Integer">
+        delete from bdgl_diary_kinsfolk where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglDiaryKinsfolkByIds" parameterType="String">
+        delete from bdgl_diary_kinsfolk where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteBdglDiaryKinsfolk">
+        delete from bdgl_diary_kinsfolk where diary_id = #{diaryId}
+    </delete>
+</mapper>

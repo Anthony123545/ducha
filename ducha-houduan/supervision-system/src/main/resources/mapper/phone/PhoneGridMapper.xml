@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.phone.mapper.PhoneGridMapper">
+    
+    <resultMap type="PhoneGrid" id="PhoneGridResult">
+        <result property="id"    column="id"    />
+        <result property="phoneCabinetId"    column="phone_cabinet_id"    />
+        <result property="name"    column="name"    />
+        <result property="gridNumber"    column="grid_number"    />
+        <result property="latticeState"    column="lattice_state"    />
+    </resultMap>
+
+    <sql id="selectPhoneGridVo">
+        select id, phone_cabinet_id, name, grid_number, lattice_state from phone_grid
+    </sql>
+
+    <select id="selectPhoneGridList" parameterType="PhoneGrid" resultMap="PhoneGridResult">
+        <include refid="selectPhoneGridVo"/>
+        <where>  
+            <if test="phoneCabinetId != null "> and phone_cabinet_id = #{phoneCabinetId}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="gridNumber != null "> and grid_number = #{gridNumber}</if>
+            <if test="latticeState != null  and latticeState != ''"> and lattice_state = #{latticeState}</if>
+        </where>
+    </select>
+    
+    <select id="selectPhoneGridById" parameterType="Long" resultMap="PhoneGridResult">
+        <include refid="selectPhoneGridVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPhoneGrid" parameterType="PhoneGrid">
+        insert into phone_grid
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="phoneCabinetId != null">phone_cabinet_id,</if>
+            <if test="name != null">name,</if>
+            <if test="gridNumber != null">grid_number,</if>
+            <if test="latticeState != null">lattice_state,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="phoneCabinetId != null">#{phoneCabinetId},</if>
+            <if test="name != null">#{name},</if>
+            <if test="gridNumber != null">#{gridNumber},</if>
+            <if test="latticeState != null">#{latticeState},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePhoneGrid" parameterType="PhoneGrid">
+        update phone_grid
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="phoneCabinetId != null">phone_cabinet_id = #{phoneCabinetId},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="gridNumber != null">grid_number = #{gridNumber},</if>
+            <if test="latticeState != null">lattice_state = #{latticeState},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePhoneGridById" parameterType="Long">
+        delete from phone_grid where id = #{id}
+    </delete>
+
+    <delete id="deletePhoneGridByIds" parameterType="String">
+        delete from phone_grid where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

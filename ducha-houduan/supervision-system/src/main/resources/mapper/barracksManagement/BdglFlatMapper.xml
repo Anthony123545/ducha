@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.barracksManagement.mapper.BdglFlatMapper">
+
+    <resultMap type="BdglFlat" id="BdglFlatResult">
+        <result property="id"    column="id"    />
+        <result property="number"    column="number"    />
+        <result property="number1"    column="number1"    />
+        <result property="name"    column="name"    />
+        <result property="behoof"    column="behoof"    />
+        <result property="statusQuo"    column="status_quo"    />
+        <result property="period"    column="period"    />
+        <result property="area"    column="area"    />
+        <result property="remark"    column="remark"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="tier"    column="tier"    />
+        <result property="roomNumber"    column="room_number"    />
+        <result property="element"    column="element"    />
+        <result property="xingMing"    column="xing_ming"    />
+        <result property="usageArea"    column="usage_area"    />
+        <result property="propertyFeeStandard"    column="property_fee_standard"    />
+        <result property="rentStandard"    column="rent_standard"    />
+        <result property="waterBil"    column="water_bil"    />
+        <result property="monthlyRent"    column="monthly_rent"    />
+        <result property="monthlyPropertyFee"    column="monthly_property_fee"    />
+        <result property="totalAmount"    column="total_amount"    />
+    </resultMap>
+
+    <sql id="selectBdglFlatVo">
+        select id, number, number1, name, behoof, status_quo, period, area, remark, createtime, updatetime, tier, room_number, element, xing_ming, usage_area, property_fee_standard, rent_standard, water_bil, monthly_rent, monthly_property_fee, total_amount from bdgl_flat
+    </sql>
+
+    <select id="selectBdglFlatList" parameterType="BdglFlat" resultMap="BdglFlatResult">
+        <include refid="selectBdglFlatVo"/>
+        <where>
+            <if test="number != null  and number != ''"> and number = #{number}</if>
+            <if test="number1 != null  and number1 != ''"> and number1 = #{number1}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="behoof != null  and behoof != ''"> and behoof = #{behoof}</if>
+            <if test="statusQuo != null  and statusQuo != ''"> and status_quo = #{statusQuo}</if>
+            <if test="period != null  and period != ''"> and period = #{period}</if>
+            <if test="area != null  and area != ''"> and area = #{area}</if>
+            <if test="createtime != null  and createtime != ''"> and createtime = #{createtime}</if>
+            <if test="updatetime != null  and updatetime != ''"> and updatetime = #{updatetime}</if>
+            <if test="tier != null  and tier != ''"> and tier = #{tier}</if>
+            <if test="roomNumber != null "> and room_number = #{roomNumber}</if>
+            <if test="element != null  and element != ''"> and element = #{element}</if>
+            <if test="xingMing != null  and xingMing != ''"> and xing_ming = #{xingMing}</if>
+            <if test="usageArea != null "> and usage_area = #{usageArea}</if>
+            <if test="propertyFeeStandard != null "> and property_fee_standard = #{propertyFeeStandard}</if>
+            <if test="rentStandard != null "> and rent_standard = #{rentStandard}</if>
+            <if test="waterBil != null "> and water_bil = #{waterBil}</if>
+            <if test="monthlyRent != null "> and monthly_rent = #{monthlyRent}</if>
+            <if test="monthlyPropertyFee != null "> and monthly_property_fee = #{monthlyPropertyFee}</if>
+            <if test="totalAmount != null "> and total_amount = #{totalAmount}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectBdglFlatById" parameterType="Integer" resultMap="BdglFlatResult">
+        <include refid="selectBdglFlatVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBdglFlat" parameterType="BdglFlat" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_flat
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null">number,</if>
+            <if test="number1 != null">number1,</if>
+            <if test="name != null">name,</if>
+            <if test="behoof != null">behoof,</if>
+            <if test="statusQuo != null">status_quo,</if>
+            <if test="period != null">period,</if>
+            <if test="area != null">area,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="tier != null">tier,</if>
+            <if test="roomNumber != null">room_number,</if>
+            <if test="element != null">element,</if>
+            <if test="xingMing != null">xing_ming,</if>
+            <if test="usageArea != null">usage_area,</if>
+            <if test="propertyFeeStandard != null">property_fee_standard,</if>
+            <if test="rentStandard != null">rent_standard,</if>
+            <if test="waterBil != null">water_bil,</if>
+            <if test="monthlyRent != null">monthly_rent,</if>
+            <if test="monthlyPropertyFee != null">monthly_property_fee,</if>
+            <if test="totalAmount != null">total_amount,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null">#{number},</if>
+            <if test="number1 != null">#{number1},</if>
+            <if test="name != null">#{name},</if>
+            <if test="behoof != null">#{behoof},</if>
+            <if test="statusQuo != null">#{statusQuo},</if>
+            <if test="period != null">#{period},</if>
+            <if test="area != null">#{area},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="tier != null">#{tier},</if>
+            <if test="roomNumber != null">#{roomNumber},</if>
+            <if test="element != null">#{element},</if>
+            <if test="xingMing != null">#{xingMing},</if>
+            <if test="usageArea != null">#{usageArea},</if>
+            <if test="propertyFeeStandard != null">#{propertyFeeStandard},</if>
+            <if test="rentStandard != null">#{rentStandard},</if>
+            <if test="waterBil != null">#{waterBil},</if>
+            <if test="monthlyRent != null">#{monthlyRent},</if>
+            <if test="monthlyPropertyFee != null">#{monthlyPropertyFee},</if>
+            <if test="totalAmount != null">#{totalAmount},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglFlat" parameterType="BdglFlat">
+        update bdgl_flat
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null">number = #{number},</if>
+            <if test="number1 != null">number1 = #{number1},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="behoof != null">behoof = #{behoof},</if>
+            <if test="statusQuo != null">status_quo = #{statusQuo},</if>
+            <if test="period != null">period = #{period},</if>
+            <if test="area != null">area = #{area},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="tier != null">tier = #{tier},</if>
+            <if test="roomNumber != null">room_number = #{roomNumber},</if>
+            <if test="element != null">element = #{element},</if>
+            <if test="xingMing != null">xing_ming = #{xingMing},</if>
+            <if test="usageArea != null">usage_area = #{usageArea},</if>
+            <if test="propertyFeeStandard != null">property_fee_standard = #{propertyFeeStandard},</if>
+            <if test="rentStandard != null">rent_standard = #{rentStandard},</if>
+            <if test="waterBil != null">water_bil = #{waterBil},</if>
+            <if test="monthlyRent != null">monthly_rent = #{monthlyRent},</if>
+            <if test="monthlyPropertyFee != null">monthly_property_fee = #{monthlyPropertyFee},</if>
+            <if test="totalAmount != null">total_amount = #{totalAmount},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglFlatById" parameterType="Integer">
+        delete from bdgl_flat where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglFlatByIds" parameterType="String">
+        delete from bdgl_flat where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.militaryvehicleManagement.mapper.BdglDepartureInfoMapper">
+    
+    <resultMap type="BdglDepartureInfo" id="BdglDepartureInfoResult">
+        <result property="id"    column="id"    />
+        <result property="vehiclemodel"    column="vehiclemodel"    />
+        <result property="vehiclenumber"    column="vehiclenumber"    />
+        <result property="driverName"    column="driver_name"    />
+        <result property="driverId"    column="driver_id"    />
+        <result property="driverPhone"    column="driver_phone"    />
+        <result property="bdglThebusId"    column="bdgl_thebus_id"    />
+        <result property="shengqingId"    column="shengqing_id"    />
+    </resultMap>
+
+    <sql id="selectBdglDepartureInfoVo">
+        select id, vehiclemodel, vehiclenumber, driver_name, driver_id, driver_phone, bdgl_thebus_id, shengqing_id from bdgl_departure_info
+    </sql>
+
+    <select id="selectBdglDepartureInfoList" parameterType="BdglDepartureInfo" resultMap="BdglDepartureInfoResult">
+        <include refid="selectBdglDepartureInfoVo"/>
+        <where>  
+            <if test="vehiclemodel != null  and vehiclemodel != ''"> and vehiclemodel = #{vehiclemodel}</if>
+            <if test="vehiclenumber != null  and vehiclenumber != ''"> and vehiclenumber = #{vehiclenumber}</if>
+            <if test="driverName != null  and driverName != ''"> and driver_name like concat('%', #{driverName}, '%')</if>
+            <if test="driverId != null "> and driver_id = #{driverId}</if>
+            <if test="driverPhone != null  and driverPhone != ''"> and driver_phone = #{driverPhone}</if>
+            <if test="bdglThebusId != null "> and bdgl_thebus_id = #{bdglThebusId}</if>
+            <if test="shengqingId != null "> and shengqing_id = #{shengqingId}</if>
+        </where>
+    </select>
+    
+    <select id="selectBdglDepartureInfoById" parameterType="Long" resultMap="BdglDepartureInfoResult">
+        <include refid="selectBdglDepartureInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBdglDepartureInfo" parameterType="BdglDepartureInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_departure_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="vehiclemodel != null">vehiclemodel,</if>
+            <if test="vehiclenumber != null">vehiclenumber,</if>
+            <if test="driverName != null">driver_name,</if>
+            <if test="driverId != null">driver_id,</if>
+            <if test="driverPhone != null">driver_phone,</if>
+            <if test="bdglThebusId != null">bdgl_thebus_id,</if>
+            <if test="shengqingId != null">shengqing_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="vehiclemodel != null">#{vehiclemodel},</if>
+            <if test="vehiclenumber != null">#{vehiclenumber},</if>
+            <if test="driverName != null">#{driverName},</if>
+            <if test="driverId != null">#{driverId},</if>
+            <if test="driverPhone != null">#{driverPhone},</if>
+            <if test="bdglThebusId != null">#{bdglThebusId},</if>
+            <if test="shengqingId != null">#{shengqingId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBdglDepartureInfo" parameterType="BdglDepartureInfo">
+        update bdgl_departure_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="vehiclemodel != null">vehiclemodel = #{vehiclemodel},</if>
+            <if test="vehiclenumber != null">vehiclenumber = #{vehiclenumber},</if>
+            <if test="driverName != null">driver_name = #{driverName},</if>
+            <if test="driverId != null">driver_id = #{driverId},</if>
+            <if test="driverPhone != null">driver_phone = #{driverPhone},</if>
+            <if test="bdglThebusId != null">bdgl_thebus_id = #{bdglThebusId},</if>
+            <if test="shengqingId != null">shengqing_id = #{shengqingId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglDepartureInfoById" parameterType="Long">
+        delete from bdgl_departure_info where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglDepartureInfoByIds" parameterType="String">
+        delete from bdgl_departure_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

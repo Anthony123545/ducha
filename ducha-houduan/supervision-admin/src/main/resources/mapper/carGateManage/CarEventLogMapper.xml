@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.supervision.web.Hikvision.carDoor.web.mapper.CarEventLogMapper">
+
+    <!-- 查询车辆进出记录 -->
+    <select id="selectByCondition" resultType="com.supervision.web.Hikvision.carDoor.web.entity.CarEvent">
+        SELECT
+        id,
+        owner_name AS ownerName,
+        plate_number AS plateNumber,
+        phone_number AS phoneNumber,
+        event_time AS eventTime,
+        event_type AS eventType,
+        car_type AS carType,
+        car_group AS carGroup
+        FROM new_carevent_log
+        WHERE 1 = 1
+        <if test="plateNumber != null and plateNumber != ''">
+            AND plate_number LIKE CONCAT('%', #{plateNumber}, '%')
+        </if>
+        <if test="ownerName != null and ownerName != ''">
+            AND owner_name LIKE CONCAT('%', #{ownerName}, '%')
+        </if>
+        <if test="phoneNumber != null and phoneNumber != ''">
+            AND phone_number LIKE CONCAT('%', #{phoneNumber}, '%')
+        </if>
+        <if test="eventType != null and eventType != ''">
+            AND event_type = #{eventType}
+        </if>
+        <if test="carType != null and carType != ''">
+            AND car_type = #{carType}
+        </if>
+        <if test="carGroup != null and carGroup != ''">
+            AND car_group LIKE CONCAT('%', #{carGroup}, '%')
+        </if>
+        <if test="startTime != null and startTime != ''">
+            AND event_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            AND event_time &lt;= #{endTime}
+        </if>
+        ORDER BY event_time DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <!-- 统计总记录数 -->
+    <select id="countByCondition" resultType="int">
+        SELECT COUNT(1)
+        FROM new_carevent_log
+        WHERE 1 = 1
+        <if test="plateNumber != null and plateNumber != ''">
+            AND plate_number LIKE CONCAT('%', #{plateNumber}, '%')
+        </if>
+        <if test="ownerName != null and ownerName != ''">
+            AND owner_name LIKE CONCAT('%', #{ownerName}, '%')
+        </if>
+        <if test="phoneNumber != null and phoneNumber != ''">
+            AND phone_number LIKE CONCAT('%', #{phoneNumber}, '%')
+        </if>
+        <if test="eventType != null and eventType != ''">
+            AND event_type = #{eventType}
+        </if>
+        <if test="carType != null and carType != ''">
+            AND car_type = #{carType}
+        </if>
+        <if test="carGroup != null and carGroup != ''">
+            AND car_group LIKE CONCAT('%', #{carGroup}, '%')
+        </if>
+        <if test="startTime != null and startTime != ''">
+            AND event_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            AND event_time &lt;= #{endTime}
+        </if>
+    </select>
+
+</mapper>
+

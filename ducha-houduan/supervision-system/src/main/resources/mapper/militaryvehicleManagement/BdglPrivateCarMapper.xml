@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supervision.militaryvehicleManagement.mapper.BdglPrivateCarMapper">
+
+    <resultMap type="BdglPrivateCar" id="BdglPrivateCarResult">
+        <result property="id"    column="id"    />
+        <result property="vehiclecategory"    column="vehiclecategory"    />
+        <result property="peopleId"    column="people_id"    />
+        <result property="peopleName"    column="people_name"    />
+        <result property="vehiclenumber"    column="vehiclenumber"    />
+        <result property="vehiclecolor"    column="vehiclecolor"    />
+        <result property="vehiclemodel"    column="vehiclemodel"    />
+        <result property="contactnumber"    column="contactnumber"    />
+        <result property="documenttype"    column="documenttype"    />
+        <result property="certificatenumber"    column="certificatenumber"    />
+        <result property="authStime"    column="auth_stime"    />
+        <result property="authEtime"    column="auth_etime"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="adminId"    column="admin_id"    />
+        <result property="createtime"    column="createtime"    />
+        <result property="updatetime"    column="updatetime"    />
+        <result property="state"    column="state"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="cutoffTime"    column="cutoff_time"    />
+        <result property="outType"    column="out_type"    />
+        <result property="chelaingleibie"    column="chelaingleibie"    />
+    </resultMap>
+
+    <sql id="selectBdglPrivateCarVo">
+        select id, vehiclecategory, people_id, people_name, vehiclenumber, vehiclecolor, vehiclemodel, contactnumber, documenttype, certificatenumber, auth_stime, auth_etime, remarks, admin_id, createtime, updatetime, state, unit_id, cutoff_time, out_type, chelaingleibie from bdgl_private_car
+    </sql>
+
+    <select id="selectBdglPrivateCarList" parameterType="BdglPrivateCar" resultMap="BdglPrivateCarResult">
+        <include refid="selectBdglPrivateCarVo"/>
+        <where>
+            <if test="vehiclecategory != null  and vehiclecategory != ''"> and vehiclecategory = #{vehiclecategory}</if>
+            <if test="peopleId != null "> and people_id = #{peopleId}</if>
+            <if test="peopleName != null  and peopleName != ''"> and people_name like concat('%', #{peopleName}, '%')</if>
+            <if test="vehiclenumber != null  and vehiclenumber != ''"> and vehiclenumber like concat('%', #{vehiclenumber}, '%')</if>
+            <if test="vehiclecolor != null  and vehiclecolor != ''"> and vehiclecolor = #{vehiclecolor}</if>
+            <if test="vehiclemodel != null  and vehiclemodel != ''"> and vehiclemodel = #{vehiclemodel}</if>
+            <if test="contactnumber != null  and contactnumber != ''"> and contactnumber = #{contactnumber}</if>
+            <if test="documenttype != null  and documenttype != ''"> and documenttype = #{documenttype}</if>
+            <if test="certificatenumber != null  and certificatenumber != ''"> and certificatenumber = #{certificatenumber}</if>
+            <if test="authStime != null "> and auth_stime = #{authStime}</if>
+            <if test="authEtime != null "> and auth_etime = #{authEtime}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="adminId != null "> and admin_id = #{adminId}</if>
+            <if test="createtime != null  and createtime != ''"> and createtime = #{createtime}</if>
+            <if test="updatetime != null  and updatetime != ''"> and updatetime = #{updatetime}</if>
+            <if test="state != null  and state != ''"> and state = #{state}</if>
+            <if test="cutoffTime != null "> and cutoff_time = #{cutoffTime}</if>
+            <if test="outType != null  and outType != ''"> and out_type = #{outType}</if>
+             <if test="chelaingleibie != null  and chelaingleibie != ''"> and chelaingleibie = #{chelaingleibie}</if>
+        </where>
+    </select>
+
+    <select id="selectBdglPrivateCarById" parameterType="Long" resultMap="BdglPrivateCarResult">
+        <include refid="selectBdglPrivateCarVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectBdglPrivateCarLists" resultMap="BdglPrivateCarResult">
+        select id, vehiclecategory, people_id, people_name, vehiclenumber, vehiclecolor, vehiclemodel, contactnumber, documenttype, certificatenumber, auth_stime, auth_etime, remarks, admin_id, createtime, updatetime, state, unit_id, cutoff_time, out_type
+        from bdgl_private_car a
+        left join sys_dept t
+        on a.unit_id=t.dept_id
+        <where>
+            <if test="vehiclecategory != null  and vehiclecategory != ''"> and a.vehiclecategory = #{vehiclecategory}</if>
+            <if test="peopleId != null "> and a.people_id = #{peopleId}</if>
+            <if test="peopleName != null  and peopleName != ''"> and a.people_name like concat('%', #{peopleName}, '%')</if>
+            <if test="vehiclenumber != null  and vehiclenumber != ''"> and a.vehiclenumber like concat('%', #{vehiclenumber}, '%')</if>
+            <if test="vehiclecolor != null  and vehiclecolor != ''"> and a.vehiclecolor = #{vehiclecolor}</if>
+            <if test="vehiclemodel != null  and vehiclemodel != ''"> and a.vehiclemodel = #{vehiclemodel}</if>
+            <if test="contactnumber != null  and contactnumber != ''"> and a.contactnumber = #{contactnumber}</if>
+            <if test="documenttype != null  and documenttype != ''"> and a.documenttype = #{documenttype}</if>
+            <if test="certificatenumber != null  and certificatenumber != ''"> and a.certificatenumber = #{certificatenumber}</if>
+            <if test="authStime != null "> and a.auth_stime = #{authStime}</if>
+            <if test="authEtime != null "> and a.auth_etime = #{authEtime}</if>
+            <if test="remarks != null  and remarks != ''"> and a.remarks = #{remarks}</if>
+            <if test="adminId != null "> and admin_id = #{adminId}</if>
+            <if test="createtime != null  and createtime != ''"> and a.createtime = #{createtime}</if>
+            <if test="updatetime != null  and updatetime != ''"> and a.updatetime = #{updatetime}</if>
+            <if test="state != null  and state != ''"> and a.state = #{state}</if>
+            <if test="cutoffTime != null "> and a.cutoff_time = #{cutoffTime}</if>
+            <if test="outType != null  and outType != ''"> and a.out_type = #{outType}</if>
+        <if test="chelaingleibie != null  and chelaingleibie != ''"> and a.chelaingleibie = #{chelaingleib}</if>
+        </where>
+        order by id desc
+    </select>
+    <select id="selectVehicleModelList" resultType="java.util.Map">
+        SELECT DISTINCT
+            b.vehiclemodel AS dictValue,
+            d.dict_label   AS dictLabel,
+            b.vehiclenumber AS dictCode
+        FROM bdgl_private_car b
+                 LEFT JOIN sys_dict_data d
+                           ON b.vehiclemodel = d.dict_value
+                               AND d.dict_type = 'brand'
+        WHERE b.vehiclemodel IS NOT NULL AND b.vehiclemodel != '' AND b.state = 1
+        ORDER BY d.dict_label
+    </select>
+
+    <insert id="insertBdglPrivateCar" parameterType="BdglPrivateCar" useGeneratedKeys="true" keyProperty="id">
+        insert into bdgl_private_car
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="vehiclecategory != null">vehiclecategory,</if>
+            <if test="peopleId != null">people_id,</if>
+            <if test="peopleName != null">people_name,</if>
+            <if test="vehiclenumber != null">vehiclenumber,</if>
+            <if test="vehiclecolor != null">vehiclecolor,</if>
+            <if test="vehiclemodel != null">vehiclemodel,</if>
+            <if test="contactnumber != null">contactnumber,</if>
+            <if test="documenttype != null">documenttype,</if>
+            <if test="certificatenumber != null">certificatenumber,</if>
+            <if test="authStime != null">auth_stime,</if>
+            <if test="authEtime != null">auth_etime,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="adminId != null">admin_id,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="updatetime != null">updatetime,</if>
+            <if test="state != null">state,</if>
+            <if test="unitId != null"> ,</if>
+            <if test="cutoffTime != null">cutoff_time,</if>
+            <if test="outType != null">out_type,</if>
+            <if test="chelaingleibie != null">che</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="vehiclecategory != null">#{vehiclecategory},</if>
+            <if test="peopleId != null">#{peopleId},</if>
+            <if test="peopleName != null">#{peopleName},</if>
+            <if test="vehiclenumber != null">#{vehiclenumber},</if>
+            <if test="vehiclecolor != null">#{vehiclecolor},</if>
+            <if test="vehiclemodel != null">#{vehiclemodel},</if>
+            <if test="contactnumber != null">#{contactnumber},</if>
+            <if test="documenttype != null">#{documenttype},</if>
+            <if test="certificatenumber != null">#{certificatenumber},</if>
+            <if test="authStime != null">#{authStime},</if>
+            <if test="authEtime != null">#{authEtime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="adminId != null">#{adminId},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="state != null">#{state},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="cutoffTime != null">#{cutoffTime},</if>
+            <if test="outType != null">#{outType},</if>
+            <if test="chelaingleibie != null">#{chelaingleibie},</if>
+        </trim>
+    </insert>
+
+    <update id="updateBdglPrivateCar" parameterType="BdglPrivateCar">
+        update bdgl_private_car
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="vehiclecategory != null">vehiclecategory = #{vehiclecategory},</if>
+            <if test="peopleId != null">people_id = #{peopleId},</if>
+            <if test="peopleName != null">people_name = #{peopleName},</if>
+            <if test="vehiclenumber != null">vehiclenumber = #{vehiclenumber},</if>
+            <if test="vehiclecolor != null">vehiclecolor = #{vehiclecolor},</if>
+            <if test="vehiclemodel != null">vehiclemodel = #{vehiclemodel},</if>
+            <if test="contactnumber != null">contactnumber = #{contactnumber},</if>
+            <if test="documenttype != null">documenttype = #{documenttype},</if>
+            <if test="certificatenumber != null">certificatenumber = #{certificatenumber},</if>
+            <if test="authStime != null">auth_stime = #{authStime},</if>
+            <if test="authEtime != null">auth_etime = #{authEtime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="adminId != null">admin_id = #{adminId},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="cutoffTime != null">cutoff_time = #{cutoffTime},</if>
+            <if test="outType != null">out_type = #{outType},</if>
+            <if test="chelaingleibie != null">chelaingleibie = #{chelaingleibie},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBdglPrivateCarById" parameterType="Long">
+        delete from bdgl_private_car where id = #{id}
+    </delete>
+
+    <delete id="deleteBdglPrivateCarByIds" parameterType="String">
+        delete from bdgl_private_car where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
